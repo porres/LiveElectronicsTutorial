@@ -1,0 +1,61 @@
+#N canvas 457 23 470 764 10;
+#X obj 186 389 +~;
+#X obj 128 289 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 400 256;
+#X obj 194 244 cnv 15 140 110 empty empty empty 20 12 0 14 -166433
+-66577 0;
+#X obj 201 305 osc~;
+#X obj 201 327 *~;
+#X obj 201 282 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 276 282 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 276 301 \$1 10;
+#X obj 276 321 line~;
+#X text 61 287 Portadora;
+#X text 199 263 Moduladora;
+#X text 62 273 Frequência;
+#X obj 128 314 sig~;
+#X text 51 358 sinal portador =>;
+#X text 212 365 <= sinal modulador;
+#X text 198 248 Frequência;
+#X text 271 249 Índice de;
+#X text 272 262 Modulação;
+#X obj 160 495 output~;
+#X text 200 414 <= sinal de frequência modulada;
+#X text 94 452 oscilador =>;
+#X obj 186 454 osc~;
+#X text 33 17 Em termos gerais \, modular um sinal é operar qualquer
+mudança nele \, mesmo que pontual ou momentânea. Porém \, no contexto
+de técnicas de síntese \, modular o sinal de áudio que controla um
+parâmetro qualquer implica \, de fato \, em uma variação constante
+desse sinal \, normalmente por meio do sinal de um oscilador como modulador.
+Vejamos então uma estrutura clássica de modulação de frequência abaixo.
+;
+#X text 35 125 O sinal de frequência a ser modulado é chamado de "Sinal
+Portador". Como estamos falando de modulação de frequência \, dizemos
+que o sinal portador é a "Frequência Portadora". Do outro lado temos
+o "sinal modulador" \, logo \, a "frequência moduladora". O desvio
+da frequência é dado pela amplitude desse sinal e é chamado de "Índice
+de Modulação";
+#X text 51 557 Temos então um sinal de Frequência portadora de 400
+Hz e esse sinal sendo modulado ao ser somado com um sinal modulador
+(sinal de um oscilador).;
+#X text 51 604 O oscilador possui uma frequência de 1 Hz e essa é a
+"Frequência Moduladora". Sua amplitude é multiplicada por 10 e esse
+valor é o "índice de modulação".;
+#X text 53 653 De tal maneira \, esse sinal modulador varia entre -10
+a 10 em ciclos que duram um segundo. Já a soma com o sinal portador
+reflete em uma variação de frequência de 390 a 410 hz em ciclos de
+mesma duração.;
+#X connect 0 0 21 0;
+#X connect 1 0 12 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 1;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 4 1;
+#X connect 12 0 0 0;
+#X connect 21 0 18 0;
+#X connect 21 0 18 1;

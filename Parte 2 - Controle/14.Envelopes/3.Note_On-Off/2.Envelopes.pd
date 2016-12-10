@@ -1,0 +1,127 @@
+#N canvas 107 25 1182 603 10;
+#X floatatom 340 311 5 0 0 0 - - -;
+#X floatatom 347 332 5 0 0 0 - - -;
+#X floatatom 355 353 5 0 0 0 - - -;
+#X floatatom 361 375 5 0 0 0 - - -;
+#X obj 160 453 *~;
+#X obj 146 497 dac~;
+#X msg 224 251 lina;
+#X msg 238 279 loga;
+#X text 377 312 A;
+#X text 384 331 D;
+#X text 391 353 S;
+#X text 397 375 R;
+#X obj 109 306 tgl 20 0 empty empty empty 17 7 0 10 -249787 -1 -1 0
+1;
+#X obj 109 227 bng 20 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 238 437 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X text 256 252 ataque linear:;
+#X text 269 278 ataque logarítmico:;
+#X obj 127 409 osc~ 440;
+#X obj 474 241 loadbang;
+#X obj 238 397 aenv~ 100 200 0.5 500;
+#X text 135 306 Note On/Off;
+#X msg 474 266 \; pd dsp 1;
+#X obj 877 435 *~;
+#X floatatom 961 293 5 0 0 0 - - -;
+#X floatatom 1039 307 5 0 0 0 - - -;
+#X floatatom 1038 329 5 0 0 0 - - -;
+#X obj 866 479 dac~;
+#X floatatom 1039 350 5 0 0 0 - - -;
+#X floatatom 1039 370 5 0 0 0 - - -;
+#X obj 831 398 osc~ 440;
+#X obj 923 436 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X obj 569 438 *~;
+#X floatatom 653 307 5 0 0 0 - - -;
+#X floatatom 672 344 5 0 0 0 - - -;
+#X floatatom 671 366 5 0 0 0 - - -;
+#X obj 559 474 dac~;
+#X obj 523 401 osc~ 440;
+#X obj 632 437 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X obj 602 395 ear~ 200 200;
+#X obj 602 335 metro 800;
+#X floatatom 172 238 5 0 0 0 - - -;
+#X text 1075 306 A;
+#X text 1075 327 D;
+#X text 1075 349 S;
+#X text 1075 369 R;
+#X text 710 342 A;
+#X text 709 366 R;
+#X obj 602 363 tgl 20 0 empty empty empty 17 7 0 10 -249787 -1 -1 0
+1;
+#X text 527 364 Note On/Off;
+#X obj 602 307 tgl 20 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 910 351 tgl 20 0 empty empty empty 17 7 0 10 -249787 -1 -1 0
+1;
+#X text 835 352 Note On/Off;
+#X obj 910 292 tgl 20 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 910 392 eadsr~ 100 200 0.5 500;
+#X obj 121 267 delay 500;
+#X text 617 67 Já o [ear~] e o [eadsr~] funcionam da mesma maneira
+que o [aenv~] \, mas são da mesma família de geradores de envelopes
+exponenciais que o [ead~] \, apresentado anteriormente.;
+#X text 620 116 O [ear~] é só um gerador de envelope de ataque e release
+\, com o tempo de ambos dado em ms \, enquanto o [eadrs~] é um gerador
+de envelope ADSR como o [aenv~].;
+#X text 620 167 O [eadsr~] e o [aenv~] geram \, inclusive \, curvas
+de envelope relativamente próximas \, sendo que o [eadsr~] tem um ataque
+que sobe um pouco mais rápido \, e decay e release que descem um pouco
+mais rápido também.;
+#X obj 910 320 metro 500;
+#X text 94 64 O [aenv~] é um gerador de envelope ADSR \, dito assintótico.
+Os valores dos argumentos e respectivos inlets são: tempo de ataque
+(em ms) \, tempo de decay (em ms) \, nível de sustain (em amplitude
+linear) e tempo de release (em ms).;
+#X text 95 30 Apresentamos aqui objetos de envelope que são controlados
+via mensagens de Note On e Note Off.;
+#X text 97 129 Quando ele recebe um valor diferente de zero \, temos
+o ataque/decay/sustain. Já o release é disparado quando ele recebe
+o valor de zero. Ou seja \, ele funciona no conceito de Note On/Off.
+Há ainda uma opção de ataque linear ou logarítmico.;
+#X connect 0 0 19 1;
+#X connect 1 0 19 2;
+#X connect 2 0 19 3;
+#X connect 3 0 19 4;
+#X connect 4 0 5 0;
+#X connect 4 0 5 1;
+#X connect 6 0 19 0;
+#X connect 7 0 19 0;
+#X connect 12 0 19 0;
+#X connect 13 0 12 0;
+#X connect 13 0 54 0;
+#X connect 17 0 4 0;
+#X connect 18 0 21 0;
+#X connect 19 0 14 0;
+#X connect 19 0 4 1;
+#X connect 22 0 26 0;
+#X connect 22 0 26 1;
+#X connect 23 0 58 1;
+#X connect 24 0 53 1;
+#X connect 25 0 53 2;
+#X connect 27 0 53 3;
+#X connect 28 0 53 4;
+#X connect 29 0 22 0;
+#X connect 31 0 35 0;
+#X connect 31 0 35 1;
+#X connect 32 0 39 1;
+#X connect 33 0 38 1;
+#X connect 34 0 38 2;
+#X connect 36 0 31 0;
+#X connect 38 0 31 1;
+#X connect 38 0 37 0;
+#X connect 39 0 47 0;
+#X connect 40 0 54 1;
+#X connect 47 0 38 0;
+#X connect 49 0 39 0;
+#X connect 50 0 53 0;
+#X connect 52 0 58 0;
+#X connect 53 0 22 1;
+#X connect 53 0 30 0;
+#X connect 54 0 12 0;
+#X connect 58 0 50 0;

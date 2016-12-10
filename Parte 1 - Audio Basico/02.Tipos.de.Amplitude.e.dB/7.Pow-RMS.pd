@@ -1,0 +1,154 @@
+#N canvas 127 94 1202 566 10;
+#X text 237 495 2;
+#X text 186 501 Voltagem;
+#X text 246 501 = Potência * Resistência;
+#X text 914 413 dB;
+#X text 1095 491 "pow";
+#X text 952 492 "rms";
+#X text 897 471 razão;
+#X obj 936 435 expr pow(10 \, $f1 / 20) \; pow(10 \, $f1 / 10);
+#X msg 967 383 20;
+#X obj 967 360 loadbang;
+#X text 949 505 "volts";
+#X text 1091 503 "watts";
+#X obj 631 339 powtodb;
+#X obj 581 252 nbx 8 14 0 100 0 0 empty empty empty 18 -6 0 10 -204786
+-1 -1 100 256;
+#X obj 631 362 nbx 8 14 0 10000 0 0 empty empty empty 18 -6 0 10 -257985
+-1 -1 140 256;
+#X obj 501 336 rmstodb;
+#X obj 501 362 nbx 8 14 0 10000 0 0 empty empty empty 18 -6 0 10 -257985
+-1 -1 140 256;
+#X floatatom 501 309 0 0 0 0 - - -;
+#X floatatom 631 309 0 0 0 0 - - -;
+#X text 587 300 "pow";
+#X text 581 312 "watts";
+#X text 456 305 "rms";
+#X text 452 317 "volts";
+#X msg 513 201 0.5;
+#X msg 581 201 100;
+#X msg 549 201 1;
+#X obj 581 179 loadbang;
+#X msg 897 50 2;
+#X msg 858 50 0.5;
+#X msg 933 49 10;
+#X msg 972 49 100;
+#X text 1017 164 "pow";
+#X text 895 166 "rms";
+#X obj 897 103 expr 20 * log10($f1) \; 10 * log10($f1);
+#X text 612 360 dB;
+#X text 483 361 dB;
+#X text 1001 145 dB;
+#X msg 936 384 10;
+#X msg 998 383 40;
+#X text 855 79 razão;
+#X text 1030 471 razão;
+#X text 892 181 "volts";
+#X text 1013 179 "watts";
+#X obj 933 26 loadbang;
+#X obj 897 144 nbx 8 16 -10000 10000 0 0 empty empty empty 18 -6 0
+10 -203904 -1 -1 20 256;
+#X text 874 145 dB;
+#X obj 1020 143 nbx 8 16 -10000 10000 0 0 empty empty empty 18 -6 0
+10 -203904 -1 -1 10 256;
+#X obj 897 78 nbx 8 16 0 10000 0 0 empty empty empty 18 -6 0 10 -240878
+-1 -1 10 256;
+#X obj 936 413 nbx 8 16 0 10000 0 0 empty empty empty 18 -6 0 10 -203904
+-1 -1 20 256;
+#X obj 936 472 nbx 8 16 0 10000 0 0 empty empty empty 18 -6 0 10 -240878
+-1 -1 10 256;
+#X obj 1071 471 nbx 8 16 0 10000 0 0 empty empty empty 18 -6 0 10 -240878
+-1 -1 100 256;
+#X text 32 44 Pois bem \, além de todos os diferentes padrões de dB
+que temos visto \, resta lembrar que há ainda dois "tipos" de dB: um
+em que um acréscimo em torno de 6 dB significa o dobro \, como no [rmstodb]
+\, e outro em que é a metade disso \, como no [powtodb].;
+#X text 35 370 A ideia da relação entre as duas fórmulas vem da relação
+entre as grandezas. Esse ajuste da fórmula implica \, na verdade \,
+que a entrada de amplitude (em "rms") foi elevada ao quadrado. O patch
+à direita demonstra isso.;
+#X text 33 501 Eis novamente a fórmula:;
+#X msg 841 384 3.0103;
+#X msg 889 384 6.0206;
+#X text 34 433 Já vimos essa relação entre as grandezas no exemplo
+passado \, na fórmula que relaciona Watt (uma grandeza "pow") e Volts
+(uma grandeza "rms") \, onde a Potência \, em Watts \, se relaciona
+com o quadrado da Voltagem.;
+#X obj 470 111 cnv 13 302 15 empty empty empty 20 12 0 14 -261234 -66577
+0;
+#X text 671 277 quadrado da;
+#X text 679 289 voltagem;
+#X text 523 249 voltagem;
+#X obj 631 284 pow 2;
+#X text 470 110 Potência ("pow") é o quadrado da Voltagem ("rms")!
+;
+#X text 432 137 E dessa forma as duas conversões dão o mesmo resultado
+\, não importando se obtido por voltagem ou potência!;
+#X obj 936 324 cnv 10 170 14 empty empty empty 20 12 0 14 -261234 -66577
+0;
+#X text 33 253 Para nos mantermos dentro da nomenclatura do Pd \, usaremos
+esses termos ("rms" e "pow") para identificar essas duas categorias
+de escalas em dB.;
+#X text 35 304 No caso de uma escala de dB em "pow" \, há uma alteração
+na fórmula (multiplicamos por 10 em vez de 20) \, o que dá \, obviamente
+\, resultados diferentes. Contudo \, podemos ainda obter uma relação
+de equivalência como explicado a seguir.;
+#X obj 600 225 hsl 128 15 1e-05 10 1 0 empty empty empty -2 -8 0 10
+-204786 -1 -1 0 1;
+#X text 32 118 Temos usado \, até agora \, o padrão de [rmstodb] \,
+pois é o que se aplica à Pressão Sonora \, Voltagem e outras chamadas
+"quantidades de campo" - normalmente expressas em valores em RMS.;
+#X text 33 180 De outro lado \, temos as "quantidades de energia" \,
+como Intensidade Sonora (também dada em dB SPL como a Pressão Sonora)
+e a Potência elétrica (Watts). Essas se relacionam com o objeto [powtodb]
+- "pow" é de "power" \, que é potência em inglês \, daí o nome.;
+#X text 429 43 Considerando uma resistência igual a 1 \, temos bem
+evidente essa relação proporcional em que a Potência é a Voltagem ao
+quadrado. E assim explica-se que o objeto [powtodb] equivale ao [rmstodb]
+se considerarmos que:;
+#X text 441 396 Em contrapartida \, é claro que uma mesma entrada de
+valor dá resultados distintos em "rmstodb" e "powtodb". Seguindo à
+direita e acima \, vemos isso na fórmula de conversão entre razão e
+dB. Essa conversão já foi apresentada \, mas agora temos nas duas formas
+("rms" e "pow"). Note como uma razão de 10 dá 20 dB em "rms" e 10 dB
+em "pow". Se 10 é a razão da voltagem \, seu valor em dB é 20 \, e
+a razão da potência que dá 20 dB é pra ser o quadrado disso (ou seja
+\, uma razão de 100).;
+#X text 808 207 Isso explica como "rms" é o dobro de "pow" com a mesma
+entrada de valores. Afinal \, a potência deveria receber um valor ao
+quadrado para dar um mesmo valor \, e o "quadrado" na escala logarítmica
+dá o dobro!;
+#X text 809 269 Abaixo temos a conversão inversa \, em mais um exemplo
+dessa relação entre as grandezas. Perceba que \, por exemplo \, 20
+dB dá uma razão de 10 vezes mais volts ("rms") e 100 vezes mais watts
+("pow"). Logo \, novamente \, a "rms" é a raiz quadrada de "pow" \,
+e "pow" é o quadrado de "rms".;
+#X connect 7 0 49 0;
+#X connect 7 1 50 0;
+#X connect 8 0 48 0;
+#X connect 9 0 8 0;
+#X connect 12 0 14 0;
+#X connect 13 0 61 0;
+#X connect 13 0 17 0;
+#X connect 15 0 16 0;
+#X connect 17 0 15 0;
+#X connect 18 0 12 0;
+#X connect 23 0 13 0;
+#X connect 24 0 13 0;
+#X connect 25 0 13 0;
+#X connect 26 0 24 0;
+#X connect 27 0 47 0;
+#X connect 28 0 47 0;
+#X connect 29 0 47 0;
+#X connect 30 0 47 0;
+#X connect 33 0 44 0;
+#X connect 33 1 46 0;
+#X connect 37 0 48 0;
+#X connect 38 0 48 0;
+#X connect 43 0 29 0;
+#X connect 47 0 33 0;
+#X connect 48 0 7 0;
+#X connect 54 0 48 0;
+#X connect 55 0 48 0;
+#X connect 61 0 18 0;
+#X connect 67 0 13 0;

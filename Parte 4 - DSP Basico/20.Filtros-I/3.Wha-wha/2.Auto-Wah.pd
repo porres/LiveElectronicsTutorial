@@ -1,0 +1,61 @@
+#N canvas 80 23 611 733 10;
+#X obj 236 337 loadbang;
+#X obj 236 387 readsf~;
+#X obj 236 500 mtof;
+#X obj 305 536 hsl 128 15 1 10 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 301 582 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X floatatom 236 448 0 0 0 0 - - -;
+#X obj 304 499 hsl 128 15 -24 12 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 236 420 env~;
+#X obj 126 502 delay~ 512 512;
+#X obj 236 474 + -10;
+#X obj 236 526 * 3;
+#X text 440 579 Q;
+#X text 441 534 Depth;
+#X msg 149 379 \; pd dsp 1;
+#X text 440 499 Sensitividade;
+#X text 109 157 Usamos o valor de amplitude em dB como nota MIDI \,
+temos ajuste de "Offset" antes de converter pra frequência \, parâmetro
+que acaba sendo a sensitividade do efeito. Depois um multiplicador
+define um parâmetro de "depth" \, que define a amplitude de frequência
+do filtro e \, por fim \, um controle do Q do filtro.;
+#X text 108 245 Um detalhe é que ambas as saídas do filtro são somadas
+\, a direita com metade da amplitude. Não que isso seja relevante para
+o evento \, é mais do tipo de ajuste que vamos testanto até achar algo
+que fica mais interessante.;
+#X obj 217 612 lores~ 200 0.9;
+#X obj 202 645 output~;
+#X text 288 449 dB;
+#X msg 236 362 open ../../../samples/pointy.aif \, start;
+#X obj 236 579 line~;
+#X msg 236 551 \$1 10;
+#X text 108 24 Vimos que o Wah Wha é só um controle de filtro via um
+LFO. Pois o controle de filtro com um envelope (Envelope Filter) é
+semelhante e pode ser encarado como um tipo de wha wha \, também chamado
+de "Auto Wah" \, porque o controle dele é automatizado a cada execução
+de nota pelo envelope.;
+#X text 109 104 Já vimos um exemplo de Envelope Filter em Síntese Subtrativa.
+Agora fazemos uma análise de amplitude com o [env~] e usamos o dado
+de amplitude para controlar o filtro.;
+#X connect 0 0 20 0;
+#X connect 0 0 13 0;
+#X connect 1 0 7 0;
+#X connect 1 0 8 0;
+#X connect 1 1 20 0;
+#X connect 2 0 10 0;
+#X connect 3 0 10 1;
+#X connect 4 0 17 2;
+#X connect 5 0 9 0;
+#X connect 6 0 9 1;
+#X connect 7 0 5 0;
+#X connect 8 0 17 0;
+#X connect 9 0 2 0;
+#X connect 10 0 22 0;
+#X connect 17 0 18 0;
+#X connect 17 0 18 1;
+#X connect 20 0 1 0;
+#X connect 21 0 17 1;
+#X connect 22 0 21 0;

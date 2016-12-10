@@ -1,0 +1,8 @@
+#N canvas 522 79 545 316 10;
+#X obj 223 148 pink~;
+#X obj 223 188 output~;
+#X text 107 47 Diferente do ruído branco \, o ruído rosa possui um
+decaimento na distribuição de energia do espectro de 3 dB por oitava.
+O objeto [pink~] é um gerador de ruído rosa.;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;

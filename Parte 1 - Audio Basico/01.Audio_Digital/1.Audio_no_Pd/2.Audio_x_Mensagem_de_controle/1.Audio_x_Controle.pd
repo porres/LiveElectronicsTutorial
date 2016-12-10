@@ -1,0 +1,65 @@
+#N canvas 126 286 1278 493 10;
+#X obj 582 353 loadbang;
+#X msg 582 379 \; pd dsp 1;
+#X obj 1058 192 print;
+#X floatatom 1058 158 5 0 0 0 - - -;
+#X obj 1133 275 print~;
+#X obj 1051 237 osc~ 440;
+#X obj 1133 240 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 1051 285 output~;
+#X text 983 236 oscilador:;
+#X text 438 85 Uma grande diferença entre sinal de áudio e dados de
+controle no Pd é que \, enquanto um dado de controle será apenas processado
+quando requisitado \, objetos de áudio são processados o tempo todo
+quando o DSP está ligado \, mesmo que não estejamos escutando nada!
+;
+#X text 440 186 Por padrão \, o DSP (de "digital signal processing")
+está desligado quando abrimos o PD. Já as outras operações \, chamadas
+de "controle" \, funcionam sempre. O processamento de áudio no Pd pode
+ser ligado ou desligado na janela do terminal ou no próprio patch \,
+ou por meio de uma mensagem como abaixo \, onde o loadbang envia uma
+mensagem bang logo que o Pd é inicializado \, ativando a mensagem "dsp
+1" enviada para o "pd" e fazenco com que o áudio seja ligado automaticamente
+ao abrirmos esse patch.;
+#X text 961 297 saída de som:;
+#X text 873 260 Conexão de Sinal de áudio =>;
+#X text 1157 236 <= clique;
+#X text 871 174 Conexão de dado de controle =>;
+#X obj 1098 406 capture~;
+#X text 863 357 Confira também o [capture~] \, um objeto similar o
+print \, clonado do Max para análise de sinal de áudio:;
+#X text 864 53 Um outro detalhe é que o sinal de áudio é representado
+por uma cordinha de conexão mais grossa \, e também que objetos de
+áudio terminam em "~" (cuja ideia é ser um símbolo que representa uma
+senóide). Veja abaixo os objetos [print] e [print~] que imprimem os
+valores que recebem no terminal (janela principal do Pd).;
+#X text 28 28 No Pd temos dois tipos de objetos:;
+#X text 50 59 - Objetos de áudio;
+#X text 49 86 - Objetos de controle;
+#X obj 156 217 osc~;
+#X obj 208 216 +~;
+#X text 36 132 Objetos de áudio lidam \, de alguma maneira \, com sinal
+de áudio digital \, que é um tipo de sinal distinto no Pd. O nome desses
+objetos terminam com o acento til (~) \, que seria um sinal que remete
+a uma forma de onda senoidal.;
+#X obj 255 380 sin;
+#X floatatom 255 349 5 0 0 0 - - -;
+#X floatatom 255 410 5 0 0 0 - - -;
+#X obj 119 381 + 5;
+#X floatatom 119 413 5 0 0 0 - - -;
+#X msg 119 348 12;
+#X text 154 347 <= mensagem =>;
+#X text 35 277 Já objetos de controle não são capazes de lidar com
+sinal de áudio e não terminam com "~". Mensagens de controle são geradas
+por interfaces gráficas e caixas de mensagem.;
+#X connect 0 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 4 0;
+#X connect 5 0 7 1;
+#X connect 5 0 7 0;
+#X connect 6 0 4 0;
+#X connect 24 0 26 0;
+#X connect 25 0 24 0;
+#X connect 27 0 28 0;
+#X connect 29 0 27 0;

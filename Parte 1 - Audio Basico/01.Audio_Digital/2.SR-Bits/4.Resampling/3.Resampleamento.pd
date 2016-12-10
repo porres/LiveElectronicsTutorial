@@ -1,0 +1,138 @@
+#N canvas 141 23 904 600 10;
+#X obj 172 494 samplerate~;
+#X floatatom 172 519 0 0 0 0 - - -;
+#X obj 172 371 loadbang;
+#X obj 572 161 output~;
+#X obj 601 69 nbx 5 14 -1e+37 1e+37 0 0 empty hz empty 0 -8 0 10 -261682
+-1 -1 440 256;
+#X msg 188 417 \; pd dsp 1 \; hz 440;
+#N canvas 71 32 1056 683 Resampling 0;
+#X obj 290 364 samplerate~;
+#X obj 290 399 nbx 6 20 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-241261 -1 -1 0 256;
+#X obj 290 279 trigger bang float;
+#X msg 300 129 0.5;
+#X msg 285 102 0.25;
+#X msg 321 153 1;
+#X msg 334 185 2;
+#X msg 342 209 4;
+#X msg 260 79 0.125;
+#X msg 346 239 8;
+#X obj 395 369 block~;
+#X obj 121 312 osc~ 440;
+#X text 353 152 Sem resampleamento;
+#X text 332 126 Downsamping pela metade;
+#X text 327 101 Downsamping por um quarto;
+#X text 364 184 Upsamping pelo dobro;
+#X text 376 238 Upsamping por oito vezes;
+#X text 370 208 Upsamping por quatro vezes;
+#X msg 395 333 set 64 1 \$1;
+#X obj 567 69 cnv 15 400 220 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 479 325 O resampleamento é o terceiro argumento que o [block~]
+recebe. O primeiro é o tamanho do bloco e o segundo é o "overlaping"
+(algo que veremos em análise de FFT).;
+#X text 304 75 Downsamping por um oitavo;
+#X obj 121 24 inlet~ lin;
+#X text 585 155 Clique nas mensagens ao lado e confira como neste subatch
+o [samplerate~] nos dá um valor diferente da Taxa de Amostragem de
+acordo com o resampleamento.;
+#X text 584 78 O resampleamento é feito a partir de um valor de razão.
+Por exemplo \, 2 é o dobro \, 0.5 é a metade. É necessário que esse
+valor seja sempre uma potência de dois \, tanto para upsampling (2
+\, 4 \, 8 \, 16 \, 32 \, etc...) quanto para downsampling (1/2 \, 1/4
+\, 1/8 \, 1/16 \, 1/32 \, etc...).;
+#X text 587 205 Perceba também que um downsampling acaba prejudicando
+a geração sonora do oscilador mesmo para frequências abaixo do Nyquist.
+Isso porque na saída do subpatch precisamos realizar um "upsampling"
+e criar novas amostras a partir de interpolação \, e isso gera artefatos
+na forma de onda.;
+#X text 242 450 Sempre que se aumenta a taxa de amostragem \, ou seja
+\, quando ocorre um "upsamplig" \, novas amostras são criadas e precisam
+ser preenchidas. Isso acontece por meio dos objetos [inlet~] e [outlet~].
+;
+#X text 242 513 Neste exemplo \, quando temos um "downsampling" neste
+subpatch \, é necessário um "upsampling" na saída pelo [outlet~] \,
+sendo ele então o encarregado por criar e preencher novas amostras.
+Já no caso de haver um "upsampling" neste subpatch \, o objeto [inlet~]
+é quem se encarrega disso.;
+#X text 640 564 No caso do [outlet~] ou [inlet~] operar um downsampling
+\, as amostras extras são simplesmente ignoradas/descartadas.;
+#X text 638 447 Podemos escolher o tipo de upsampling que o [outlet~]
+ou [inlet~] fazem. Neste exemplo temos a opção de interpolação linear
+(argumento "lin") \, outra opção seria a de "sample and hold" (argumento
+"hold"). Ambas as formas foram apresentadas anteriormente \, como no
+exemplo passado \, mas há ainda uma terceira onde as amostras extras
+são preenchidas com zeros e que ocorre quando não há argumentos. Abra
+o help do [outlet~] para mais detalhes.;
+#X obj 121 621 outlet~ lin;
+#X obj 25 621 outlet~ hold;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 2 1 18 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X connect 5 0 2 0;
+#X connect 6 0 2 0;
+#X connect 7 0 2 0;
+#X connect 8 0 2 0;
+#X connect 9 0 2 0;
+#X connect 11 0 30 0;
+#X connect 11 0 31 0;
+#X connect 18 0 10 0;
+#X connect 22 0 11 0;
+#X restore 601 123 pd Resampling;
+#X text 464 31 Abra o subpatch [pd Resampling] abaixo para conferir
+o resampleamento.;
+#X text 65 33 Os objetos [block~] e [switch~] \, além de serem capazes
+de mudar o tamanho do bloco do patch ou subpatch \, também permitem
+um resampleamento - tanto "downsampling" como "upsampling" \, que seria
+\, respectivamente \, abaixar ou aumentar a taxa de amostragem em relação
+a que está rodando no Pd.;
+#X text 65 121 Já foi dito que a taxa de amostragem que o Pd roda costuma
+ser de 44100 Hz \, mas que pode ser mudada nas configurações do programa.
+Todavia \, neste exemplo \, estamos mudando com o [block~].;
+#X text 66 188 É mais pertinente que esse tipo de processamento seja
+feito em um subpatch \, pelo mesmo motivo que mudar o tamanho de bloco
+(conflitos no funcionamento de objetos como [adc~] e [dac~].;
+#X text 68 247 Um detalhe técnico é que os objetos [inlet~] e [outlet~]
+trabalham muito bem e automaticamente na conversão de tamanho de bloco
+e taxa de amostragem.;
+#X text 478 262 Há uma relação com a mudança da taxa de amostragem
+e o tamanho do bloco \, é por isso que um objeto como o [block~] também
+cuida do resampleamento.;
+#X text 69 298 Pois bem \, vejamos aqui no patch qual é a taxa de amostragem
+que o Pd está rodando. Em seguida \, num subpatch acima à direita \,
+teremos o resampleamento com o [blcok~] em relação a esse valor.;
+#X text 222 520 <= taxa de amostragem do Pd;
+#X obj 601 94 sig~;
+#X text 480 378 Portanto \, por mais que o bloco esteja definido por
+64 \, temos \, na prática \, um bloco de 128 amostras. Porém \, a leitura
+dessas amostras é feita mais rapidamente \, em uma taxa de amostragem
+maior. Logo \, mudar a taxa de amostragem \, além de definir uma frequência
+diferente de leitura das amostras \, também implica em mudar o tamanho
+do bloco.;
+#X text 480 472 É importante perceber que \, por exemplo no caso de
+um oscilador \, mudar a velocidade de leitura implica em mudar a frequência.
+Isso porque \, em um upsampling de 2x \, estamos lendo as amostras
+duas vezes mais rápido. Porém \, podemos perceber que a frequência
+do oscilador neste exemplo não muda. Isso significa que o objeto [osc~]
+recebe informação sobre o resampleamento realizado pelo [block~] para
+um ajuste de frequência de oscilação.;
+#X text 478 236 Mais detalhes técnicos:;
+#X obj 676 162 output~;
+#X text 750 174 linear;
+#X text 535 172 hold;
+#X text 479 315 Por exemplo \, um oscilador com frequência de 689.062
+Hz tem um período que dura 64 amostras numa taxa de 44.1Khz. Em um
+upsampling de 2x \, a taxa é de 88.2kHz e o período tem 128 amostras
+\, o dobro de número de amostras.;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 2 0 5 0;
+#X connect 4 0 15 0;
+#X connect 6 0 3 0;
+#X connect 6 0 3 1;
+#X connect 6 1 19 0;
+#X connect 6 1 19 1;
+#X connect 15 0 6 0;

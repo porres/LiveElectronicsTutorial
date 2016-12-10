@@ -1,0 +1,145 @@
+#N canvas 69 23 1254 705 10;
+#X obj 440 388 cnv 15 350 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X obj 445 551 cnv 15 330 30 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 456 510 Vamos passar agora para a notação da função de transferência:
+;
+#X obj 889 52 cnv 15 294 50 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X text 896 67 H(z) =;
+#X text 945 56 Y(z);
+#X text 946 79 X(z);
+#X text 937 64 _______;
+#X text 982 67 =;
+#X obj 921 166 cnv 15 180 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X obj 934 318 cnv 15 180 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X obj 1088 249 v a;
+#X obj 904 399 cnv 15 230 50 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 914 413 H(z) =;
+#X text 438 423 Ele possui um mesmo coeficiente para todos os elementos
+do filtro (que é 0.25 ou uma divisão por 4). A implementação no [fexpr~]
+fica assim.;
+#X obj 459 482 fexpr~ ($x[0] + $x[-1] + $x[-2] + $x[-3]) * 0.25;
+#X obj 486 645 cnv 15 280 30 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 836 286 Passamos agora para a notação da função de transferência:
+;
+#X obj 946 358 cnv 15 180 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 841 25 Agora jogamos o X(z) para o outro lado da equação e
+temos H(z).;
+#X text 1045 402 Y(z);
+#X text 1012 409 _________________;
+#X text 857 470 Cancelando Y(z) \, temos finalmente a equação de transferência
+final:;
+#X obj 900 512 cnv 15 250 50 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X text 917 525 H(z) =;
+#X text 966 514 Y(z);
+#X text 967 537 X(z);
+#X text 958 522 _______;
+#X text 1021 522 _________________;
+#X text 1006 525 =;
+#X text 1064 515 1;
+#X text 1033 539 1 - a * z^-1;
+#X text 479 391 y[n] = (x[n] + x[n-1] + x[n-2] + x[n-3]) / 4;
+#X text 448 558 Y(z) = (X(z) + X(z)z^-1 + X(z)z^-2 + X(z)z^-3) * 0.25
+;
+#X text 494 652 Y(z) = 0.25 X(z) * (1 + z^-1 + z^-2 + z^-3);
+#X text 994 68 0.25 (1 + z^-1 + z^-2 + z^-3);
+#X text 833 136 Vejamos agora o filtro IIR já apresentado. Eis sua
+equação:;
+#X text 837 215 Onde "a" é o coeficiente de feedback \, no [fexpr~]
+fica assim:;
+#X text 927 169 y[n] = x[n] + a * y[n-1];
+#X obj 927 249 fexpr~ $x[0] + a * $y[-1];
+#X text 942 322 Y(z) = X(z) + a * Y(z)z^-1;
+#X text 954 362 X(z) = Y(z) - a * Y(z)z^-1;
+#X text 1016 426 Y(z) - a * z^-1;
+#X text 36 15 Uma forma de descrever a ação de um filtro é por meio
+de sua Função de Transferência - definida como: H(z).;
+#X text 36 47 A notação é em função de "z" em vez de "n" (número de
+amostra). Na prática \, se trata da mesma coisa \, onde z^-1 (z elevado
+a -1) significa atrasar uma amostra \, z^-2 é atrasar duas amostras
+e assim por diante.;
+#X text 35 172 Pois bem \, se esses novos conceitos podem parecer confusos
+em um primeiro momento \, a matemática de filtros é bem trivial! Não
+requer nada além do que já vimos de números complexos e um pouco de
+álgebra elementar.;
+#X obj 34 136 cnv 15 353 25 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X obj 271 123 cnv 15 116 25 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X text 34 107 Porém \, na realidade \, o "z" diz respeito a uma frequência
+complexa \, porque vem da Transformada Z \, que pode ser definida como
+uma generalização da transformada de Fourier (onde a DFT ou FFT é um
+caso específico da Transformada Z).;
+#X text 36 234 Então \, temos definido filtros por uma equação de diferença
+\, que é o tipo de equação do [fexpr~]. O filtro também pode ser definido
+por uma Resposta Impulsiva (IR) \, definida como h(n). Já falamos um
+pouco de IR quando apresentamos a convolução e retornaremos a isso
+mais adiante. Vejamos a descrição matemática.;
+#X obj 94 327 cnv 15 200 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 119 330 x(n) => [ h(n) ] => y(n);
+#X obj 92 537 cnv 15 200 25 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X text 118 541 X(z) => [ H(z) ] => Y(z);
+#X obj 209 641 cnv 15 144 40 empty empty empty 5 12 0 14 -261234 -66577
+0;
+#X text 38 577 Temos então o sinal de entrada definido por X(z) \,
+o sinal de saída definido por Y(z) e a função de Transferência definida
+como H(z). A ideia é que \, ao multiplicarmos X(z) por H(z) \, temos
+Y(z). Por conseguinte \, H(z) é igual a Y(z) divido por X(z). Em suma:
+;
+#X text 435 270 Nós ainda utilizaremos equações de diferença para implementação
+de filtros. Mas a função de transferência é útil para análise de filtros
+e cálculo de resposta de frequência.;
+#X text 447 595 Pois bem \, para chegarmos na função de transferência
+H(z) \, precisamos ter Y(z) / X(z). Vamos então isolar X(z).;
+#X text 36 361 Onde "n" é o número da amostra \, x(n) o sinal de entrada
+\, y(n) o sinal de saída e h(n) a ação do filtro \, ou "IR". Lembrando
+que a saída do filtro [y(n)] é igual à convolução da entrada do filtro
+[x(n)] com o IR [h(n)].;
+#X text 33 429 Agora vejamos a notação da Função de Transferência.
+É a mesma coisa \, mas temos letras maiúsculas e "z" no lugar de "n".
+Ou seja \, em vez de trabalharmos no domínio do tempo \, com o número
+de amostra "n" \, estamos trabalhando no domínio da frequência \, em
+função da frequência complexa "z"! Portanto é a mesma ideia de uma
+FFT \, que define o sinal no domínio da frequência ao invés do tempo!
+;
+#X text 219 646 X(z) x H(z) = Y(z) \; H(z) = Y(z) / X(z);
+#X text 423 251 ============================================================
+;
+#X text 830 110 ============================================================
+;
+#X text 437 92 Isso remete ao que já foi dito quando tratamos de convolução
+\, que uma convolução no domínio do tempo é igual a uma multiplicação
+no domínio da frequência.;
+#X text 438 137 Enfatizando que a Transformada Z está no domínio da
+frequência \, a implicação é que a multiplicação da Transformada Z
+da entrada - X(z) - com a do IR - H(z) - nos dá a Transformada Z da
+saída - Y(z). Pois bem \, foi justamente o que vimos em convolução
+\, porém com FFT. Mas lembrando que a transformada Z é só uma forma
+mais generalizada da FFT \, vemos que é a mesma coisa de fato!;
+#X text 437 26 A função de Transferência indica então que a Transformada
+Z do IR - H(z) - é igual à Transformada Z da saída do filtro - Y(z)
+- dividida pela Transformada Z da entrada do filtro - X(z).;
+#X text 437 330 Vejamos então a Função de Transferência de um tipo
+de filtro FIR já apresentado \, um de média \, mas agora com apenas
+4 amostras. Eis sua equação:;
+#X text 861 613 Note que filtros IIR (recursivos \, com feedback ou
+um polo) possuem uma função de transferência com um denominador (parte
+de baixo da equação) em função de z. Já filtros não recursivos (FIR)
+não possuem denominador em função de z!;
+#X text 843 358 Isolamos o X[z]:;
+#X text 963 401 Y(z);
+#X text 964 424 X(z);
+#X text 955 409 _______;
+#X text 1003 412 =;
+#X text 849 588 ============================================================
+;

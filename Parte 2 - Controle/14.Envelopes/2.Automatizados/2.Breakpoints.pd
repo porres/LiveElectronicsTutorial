@@ -1,0 +1,99 @@
+#N canvas 132 35 1000 694 10;
+#X obj 217 363 bng 15 250 50 0 empty empty empty 8 -8 0 10 -228856
+-1 -1;
+#X obj 141 301 bng 30 250 50 0 empty empty empty 8 -8 0 10 -261234
+-1 -1;
+#X obj 319 466 vsl 15 127 0 1 0 0 empty empty empty 8 -8 0 10 -261234
+-1 -1 0 1;
+#X msg 207 329 stop;
+#X obj 199 415 pack;
+#X floatatom 182 392 5 0 0 0 - - -;
+#X floatatom 220 392 5 0 0 0 - - -;
+#X obj 182 358 bpe;
+#X obj 319 433 line 0 1;
+#X obj 199 512 vline~;
+#X obj 170 545 *~;
+#X obj 127 510 osc~ 440;
+#X obj 167 577 dac~;
+#X text 234 362 bang quando acaba;
+#X obj 182 285 loadbang;
+#X text 238 329 interrompe o agendamento;
+#X text 63 32 Envelopes podem ainda tomar qualquer forma fora dos padrões
+clássicos apresentados. Isso pode ser feito tanto com o [vline~] ou
+o objeto gráfico [envgen]. O Pd extended traz ainda outras opções de
+geradores de linhas \, chamados "breakpoints". O [bpe] \, de "breakpoint
+envelope" funciona de modo parecido com o [envgen] \, pois agenda e
+envia mensagens para serem usadas em objetos como [line] \, [line~]
+ou [vline~]. Sendo uma grande diferença a falta de uma interface gráfica.
+;
+#X msg 182 307 0 0 1 1000 0.5 500 0.5 1000 1 500 0 1000;
+#X text 67 247 Um bang dispara o envelope.;
+#X obj 532 295 loadbang;
+#X text 507 104 A sintaxe é diferente do [bpe] e igual a do [envgen]
+\, já apresentada enteriormente. Abaixo \, temos a mensagem que equivale
+ao envelope gerado pelo [bpe] à esquerda.;
+#X msg 551 367 dump;
+#X msg 631 584 0 1000 1 500 0.5 1000 0.5 500 1 1000 0;
+#X obj 790 330 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X text 509 152 Como é uma interface gráfica que gera funções de envelope
+\, um recurso presente em ambos [breakpoints] e [envgen] é a possibilidade
+do objeto cuspir \, ao receber a mensagem "dump" \, a lista de valores
+que você criou brincando com o mouse.;
+#X text 510 224 Aqui \, entretanto \, usamos o recurso do outlet extra
+\, que envia um bang sempre que mexemos no gráfico \, para sempre força-lo
+a cuspir os valores enquanto estamos mexendo nele.;
+#X obj 631 555 prepend set;
+#X obj 534 402 tof/breakpoints;
+#X text 506 30 Temos também um objeto gráfico [tof/breakpoints] (da
+biblioteca "tof") que é baseado no [envgen]. É apenas uma variação
+com alguns detalhes diferentes \, como um outlet a mais que envia bangs
+quando o envelope é mudado. Visualmente \, sua cor é um pouco mais
+clara.;
+#X obj 753 532 loadbang;
+#X msg 753 554 set;
+#X text 65 157 Ele recebe uma mensagem com uma sintaxe que define os
+pontos sempre em pares \, onde o primeiro é o ponto de chegada e o
+segundo é o tempo em ms até chegar lá. O primeiro par (0 0) indica
+que começará imediatamente no zero. Se há intenção de permanecer em
+um ponto \, devemos repetir o valor do ponto e dar o tempo de permanência.
+;
+#X obj 532 558 vline~;
+#X obj 503 591 *~;
+#X obj 460 556 osc~ 440;
+#X obj 500 623 dac~;
+#X obj 478 354 bng 30 250 50 0 empty empty empty 8 -8 0 10 -228856
+-1 -1;
+#X msg 532 320 0 1000 1 500 0.5 1000 0.5 500 1 1000 0;
+#X connect 1 0 7 0;
+#X connect 3 0 7 0;
+#X connect 4 0 8 0;
+#X connect 4 0 9 0;
+#X connect 5 0 4 0;
+#X connect 6 0 4 1;
+#X connect 7 0 5 0;
+#X connect 7 1 6 0;
+#X connect 7 2 0 0;
+#X connect 8 0 2 0;
+#X connect 9 0 10 1;
+#X connect 10 0 12 0;
+#X connect 10 0 12 1;
+#X connect 11 0 10 0;
+#X connect 14 0 17 0;
+#X connect 17 0 7 0;
+#X connect 19 0 37 0;
+#X connect 21 0 27 0;
+#X connect 23 0 21 0;
+#X connect 26 0 22 0;
+#X connect 27 0 32 0;
+#X connect 27 0 8 0;
+#X connect 27 1 26 0;
+#X connect 27 2 23 0;
+#X connect 29 0 30 0;
+#X connect 30 0 22 0;
+#X connect 32 0 33 1;
+#X connect 33 0 35 0;
+#X connect 33 0 35 1;
+#X connect 34 0 33 0;
+#X connect 36 0 27 0;
+#X connect 37 0 27 0;

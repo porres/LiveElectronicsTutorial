@@ -1,0 +1,187 @@
+#N canvas 262 23 997 711 10;
+#X obj 60 344 triangle~ 1;
+#X obj 60 380 *~;
+#X obj 60 317 +~;
+#X obj 149 296 line~;
+#X obj 206 345 line~;
+#X msg 206 322 \$1 10;
+#X obj 152 254 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 6300 1;
+#X obj 178 616 /~ 3;
+#X obj 568 280 phasor~;
+#X obj 568 303 expr~ if ($v1 < 0.5 \, -1 \, 1);
+#X obj 750 311 phasor~;
+#X obj 750 336 triangle~ 1;
+#X obj 750 256 *~ 2;
+#X obj 750 366 *~ 0.5;
+#N canvas 227 235 427 341 gain 0;
+#X obj 77 211 *~;
+#X obj 65 274 dac~;
+#X obj 106 181 line~;
+#X msg 106 155 \$1 10;
+#X obj 106 129 pow 4;
+#X obj 77 61 inlet~;
+#X obj 109 105 hsl 100 15 0 1 0 0 empty empty empty -2 -8 0 10 -163060
+-1 -1 0 1;
+#X text 137 104 ganho;
+#X obj 155 201 tgl 15 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X obj 155 222 metro 220;
+#X obj 155 140 loadbang;
+#X obj 249 227 r~ \$0-out;
+#X obj 155 257 tabwrite~ \$0-out;
+#X msg 192 171 \; pd dsp 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 12 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X connect 6 0 4 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 0;
+#X connect 10 0 8 0;
+#X connect 10 0 13 0;
+#X connect 11 0 12 0;
+#X coords 0 -1 1 1 120 25 2 100 100;
+#X restore 178 652 pd gain;
+#X obj 60 290 phasor~ 50;
+#X text 288 252 fase;
+#N canvas 227 235 281 342 gain 0;
+#X obj 77 211 *~;
+#X obj 65 274 dac~;
+#X obj 106 181 line~;
+#X msg 106 155 \$1 10;
+#X obj 106 129 pow 4;
+#X obj 77 61 inlet~;
+#X obj 109 105 hsl 100 15 0 1 0 0 empty empty empty -2 -8 0 10 -163060
+-1 -1 0 1;
+#X text 137 104 ganho;
+#X obj 109 248 s~ \$0-out;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 8 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X connect 6 0 4 0;
+#X coords 0 -1 1 1 120 25 2 100 100;
+#X restore 750 394 pd gain;
+#X obj 691 464 cnv 15 198 128 empty empty empty 20 12 0 14 -261682
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-out 882 float 0;
+#X coords 0 1.02 881 -1.02 200 130 1;
+#X restore 690 463 graph;
+#X text 632 279 Onda Quadrada;
+#X text 834 337 Dente de Serra;
+#X text 61 19 O princípio de síntese aditiva não precisa se restringir
+a osciladores senoidais. Neste exemplo somamos ondas complexas como
+ondas Quadrada e Dente de Serra.;
+#X text 789 256 uma oitava acima;
+#X text 806 282 Detuning;
+#X obj 750 226 mtof~;
+#X text 802 201 G#1;
+#X obj 750 202 sig~ 32;
+#X msg 149 274 \$1 500;
+#X obj 209 281 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 10700 1;
+#X text 345 278 amp;
+#X floatatom 206 301 0 0 0 0 - - -;
+#X obj 178 435 triangle~ 1;
+#X obj 178 471 *~;
+#X obj 178 408 +~;
+#X obj 267 387 line~;
+#X obj 324 436 line~;
+#X msg 324 413 \$1 10;
+#X obj 270 345 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 0 1;
+#X text 406 343 fase;
+#X msg 267 365 \$1 500;
+#X obj 327 372 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 463 369 amp;
+#X floatatom 324 392 0 0 0 0 - - -;
+#X obj 294 535 triangle~ 1;
+#X obj 294 571 *~;
+#X obj 294 508 +~;
+#X obj 383 487 line~;
+#X obj 440 536 line~;
+#X msg 440 513 \$1 10;
+#X obj 386 445 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 10100 1;
+#X text 522 443 fase;
+#X msg 383 465 \$1 500;
+#X obj 443 472 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 579 469 amp;
+#X floatatom 440 492 0 0 0 0 - - -;
+#X obj 178 381 phasor~ 50;
+#X obj 294 481 phasor~ 50;
+#X text 62 71 Abaixo temos 3 osciladores Dente de Serra na mesma frequência
+\, mas temos um controle independente de amplitude e fase para cada
+oscilador. Note como aqui nesse caso apenas o ajuste de amplitude e
+fase de cada um interfere bastante no desenho da forma de onda resultante.
+;
+#X text 64 149 A Fase \, no contexto de uma Dente de Serra \, interfere
+muito mais \, e é bom ressaltar novamente como uma inversão de fase
+não é o mesmo que inverter a polaridade aqui. Para inverter a polaridade
+\, temos a possibilidade de setar amplitudes negativas no sliders de
+amplitudes.;
+#X text 525 33 Abaixo temos a soma de uma onda quadrada e uma dente
+de serra. A onda dente de serra está uma oitava acima (porque multiplicamos
+a frequência por 2). A dente de serra também é desafinada um pouco
+(0.5 Hz a mais) - fazendo que ocorra uma defasagem constante. Esse
+processo costuma ser chamado de "Detuning" e faz com que a forma de
+onda mude constantemente de acordo com a defasagem dos osciladores.
+Por isso o "Detuning" é um recurso muito usado em síntese aditiva.
+;
+#X text 556 638 Atenção: Já sabemos que esses osciladores geram aliasing
+\, portanto seria bem vindo limitar a banda do resultado sonoro.;
+#X obj 750 282 +~ 0.5;
+#X connect 0 0 1 0;
+#X connect 1 0 7 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 1;
+#X connect 4 0 1 1;
+#X connect 5 0 4 0;
+#X connect 6 0 28 0;
+#X connect 7 0 14 0;
+#X connect 8 0 9 0;
+#X connect 9 0 13 0;
+#X connect 10 0 11 0;
+#X connect 11 0 13 0;
+#X connect 12 0 62 0;
+#X connect 13 0 17 0;
+#X connect 15 0 2 0;
+#X connect 25 0 8 0;
+#X connect 25 0 12 0;
+#X connect 27 0 25 0;
+#X connect 28 0 3 0;
+#X connect 29 0 31 0;
+#X connect 31 0 5 0;
+#X connect 32 0 33 0;
+#X connect 33 0 7 0;
+#X connect 34 0 32 0;
+#X connect 35 0 34 1;
+#X connect 36 0 33 1;
+#X connect 37 0 36 0;
+#X connect 38 0 40 0;
+#X connect 40 0 35 0;
+#X connect 41 0 43 0;
+#X connect 43 0 37 0;
+#X connect 44 0 45 0;
+#X connect 45 0 7 0;
+#X connect 46 0 44 0;
+#X connect 47 0 46 1;
+#X connect 48 0 45 1;
+#X connect 49 0 48 0;
+#X connect 50 0 52 0;
+#X connect 52 0 47 0;
+#X connect 53 0 55 0;
+#X connect 55 0 49 0;
+#X connect 56 0 34 0;
+#X connect 57 0 46 0;
+#X connect 62 0 10 0;

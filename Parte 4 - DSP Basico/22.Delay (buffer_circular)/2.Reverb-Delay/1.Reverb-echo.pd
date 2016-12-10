@@ -1,0 +1,133 @@
+#N canvas 354 33 538 446 12;
+#X obj 118 229 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 118 272 pd teste;
+#X obj 118 316 output~;
+#N canvas 186 23 504 697 reverb-echo 0;
+#X obj 109 153 inlet~;
+#X obj 110 652 outlet~;
+#X obj 169 652 outlet~;
+#X obj 109 256 +~;
+#X obj 208 257 -~;
+#X obj 109 334 +~;
+#X obj 190 333 -~;
+#X obj 109 411 +~;
+#X obj 172 411 -~;
+#X obj 110 495 +~;
+#X obj 175 494 -~;
+#X obj 110 575 +~;
+#X obj 169 575 -~;
+#X obj 211 200 delwrite~ \$0-del1 5;
+#X obj 211 224 delread~ \$0-del1 5;
+#X obj 190 357 delwrite~ \$0-del3 13;
+#X obj 190 380 delread~ \$0-del3 13;
+#X obj 208 281 delwrite~ \$0-del2 8;
+#X obj 208 303 delread~ \$0-del2 8;
+#X obj 172 435 delwrite~ \$0-del4 21;
+#X obj 172 460 delread~ \$0-del4 21;
+#X obj 175 518 delwrite~ \$0-del5 34;
+#X obj 175 541 delread~ \$0-del5 34;
+#X obj 169 600 delwrite~ \$0-del6 55;
+#X obj 169 623 delread~ \$0-del6 55;
+#X text 52 93 A saída é em estéreo \, pois no último estágio temos
+ainda uma outra saída de uma cópia atrasada do sinal final.;
+#X text 49 14 São seis estágios de delay \, onde em cada um temos o
+sinal de entrada sendo somado com a saída de um delay. Peceba que no
+lado direito do patch temos o objeto [-~] e isso significa que o sinal
+está sendo somado com a polaridade invertida.;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 0 0 13 0;
+#X connect 3 0 5 0;
+#X connect 3 0 6 0;
+#X connect 4 0 17 0;
+#X connect 5 0 7 0;
+#X connect 5 0 8 0;
+#X connect 6 0 15 0;
+#X connect 7 0 9 0;
+#X connect 7 0 10 0;
+#X connect 8 0 19 0;
+#X connect 9 0 11 0;
+#X connect 9 0 12 0;
+#X connect 10 0 21 0;
+#X connect 11 0 1 0;
+#X connect 12 0 23 0;
+#X connect 14 0 3 1;
+#X connect 14 0 4 1;
+#X connect 16 0 7 1;
+#X connect 16 0 8 1;
+#X connect 18 0 5 1;
+#X connect 18 0 6 1;
+#X connect 20 0 9 1;
+#X connect 20 0 10 1;
+#X connect 22 0 11 1;
+#X connect 22 0 12 1;
+#X connect 24 0 2 0;
+#X restore 296 297 pd reverb-echo;
+#X obj 296 217 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 296 260 pd teste;
+#X obj 296 334 output~;
+#X text 69 43 Este é um exemplo simples de reverberador implementado
+a partir de uma cadeia de objetos de delay. Abaixo \, à esquerda \,
+temos o som de teste sem processamento de reverb-echo \, compare com
+o resultado da direita.;
+#X text 69 115 A entrada é mono \, mas a saída é em estéreo. Abra o
+subpacth [reverb-echo] para entender como funciona a implementação.
+O sinal de teste é uma senóide fazendo um breve sweep \, abra também
+e confira.;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X connect 3 0 6 0;
+#X connect 3 1 6 1;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;

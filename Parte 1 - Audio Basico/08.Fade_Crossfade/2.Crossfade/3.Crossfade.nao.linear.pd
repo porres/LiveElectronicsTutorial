@@ -1,0 +1,59 @@
+#N canvas 237 38 707 662 10;
+#X obj 237 334 *~;
+#X obj 111 342 *~;
+#X obj 126 314 expr~ 1 - $v1;
+#X obj 170 371 +~;
+#X obj 224 580 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -179691
+-1 -1 7000 1;
+#N canvas 60 84 350 289 output 0;
+#X obj 116 171 *~;
+#X obj 100 210 dac~;
+#X obj 131 62 inlet;
+#X obj 82 62 inlet~;
+#X obj 131 118 line~;
+#X msg 131 92 \$1 10;
+#X obj 131 146 expr~ pow($v1 \, 4);
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 1;
+#X restore 170 606 pd output;
+#X obj 252 153 tgl 25 0 empty empty empty 17 7 0 10 -199925 -1 -1 0
+1;
+#X obj 111 269 osc~ 200;
+#X obj 186 269 osc~ 300;
+#X text 54 342 fonte 1;
+#X text 263 333 fonte 2;
+#X obj 252 283 curve~;
+#X obj 419 395 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 272 395 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 281 157 Crossfade;
+#X obj 252 248 pack f 1000 0.5;
+#X floatatom 339 223 0 0 0 0 - - -;
+#X text 256 206 tente outros valores;
+#X text 257 221 de curvatura:;
+#X text 120 34 O objeto [curve~] pode gerar crossfades não lineares
+\, além de crossfades lineares (já que também consegue gerar retas
+se o parâmetro de curvatura for igual a 0).;
+#X text 121 86 Experimente abaixo. Os outros exemplos a seguir também
+não são lineares. Porém se tratam de crossfades fixos. Já este depende
+do valor de curvatura dado.;
+#X connect 0 0 3 1;
+#X connect 1 0 3 0;
+#X connect 2 0 1 1;
+#X connect 2 0 13 0;
+#X connect 3 0 5 0;
+#X connect 4 0 5 1;
+#X connect 6 0 15 0;
+#X connect 7 0 1 0;
+#X connect 8 0 0 0;
+#X connect 11 0 2 0;
+#X connect 11 0 0 1;
+#X connect 11 0 12 0;
+#X connect 15 0 11 0;
+#X connect 16 0 15 2;

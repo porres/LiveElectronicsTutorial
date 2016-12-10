@@ -1,0 +1,89 @@
+#N canvas 54 54 900 424 10;
+#X obj 162 307 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 108 330 pd output;
+#X obj 217 277 nbx 5 14 0 1 0 0 \$0-reson \$0-reson-set empty 0 -8
+0 10 -261234 -1 -1 1 256;
+#X obj 148 254 nbx 5 14 20 20000 0 0 \$0-freq \$0-freq-set empty 0
+-8 0 10 -261682 -1 -1 20.7064 256;
+#X obj 151 229 hsl 200 15 20 20000 1 0 empty \$0-freq-slider-set empty
+-2 -8 0 10 -261682 -1 -1 100 1;
+#X obj 220 255 hsl 150 15 0 1 0 0 empty \$0-reson-slider-set empty
+-2 -8 0 10 -261234 -1 -1 14900 1;
+#X obj 108 277 lores~ 500 0.5;
+#X obj 72 238 blosc~;
+#X obj 72 209 sig~ 200;
+#X text 52 37 A Síntese Subtrativa pode ser resumida simplesmente ao
+ato de aplicar um filtro na forma de onda para esculpir um pouco o
+som. Claramente partimos de uma fonte sonora rica e cheia de componentes
+espectrais \, como uma onda dente de serra.;
+#X text 54 123 O filtro mais comum utilizado em síntese é o Passa Baixa
+Ressonante \, como o [lores~] abaixo \, mas nada impede de usarmos
+outros filtros \, obviamente.;
+#X obj 565 276 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 12700 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 511 299 pd output;
+#X obj 511 200 noise~;
+#X obj 638 221 nbx 5 14 10 1000 0 0 \$0-reson \$0-reson-set empty 0
+-8 0 10 -261234 -1 -1 1000 256;
+#X obj 569 198 nbx 5 14 20 20000 0 0 \$0-freq \$0-freq-set empty 0
+-8 0 10 -261682 -1 -1 1321.54 256;
+#X obj 572 173 hsl 200 15 500 5000 1 0 empty \$0-freq-slider-set empty
+-2 -8 0 10 -261682 -1 -1 8400 1;
+#X obj 641 199 hsl 150 15 10 1000 1 0 empty \$0-reson-slider-set empty
+-2 -8 0 10 -261234 -1 -1 14900 1;
+#X text 672 198 Q/Ressonânica;
+#X text 596 172 Frequência Ressonante;
+#X text 175 228 Frequência Ressonante;
+#X text 248 254 Q/Ressonânica;
+#X obj 511 246 reson~ 1 500 50;
+#X text 470 55 Até mesmo um ruído branco pode entrar na brincadeira
+de ser filtrado na síntese subtrativsa. Aqui temos o objeto [noise~]
+passando por um filtro passa banda [reson~]. Com um parâmetro de Q
+bem alto \, perceba que o resultado perceptivo é de uma altura/frequência
+bem definida.;
+#X connect 0 0 1 1;
+#X connect 2 0 6 2;
+#X connect 3 0 6 1;
+#X connect 4 0 3 0;
+#X connect 5 0 2 0;
+#X connect 6 0 1 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 11 0 12 1;
+#X connect 13 0 22 0;
+#X connect 14 0 22 3;
+#X connect 15 0 22 2;
+#X connect 16 0 15 0;
+#X connect 17 0 14 0;
+#X connect 22 0 12 0;

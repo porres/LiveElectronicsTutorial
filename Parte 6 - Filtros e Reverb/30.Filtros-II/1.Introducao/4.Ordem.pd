@@ -1,0 +1,118 @@
+#N canvas 57 57 1315 689 10;
+#X obj 50 328 cnv 15 300 40 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 59 337 y(n) = a0 * x(n) + a1 * x(n-1) + b1 * y(n-1);
+#X text 1 296 A equação de diferença correspondente é:;
+#X obj 173 490 v a0;
+#X obj 233 490 v a1;
+#X obj 288 490 v b1;
+#X floatatom 288 464 0 0 0.99 0 - - -;
+#X floatatom 233 464 0 0 0.99 0 - - -;
+#X floatatom 173 464 0 0 0.99 0 - - -;
+#X text 84 488 coeficientes:;
+#X obj 652 461 v a0;
+#X obj 705 461 v a1;
+#X obj 546 461 v b1;
+#X floatatom 546 435 7 0 0.99 0 - - -;
+#X floatatom 705 435 7 0 0.99 0 - - -;
+#X floatatom 652 435 7 0 0.99 0 - - -;
+#X text 453 431 coeficientes:;
+#X floatatom 599 435 7 0 0.99 0 - - -;
+#X obj 599 461 v b2;
+#X floatatom 759 435 7 0 0.99 0 - - -;
+#X obj 759 461 v a2;
+#X text 879 14 O sistema de segunda ordem é nada mais nada menos que
+um [biquad~] \, filtro que já foi apresentado anteriormente!;
+#X text 881 60 Vimos que o [biquad~] pode se configurar como diversos
+filtros \, dependendo apenas dos valores dos coeficientes.;
+#X obj 546 411 unpack float float float float float;
+#X obj 475 500 noise~;
+#X obj 966 183 loadbang;
+#X obj 476 590 output~;
+#X obj 966 233 s \$0-coeficientes;
+#X obj 1071 318 r \$0-coeficientes;
+#X obj 1017 346 biquad~;
+#X obj 1017 309 noise~;
+#X obj 1017 376 output~;
+#X obj 546 389 r \$0-coeficientes;
+#X obj 496 285 cnv 15 290 32 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 507 285 y(n) = a0 * x(n) + a1 * x(n-1) + a2 * x(n-2) \; + b1
+* y(n-1) + b2 * y(n-2);
+#X text 489 28 Um sistema de segunda ordem possui mais um estágio de
+primeira ordem \, e atraso de até duas amostras. Vejamos o diagrama
+e a equação de diferença:;
+#X text 484 344 Abaixo temos a implementação em um [fexpr~]:;
+#X text 899 283 Compare o resultado sonoro abaixo do pfexpr~] com o
+[biquad~].;
+#X text 650 480 ganho;
+#X text 168 509 ganho;
+#X obj 70 544 fexpr~ a0 * $x[0] + a1 * $x[-1] + b1 * $y[-1];
+#X obj 475 533 fexpr~ a0 * $x[0] + a1 * $x[-1] + a2 * $x[-2] + b1 *
+$y[-1] + b2 * $y[-2];
+#X text 30 31 O atraso máximo \, em número de amostras \, define a
+ordem de um filtro. Um filtro de primeira ordem apenas contém atrasos
+de até uma amostra. Já um "Sistema de Primeira Ordem" contém atraso
+em feedforward e feedback em até uma amostra \, e possui o seguinte
+diagrama:;
+#X text 236 512 ff;
+#X text 291 511 fb;
+#X text 36 388 Temos então o coeficiente "a1" para o atraso em "ff"
+(feedforward) e "b1" para o atraso em "fb" (feedback). Temos também
+o coeficiente de ganho "a0" \, que atenua ou amplifica o sinal de entrada.
+Abaixo temos a implementação em [fexpr~].;
+#X text 42 580 Perceba que estamos usando outra abreviação no [fexpr~]
+\, em que ele interpreta $x[0] como sendo $x1[0]. Logo \, se o número
+da variável é suprimida \, ele entende que se trata do primeiro inlet!
+;
+#X text 547 483 fb1;
+#X text 605 483 fb2;
+#X text 710 481 ff1;
+#X text 764 481 ff2;
+#X text 880 100 O [biquad~] recebe uma lista de 5 coeficientes \, que
+correspondem justamente aos coeficientes b1 \, b2 \, a0 \, a1 \, a2
+do sistema de segunda ordem ao lado.;
+#X text 1056 178 ou: b1 \, b2 \, a0 \, a1 \, a2;
+#X text 883 435 ============================================================
+;
+#X text 887 463 Por fim \, é importante informar que a ordem do filtro
+interfere na resposta de frequência. Por exemplo \, um filtro de primeira
+ordem tem um decaimento de 6dB por oitava (como o [lop~] \, aliás).
+Já um filtro de segunda ordem terá um decaimento de 12 dB por oitava.
+Já um de quarta ordem \, 24 dB por oitava. Ligar filtros em cascata
+aumentam a ordem. Por exemplo \, dois [lop~] em cascata cria um filtro
+de segunda ordem \, já dois [biquad~] geram um de quarta ordem.;
+#X obj 919 590 lop~ 300;
+#X obj 919 613 lop~ 300;
+#X obj 995 590 biquad~ 1.99 -0.995 0.00246 0 -0.00246;
+#X msg 966 208 1.99 -0.995 0.00246 0 -0.00246;
+#X obj 995 612 biquad~ 1.99 -0.995 0.00246 0 -0.00246;
+#X text 879 157 Sintaxe da ordem dos coeficientes: fb1 \, fb2 \, ganho
+\, ff1 \, ff2;
+#X obj 209 193 image ../files/FOS.gif;
+#X obj 642 171 image ../files/SOS.gif;
+#X connect 6 0 5 0;
+#X connect 7 0 4 0;
+#X connect 8 0 3 0;
+#X connect 13 0 12 0;
+#X connect 14 0 11 0;
+#X connect 15 0 10 0;
+#X connect 17 0 18 0;
+#X connect 19 0 20 0;
+#X connect 23 0 13 0;
+#X connect 23 1 17 0;
+#X connect 23 2 15 0;
+#X connect 23 3 14 0;
+#X connect 23 4 19 0;
+#X connect 24 0 41 0;
+#X connect 25 0 58 0;
+#X connect 28 0 29 0;
+#X connect 29 0 31 0;
+#X connect 29 0 31 1;
+#X connect 30 0 29 0;
+#X connect 32 0 23 0;
+#X connect 41 0 26 0;
+#X connect 41 0 26 1;
+#X connect 55 0 56 0;
+#X connect 57 0 59 0;
+#X connect 58 0 27 0;

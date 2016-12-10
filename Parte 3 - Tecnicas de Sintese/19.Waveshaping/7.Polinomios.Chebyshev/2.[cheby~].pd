@@ -1,0 +1,147 @@
+#N canvas 134 47 821 657 10;
+#X obj 131 416 dbtorms;
+#X obj 131 439 pack;
+#X floatatom 183 416 5 1 5 0 - - -;
+#X obj 183 365 hradio 15 1 0 6 empty empty empty 0 -8 0 10 -228856
+-1 -1 0;
+#X obj 183 389 + 1;
+#X obj 116 387 nbx 5 14 0 100 0 0 empty empty empty 0 -8 0 10 -228856
+-1 -1 0 256;
+#X text 222 414 <= harmônico;
+#X text 39 138 O argumento do [cheby~] é o número máximo de coeficientes.
+A sintaxe da mensagem "coef" é o número do coeficiente (harmônico)
+seguido do valor de amplitude. Clique na mensagem abaixo ou no horizontal
+radio e caixa de número para exeprimentar com o objeto. Tente também
+uma entrada de áudio.;
+#X obj 570 482 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array cheby 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 569 481 graph;
+#X text 555 476 1;
+#X text 549 608 -1;
+#X text 555 543 0;
+#X obj 131 532 hip~ 5;
+#X msg 131 463 coef \$2 \$1;
+#X obj 131 494 cheby~ 6;
+#X text 115 363 Amp (dB);
+#X floatatom 463 357 5 0 0 0 - - -;
+#X obj 463 411 *~;
+#X obj 545 347 bng 30 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 545 418 curve~;
+#X obj 215 540 hsl 128 15 0 1 0 0 empty empty empty -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 255 22 516 318 ganho/graph 0;
+#X obj 149 188 *~;
+#X obj 178 158 line~;
+#X msg 178 132 \$1 10;
+#X obj 178 106 pow 4;
+#X obj 178 79 inlet;
+#X obj 79 36 inlet~;
+#X obj 325 102 loadbang;
+#X msg 325 127 1 \; pd dsp 1;
+#X obj 325 165 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 325 186 metro 100;
+#X obj 184 249 tabwrite~ cheby;
+#X obj 107 251 dac~;
+#X obj 194 191 r~ \$0-cheby;
+#X connect 0 0 11 0;
+#X connect 0 0 11 1;
+#X connect 0 0 10 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 12 0 10 0;
+#X restore 131 565 pd ganho/graph;
+#X obj 48 443 osc~ 200;
+#X obj 434 442 cheby~ 6;
+#X obj 434 484 hip~ 5;
+#N canvas 0 22 450 300 out 0;
+#X obj 145 58 inlet~;
+#X obj 182 235 s~ \$0-cheby;
+#X obj 135 239 dac~;
+#X obj 188 90 loadbang;
+#X obj 187 117 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 183 169 line~;
+#X msg 191 143 \$1 100;
+#X obj 173 200 *~;
+#X connect 0 0 7 0;
+#X connect 3 0 4 0;
+#X connect 4 0 6 0;
+#X connect 5 0 7 1;
+#X connect 6 0 5 0;
+#X connect 7 0 1 0;
+#X connect 7 0 2 0;
+#X connect 7 0 2 1;
+#X restore 434 560 pd out;
+#X obj 434 262 loadbang;
+#X text 431 158 Abaixo temos uma senóide passando pelo objeto [cheby~]
+com um envelope (objeto [curve~]). Clique no bang e note como \, de
+acordo com a amplitude do envelope \, a forma de onda gerada muda.
+;
+#X text 429 45 Como já dito \, uma característica geral de waveshaping
+é que a amplitude do sinal de entrada interfere no resultado sonoro.
+No caso dos polinômios de chebyshev \, a forma de onda gerada com a
+amplitude certa de todos os harmônicos só acontece quando o sinal de
+entrada é uma senóide que varia entre -1 e 1 \, ou seja \, para valores
+de amplitudes menores \, temos outra forma de onda.;
+#X obj 463 382 osc~ 100;
+#X msg 434 298 coef 1 0.2 \, coef 2 0.2 \, coef 3 0.2 \, coef 4 0.1
+\, coef 5 0.1 \, coef 6 0.2;
+#X msg 545 390 1 3000 -0.75 0 3000 0.25;
+#X text 39 43 O objeto [cheby~] é um waveshaper que gera uma função
+de transferência a partir de polinomios de chebyshev e já faz o waveshaping
+internamente. Ele recebe mensagens com o número e valor de cada coeficiente.
+O número do coeficiente diz respeito ao harmônico \, e seu valor é
+tão somente o valor de amplitude do harmônico.;
+#X text 37 244 Só há um porém \, o [cheby~] não gera uma tabela normalizada
+\, então é preciso tomar um certo cuidado com os valores de amplitude
+que enviamos a ele. Caso a função extrapole os limites de -1 e 1 \,
+a saída pode "explodir". Então é bom cuidar que a soma de amplitudes
+não seja maior que 1! É bom ainda pensar em usar um [tanh~] para comprimir
+o sinal.;
+#X connect 0 0 1 0;
+#X connect 1 0 14 0;
+#X connect 2 0 1 1;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 0 0;
+#X connect 13 0 22 0;
+#X connect 14 0 15 0;
+#X connect 15 0 13 0;
+#X connect 17 0 30 0;
+#X connect 18 0 24 0;
+#X connect 19 0 32 0;
+#X connect 20 0 18 1;
+#X connect 21 0 22 1;
+#X connect 23 0 15 0;
+#X connect 24 0 25 0;
+#X connect 25 0 26 0;
+#X connect 27 0 31 0;
+#X connect 30 0 18 0;
+#X connect 31 0 24 0;
+#X connect 32 0 20 0;

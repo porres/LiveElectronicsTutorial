@@ -1,0 +1,87 @@
+#N canvas 184 22 633 604 10;
+#X floatatom 379 455 5 0 0 0 - - -;
+#X obj 205 372 *~ 0.5;
+#X obj 208 288 hsl 128 15 0.1 5 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 0 1;
+#X obj 90 271 readsf~;
+#X obj 205 393 +~ 0.5;
+#X floatatom 205 315 5 0 0 0 - - -;
+#X obj 330 394 hsl 128 15 50 1000 0 0 empty empty empty -2 -8 0 10
+-261234 -1 -1 0 1;
+#X obj 282 361 hsl 128 15 2 2000 1 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 422 358 depth;
+#X text 475 392 Freq. Base;
+#X floatatom 279 385 5 0 0 0 - - -;
+#X floatatom 327 420 5 0 0 0 - - -;
+#X obj 382 426 hsl 128 15 1 15 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#X obj 205 457 +~ 400;
+#X obj 186 496 vcf~ 10;
+#X obj 205 431 *~ 1700;
+#X obj 205 337 osc~ 1.5;
+#X obj 90 214 loadbang;
+#X obj 244 515 hsl 128 15 0 1.2 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 655 392 output 0;
+#X obj 216 245 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 200 284 dac~;
+#X obj 117 56 inlet~;
+#X obj 192 57 inlet~;
+#X obj 157 165 tanh~;
+#X obj 329 68 inlet;
+#X obj 167 197 tanh~;
+#X obj 168 104 *~ 0.5;
+#X obj 113 105 *~ 0.5;
+#X obj 304 145 loadbang;
+#X msg 304 170 \; pd dsp 1;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 11 0;
+#X connect 6 0 10 0;
+#X connect 7 0 9 0;
+#X connect 8 0 3 0;
+#X connect 9 0 0 0;
+#X connect 10 0 7 0;
+#X connect 11 0 7 0;
+#X connect 12 0 13 0;
+#X restore 190 542 pd output;
+#X text 523 424 Q;
+#X text 172 376 DC;
+#X text 161 395 Offset;
+#X text 346 287 LFO rate;
+#X text 183 313 Hz;
+#X msg 90 239 open ../../../samples/guitar2.wav \, 1;
+#X text 132 45 O Wah-wah \, famoso efeito usado em músicas psicodélicas
+por aí. Na prática ele não difere em nada de um "filter sweep". Temos
+então basicamente um LFO controlando um filter sweep e a única diferença
+desse patch em relação ao que já vimos é que temos o ajuste de DC Offset
+no LFO e controles de todos os parâmetros via sliders.;
+#X text 133 138 Usamos aqui um [vcf~] \, mas há diversar variações
+possíveis com todos os outros filtros já apresentados!;
+#X connect 0 0 14 2;
+#X connect 1 0 4 0;
+#X connect 2 0 5 0;
+#X connect 3 0 14 0;
+#X connect 3 1 25 0;
+#X connect 4 0 15 0;
+#X connect 5 0 16 0;
+#X connect 6 0 11 0;
+#X connect 7 0 10 0;
+#X connect 10 0 15 1;
+#X connect 11 0 13 1;
+#X connect 12 0 0 0;
+#X connect 13 0 14 1;
+#X connect 14 0 19 0;
+#X connect 14 1 19 1;
+#X connect 15 0 13 0;
+#X connect 16 0 1 0;
+#X connect 17 0 25 0;
+#X connect 18 0 19 2;
+#X connect 25 0 3 0;

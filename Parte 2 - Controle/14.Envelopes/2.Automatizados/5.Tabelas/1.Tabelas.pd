@@ -1,0 +1,145 @@
+#N canvas 48 22 1213 708 10;
+#X obj 320 426 bng 30 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 305 615 *~;
+#X obj 242 508 osc~ 440;
+#X obj 295 649 dac~;
+#X obj 735 50 loadbang;
+#X msg 735 131 \; pd dsp 1;
+#X obj 750 80 samplerate~;
+#X obj 750 102 v sr;
+#X text 868 207 0;
+#X text 870 10 1;
+#X obj 884 18 cnv 15 298 198 empty empty empty 20 12 0 14 -195955 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array hann 22050 float 0;
+#X coords 0 1 22049 0 300 200 1;
+#X restore 883 17 graph;
+#X obj 647 192 expr 1 / $f1 \; $f1 * sr;
+#X obj 647 241 trigger f b;
+#X obj 441 160 / 1000;
+#X obj 441 184 expr 1 / $f1 \; $f1 * sr;
+#X text 416 136 ms;
+#X obj 441 284 osc~;
+#X obj 441 233 trigger f b;
+#X obj 441 310 *~ 0.5;
+#X obj 441 333 +~ 0.5;
+#X msg 462 260 0.5;
+#X obj 441 137 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-236980 -1 -1 500 256;
+#X obj 647 169 / 1000;
+#X text 622 145 ms;
+#X msg 642 97 500;
+#X obj 647 146 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-236980 -1 -1 500 256;
+#X text 868 448 0;
+#X text 870 251 1;
+#X obj 884 259 cnv 15 298 198 empty empty empty 20 12 0 14 -195955
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array seno 22050 float 0;
+#X coords 0 1 22049 0 300 200 1;
+#X restore 883 258 graph;
+#X obj 320 583 tabplay~;
+#X obj 344 471 loadbang;
+#X text 32 349 Para tocar a tabela \, temos uma forma bem simples com
+o objeto [tabplay~]. No próximo exemplo veremos outra forma que permite
+outros recursos.;
+#X obj 647 291 phasor~;
+#X obj 647 316 /~ 2;
+#X obj 647 342 sin~;
+#X msg 682 268 0;
+#X msg 344 495 set hann;
+#X msg 351 521 set seno;
+#X obj 710 386 tabwrite~ seno;
+#X obj 504 368 tabwrite~ hann;
+#X obj 609 431 / 1000;
+#X obj 609 455 expr 1 / $f1 \; $f1 * sr;
+#X text 584 403 ms;
+#X obj 609 490 trigger f b;
+#X obj 609 408 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-236980 -1 -1 500 256;
+#X text 868 678 0;
+#X text 870 481 1;
+#X obj 884 489 cnv 15 298 198 empty empty empty 20 12 0 14 -195955
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array trapezoid 22050 float 0;
+#X coords 0 1.01 22049 0 300 200 1;
+#X restore 883 488 graph;
+#X msg 516 226 \; hann resize \$1;
+#X msg 722 234 \; seno resize \$1;
+#X obj 609 541 phasor~;
+#X msg 645 517 0;
+#X text 30 213 A segunda função é a primeira metade de um ciclo de
+um Seno \, também presente no objeto [fade~]. Ambas podem ser pensadas
+como um envelope "AR".;
+#X text 29 60 Neste exemplo usaremos tabelas como envelopes \, uma
+ideia que abre algumas possibilidades \, uma vez que podemos até carregar
+arquivos de som e texto em uma tabela. Aqui \, entretanto \, estamos
+criando tabelas com envelopes no próprio patch. No caso \, vamos jogar
+umas funções nessas tabelas.;
+#X text 30 142 A primeira função é a chamada "hann" \, que não passa
+de uma senóide. Mais esepcificamente \, é uma senóide com fase de cosseno
+invertido e ajuste de ganho e DC offset (para que fique entre 0 e 1).
+Essa é uma das funções que já vimos e se encontra no objeto [fade~].
+;
+#X text 29 296 O tamanho da tabela é dado em ms \, calculamos o tamanho
+da tabela ao multiplicar pela taxa de amostragem \, já a frequência
+é calculada como inverso do período.;
+#X obj 672 605 tabwrite~ trapezoid;
+#X obj 609 567 trapezoid~ 0.2 0.8;
+#X text 30 260 Uma terceira função parte de uma onda trapezoidal \,
+que pode ser interpretada como um envelope "ASR".;
+#X msg 356 544 set trapezoid;
+#X msg 684 493 \; trapezoid resize \$1;
+#X text 359 433 Envelope;
+#X connect 0 0 31 0;
+#X connect 1 0 3 0;
+#X connect 1 0 3 1;
+#X connect 2 0 1 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X connect 4 0 25 0;
+#X connect 6 0 7 0;
+#X connect 12 0 13 0;
+#X connect 12 1 52 0;
+#X connect 13 0 34 0;
+#X connect 13 1 37 0;
+#X connect 13 1 40 0;
+#X connect 14 0 15 0;
+#X connect 15 0 18 0;
+#X connect 15 1 51 0;
+#X connect 17 0 19 0;
+#X connect 18 0 17 0;
+#X connect 18 1 21 0;
+#X connect 18 1 41 0;
+#X connect 19 0 20 0;
+#X connect 20 0 41 0;
+#X connect 21 0 17 1;
+#X connect 22 0 14 0;
+#X connect 23 0 12 0;
+#X connect 25 0 26 0;
+#X connect 25 0 22 0;
+#X connect 25 0 46 0;
+#X connect 26 0 23 0;
+#X connect 31 0 1 1;
+#X connect 32 0 38 0;
+#X connect 34 0 35 0;
+#X connect 35 0 36 0;
+#X connect 36 0 40 0;
+#X connect 37 0 34 1;
+#X connect 38 0 31 0;
+#X connect 39 0 31 0;
+#X connect 42 0 43 0;
+#X connect 43 0 45 0;
+#X connect 43 1 63 0;
+#X connect 45 0 53 0;
+#X connect 45 1 54 0;
+#X connect 45 1 59 0;
+#X connect 46 0 42 0;
+#X connect 53 0 60 0;
+#X connect 54 0 53 1;
+#X connect 60 0 59 0;
+#X connect 62 0 31 0;

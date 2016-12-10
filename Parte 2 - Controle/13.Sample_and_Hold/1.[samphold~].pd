@@ -1,0 +1,80 @@
+#N canvas 318 33 1048 643 12;
+#X obj 213 579 output~;
+#X obj 150 323 triangle~ 0.7;
+#X text 114 324 LFO;
+#X obj 213 543 blosc~ saw;
+#X obj 213 371 samphold~;
+#X obj 62 437 Scope~ 130 130 256 3 50 -1 1 0 0 0 0 102 255 51 135 135
+135 0;
+#X obj 304 450 Scope~ 130 130 256 3 50 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 80 142 Dessa forma é possível gerar gestos bem interessantes
+de controle. Neste exemplo \, temos uma onda triangular passando pelo
+sample and hold. A saída desse sinal passa por um ajuste de amplitude
+e DC Offset e controla a frequência de um oscilador dente de serra
+de banda limitada.;
+#X obj 213 458 *~ 150;
+#X obj 213 486 +~ 250;
+#X obj 658 184 triangle~ 0.7;
+#X text 622 185 LFO;
+#X obj 721 404 blosc~ saw;
+#X obj 721 232 samphold~;
+#X obj 570 298 Scope~ 130 130 256 3 50 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 812 311 Scope~ 130 130 256 3 50 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 807 243 hsl 128 15 1 2000 0 0 empty sl empty -2 -8 0 10 -228856
+-1 -1 6200 1;
+#X text 834 239 portamento;
+#X obj 273 336 phasor~ 9.11;
+#X obj 150 289 phasor~ 14;
+#X obj 781 197 phasor~ 3;
+#X obj 893 505 loadbang;
+#X text 599 42 Após o [samphold~] podemos incluir um [slide~] para
+suavizar a saída do sinal \, gerando assim "portamentos" entre os valores
+coletados peo [samphold~].;
+#X floatatom 781 164 5 0 0 0 - - -;
+#X floatatom 658 123 5 0 0 0 - - -;
+#X floatatom 273 298 5 0 0 0 - - -;
+#X floatatom 150 257 5 0 0 0 - - -;
+#X msg 893 531 \; pd dsp 1 \; sl 1;
+#X obj 658 152 phasor~ 5.3;
+#X obj 721 319 *~ 175;
+#X obj 721 347 +~ 225;
+#X obj 705 465 output~;
+#X obj 721 274 slide~;
+#X text 79 12 O [samphold~] foi pensado para ser trigado ao final do
+ciclo de um [phasor~] com frequência positiva. Ele Já foi usado para
+mudar a taxa de amostragem e gerar aliasing \, mas seu uso mais comum
+é coletar amostras de um sinal de áudio para controle. Já o usamos
+assim para implementar um gerador de números aleatóreos ligando o sample
+and hold em um gerador de ruído \, mas podemos também ligar o sample
+and hold em um LFO \, como demonstrado aqui!;
+#X connect 1 0 4 0;
+#X connect 1 0 5 0;
+#X connect 3 0 0 0;
+#X connect 3 0 0 1;
+#X connect 4 0 8 0;
+#X connect 4 0 6 0;
+#X connect 8 0 9 0;
+#X connect 9 0 3 0;
+#X connect 10 0 13 0;
+#X connect 10 0 14 0;
+#X connect 12 0 31 0;
+#X connect 12 0 31 1;
+#X connect 13 0 32 0;
+#X connect 16 0 32 1;
+#X connect 16 0 32 2;
+#X connect 18 0 4 1;
+#X connect 19 0 1 0;
+#X connect 20 0 13 1;
+#X connect 21 0 27 0;
+#X connect 23 0 20 0;
+#X connect 24 0 28 0;
+#X connect 25 0 18 0;
+#X connect 26 0 19 0;
+#X connect 28 0 10 0;
+#X connect 29 0 30 0;
+#X connect 30 0 12 0;
+#X connect 32 0 15 0;
+#X connect 32 0 29 0;

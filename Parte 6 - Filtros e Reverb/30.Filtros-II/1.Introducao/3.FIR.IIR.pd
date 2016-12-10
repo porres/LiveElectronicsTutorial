@@ -1,0 +1,50 @@
+#N canvas 79 75 926 573 10;
+#X text 62 198 O objeto [z~] não permite feedback \, portanto ele só
+serve para implementar filtros FIR! Já o objeto [fexpr~] permite feedback.
+Logo \, é capaz de implementar filtros FIR ou IIR!;
+#X obj 67 313 fexpr~ ($x1[0] + $x1[-1] + $x1[-2] + $x1[-3] + $x1[-4]
++ $x1[-5] + $x1[-6] + $x1[-7]) * 0.125;
+#X text 62 248 Abaixo temos novamente o filtro de média \, que se caracteriza
+como um filtro FIR.;
+#X obj 661 167 v a;
+#X obj 664 125 hsl 128 15 0 0.999 0 0 empty empty empty -2 -8 0 10
+-228856 -1 -1 0 1;
+#X floatatom 661 146 0 0 0.999 0 - - -;
+#X obj 514 177 output~;
+#X text 461 46 E a seguir outro filtro já apresentado anteriormente
+\, com feedback \, que se configura como um filtro IIR.;
+#X text 485 257 A diferença com a forma anterior é que a expressão
+está abreviada \, como permite a sintaxe do [fexpr~] \, de modo que
+"$x" é compreendido como "$x1[0]" \, ou seja \, como o sinal de entrada
+sem atraso. Já "$y" é compreendido como "$y1[-1]" \, que significa
+a saída do filtro com o atraso de uma amostra.;
+#X text 485 141 IIR:;
+#X text 31 320 FIR:;
+#X text 283 409 ============================================================
+;
+#X text 688 168 coeficiente;
+#X obj 521 113 noise~;
+#X obj 521 142 fexpr~ $x + a * $y;
+#X text 60 49 Um filtro que não possui feedback é chamado de "não recursivo"
+(non recursive) ou de "resposta impulsiva finita" (Finite Impulse Response
+\, ou apenas FIR).;
+#X text 60 103 Já um filtro com feedback é chamado de "recursivo" ou
+de "resposta impulsiva infinita" (recursive \, Ininite Impulse Response
+\, ou apenas IIR).;
+#X text 486 344 Outra diferença é que usamos uma variável "a" \, por
+meio do objeto value ([v]) \, que recebe o valor do coeficiente na
+equação - valor esse que é dado por um slider!;
+#X text 298 442 Perceba que \, se o coeficiente for igual a 1 \, o
+filtro IIR será de fato infinito \, pois qualquer sinal/amostra que
+entrar no filtro será retroalimentado para sempre sem nenhuma atenuação.
+Um coeficiente maior que um será \, além de infinito \, acumulativo
+\, fazendo com que o filtro "exploda" rapidamente (cuidado \, portanto).
+;
+#X text 61 149 Para decorar essa nomenclatura \, você pode pensar que
+um filtro com retroalimentação (feedback) pode soar para sempre \,
+ou seja \, é "infinito".;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
+#X connect 13 0 14 0;
+#X connect 14 0 6 0;
+#X connect 14 0 6 1;

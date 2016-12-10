@@ -1,0 +1,99 @@
+#N canvas 357 46 877 534 10;
+#X obj 519 156 nbx 6 14 64 1e+37 0 0 \$0-w_size \$0-w_size-set empty
+0 -8 0 10 -262130 -1 -1 16384 256;
+#N canvas 636 295 609 422 zeropad 0;
+#X obj 90 247 s \$0-set-block;
+#X obj 90 137 t b f;
+#X obj 90 173 v w_size_\$0;
+#X obj 90 54 inlet;
+#X msg 210 285 const 1;
+#X msg 273 282 resize \$1;
+#X obj 273 249 / 2;
+#X obj 207 214 t f b f;
+#X obj 90 92 * 2;
+#X obj 271 324 s \$0-zeropad;
+#X msg 157 89 resize \$1;
+#X obj 157 120 s \$0-Amplitude;
+#X msg 90 220 set \$1 1;
+#X text 360 280 Gera a tabela de zeropad;
+#X obj 371 91 loadbang;
+#X msg 371 117 \; pd dsp 1;
+#X connect 1 0 2 0;
+#X connect 1 1 2 0;
+#X connect 2 0 12 0;
+#X connect 2 0 7 0;
+#X connect 3 0 8 0;
+#X connect 3 0 10 0;
+#X connect 4 0 9 0;
+#X connect 5 0 9 0;
+#X connect 6 0 5 0;
+#X connect 7 0 5 0;
+#X connect 7 1 4 0;
+#X connect 7 2 6 0;
+#X connect 8 0 1 0;
+#X connect 10 0 11 0;
+#X connect 12 0 0 0;
+#X connect 14 0 15 0;
+#X coords 0 0 1 1 120 60 0;
+#X restore 519 188 pd zeropad;
+#X obj 519 73 symbol \$0-sample;
+#X obj 247 393 table \$0-sample;
+#X obj 519 130 soundfiler;
+#X obj 519 45 loadbang;
+#X obj 146 344 tabplay~ \$0-sample;
+#X obj 146 313 bng 15 250 50 0 \$0-bang empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 246 423 table \$0-zeropad;
+#N canvas 568 184 405 309 FFT 0;
+#X obj 70 109 *~;
+#X obj 70 43 inlet~;
+#X obj 70 148 rfft~;
+#X obj 249 142 r \$0-set-block;
+#X obj 249 165 block~;
+#X obj 85 76 tabreceive~ \$0-zeropad;
+#X obj 70 185 cartopol~;
+#X obj 139 236 tabwrite~ \$0-Amplitude;
+#X obj 139 157 r \$0-bang;
+#X obj 139 185 delay 371;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 4 0;
+#X connect 5 0 0 1;
+#X connect 6 0 7 0;
+#X connect 8 0 9 0;
+#X connect 9 0 7 0;
+#X restore 146 411 pd FFT;
+#X text 585 155 amostras do sample;
+#X text 168 310 tocar/analisar;
+#X obj 166 383 dac~;
+#X text 39 47 Zero Padding é um conceito simples que apenas consiste
+em adicionar zeros ao final de um sinal no domínio do tempo. Isso é
+feito para aumentar o seu tamanho e a utilidade disso em uma análise
+de FFT é que podemos aumentar assim a a resolução de frequência na
+análise \, já que teremos uma janela maior.;
+#X text 42 135 Uma outra forma de trabalhar com o conceito de Zero
+Padding é por meio de uma janela que zera os valores a partir de um
+ponto. Neste exemplo usamos essa forma para demonstrar a implementação
+\, que depois será utilizada em reverb de convolução.;
+#X text 43 208 Temos sinal com 16384 amostras e uma análise de 32768
+pontos (o dobro) \, onde a tabela zeropad zera os valores acima do
+ponto 16384 (abra e os subpatches abaixo e confira). A análise é plotada
+na tabela abaixo à direita.;
+#X obj 435 284 cnv 15 398 198 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Amplitude 16384 float 0;
+#X coords 0 100 16383 -1 400 200 1;
+#X restore 434 283 graph;
+#X msg 519 98 read -resize ../../../samples/IR.wav \$1;
+#X connect 0 0 1 0;
+#X connect 2 0 18 0;
+#X connect 4 0 0 0;
+#X connect 5 0 2 0;
+#X connect 6 0 9 0;
+#X connect 6 0 12 1;
+#X connect 6 0 12 0;
+#X connect 7 0 6 0;
+#X connect 18 0 4 0;

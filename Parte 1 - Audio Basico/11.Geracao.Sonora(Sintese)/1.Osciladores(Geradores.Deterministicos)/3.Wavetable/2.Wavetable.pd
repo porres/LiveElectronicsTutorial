@@ -1,0 +1,90 @@
+#N canvas 597 23 570 702 12;
+#X obj 181 390 soundfiler;
+#X obj 72 550 output~;
+#X obj 73 382 phasor~ 50;
+#X obj 102 510 tabread4~ wave;
+#X floatatom 181 418 5 0 0 0 - - -;
+#X obj 181 445 - 1;
+#X obj 102 454 *~;
+#X obj 286 425 cnv 15 198 138 empty empty empty 20 12 0 14 -240877
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array wave 512 float 0;
+#X coords 0 1 511 -1 200 140 1;
+#X restore 285 424 graph;
+#X obj 181 293 loadbang;
+#X text 64 13 Agora temos um exemplo de oscilador de tabela (wavetable
+oscillator) propriamente dito \, onde \, em vez de gerarmos uma tabela
+\, usamos uma forma de onda previamente gravada. Durante a década de
+80 \, essa técnica foi muito usada em diversos sintetizadores digitais.
+;
+#X text 66 101 É relativamente fácil encontrar por aí tabelas de onda
+em formato .wav ou .aif que podem ser usadas no Pd. Para carregar um
+arquivo wav numa tabela \, usamos o [soundfiler] \, que retorna o tamanho
+da tabela em números de samples (que costuma ser de 512 amostras).
+Pegamos esse valor "n" de amostras e subtraímos 1 para indicar os índices
+da tabela \, que é de 0 a n-1.;
+#X obj 73 351 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-261682 -1 -1 0 256;
+#X text 48 349 Hz;
+#X text 64 220 Agora é só usar um [tabread4~] ligado a um [phasor~]
+e pronto!;
+#N canvas 220 61 381 392 sequencer 0;
+#X obj 170 135 mtof;
+#X obj 184 292 *~;
+#X obj 170 161 t f b;
+#X text 294 256 envelope;
+#X obj 47 69 metro 200;
+#X obj 47 46 loadbang;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array sequencer 16 float 3;
+#A 0 -6 -8 -8 -3 -8 1 4 4 -3 -5 -5 -1 2 6 7 7;
+#X coords 0 12 16 -12 100 70 1;
+#X restore 196 42 graph;
+#X obj 47 136 v i;
+#X obj 184 321 outlet~;
+#X obj 71 248 tabread4~ wave;
+#X obj 117 189 phasor~;
+#X obj 47 92 expr (i + 1) % 16 \; sequencer[i] + 36;
+#X obj 218 220 r \$0-size;
+#X obj 117 219 *~;
+#X obj 202 256 ead~ 50 150;
+#X connect 0 0 2 0;
+#X connect 1 0 8 0;
+#X connect 2 0 10 0;
+#X connect 2 1 14 0;
+#X connect 4 0 11 0;
+#X connect 5 0 4 0;
+#X connect 9 0 1 0;
+#X connect 10 0 13 0;
+#X connect 11 0 7 0;
+#X connect 11 1 0 0;
+#X connect 12 0 13 1;
+#X connect 13 0 9 0;
+#X connect 14 0 1 1;
+#X restore 279 606 pd sequencer;
+#X obj 258 643 output~;
+#X text 343 653 Teste com o sequencer:;
+#X msg 181 358 read -resize \$1 wave;
+#X obj 259 302 openpanel;
+#X obj 259 273 bng 23 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X text 289 273 Abrir outro;
+#X obj 181 472 s \$0-size;
+#X obj 181 331 symbol ../../../../samples/baglama.wav;
+#X connect 0 0 4 0;
+#X connect 2 0 6 0;
+#X connect 3 0 1 0;
+#X connect 3 0 1 1;
+#X connect 4 0 5 0;
+#X connect 5 0 6 1;
+#X connect 5 0 22 0;
+#X connect 6 0 3 0;
+#X connect 9 0 23 0;
+#X connect 12 0 2 0;
+#X connect 15 0 16 0;
+#X connect 15 0 16 1;
+#X connect 18 0 0 0;
+#X connect 19 0 23 0;
+#X connect 20 0 19 0;
+#X connect 23 0 18 0;

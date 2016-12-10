@@ -1,0 +1,105 @@
+#N canvas 78 28 1327 742 10;
+#X obj 170 224 sig~ 100;
+#X msg 219 407 100;
+#X obj 170 288 print~;
+#X obj 192 255 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 219 442 print;
+#X obj 284 233 loadbang;
+#X text 72 148 Veja abaixo o objeto [sig~] gerando um sinal de áudio.
+O valor gerado é de "100" \, que é constantemente gerado na taxa de
+amostragem (44.100 vezes por segundo). Clique no bang para imprimir
+o sinal de áudio e conferir.;
+#X text 72 51 Vamos reforçar certas diferenças entre sinal de áudio
+e mensagem de controle. Objetos de áudio operam em uma taxa fixa \,
+a tal Taxa de Áudio ou Taxa de Amostragem \, onde sempre geram valores
+nesse intervalo de tempo. Essa é uma particularidade do sinal de áudio
+e que difere de uma mensagem de controle no Pd.;
+#X text 79 332 Outro detalhe relevante é que o sinal de áudio é sempre
+processado em "blocos" (padrão de 64) \, enquanto mensagens de dados
+são sempre processadas "de uma só vez" quando requisitadas.;
+#X text 76 487 Em computação musical \, é comum haver uma distinção
+entre a taxa de geração de sinal de áudio e mensagem de "controle"
+\, onde o comum é que a taxa do sinal de áudio seja a máxima resolução
+de tempo para geração de valores (por exemplo \, numa taxa de 44100
+\, a resolução de tempo entre uma amostra e outra é de 0.0226757 ms).
+;
+#X text 508 411 Claramente \, isso depende de cada sistema de Computação
+Musical. No Max/MSP \, por exemplo \, a resolução de tempo das mensagens
+de controle é \, por padrão \, de 2 ms \, podendo ser maior e no mínimo
+de 1 ms.;
+#X text 508 592 Pois bem \, e no Pd? Curiosamente \, não há uma taxa
+fixa e definida. Isso significa que os patches podem gerar dados em
+uma taxa qualquer \, até mesmo excedendo a taxa de áudio! Porém \,
+claro que isso seria bobagem e desnecessário. Primeiro porque o custo
+computacional seria muito grande \, e segundo pelo fato de que se há
+necessidade dessa resolução de tempo \, que se use um objeto de áudio.
+Em termos práticos \, a geração de dados de controle ainda só faz algum
+sentido se for em uma taxa menor que a de áudio.;
+#X obj 1048 295 lop~;
+#X obj 540 206 osc~;
+#X obj 540 156 sig~ 440;
+#X text 556 179 <= sinal de áudio como controle de frequência.;
+#X obj 516 247 output~;
+#X text 498 40 Ou seja \, sinal de áudio também é usado para controlar
+parâmetros \, por isso é comum que muitos objetos no Pd possuam um
+inlet que recebe sinal de áudio para controle.;
+#X text 506 314 Mas enfim \, usamos áudio para controle apenas quando
+necessitamos de uma boa resolução de tempo - caso contrário \, usamos
+mensagens de controle.;
+#X text 507 367 Mas agora \, e qual é a taxa de geração de dados de
+controle? Qual é a resolução máxima?;
+#X text 500 97 Por exemplo \, o oscilador [osc~] pode receber tanto
+dado de controle quanto sinal de áudio para indicar a frequência.;
+#X text 507 471 Já no supercollider temos um outro paradigma. A taxa
+de controle ainda é dada pelo tamano do bloco e a taxa de amostragem
+- por exemplo: numa taxa de amostragem de 44100 e um tamanho de bloco
+de 64 \, a taxa de controle é o intervalo de tempo que corresponde
+a 64 amostras (1.45125 ms). Porém \, os dados de controle ainda geram
+sinais na taxa de áudio \, mas os valores entre um bloco e outro são
+interpolados.;
+#X obj 1006 249 noise~;
+#X obj 1028 347 output~;
+#X obj 1072 237 hsl 128 15 100 1000 1 0 empty cutoff empty -2 -8 0
+10 -228856 -1 -1 0 1;
+#X floatatom 1069 263 5 0 0 0 - - -;
+#X text 76 585 Já o conceito de mensagens de "controle" indica que
+não há necessidade de tamanha resolução de tempo igual à de áudio \,
+pois a ideia é que são usadas para controlar parâmetros esporadicamente
+\, como mudança de frequência de um oscilador. Não obstante \, usamos
+um sinal de áudio para controlar parâmetros se há a necessidade de
+uma resolução maior de tempo desse tipo!;
+#X text 934 58 Agora \, uma outra questão é que nem todos os objetos
+de áudio no Pd recebem sinal de áudio para controle de parâmetros.
+Vejamos \, por exemplo \, o caso do [lop~] \, que é um filtro passa
+baixa (lowpass).;
+#X msg 284 261 \; cutoff 100 \; pd dsp 1;
+#X text 1108 263 hz;
+#X text 935 129 O inlet esquerdo do [lop~] recebe o sinal de áudio
+que será processado e filtrado. Já o inlet direito é um inlet que só
+recebe dados de controle \, e é usado para controlar o parâmetro de
+frequência de corte do filtro em Hz.;
+#X text 938 432 Muito bem \, nesse caso pouco importa se os dados de
+controle podem ser gerados em intervalos de tempo menor que um bloco
+de áudio. Isso porque o objeto só vai considerar um valor de mensagem
+de controle por bloco de áudio!;
+#X text 938 503 Isso significa que \, por mais que o Pd não restrinja
+uma taxa mínima para geração de dados de controle \, objetos que áudio
+com inlets de controle implicam em uma taxa de controle igual ao tamanho
+de um bloco.;
+#X text 938 577 Há ainda mais alguns detalhes a serem tratados que
+dizem respeito a essa questão de Sinal de Áudio versus Dados de controle
+que veremos logo a seguir no tópico sobre conversão entre sinal de
+áudio e dado de controle e vice versa.;
+#X connect 0 0 2 0;
+#X connect 1 0 4 0;
+#X connect 3 0 2 0;
+#X connect 5 0 28 0;
+#X connect 12 0 23 0;
+#X connect 12 0 23 1;
+#X connect 13 0 16 0;
+#X connect 13 0 16 1;
+#X connect 14 0 13 0;
+#X connect 22 0 12 0;
+#X connect 24 0 25 0;
+#X connect 25 0 12 1;

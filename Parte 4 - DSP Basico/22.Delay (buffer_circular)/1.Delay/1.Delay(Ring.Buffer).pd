@@ -1,0 +1,105 @@
+#N canvas 83 200 1296 653 10;
+#X obj 517 162 output~;
+#X obj 539 317 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 528 383 output~;
+#X text 717 119 - nome do buffer \; - tempo máximo em ms *;
+#X obj 517 91 readsf~;
+#X obj 517 41 loadbang;
+#X text 57 238 Digamos que a extensão da fita em loop permita gravar
+5 segundos. Isso significa que a cada instante ela está gravando em
+cima do que foi gravado há 5 segundos atrás.;
+#X text 58 288 Pois bem \, no mundo digital do Pd \, temos um ring
+buffer no [delwrite~] \, cujo primeiro argumento dá o nome à linha
+de delay e o segundo argumento dá o tamanho do buffer em ms. Esse buffer
+pode ser lido com um objeto [delread~] de mesmo nome. Podemos ter mais
+de um [delread~] para ler um mesmo buffer em diferentes pontos.;
+#X obj 700 314 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 689 380 output~;
+#X text 58 382 Confira ao lado.;
+#X text 610 175 não pode ser maior do que o;
+#X text 611 188 especificado no [delwrite~].;
+#X text 593 162 * O tempo de delay no [delread~];
+#X obj 578 127 delwrite~ \$0-del 3000;
+#X obj 539 347 delread~ \$0-del 500;
+#X obj 700 344 delread~ \$0-del 1500;
+#X obj 613 489 delay~ 1024 512;
+#X text 483 449 ============================================================
+;
+#X text 46 412 ============================================================
+;
+#X msg 517 66 open ../../../samples/bubul.wav \, 1;
+#X text 58 38 O [delwrite~] cria um buffer de áudio e grava nele continuamente.
+De modo mais específico \, trata-se de um buffer "circular" \, que
+é nada mais que um buffer em "loop constante" - uma vez que \, ao chegar
+no final do buffer \, ele começa a gravar de volta do começo. Outro
+nome para esse tipo de buffer cíclico é "Ring Buffer" (buffer em anel)
+\, pensando que o buffer forma um loop fechado.;
+#X text 511 243 O [delrad~] recebe dois argumentos \, o nome do buffer
+e o tempo de delay (que também pode ser dado pelo inlet).;
+#X text 58 138 No mundo analógico \, podemos pensar em um rolo de fita
+fazendo uma volta fechada (em loop). E \, de fato \, um dos primeiros
+delays eram de fita e a partir desse simples mecanismo. A fita tinha
+um cabeçote para gravação contínua e outro para leitura \, que poderia
+ser posicionado próximo ao cabeçote de gravação ou mais distante \,
+de modo que \, quanto mais distante \, maior o atraso/delay.;
+#X text 50 441 O "delay" é um processamento bem básico e vastamente
+usado para gerar efeitos como ecos e repetições. Mas é com delays também
+que podemos implementar algoritmos sofisticados de reverberação. Veremos
+ainda como delays de tempo variável (próximo exemplo) são a base de
+processamentos como Mudança de Altura (Pitch Shifting). Além de tudo
+\, mais à frente \, veremos como são eles também a base de processamento
+de filtros.;
+#X text 52 552 Em suma \, delays são muito importantes e uma categoria
+essencial em processamento de áudio/DSP.;
+#X text 709 100 Argumentos:;
+#X text 508 524 O objeto [delay~] é outra opção que pode ser conveniente
+para pequenos atrasos definidos em número de amostras. O primeiro argumento
+é o tamanho máximo que o delay tem \, já o atraso é dado pelo segundo
+argumento (também recebido no inlet direito).;
+#X obj 1039 287 sig~ 100;
+#N canvas 134 49 349 226 delwrite~ 0;
+#X obj 58 40 inlet~;
+#X obj 103 149 outlet~;
+#X obj 57 87 delwrite~ \$0-delay_dois 100;
+#X text 163 152 dummy outlet;
+#X connect 0 0 2 0;
+#X restore 1039 354 pd delwrite~;
+#N canvas 164 51 363 243 delread~ 0;
+#X obj 116 34 inlet~;
+#X obj 114 157 outlet~;
+#X obj 114 122 delread~ \$0-delay_dois;
+#X text 166 32 dummy intlet;
+#X connect 2 0 1 0;
+#X restore 1039 384 pd delread~;
+#X obj 1020 430 output~;
+#X text 897 146 A ordem de criação tem um papel nessa questão \, sendo
+que a fonte de sinal deve ser criada e conectada por último \, mas
+isso pode ser alterado sem querer em alguma edição do patch \, sendo
+que uma forma de tornar explícito e garantir com segurança o funcionamento
+é com o uso de subpatches com dumy inlet/outlet como abaixo.;
+#X obj 1039 322 blosc~ saw;
+#X text 896 71 Ordem de execução/criação dos objetos pode definir se
+há um atraso mínmo de um bloco \, como já mencionado na primeira pasta
+da primeira parte deste material (revejam o exemplo 01.Audio_Digital/1.Audio_no_Pd/3.DSP_Loop_Ordem_Conexao).
+;
+#X text 913 527 O mesmo vale para o objeto [vd~] \, que veremos a seguir.
+;
+#X connect 1 0 15 0;
+#X connect 4 0 0 0;
+#X connect 4 0 0 1;
+#X connect 4 0 14 0;
+#X connect 4 1 20 0;
+#X connect 5 0 20 0;
+#X connect 8 0 16 0;
+#X connect 15 0 2 0;
+#X connect 15 0 2 1;
+#X connect 16 0 9 0;
+#X connect 16 0 9 1;
+#X connect 20 0 4 0;
+#X connect 28 0 33 0;
+#X connect 29 0 30 0;
+#X connect 30 0 31 0;
+#X connect 30 0 31 1;
+#X connect 33 0 29 0;

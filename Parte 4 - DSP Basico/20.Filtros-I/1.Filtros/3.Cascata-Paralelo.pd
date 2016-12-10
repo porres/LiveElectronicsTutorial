@@ -1,0 +1,98 @@
+#N canvas 471 22 463 730 10;
+#X obj 95 581 noise~;
+#X obj 198 650 +~;
+#X obj 252 650 hsl 128 15 0 1 0 0 empty \$0-gain empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 198 674 pd output;
+#X obj 204 434 hsl 128 15 0 1 0 0 empty \$0-gain empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 150 468 pd output;
+#X obj 242 268 hsl 128 15 0 1 0 0 empty \$0-gain empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 172 299 pd output;
+#X text 45 44 Todos os filtros que vimos e ainda veremos podem ser
+combinados para gerar uma resposta de frequência mais elaborada. Há
+basicamente duas formas de ligar os filtros: em Cascata e em Paralelo.
+;
+#X obj 137 624 vcf~ 5;
+#X obj 213 624 vcf~ 10;
+#X obj 153 581 sig~ 400;
+#X obj 232 584 sig~ 1200;
+#X obj 118 389 noise~;
+#X obj 118 443 hip~ 500;
+#X obj 118 416 lop~ 300;
+#X obj 172 218 noise~;
+#X obj 172 247 lop~ 300;
+#X obj 172 274 lop~ 300;
+#X text 54 508 Por fim \, a forma de ligar dois filtros em paralelo
+consiste apenas em filtrar o sinal independentemente e depois somar
+o sinal \, como abaixo.;
+#X text 48 340 Abaixo combinamos em cascata um [lop~] e um [hip~] para
+formar um filtro que seria um tipo de Passa Banda.;
+#X text 45 105 Em cascata significa filtrar o sinal mais de uma vez.
+Por exemplo \, abaixo temos a saída de um [lop~] ligado em cascata
+em outro [lop~] com os mesmos parâmetros. Nesse caso \, aumentamos
+a taxa de decaimento da resposta de frequência (o decaimento de um
+filtro [lop~] é de 6 dB por oitava \, com dois em cascata temos o decaimento
+de 12 dB por oitava).;
+#X connect 0 0 9 0;
+#X connect 0 0 10 0;
+#X connect 1 0 3 0;
+#X connect 2 0 3 1;
+#X connect 4 0 5 1;
+#X connect 6 0 7 1;
+#X connect 9 0 1 0;
+#X connect 10 0 1 1;
+#X connect 11 0 9 1;
+#X connect 12 0 10 1;
+#X connect 13 0 15 0;
+#X connect 14 0 5 0;
+#X connect 15 0 14 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 7 0;

@@ -1,0 +1,355 @@
+#N canvas 353 26 836 671 10;
+#X obj 202 552 cnv 15 155 28 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text 426 171 ============================================================
+;
+#X text 18 135 ============================================================
+;
+#X text 31 95 As propriedades especiais surgem ao multiplicar a unidade
+imaginária "i" por ela mesma \, o que nos dá -1!;
+#X text 21 156 Vejamos a multiplicação complexa:;
+#X text 36 353 Já na outra metade da equação \, podemos colocar a unidade
+imaginária "i" em evidência \, o que nos dá:;
+#X text 36 411 Desse modo \, a primeira metade da equação é considerada
+a parte real do resultdo \, enquanto a metade restante é a parte imaginária.
+;
+#X text 36 456 Consideremos agora dois números complexos definidos
+como (Re1 + Im1) e (Re2 + Im2) \, onde "Re" é a parte Real e "Im" a
+parte Imaginária (sendo que a unidade imaginária "i" é implícita).
+;
+#X text 203 554 (Re1 * Re2) - (Im1 * Im2);
+#X obj 203 605 cnv 15 155 28 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text 203 611 (Im1 * Re2) + (Re1 * Im2);
+#X text 40 584 E uma parte imaginária igual a:;
+#X text 16 637 ============================================================
+;
+#N canvas 293 22 861 708 Multiplicação-Complexa 0;
+#X obj 144 434 expr (Re1 * Re2) - (Im1 * Im2) \; (Im1 * Re2) + (Re1
+* Im2);
+#X obj 144 396 bng 25 250 50 0 empty expr empty 17 7 0 10 -262130 -1
+-1;
+#X obj 314 86 v Re1;
+#X obj 374 86 v Im1;
+#X obj 472 85 v Re2;
+#X obj 532 86 v Im2;
+#X obj 127 237 *;
+#X obj 127 264 -;
+#X obj 168 236 *;
+#X obj 277 235 *;
+#X obj 251 235 *;
+#X obj 314 56 nbx 4 18 -1e+37 1e+37 0 0 \$0-Re1 Re1 Re1 0 -8 0 12 -262130
+-1 -1 31 256;
+#X obj 472 56 nbx 4 18 -1e+37 1e+37 0 0 \$0-Re2 Re2 Re2 0 -8 0 12 -257985
+-1 -1 45 256;
+#X obj 374 56 nbx 4 18 -1e+37 1e+37 0 0 \$0-Im1 Im1 Im1 0 -8 0 12 -204786
+-1 -1 44 256;
+#X obj 532 56 nbx 4 18 -1e+37 1e+37 0 0 \$0-Im2 Im2 Im2 0 -8 0 12 -4034
+-1 -1 33 256;
+#X obj 89 165 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re1 Re1 0 -8 0 12
+-262130 -1 -1 31 256;
+#X obj 247 165 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re2 Re2 0 -8 0 12
+-257985 -1 -1 45 256;
+#X obj 149 165 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im1 Im1 0 -8 0 12
+-204786 -1 -1 44 256;
+#X obj 307 165 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im2 Im2 0 -8 0 12
+-4034 -1 -1 33 256;
+#X obj 127 300 nbx 9 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 -57 256;
+#X obj 679 313 cartopol;
+#X floatatom 679 342 8 0 0 0 - - -;
+#X floatatom 742 343 8 0 0 0 - - -;
+#X obj 520 314 cartopol;
+#X obj 603 451 poltocar;
+#X floatatom 510 343 8 0 0 0 - - -;
+#X floatatom 573 344 8 0 0 0 - - -;
+#X obj 603 409 *;
+#X obj 648 408 +;
+#X text 505 419 Amplitudes;
+#X obj 513 278 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re1 Re1 0 -8 0 12
+-262130 -1 -1 31 256;
+#X obj 672 278 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re2 Re2 0 -8 0 12
+-257985 -1 -1 45 256;
+#X obj 573 278 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im1 Im1 0 -8 0 12
+-204786 -1 -1 44 256;
+#X obj 732 278 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im2 Im2 0 -8 0 12
+-4034 -1 -1 33 256;
+#X obj 550 490 nbx 9 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 -57.0001 256;
+#X obj 686 489 nbx 9 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 3003 256;
+#X text 37 345 Re = (Re1 * Re2) - (Im1 * Im2);
+#X text 274 346 Im = (Im1 * Re2) + (Re1 * Im2);
+#X obj 260 266 +;
+#X obj 260 299 nbx 9 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 3003 256;
+#X obj 144 475 nbx 9 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 -57 256;
+#X obj 327 471 nbx 9 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 3003 256;
+#X text 144 327 Parte Real;
+#X text 267 327 Parte Imaginária;
+#X text 175 399 calcular via [expr]:;
+#X text 504 401 Multiplica;
+#X text 692 405 Soma;
+#X text 689 421 Fases;
+#X text 21 123 Forma Cartesiana:;
+#X text 456 154 Forma Polar:;
+#X msg 541 617 \; Im2 33 \; Re2 45 \; Im1 44 \; Re1 31;
+#X obj 265 86 s expr;
+#X text 314 10 Insira valores da direita para a esquerda.;
+#X text 480 185 Convertemos os números para a forma Polar \, multiplicamos
+as amplitudes e somamos as fases. Depois convertemos novamente para
+a forma cartesiana para demonstrar que o resultado é o mesmo:;
+#X text 330 538 O cálculo na forma Cartesiana é um pouquinho mais acurado
+\, pois a conversão na forma polar tem uma aproximação via o cálculo
+da Arcotangente (que \, apesar de ser irrisório nos dias de hoje \,
+também gasta mais processamento). Por exemplo \, veja como esses valores
+abaixo dá uma pequena diferença \, clique na mensagem:;
+#X connect 0 0 40 0;
+#X connect 0 1 41 0;
+#X connect 1 0 0 0;
+#X connect 6 0 7 0;
+#X connect 7 0 19 0;
+#X connect 8 0 7 1;
+#X connect 9 0 38 1;
+#X connect 10 0 38 0;
+#X connect 11 0 2 0;
+#X connect 11 0 51 0;
+#X connect 12 0 4 0;
+#X connect 13 0 3 0;
+#X connect 14 0 5 0;
+#X connect 15 0 6 0;
+#X connect 15 0 10 0;
+#X connect 16 0 9 1;
+#X connect 16 0 6 1;
+#X connect 17 0 8 0;
+#X connect 17 0 9 0;
+#X connect 18 0 10 1;
+#X connect 18 0 8 1;
+#X connect 20 0 21 0;
+#X connect 20 1 22 0;
+#X connect 21 0 27 1;
+#X connect 22 0 28 1;
+#X connect 23 0 25 0;
+#X connect 23 1 26 0;
+#X connect 24 0 34 0;
+#X connect 24 1 35 0;
+#X connect 25 0 27 0;
+#X connect 26 0 28 0;
+#X connect 27 0 24 0;
+#X connect 28 0 24 1;
+#X connect 30 0 23 0;
+#X connect 31 0 20 0;
+#X connect 32 0 23 1;
+#X connect 33 0 20 1;
+#X connect 38 0 39 0;
+#X restore 523 130 pd Multiplicação-Complexa;
+#X text 441 201 Divisão complexa:;
+#X obj 524 411 cnv 15 155 28 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 523 464 cnv 15 155 28 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text 472 443 E uma parte imaginária igual a:;
+#X text 468 390 A parte real igual a \;;
+#X text 525 413 (Re1 * Re2) + (Im1 * Im2);
+#X text 523 470 (Im1 * Re2) - (Re1 * Im2);
+#X text 454 341 O cálculo na forma cartesiana também é similar à multiplicação
+\, apenas os sinais são invertidos.;
+#X text 451 285 Veremos que \, de modo similar à Multiplicação Complexa
+\, o resultado da Divisão Complexa equivale a uma divisão das amplitudes
+e subtração das Fases!;
+#X text 450 521 Mas há um passo seguinte \, em que precisamos normalizar
+o resultado de ambas as partes por: (Re2 * Re2) + (Im2 * Im2). Veja
+o subpatch abaixo para a implementação:;
+#N canvas 235 22 942 704 Divisão-Complexa 0;
+#X obj 660 144 cartopol;
+#X obj 501 145 cartopol;
+#X text 470 198 Amplitudes;
+#X obj 494 109 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re1 Re1 0 -8 0 12
+-262130 -1 -1 31 256;
+#X obj 653 109 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re2 Re2 0 -8 0 12
+-257985 -1 -1 45 256;
+#X obj 554 109 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im1 Im1 0 -8 0 12
+-204786 -1 -1 44 256;
+#X obj 713 109 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im2 Im2 0 -8 0 12
+-4034 -1 -1 33 256;
+#X obj 548 193 /;
+#X obj 623 193 -;
+#X text 488 183 Divide;
+#X obj 157 385 *;
+#X obj 198 384 *;
+#X obj 279 383 *;
+#X obj 245 383 *;
+#X obj 277 316 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re2 Re2 0 -8 0 12
+-257985 -1 -1 45 256;
+#X obj 337 316 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im2 Im2 0 -8 0 12
+-4034 -1 -1 33 256;
+#X obj 157 436 +;
+#X obj 253 439 -;
+#X obj 157 523 nbx 5 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 0.914258 256;
+#X obj 253 521 nbx 7 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 0.307322 256;
+#X obj 157 494 /;
+#X obj 253 493 /;
+#X obj 317 392 *;
+#X obj 348 392 *;
+#X obj 317 443 +;
+#X obj 135 316 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Re1 Re1 0 -8 0 12
+-262130 -1 -1 31 256;
+#X obj 195 316 nbx 4 18 -1e+37 1e+37 0 0 empty \$0-Im1 Im1 0 -8 0 12
+-204786 -1 -1 44 256;
+#X obj 111 660 nbx 5 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 0.914258 256;
+#X obj 229 659 nbx 7 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 0.307322 256;
+#X obj 348 658 v norm;
+#X obj 111 583 bng 22 250 50 0 empty expr empty 17 7 0 10 -262130 -1
+-1;
+#X obj 114 238 v Re1;
+#X obj 276 200 nbx 4 18 -1e+37 1e+37 0 0 \$0-Re2 empty Re2 0 -8 0 12
+-257985 -1 -1 0 256;
+#X obj 177 199 nbx 4 18 -1e+37 1e+37 0 0 \$0-Im1 empty Im1 0 -8 0 12
+-204786 -1 -1 0 256;
+#X obj 336 200 nbx 4 18 -1e+37 1e+37 0 0 \$0-Im2 empty Im2 0 -8 0 12
+-4034 -1 -1 0 256;
+#X obj 114 198 nbx 4 18 -1e+37 1e+37 0 0 \$0-Re1 empty Re1 0 -8 0 12
+-262130 -1 -1 0 256;
+#X obj 177 236 v Im1;
+#X obj 276 236 v Re2;
+#X obj 336 236 v Im2;
+#X obj 251 412 swap;
+#X obj 535 533 nbx 5 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 2847 256;
+#X obj 730 532 nbx 7 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 957 256;
+#X obj 535 455 bng 22 250 50 0 empty expr empty 17 7 0 10 -262130 -1
+-1;
+#X obj 578 273 poltocar;
+#X obj 550 312 nbx 5 18 -1e+37 1e+37 0 0 empty empty Re -18 9 0 12
+-245290 -1 -1 0.914258 256;
+#X obj 641 313 nbx 7 18 -1e+37 1e+37 0 0 empty empty Im -18 7 0 12
+-171620 -1 -1 0.307322 256;
+#X obj 623 237 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-204800 -1 -1 0.324277 256;
+#X obj 684 618 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-204800 -1 -1 0.324277 256;
+#X obj 548 237 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261234 -1 -1 0.964528 256;
+#X obj 610 618 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-259602 -1 -1 3003.54 256;
+#X obj 535 484 expr ((Re1 * Re2) + (Im1 * Im2)) \; ((Im1 * Re2) - (Re1
+* Im2));
+#X obj 631 573 cartopol;
+#X text 696 236 Fase;
+#X text 516 233 Amp;
+#X text 578 615 Amp;
+#X text 655 191 Subtrai;
+#X text 658 207 Fases;
+#X obj 111 609 expr ((Re1 * Re2) + (Im1 * Im2)) / norm \; ((Im1 * Re2)
+- (Re1 * Im2)) / norm \; (pow(Re2 \, 2) + pow(Im2 \, 2));
+#X text 136 581 calcular via expr;
+#X text 95 39 Re: (Re1 * Re2) + (Im1 * Im2) / normalização \; Im: (Im1
+* Re2) - (Re1 * Im2) / normalização;
+#X text 101 90 normalização = (Re2 * Re2) + (Im2 * Im2);
+#X text 78 271 Forma Cartesiana:;
+#X text 468 51 Forma Polar:;
+#X obj 66 238 s expr;
+#X text 697 638 igual;
+#X text 755 616 Fase;
+#X text 64 9 Divisão Complexa:;
+#X text 115 154 insira valores da direita para a esquerda:;
+#X text 482 379 O fator de normalização apenas redimensiona o valor
+de amplitude. A informação de Fase permanece igual. Veja abaixo o cálculo
+sem a normalização \, que dá uma amplitude diferente \, mas a mesma
+fase.;
+#X text 617 636 diferente;
+#X connect 0 0 7 1;
+#X connect 0 1 8 1;
+#X connect 1 0 7 0;
+#X connect 1 1 8 0;
+#X connect 3 0 1 0;
+#X connect 4 0 0 0;
+#X connect 5 0 1 1;
+#X connect 6 0 0 1;
+#X connect 7 0 48 0;
+#X connect 8 0 46 0;
+#X connect 10 0 16 0;
+#X connect 11 0 16 1;
+#X connect 12 0 39 1;
+#X connect 13 0 39 0;
+#X connect 14 0 10 1;
+#X connect 14 0 12 1;
+#X connect 14 0 22 1;
+#X connect 14 0 22 0;
+#X connect 15 0 13 1;
+#X connect 15 0 11 1;
+#X connect 15 0 23 1;
+#X connect 15 0 23 0;
+#X connect 16 0 20 0;
+#X connect 17 0 21 0;
+#X connect 20 0 18 0;
+#X connect 21 0 19 0;
+#X connect 22 0 24 0;
+#X connect 23 0 24 1;
+#X connect 24 0 21 1;
+#X connect 24 0 20 1;
+#X connect 25 0 10 0;
+#X connect 25 0 13 0;
+#X connect 26 0 11 0;
+#X connect 26 0 12 0;
+#X connect 30 0 57 0;
+#X connect 32 0 37 0;
+#X connect 33 0 36 0;
+#X connect 34 0 38 0;
+#X connect 35 0 31 0;
+#X connect 35 0 63 0;
+#X connect 39 0 17 0;
+#X connect 39 1 17 1;
+#X connect 40 0 51 0;
+#X connect 41 0 51 1;
+#X connect 42 0 50 0;
+#X connect 43 0 44 0;
+#X connect 43 1 45 0;
+#X connect 46 0 43 1;
+#X connect 48 0 43 0;
+#X connect 50 0 40 0;
+#X connect 50 1 41 0;
+#X connect 51 0 49 0;
+#X connect 51 1 47 0;
+#X connect 57 0 27 0;
+#X connect 57 1 28 0;
+#X connect 57 2 29 0;
+#X restore 542 592 pd Divisão-Complexa;
+#X text 22 1 ============================================================
+;
+#X text 428 626 ============================================================
+;
+#X text 425 0 ============================================================
+;
+#X text 242 385 [(b * c) + (a * d)]i;
+#X text 30 26 A adoção de números complexos permite simplificar cálculos
+que \, de outra maneira \, seriam realmente complicados. Veremos aqui
+algumas propriedades que emergem do cálculo com números complexos em
+multiplicação e divisão.;
+#X text 36 514 Resumidamente \, podemos dizer que multiplicar os dois
+números nos dá uma parte real igual a \;;
+#X text 433 33 O subpatch abaixo implementa a multiplicação complexa
+em objetos de matemática \, e demonstra qual é a relação com a operação
+do número complexo na forma Polar (Amplitude e Fase). Veremos que o
+resultado é igual a multiplicar as Amplitudes e somar as fases!;
+#X text 451 230 Consideremos agora dois números complexos também definidos
+como (Re1 + Im1) e (Re2 + Im2). Vamos então dividir o primeiro pelo
+segundo.;
+#X text 27 182 Temos dois números complexos (a + b.i) e (c + d.i) \,
+sendo "a" e "c" as partes reais e "b" e "d" as imaginárias (multiplicadas
+por "i").;
+#X text 36 279 Agora \, na primeira metade da equação \, temos (a *
+c) + (b.i * d.i). A multiplicação das partes imaginárias (b.i * d.i)
+gera "-1" pela multiplicação das unidades imaginárias \, produzindo
+um sinal negativo. O resultdo é (a * c) - (b * d). Note que a unidade
+imaginária foi removida.;
+#X text 40 230 - Começamos então com (a + b.i) * (c + d.i) \; - Depois
+da propriedade distributiva \, temos \; (a * c) + (b.i * d.i) + (b.i
+* c) + (a * d.i);

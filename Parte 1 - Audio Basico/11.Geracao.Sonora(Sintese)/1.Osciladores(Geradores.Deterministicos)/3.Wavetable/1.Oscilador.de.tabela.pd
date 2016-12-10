@@ -1,0 +1,266 @@
+#N canvas 170 46 986 689 10;
+#X obj 821 222 send HarmWaveForm;
+#X obj 865 452 s harm;
+#X msg 865 427 0;
+#X obj 865 405 bng 15 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 879 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 827 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 775 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 724 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 672 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 621 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 569 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 0 256;
+#X obj 519 357 nbx 4 18 -1e+37 1e+37 0 0 empty harm empty 0 -8 0 10
+-191672 -1 -1 1 256;
+#X obj 552 105 cnv 15 198 138 empty empty empty 20 12 0 14 -204800
+-66577 0;
+#N canvas 0 22 474 324 (subpatch) 0;
+#X array HarmWaveForm 515 float 0;
+#X coords 0 1 514 -1 200 140 1;
+#X restore 551 104 graph;
+#X obj 263 400 phasor~;
+#X obj 48 402 nbx 4 18 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-204800 -1 -1 300 256;
+#X obj 263 474 tabread4~ HarmWaveForm;
+#X obj 311 499 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#N canvas 0 22 237 305 ganho 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 263 521 pd ganho;
+#X obj 96 457 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#N canvas 0 22 237 305 ganho 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 48 483 pd ganho;
+#X text 229 424 =;
+#X obj 263 375 nbx 4 18 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-204800 -1 -1 300 256;
+#X text 537 98 1;
+#X text 532 233 -1;
+#X text 884 402 Resetar;
+#X obj 263 449 +~ 1;
+#X text 40 334 É possível armazenar essa tabela como arquivo de texto
+\, ou mesmo de áudio \, para recarregar novamente em uma tabela qualquer.
+;
+#X text 38 246 Uma interpolação significa uma aproximação para índices
+com pontos decimais (13.5 \, por exemplo). O tipo de interpolação feita
+será apresentada em detalhes depois.;
+#X text 37 177 Os pontos adicionais criados são o primeiro e os dois
+últimos. Logo \, os índices reais vão de 1 a 512! O primeiro ponto
+(índice 0) é pra ser uma cópia do último (512). Já os dois últimos
+(513 e 514) devem ser cópias dos dois primeiros (índices 1 e 2 \, respectivamente).
+;
+#X text 317 440 (1 a 513);
+#X obj 263 429 *~ 512;
+#X text 36 17 Neste exemplo \, temos uma lista de amplitudes com 8
+parciais harmônicos (que geram uma forma de onda periódica). São \,
+portanto \, os 8 primeiros termos de uma série harmônica. A lista é
+enviada à tabela seguida do comando "sinesum" e um número que deve
+ser uma potência de 2 (nesse caso \, 512).;
+#X text 551 24 Brinque com as caixas de números abaixo \, cada uma
+controla a amplitude de um termo da Série Harmônica \, na ordem da
+esquerda pra direita.;
+#X obj 779 139 prepend sinesum 512;
+#N canvas 153 25 644 363 normalizado 0;
+#X obj 479 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 425 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 371 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 318 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 264 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 104 159 unpack float float float float float float float float
+;
+#X obj 211 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 157 204 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 0 256;
+#X obj 104 205 nbx 4 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-137954 -1 -1 1 256;
+#X text 116 134 <== lista normalizada;
+#X obj 104 -34 inlet;
+#X obj 157 21 minmax;
+#X obj 104 102 list-math /;
+#X obj 157 46 abs;
+#X obj 178 72 max;
+#X obj 104 -2 t l l;
+#X text 185 102 Divide pelo maior valor absoluto;
+#X connect 5 0 8 0;
+#X connect 5 1 7 0;
+#X connect 5 2 6 0;
+#X connect 5 3 4 0;
+#X connect 5 4 3 0;
+#X connect 5 5 2 0;
+#X connect 5 6 1 0;
+#X connect 5 7 0 0;
+#X connect 10 0 15 0;
+#X connect 11 0 13 0;
+#X connect 11 1 14 1;
+#X connect 12 0 5 0;
+#X connect 13 0 14 0;
+#X connect 14 0 12 1;
+#X connect 15 0 12 0;
+#X connect 15 1 11 0;
+#X coords 0 -1 1 1 430 27 2 100 200;
+#X restore 522 487 pd normalizado;
+#N canvas 220 61 361 306 sequencer 0;
+#X obj 152 130 mtof;
+#X obj 163 216 *~;
+#X obj 152 156 t f b;
+#X text 205 202 envelope;
+#X obj 193 185 ead~ 50 150;
+#X obj 47 69 metro 200;
+#X obj 47 46 loadbang;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array sequencer 16 float 3;
+#A 0 -6 -8 -8 -3 -8 1 4 4 -3 -5 -5 -1 2 6 7 7;
+#X coords 0 12 16 -12 100 70 1;
+#X restore 180 41 graph;
+#X obj 47 130 v i;
+#X obj 163 245 outlet~;
+#X obj 50 186 tabosc4~ HarmWaveForm;
+#X obj 47 92 expr (i + 1) % 16 \; sequencer[i] + 48;
+#X connect 0 0 2 0;
+#X connect 1 0 9 0;
+#X connect 2 0 10 0;
+#X connect 2 1 4 0;
+#X connect 4 0 1 1;
+#X connect 5 0 11 0;
+#X connect 6 0 5 0;
+#X connect 10 0 1 0;
+#X connect 11 0 8 0;
+#X connect 11 1 0 0;
+#X restore 731 588 pd sequencer;
+#X obj 48 430 tabosc4~ HarmWaveForm;
+#X obj 731 625 output~;
+#X obj 638 430 pack f f f f f f f f;
+#X obj 779 111 receive WaveList;
+#X obj 638 457 s WaveList;
+#X text 600 604 Teste a sonoridade \; com o sequencer:;
+#X obj 535 343 cnv 1 1 1 empty empty 1Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 586 343 cnv 1 1 1 empty empty 2Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 638 343 cnv 1 1 1 empty empty 3Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 688 343 cnv 1 1 1 empty empty 4Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 741 343 cnv 1 1 1 empty empty 5Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 792 343 cnv 1 1 1 empty empty 6Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 846 343 cnv 1 1 1 empty empty 7Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 897 343 cnv 1 1 1 empty empty 8Âº 0 0 0 14 -262144 -66577 0
+;
+#X obj 461 281 loadbang;
+#X msg 461 306 1;
+#X text 540 278 -------------- Lista de Amplitude de Parciais --------------
+;
+#X text 898 284 |;
+#X text 898 293 |;
+#X text 898 302 |;
+#X text 898 311 |;
+#X text 536 283 |;
+#X text 536 292 |;
+#X text 536 301 |;
+#X text 536 310 |;
+#X text 581 522 Como estamos normalizando a forma de onda \, normalizamos
+também a lista acima apenas para visualizar melhor as relações proporcionais
+entre os parciais.;
+#X msg 779 185 normalize;
+#X obj 779 163 trigger bang anything;
+#X obj 648 404 cyclone/bondo 8;
+#X text 37 94 O comando "sinesum 512" desenha a forma de onda em uma
+tabela com 512 pontos mais 3 (com índices de 0 a 514 \, portanto).
+Esses três pontos adicionais são necessários para a interpolação feita
+no objeto [tabosc4~] \, que precisa \, justamente \, de uma tabela
+com tamanho igual a uma potência de 2 mais esses 3 pontos adicionais.
+;
+#X text 40 290 O [tabosc4~] é \, então \, um oscilador de tabela interpolado.
+E e comando "sinesum" é um gerador de tabelas para leitura interpolada
+própria para o [tabosc4~].;
+#X text 49 556 Um [phasor~] ligado ao [tabread4~] pode substituir o
+[tabosc4~] \, já que o [tabread4~] é um leitor de tabela que faz o
+mesmo tipo de interpolação. Por preciosismo \, e para a interpolação
+fazer sentido \, devemos descartar o primeiro e o último ítem da tabela.
+Logo \, em nosso exemplo (com 515 pontos e índices de 0 a 514) \, lemos
+do índice 1 ao 513! Enfatizando que o 513 deve ser uma cópia do 1 \,
+fazemos assim um loop perfeito.;
+#X text 558 299 (Valores negativos invertem a polaridade do parcial!!!)
+;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 65 7;
+#X connect 5 0 65 6;
+#X connect 6 0 65 5;
+#X connect 7 0 65 4;
+#X connect 8 0 65 3;
+#X connect 9 0 65 2;
+#X connect 10 0 65 1;
+#X connect 11 0 65 0;
+#X connect 14 0 31 0;
+#X connect 15 0 37 0;
+#X connect 16 0 18 0;
+#X connect 17 0 18 1;
+#X connect 19 0 20 1;
+#X connect 22 0 14 0;
+#X connect 26 0 16 0;
+#X connect 31 0 26 0;
+#X connect 34 0 64 0;
+#X connect 36 0 38 0;
+#X connect 36 0 38 1;
+#X connect 37 0 20 0;
+#X connect 39 0 35 0;
+#X connect 39 0 41 0;
+#X connect 40 0 34 0;
+#X connect 51 0 52 0;
+#X connect 52 0 11 0;
+#X connect 63 0 0 0;
+#X connect 64 0 63 0;
+#X connect 64 1 0 0;
+#X connect 65 0 39 0;
+#X connect 65 1 39 1;
+#X connect 65 2 39 2;
+#X connect 65 3 39 3;
+#X connect 65 4 39 4;
+#X connect 65 5 39 5;
+#X connect 65 6 39 6;
+#X connect 65 7 39 7;

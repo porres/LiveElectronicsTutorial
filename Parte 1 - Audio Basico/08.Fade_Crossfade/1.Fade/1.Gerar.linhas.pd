@@ -1,0 +1,112 @@
+#N canvas 43 72 1293 658 10;
+#X obj 41 311 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -261234
+-1 -1 0 1;
+#X msg 41 241 \$1 1000;
+#X obj 41 276 line 0 1;
+#X text 96 275 um dado a cada ms;
+#X obj 220 312 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -261234
+-1 -1 0 1;
+#X obj 220 238 t f b;
+#X msg 241 260 1000;
+#X obj 220 282 line;
+#X floatatom 41 217 2 0 0 0 - - -;
+#X floatatom 220 215 2 0 0 0 - - -;
+#X obj 220 194 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 41 195 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X text 16 470 Você pode enviar os dados de ponto de chegada e tempo
+de duração como uma lista de dois valores no primeiro inlet \, ou como
+valores separados no primeiro e segundo inlet \, respectivamente.;
+#X obj 527 200 line;
+#X text 18 528 No caso de enviar valores separados \, você precisa
+sempre definir um valor de tempo antes de enviar o ponto de chegada.
+Caso contrário \, ele vai ao ponto de chegada imediatamente.;
+#X obj 530 226 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X msg 527 171 0 \, 1 1000;
+#X obj 527 143 metro 1000;
+#X obj 527 119 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X text 415 22 Podemos definir um ponto de partida ao enviar duas mensagens
+em sequência como abaixo. A primeira não tem definição de tempo. Logo
+\, o valor é atingido imediatamente e funciona como ponto de partida
+da linha. O exemplo a seguir \, segue esse procedimento para realizar
+uma linha em loop.;
+#X obj 894 204 vline~;
+#X obj 894 232 unsig~ 1;
+#X obj 897 261 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 93 241 rampa de 1000 ms;
+#X text 274 258 rampa de 1000 ms;
+#X msg 894 172 0 \, 1 1000 500 \, 0 1000 2000 \, 1 500 3000;
+#X text 429 275 O [line~] é a versão para áudio. Além da questão de
+serem tipos de dados diferentes \, uma grande diferença é que os dados
+da linha são gerados de acordo com a taxa de amostagem (um valor por
+amostra). Porém ele só começa a atuar no início de um bloco de áudio
+\, e não a qualquer momento. O final das linhas também coincide com
+o final de um bloco.;
+#X obj 1000 522 bng 15 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 925 488 cyclone/line~;
+#X text 5 19 Geradores de linha são procedimentos elementares \, úteis
+para controle de amplitude \, envelope \, leitura de samples e uma
+série aplicações.;
+#X text 6 70 Vejamos aqui objetos para gerar linhas em dados de controle
+e sinal de áudio \, eles recebem um valor de chegada e um tempo pra
+chegar lá em ms. O primeiro argumento do [line] \, versão para dado
+de controle \, define um ponto de partida. Ele gera um valor a cada
+20 ms \, por padrão \, mas você pode mudar isso como segundo argumento
+(a partir do Pd 0.43 \, um terceiro inlet também muda esse valor).
+Clique nos toggles a seguir.;
+#X msg 507 472 0 \, 1 1000;
+#X obj 507 444 metro 1000;
+#X obj 507 420 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 507 501 line~;
+#X obj 510 555 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X obj 507 527 snaps~;
+#X text 834 22 Já o [vline~] tem uma resolução melhor e não se restringe
+ao tamanho do bloco (tanto para início quanto para fim da linha). Logo
+\, é próprio para linhas com pequena duração. Ele aceita um terceiro
+elemento na sintaxe que é um delay inicial (e corresponde ao terceiro
+inlet). Várias mensagens podem ser enviadas de uma só vez \, separadas
+por vírgulas \, permitindo que várias linhas geram agendadas para ocorrer
+em sequência.;
+#X obj 925 524 unsig~ 1;
+#X obj 928 553 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X msg 925 449 0 0 0 500 1 1000 1 500 0 1000 1 500;
+#X text 848 327 O [line~] na versão clonada do max \, da biblioteca
+cyclone \, também permite o agendamento de diversas linhas e envia
+um bang ao final do processo. Abaixo \, temos a mesma geração de linha
+feita acima. A sintaxe é diferente \, pois ele aceita pares de argumentos
+indicando o ponto de chegada e o tempo para chegar lá.;
+#X text 871 597 Mais detalhes no "help" de cada objeto.;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 5 0 7 0;
+#X connect 5 1 6 0;
+#X connect 6 0 7 1;
+#X connect 7 0 4 0;
+#X connect 8 0 1 0;
+#X connect 9 0 5 0;
+#X connect 10 0 9 0;
+#X connect 11 0 8 0;
+#X connect 13 0 15 0;
+#X connect 16 0 13 0;
+#X connect 17 0 16 0;
+#X connect 18 0 17 0;
+#X connect 20 0 21 0;
+#X connect 21 0 22 0;
+#X connect 25 0 20 0;
+#X connect 28 0 38 0;
+#X connect 28 1 27 0;
+#X connect 31 0 34 0;
+#X connect 32 0 31 0;
+#X connect 33 0 32 0;
+#X connect 34 0 36 0;
+#X connect 36 0 35 0;
+#X connect 38 0 39 0;
+#X connect 40 0 28 0;

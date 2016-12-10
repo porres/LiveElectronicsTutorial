@@ -1,0 +1,79 @@
+#N canvas 77 69 1258 559 10;
+#X obj 156 292 sin~;
+#X obj 659 182 cos~;
+#X text 41 25 Este exemplo é praticamente uma revisão \, pois o já
+foi bem introduzido anteriormente o funcionamento de um oscilador senoidal.
+;
+#X text 43 76 Vimos que a mesma forma de onda pode ser obtida com a
+função Seno e Cosseno \, havendo apenas uma diferença de fase de 90
+graus (Quadrante) entre os dois.;
+#X text 44 125 Em todo caso \, um oscilador senoidal propriamente dito
+possui uma fase de Seno. Já um oscilador em fase de Cosseno seria de
+fato um oscilador cossenoidal. Não obstante \, na prática \, meio que
+tanto faz \, pois é só você ajustar a fase inicial para o que quiser.
+;
+#X text 48 213 Oscilador Senoidal:;
+#X text 46 396 Acima temos a construção de um oscilador em fase de
+Seno com um [phasor~] ligado ao [sin~]. O inlet direito do [phasor~]
+permite um ajuste de fase inicial. Porém \, como já vimos \, não se
+trata de um ajuste de fase \, pois ele resseta a fase sempre que recebe
+um dado.;
+#X text 48 474 Outro ajuste de fase \, sem ressetar a forma de onda
+\, é possível no sinal direto de Fase Corrente (saída do [phasor~]).
+;
+#X obj 130 330 output~;
+#X obj 537 160 osc~ 440;
+#X obj 156 255 phasor~ 440;
+#X text 452 25 O [osc~] é um oscilador cossenoidal \, tal como um [phasor~]
+ligado ao [cos~]. Como no [phasor~] \, é possível ressetar a fase no
+inlet direito do [osc~]. O [osc~] é um pouco mais eficiente computacionalmente
+\, além de mais conveniente que criar e conectar dois objetos. A única
+vantagem do [phasor~] + [cos~] é que ele permite um acesso/ajuste ao
+sinal de fase corrente (ou seja \, mudar a fase sem ressetar a forma
+de onda).;
+#X obj 659 149 phasor~ 440;
+#X obj 513 211 output~;
+#X obj 636 217 output~;
+#X obj 512 353 loadbang;
+#X obj 649 351 phasor~ 440;
+#X obj 491 399 osc~;
+#X msg 512 376 0.75;
+#X obj 649 404 cos~;
+#X obj 649 378 -~ 0.25;
+#X text 441 270 Para mudar a fase de um oscilador cossenoidal para
+a Fase de Seno \, basta deslocar um quarto de ciclo pra trás \, ou
+ainda 3/4 de ciclos à frente. Isso significa um ajuste de fase de 0.75
+ou -0.25 \, tanto faz.;
+#X obj 1006 227 sig~ 0.75;
+#X text 1074 225 fase de seno;
+#X text 451 430 Aliás \, a abstração [sin~] não passa de uma subtração
+da fase em 0.25 antes de ligar no [cos~].;
+#X text 452 464 E claro que \, para se chegar numa fase de cosseno
+em um oscilador senoidal \, basta somar um quarto de ciclo (0.25) na
+fase!;
+#X text 858 114 O [cycle~] é outro oscilador cossenoidal e um objeto
+clonado do MAX/MSP. A grande diferença com o [osc~] é que ele permite
+um ajuste de fase sem ressetar a forma de onda.;
+#X obj 949 256 cycle~ 440;
+#X text 861 169 Abaixo temos o [cycle~] com um ajuste para fase inicial
+de seno.;
+#X text 863 372 O [cycle~] também é mais eficiente que um [phasor~]
+ligado num [cos~]. A única desvantagem do [cycle~] agora é que ele
+não permite ressetar a forma de onda \, como é possível no [osc~] ou
+[phasor~] + [cos].;
+#X obj 925 301 output~;
+#X connect 0 0 8 0;
+#X connect 0 0 8 1;
+#X connect 1 0 14 0;
+#X connect 1 0 14 1;
+#X connect 9 0 13 0;
+#X connect 9 0 13 1;
+#X connect 10 0 0 0;
+#X connect 12 0 1 0;
+#X connect 15 0 18 0;
+#X connect 16 0 20 0;
+#X connect 18 0 17 1;
+#X connect 20 0 19 0;
+#X connect 22 0 27 1;
+#X connect 27 0 30 0;
+#X connect 27 0 30 1;

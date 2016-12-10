@@ -1,0 +1,58 @@
+#N canvas 252 22 503 694 10;
+#X obj 205 565 *~;
+#X obj 193 609 dac~;
+#X obj 220 527 vline~;
+#X msg 220 482 0 50;
+#X text 280 246 velocity;
+#X obj 147 275 mtof;
+#X text 118 290 Hz;
+#X obj 147 380 osc~;
+#X floatatom 147 305 5 0 0 0 - - -;
+#X msg 276 492 \$1 50 \, \$2 100 50;
+#X obj 276 411 t f f;
+#X obj 276 466 pack;
+#X obj 303 436 * 0.5;
+#X obj 276 387 / 127;
+#X obj 220 277 t f f;
+#X obj 276 361 f;
+#X obj 220 307 == 0;
+#X obj 220 332 sel 1 0;
+#X obj 147 206 notein;
+#X obj 147 247 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 220 249 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 0 256;
+#X text 107 246 Pitch;
+#X text 65 45 Se você tem um tecladinho controlador MIDI \, agora é
+a hora de se divertir com ele. Ligue ele antes do Pd e configure primeiro
+no MIDI settings.;
+#X obj 365 567 loadbang;
+#X msg 365 593 \; pd dsp 1;
+#X text 68 100 O controlador envia um Note Off quando a tecla deixa
+de ser pressionada. Portanto precisamos de um patch exatamente como
+o anterior \, apenas sem o [makenote] e a entrada de nota direto do
+[notein] (objeto que lê a nota MIDI do controlador).;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 5 0 8 0;
+#X connect 7 0 0 0;
+#X connect 8 0 7 0;
+#X connect 9 0 2 0;
+#X connect 10 0 11 0;
+#X connect 10 1 12 0;
+#X connect 11 0 9 0;
+#X connect 12 0 11 1;
+#X connect 13 0 10 0;
+#X connect 14 0 16 0;
+#X connect 14 1 15 1;
+#X connect 15 0 13 0;
+#X connect 16 0 17 0;
+#X connect 17 0 3 0;
+#X connect 17 1 15 0;
+#X connect 18 0 19 0;
+#X connect 18 1 20 0;
+#X connect 19 0 5 0;
+#X connect 20 0 14 0;
+#X connect 23 0 24 0;

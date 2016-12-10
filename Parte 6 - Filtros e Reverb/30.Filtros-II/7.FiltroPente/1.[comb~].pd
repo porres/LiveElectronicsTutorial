@@ -1,0 +1,238 @@
+#N canvas 91 50 1271 650 10;
+#X floatatom 598 178 5 -1 1 0 - a -;
+#X floatatom 633 238 5 -1 1 0 - b -;
+#X floatatom 669 299 5 -1 1 0 - c -;
+#X floatatom 563 124 5 0 0 0 - del -;
+#X obj 141 472 noise~;
+#X obj 188 471 vline~;
+#X obj 188 385 tgl 15 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X obj 144 558 output~;
+#X obj 188 412 metro 1000;
+#X obj 188 361 loadbang;
+#X msg 188 441 1 10 \, 0 50 10;
+#X obj 528 91 r~ \$0-input;
+#X obj 528 365 output~;
+#X obj 563 568 output~;
+#X obj 611 205 s \$0-a;
+#X obj 645 268 s \$0-b;
+#X obj 690 331 s \$0-c;
+#X obj 576 149 s \$0-del;
+#N canvas 0 22 457 347 comb 0;
+#X obj 149 194 +~;
+#X obj 149 234 +~;
+#X obj 104 65 delwrite~ \$0-x 1000;
+#X obj 164 118 vd~ \$0-x;
+#X obj 165 273 delwrite~ \$0-y 1000;
+#X obj 241 154 vd~ \$0-y;
+#X obj 241 202 *~;
+#X obj 256 179 r \$0-c;
+#X obj 241 78 r \$0-del;
+#X obj 164 165 *~;
+#X obj 179 143 r \$0-b;
+#X obj 92 143 *~;
+#X obj 107 119 r \$0-a;
+#X obj 92 31 inlet~;
+#X obj 335 176 block~ 1;
+#X obj 149 305 outlet~;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 1 0 15 0;
+#X connect 3 0 9 0;
+#X connect 5 0 6 0;
+#X connect 6 0 1 1;
+#X connect 7 0 6 1;
+#X connect 8 0 3 0;
+#X connect 8 0 5 0;
+#X connect 9 0 0 1;
+#X connect 10 0 9 1;
+#X connect 11 0 0 0;
+#X connect 12 0 11 1;
+#X connect 13 0 2 0;
+#X connect 13 0 11 0;
+#X restore 563 531 pd comb;
+#X obj 563 505 r~ \$0-input;
+#X msg 123 394 \; del 10 \; a 0.8 \; b 0.5 \; c 0.9;
+#X obj 528 336 comb~ 100 10 0.8 0.5 0.9;
+#X text 469 450 No subpatch abaixo \, temos a implementação do [comb~]
+com objetos de delay do vanilla.;
+#X obj 996 567 output~;
+#X obj 996 504 r~ \$0-input;
+#N canvas 747 251 567 476 teeth~ 0;
+#X obj 176 298 +~;
+#X obj 176 338 +~;
+#X obj 268 306 *~;
+#X obj 283 253 r \$0-c;
+#X obj 191 269 *~;
+#X obj 206 217 r \$0-b;
+#X obj 119 207 *~;
+#X obj 119 65 inlet~;
+#X obj 402 246 block~ 1;
+#X obj 176 409 outlet~;
+#X obj 192 377 delwrite~ \$0-y2 1000;
+#X obj 131 99 delwrite~ \$0-x2 1000;
+#X obj 191 182 vd~ \$0-x2;
+#X obj 268 218 vd~ \$0-y2;
+#X floatatom 283 279 5 0 0 0 - - -;
+#X floatatom 206 243 5 0 0 0 - - -;
+#X obj 134 156 r \$0-a;
+#X floatatom 134 183 5 0 0 0 - - -;
+#X obj 191 153 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-del empty 0 -8 0
+10 -262144 -1 -1 13.95 256;
+#X obj 268 196 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-del empty 0 -8 0
+10 -262144 -1 -1 13.95 256;
+#X text 202 134 d1;
+#X text 280 178 d2;
+#X connect 0 0 1 0;
+#X connect 1 0 9 0;
+#X connect 1 0 10 0;
+#X connect 2 0 1 1;
+#X connect 3 0 14 0;
+#X connect 4 0 0 1;
+#X connect 5 0 15 0;
+#X connect 6 0 0 0;
+#X connect 7 0 6 0;
+#X connect 7 0 11 0;
+#X connect 12 0 4 0;
+#X connect 13 0 2 0;
+#X connect 14 0 2 1;
+#X connect 15 0 4 1;
+#X connect 16 0 17 0;
+#X connect 17 0 6 1;
+#X connect 18 0 12 0;
+#X connect 19 0 13 0;
+#X restore 996 530 pd teeth~;
+#X text 880 435 No subpatch abaixo \, temos a implementação do [teeth~]
+com objetos de delay do vanilla.;
+#X text 51 289 O [comb~] \, aliás \, é outro external clone de um objeto
+de MAX/MSP. Como no exemplo anterior \, temos um ruído branco envelopado
+como entrada do filtro.;
+#X text 50 224 Perceba como o [comb~] é muito similar ao [alpass~].
+Podemos dizer que o [allpass~] é \, de fato \, uma das possibilidades
+de configurações que esse diagrama do [comb~] permite \, basta que
+b seja 1 e a = c * -1!;
+#X text 52 27 O [comb~] é um tipo genérico de Comb Filter (filtro de
+pente) com a seguinte equação e diagrama:;
+#X text 867 149 O MAX/MSP tem ainda outro objeto que não foi clonado
+no Pd que é o [teeth~]. O [teeth~] é uma variação do [comb~] \, sendo
+que ele é mais geral e possibilita tempos de delay diferentes para
+o feedback e o feedforward. Ou seja \, o [teeth~] é um comb filter
+ainda mais genérico \, que permite \, dentro de suas possibilidades
+\, tanto o [comb~] como o [allpass~].;
+#X obj 900 273 cnv 15 290 140 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X text 953 291 |;
+#X text 953 303 |;
+#X text 953 315 |;
+#X text 934 326 |;
+#X text 976 326 |;
+#X text 976 346 |;
+#X text 934 346 |;
+#X text 937 317 _______;
+#X text 937 346 _______;
+#X text 953 318 v;
+#X text 1015 318 |;
+#X text 1015 329 |;
+#X text 1015 299 |;
+#X text 1015 308 |;
+#X text 1015 294 ^;
+#X text 1099 292 |;
+#X text 1099 304 |;
+#X text 1099 316 |;
+#X text 1080 327 |;
+#X text 1122 327 |;
+#X text 1122 347 |;
+#X text 1080 347 |;
+#X text 1083 318 _______;
+#X text 1083 347 _______;
+#X text 1099 319 v;
+#X text 1045 320 |;
+#X text 1045 330 |;
+#X text 1045 298 |;
+#X text 1045 308 |;
+#X text 1045 293 ^;
+#X text 1122 284 >;
+#X text 934 336 |z^-d1 |;
+#X text 1080 337 |z^-d2 |;
+#X text 914 383 y[n] = a * x[n] + b * x[n-d1] + c * y[n-d2];
+#X text 982 335 -(*b)-;
+#X text 1046 336 -(*c)-;
+#X text 913 285 x[n] -----(*a)--(+)--(+)----------- y[n];
+#X obj 45 67 cnv 15 290 140 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 98 85 |;
+#X text 98 97 |;
+#X text 98 109 |;
+#X text 79 120 |;
+#X text 121 120 |;
+#X text 121 140 |;
+#X text 79 140 |;
+#X text 82 111 _______;
+#X text 82 140 _______;
+#X text 98 112 v;
+#X text 160 112 |;
+#X text 160 123 |;
+#X text 160 93 |;
+#X text 160 102 |;
+#X text 160 88 ^;
+#X text 244 86 |;
+#X text 244 98 |;
+#X text 244 110 |;
+#X text 225 121 |;
+#X text 267 121 |;
+#X text 267 141 |;
+#X text 225 141 |;
+#X text 228 112 _______;
+#X text 228 141 _______;
+#X text 244 113 v;
+#X text 190 114 |;
+#X text 190 124 |;
+#X text 190 92 |;
+#X text 190 102 |;
+#X text 190 87 ^;
+#X text 267 78 >;
+#X text 127 129 -(*b)-;
+#X text 191 130 -(*c)-;
+#X text 58 79 x[n] -----(*a)--(+)--(+)----------- y[n];
+#X text 79 130 | z^-d |;
+#X text 225 131 | z^-d |;
+#X text 59 177 y[n] = a * x[n] + b * x[n-d] + c * y[n-d];
+#X text 859 108 ============================================================
+;
+#X obj 173 501 *~;
+#X text 454 25 Os argumentos do [comb~] são: tempo máximo de delay
+\, delay em ms e coeficientes (a \, b e c).;
+#X text 659 206 ganho;
+#X text 692 268 feedforward;
+#X text 736 331 feedback;
+#X text 867 42 Já vimos como o [comb~] pode ser usada para implementar
+processamentos de delay \, como Chorus e Flanger. Falaremos agora de
+sua característica como filtro.;
+#X obj 224 527 s~ \$0-input;
+#X connect 0 0 14 0;
+#X connect 0 0 21 2;
+#X connect 1 0 15 0;
+#X connect 1 0 21 3;
+#X connect 2 0 16 0;
+#X connect 2 0 21 4;
+#X connect 3 0 17 0;
+#X connect 3 0 21 1;
+#X connect 4 0 108 0;
+#X connect 5 0 108 1;
+#X connect 6 0 8 0;
+#X connect 8 0 10 0;
+#X connect 9 0 6 0;
+#X connect 9 0 20 0;
+#X connect 10 0 5 0;
+#X connect 11 0 21 0;
+#X connect 18 0 13 0;
+#X connect 18 0 13 1;
+#X connect 19 0 18 0;
+#X connect 21 0 12 1;
+#X connect 21 0 12 0;
+#X connect 24 0 25 0;
+#X connect 25 0 23 0;
+#X connect 25 0 23 1;
+#X connect 108 0 7 0;
+#X connect 108 0 7 1;
+#X connect 108 0 114 0;

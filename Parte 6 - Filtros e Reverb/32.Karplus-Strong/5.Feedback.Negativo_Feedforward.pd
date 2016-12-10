@@ -1,0 +1,134 @@
+#N canvas 54 33 1180 666 10;
+#X obj 438 128 lop~;
+#X obj 414 186 output~;
+#X obj 438 96 comb~ 100 0 1 0 0;
+#X text 378 334 No exemplo abaixo \, temos o [comb~] com o argumento
+do valor do ganho de feedforward igual a 1 (quarto argumento). Isso
+significa que \, quando temos um feedback negativo \, haverá um cancelamento
+entre os sinais de feedforward e feedback quando os valores de ganho
+forem os mesmos. Portanto o efeito se perde.;
+#X obj 553 102 r \$0-cutoff;
+#X floatatom 553 128 0 0 0 0 - - -;
+#X obj 152 331 expr 1000 / $f1;
+#X text 254 330 ms;
+#X obj 59 325 noise~;
+#X obj 74 403 vline~;
+#X obj 152 229 metro;
+#X obj 152 195 tgl 15 0 empty empty empty 17 7 0 10 -261234 -33289
+-1 1 1;
+#X obj 152 266 expr random(30 \, 50) \; random(200 \, 600);
+#X obj 165 535 hsl 128 15 100 10000 0 0 empty cutoff empty -2 -6 0
+8 -262130 -1 -1 7184 1;
+#X floatatom 162 559 0 0 0 0 - - -;
+#X text 190 516 cutoff;
+#X obj 166 436 hsl 128 15 -0.999 0.999 0 0 empty fb empty -2 -6 0 8
+-175543 -1 -1 25 1;
+#X floatatom 163 460 0 0 0 0 - - -;
+#X text 201 417 feedback;
+#X obj 152 308 mtof;
+#X obj 219 176 loadbang;
+#X msg 219 201 \; fb -0.995 \; cutoff 5700;
+#X obj 162 588 s \$0-cutoff;
+#X obj 59 451 s~ \$0-in;
+#X obj 438 48 r~ \$0-in;
+#X obj 152 357 s \$0-deltime;
+#X obj 163 486 s \$0-feedback;
+#X obj 547 71 r \$0-feedback;
+#X obj 462 71 r \$0-deltime;
+#X obj 454 541 lop~;
+#X obj 429 577 output~;
+#X obj 569 515 r \$0-cutoff;
+#X floatatom 569 541 0 0 0 0 - - -;
+#X obj 454 461 r~ \$0-in;
+#X obj 563 484 r \$0-feedback;
+#X obj 478 484 r \$0-deltime;
+#X obj 454 509 comb~ 100 0 1 1 0;
+#X obj 865 228 lop~;
+#X obj 840 264 output~;
+#X obj 980 202 r \$0-cutoff;
+#X floatatom 980 228 0 0 0 0 - - -;
+#X obj 865 128 r~ \$0-in;
+#X obj 964 145 r \$0-feedback;
+#X obj 877 152 r \$0-deltime;
+#X obj 964 172 * -1;
+#X text 758 34 Porém \, no exemplo abaixo \, sem o ganho do sinal de
+entrada \, temos só o feedforward e uma versão atrasada \, em feedback
+\, com a polaridade invertida \, e isso \, além de não cancelar o processamento
+\, gera mais uma variação possível.;
+#X obj 951 592 output~;
+#X obj 989 491 r \$0-cutoff;
+#X floatatom 989 517 0 0 0 0 - - -;
+#X obj 868 416 r~ \$0-in;
+#X obj 967 466 r \$0-feedback;
+#X obj 892 439 r \$0-deltime;
+#X obj 868 494 comb~ 100 0 1 0 0;
+#X obj 59 426 *~;
+#X text 788 339 Ainda outra variação é um mesmo valor de ganho para
+o feedforward e feedback \, além da ideia de que você pode e deve testar
+outros filtros passa baixa (como o [moog~] abaixo).;
+#X obj 976 556 moog~;
+#X text 34 36 O algoritmo original também permite um feedback negativo.
+Vamos explorar esse parâmetro. O que ocorre é uma inversão de polaridade
+a cada reiteração do período.;
+#X msg 74 374 1 \, 0 0 \$1;
+#X text 375 254 Perceba que essa inversão de polaridade faz com que
+o timbre adquira qualidades sonoras diferentes \, como soar uma oitava
+abaixo.;
+#X text 37 86 Vejamos as imlpicações do feedback negativo no contexto
+de um comb filter e também a possibilidade de usar a linha de feedforward
+do objeto [comb~].;
+#X obj 865 196 comb~ 100 0 0 0 0;
+#X obj 1049 524 sig~ 3;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 1;
+#X connect 6 0 25 0;
+#X connect 6 0 57 0;
+#X connect 8 0 53 0;
+#X connect 9 0 53 1;
+#X connect 10 0 12 0;
+#X connect 11 0 10 0;
+#X connect 12 0 19 0;
+#X connect 12 1 10 1;
+#X connect 13 0 14 0;
+#X connect 14 0 22 0;
+#X connect 16 0 17 0;
+#X connect 17 0 26 0;
+#X connect 19 0 6 0;
+#X connect 20 0 21 0;
+#X connect 20 0 11 0;
+#X connect 24 0 2 0;
+#X connect 27 0 2 4;
+#X connect 28 0 2 1;
+#X connect 29 0 30 0;
+#X connect 29 0 30 1;
+#X connect 31 0 32 0;
+#X connect 32 0 29 1;
+#X connect 33 0 36 0;
+#X connect 34 0 36 4;
+#X connect 35 0 36 1;
+#X connect 36 0 29 0;
+#X connect 37 0 38 0;
+#X connect 37 0 38 1;
+#X connect 39 0 40 0;
+#X connect 40 0 37 1;
+#X connect 41 0 60 0;
+#X connect 42 0 44 0;
+#X connect 42 0 60 3;
+#X connect 43 0 60 1;
+#X connect 44 0 60 4;
+#X connect 47 0 48 0;
+#X connect 48 0 55 1;
+#X connect 49 0 52 0;
+#X connect 50 0 52 4;
+#X connect 50 0 52 3;
+#X connect 51 0 52 1;
+#X connect 52 0 55 0;
+#X connect 53 0 23 0;
+#X connect 55 0 46 0;
+#X connect 55 0 46 1;
+#X connect 57 0 9 0;
+#X connect 60 0 37 0;
+#X connect 61 0 55 2;

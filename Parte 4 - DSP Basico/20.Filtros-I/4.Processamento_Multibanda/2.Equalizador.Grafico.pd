@@ -1,0 +1,122 @@
+#N canvas 495 27 552 752 10;
+#X obj 131 321 noise~;
+#X obj 185 612 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 131 645 pd output;
+#X text 199 320 Abra o subpatch e confira:;
+#X text 92 116 A primeira banda \, dos graves \, é um filtro lowshelf
+(objeto [lowshelv]). As duas bandas seguintes (médio grave e médio
+agudo) são filtros peaking (objeto [equalizer]) e a última banda \,
+dos agudos \, é um highshelv (objeto [highshev]).;
+#X text 91 243 O valor em dB é dado pelos sliders/caixa de números
+abaixo \, o que faz deste exemplo um equalizador gráfico comum.;
+#N canvas 326 23 702 656 Equalizador_Gráfico(4_bandas) 0;
+#X obj 273 592 outlet~;
+#X obj 131 196 cnv 15 268 193 empty empty empty 20 12 0 14 -104422
+-66577 0;
+#X obj 138 340 nbx 5 14 -1e+37 1e+37 0 0 \$0-gain1 \$0-gain1-set empty
+0 -8 0 10 -171897 -1 -1 0 256;
+#X obj 170 29 inlet~;
+#X obj 149 205 vsl 30 128 -24 24 0 0 \$0-gain1-set init_gain empty
+0 -9 0 10 -138226 -1 -1 6350 1;
+#X obj 170 57 s~ \$0-in;
+#X obj 202 340 nbx 5 14 -1e+37 1e+37 0 0 \$0-gain2 \$0-gain2-set empty
+0 -8 0 10 -171897 -1 -1 0 256;
+#X obj 266 340 nbx 5 14 -1e+37 1e+37 0 0 \$0-gain3 \$0-gain3-set empty
+0 -8 0 10 -171897 -1 -1 0 256;
+#X obj 331 340 nbx 5 14 -1e+37 1e+37 0 0 \$0-gain4 \$0-gain4-set empty
+0 -8 0 10 -171897 -1 -1 0 256;
+#X obj 468 235 loadbang;
+#X msg 468 259 \; init_gain 0 \; pd dsp 1;
+#X obj 212 205 vsl 30 128 -24 24 0 0 \$0-gain2-set init_gain empty
+0 -9 0 10 -138226 -1 -1 6350 1;
+#X obj 276 205 vsl 30 128 -24 24 0 0 \$0-gain3-set init_gain empty
+0 -9 0 10 -138226 -1 -1 6350 1;
+#X obj 340 205 vsl 30 128 -24 24 0 0 \$0-gain4-set init_gain empty
+0 -9 0 10 -138226 -1 -1 6350 1;
+#X obj 72 486 r~ \$0-in;
+#X obj 54 511 biquad~;
+#X obj 54 431 t b f;
+#X obj 189 480 r~ \$0-in;
+#X obj 175 510 biquad~;
+#X obj 175 422 t b f;
+#X obj 318 491 r~ \$0-in;
+#X obj 302 515 biquad~;
+#X obj 302 421 t b f;
+#X obj 302 456 equalizer 2000 0 200;
+#X obj 453 477 r~ \$0-in;
+#X obj 435 506 biquad~;
+#X obj 435 429 t b f;
+#X obj 435 455 highshelf 5000 0 100;
+#X text 125 100 A partir dos valores em dB dados pelos sliders e caixas
+de número abaixo \, fazemos um simples ajuste de ganho em cada canal
+do equalizador.;
+#X text 231 57 envia sinal de entrada para os "canais";
+#X obj 143 369 cnv 5 5 5 empty empty grave 0 0 0 14 -104422 -262144
+0;
+#X obj 208 364 cnv 5 5 5 empty empty mÃ©dio 0 0 0 14 -104422 -262144
+0;
+#X obj 208 376 cnv 5 5 5 empty empty grave 0 0 0 14 -104422 -262144
+0;
+#X obj 272 364 cnv 5 5 5 empty empty mÃ©dio 0 0 0 14 -104422 -262144
+0;
+#X obj 272 376 cnv 5 5 5 empty empty agudo 0 0 0 14 -104422 -262144
+0;
+#X obj 333 369 cnv 5 5 5 empty empty agudo 0 0 0 14 -104422 -262144
+0;
+#X obj 54 457 lowshelf 300 0 100;
+#X obj 175 457 equalizer 600 0 200;
+#X connect 2 0 16 0;
+#X connect 3 0 5 0;
+#X connect 6 0 19 0;
+#X connect 7 0 22 0;
+#X connect 8 0 26 0;
+#X connect 9 0 10 0;
+#X connect 14 0 15 0;
+#X connect 15 0 0 0;
+#X connect 16 0 36 0;
+#X connect 16 1 36 1;
+#X connect 17 0 18 0;
+#X connect 18 0 0 0;
+#X connect 19 0 37 0;
+#X connect 19 1 37 1;
+#X connect 20 0 21 0;
+#X connect 21 0 0 0;
+#X connect 22 0 23 0;
+#X connect 22 1 23 1;
+#X connect 23 0 21 0;
+#X connect 24 0 25 0;
+#X connect 25 0 0 0;
+#X connect 26 0 27 0;
+#X connect 26 1 27 1;
+#X connect 27 0 25 0;
+#X connect 36 0 15 0;
+#X connect 37 0 18 0;
+#X coords 0 -1 1 1 270 214 1 130 180;
+#X restore 131 370 pd Equalizador_Gráfico(4_bandas);
+#X text 90 34 Um equalizador gráfico é o processamento multibanda mais
+simples que existe \, pois consiste em apenas um ajuste de ganho para
+cada banda de frequência. Neste exemplo temos um equalizador bem simples
+de 4 bandas \, a partir de filtros que vimos anteriormente ligados
+em paralelo.;
+#X text 92 187 O processo é bem elementar \, filtramos o sinal em 4
+canais de filtros e fazemos um ajuste de ganho em dB para cada faixa.
+Ao final \, somamos o resultado.;
+#X connect 0 0 6 0;
+#X connect 1 0 2 1;
+#X connect 6 0 2 0;

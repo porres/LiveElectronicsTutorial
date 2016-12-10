@@ -1,0 +1,18 @@
+#N canvas 97 60 464 526 10;
+#X obj 139 282 curve~;
+#X obj 139 316 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X msg 139 253 0 \, 1 200 0 0 200 -0.5 1 200 0.5;
+#X text 43 46 O [curve~] é outro objeto clonado do max e funciona de
+modo similar ao [cyclone/line~]. Todavia \, se trata de um gerador
+de curvas.;
+#X text 41 97 A sintaxe do objeto requer mensagens com três parâmetros:
+1- o ponto de chegada \, 2- o tempo para chegar lá e 3- curvatura.
+Os valores de curvatura vão de -1 a 1 \, sendo que 0 dá uma reta como
+nos geradores de linha.;
+#X text 40 163 Como o [cyclone/line~] \, o [curve~] agenda diferentes
+curvas em sequência \, basta concatenar os três parâmetros de cada
+curva em sequência em uma mesma mensagem. Mais detalhes no "help".
+;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;

@@ -1,0 +1,187 @@
+#N canvas 80 23 1227 708 10;
+#X obj 906 555 *~;
+#X obj 950 593 +~;
+#X obj 995 587 *~;
+#X obj 924 632 output~;
+#X obj 921 507 /~ 2;
+#X obj 1083 547 /~ 2;
+#X obj 1083 496 wrap~;
+#X obj 1083 476 +~ 0.5;
+#X obj 921 529 sin~;
+#X obj 1083 570 sin~;
+#X obj 921 442 phasor~;
+#X obj 995 555 vd~ \$0-buffer;
+#X obj 826 515 vd~ \$0-buffer;
+#X obj 826 485 *~;
+#X obj 995 534 *~;
+#X obj 686 623 readsf~;
+#X obj 686 576 loadbang;
+#X text 1070 389 grão (ms);
+#X obj 1010 392 nbx 5 14 5 1000 0 0 empty \$0-grao-set empty 0 -8 0
+10 -204786 -1 -1 75 256;
+#X obj 921 341 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-cents-set empty
+0 -8 0 10 -261682 -1 -1 111 256;
+#X text 881 340 Cents;
+#X obj 228 530 output~;
+#X obj 228 494 vd~ \$0-buffer;
+#X obj 228 466 *~ 50;
+#X text 38 83 No caso \, o sentido de uma reta desse sinal de áudio
+indica se o intervalo é ascendente ou descendente. Por exemplo \, se
+temos uma reta ascendente \, significa que o tempo de atraso do delay
+está aumentando. Portanto \, é como "segurar" e atrasar a leitura do
+sinal \, tal como diminuir a velocidade de leitura de um disco de vinil
+ou de uma fita cassete. Por outro lado \, se a reta é descendente \,
+há uma asceleração e um pitch shifting ao agudo.;
+#X obj 80 453 Scope~ 130 130 256 3 128 0 1 0 0 0 0 102 255 51 135 135
+135 0;
+#X msg 228 366 5;
+#X msg 240 392 -5;
+#X obj 228 415 phasor~;
+#X obj 228 343 loadbang;
+#X text 258 367 mais grave;
+#X text 270 392 mais agudo;
+#X text 39 196 Antes \, usamos um gerador de envelope para desenhar
+retas ascendentes ou descendentes \, mas podemos usar também apenas
+um [phasor~]. No caso de um [phasor~] com frequência positiva \, temos
+uma reta ascendente - ou seja \, uma mudança para mais grave. Já uma
+frequência negativa inverte a direção e temos uma mudança para o agudo.
+;
+#X text 429 220 Mas como deve ter notado no exemplo à esquerda \, precisamos
+de um processo de granulação (de preferência em overlaps) para que
+tenhamos uma sucessão de grãos envelopados \, evitando clicks!;
+#X obj 456 607 \$0;
+#X text 42 285 Essa relação da direção do [phasor~] e a transposição
+é inversa do que estávamos vendo antes \, com o [phasor~] lendo um
+buffer/sample.;
+#X text 38 22 Por enquanto implementamos apenas um "arpejador" com
+um buffer circular (delays) e vimos que podemos mudar o intervalo de
+acordo com um sinal de áudio que controla o ponto de leitura do delay.
+;
+#X text 712 395 grão (ms);
+#X obj 652 420 expr 1000 / $f1;
+#X obj 652 398 nbx 5 14 5 200 0 0 empty \$0-grao-set empty 0 -8 0 10
+-204786 -1 -1 75 256;
+#X floatatom 652 444 5 0 0 0 - - -;
+#X obj 573 536 *;
+#X obj 573 512 bondo;
+#X obj 502 415 expr pow(2 \, $f1/1200);
+#X obj 502 392 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-cents-set empty
+0 -8 0 10 -261682 -1 -1 -400 256;
+#X floatatom 502 487 9 0 0 0 - - -;
+#X text 551 558 Hz;
+#X obj 573 558 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-203904 -1 -1 2.75066 256;
+#X text 464 389 Cents;
+#X obj 921 416 *~;
+#X obj 921 392 expr~ 1 - $v1;
+#X obj 1018 414 expr~ 1000 / $v1;
+#X obj 921 364 expr~ pow(2 \, $v1/1200);
+#X text 884 365 razão;
+#X text 464 439 Razão;
+#X floatatom 502 440 5 0 0 0 - - -;
+#X obj 573 582 phasor~;
+#X obj 502 463 expr ($f1 - 1) * -1;
+#X text 40 615 É importante ressaltar que a linha de delay sempre "roda"
+em uma velocidade normal de leitura. Portanto o ajuste do [phasor~]
+(sua frequência \, amplitude e direção) não é o único elemento \, pois
+sempre é somado \, implicitamente \, com a velocidade de leitura do
+[vd~].;
+#X text 425 26 Pois então precisamos calcular a frequência do [phasor~]
+pro ajuste de altura desejado. Para contabilizar a leitura natural
+do delay \, subtraímos o intervalo em "razão" por "1" \, que é a velocidade
+normal de leitura do [vd~].;
+#X text 427 88 Também invertemos a frequência do [phasor~] já que agora
+a relação da sua direção é inversa!;
+#X text 427 127 Dessa forma \, para a razão de "1" (intervalo de uníssono
+- sem ajuste de altura) temos a frequência de "0" para o [phasor~].
+Logo \, não há mudança de pitch! Já para uma transposição a um intervalo
+acima \, temos um valor negativo de frequência \, e valores positivos
+para transposições ao grave.;
+#X text 431 286 Além do intervalo de mudança de altura \, o tamanho
+do grão também define a frequência do phasor. Calculamos então a frequência
+correspondente ao período do grão e multiplicamos pelo intervalo de
+mudança de altura. Veja em detalhes abaixo o cálculo da frequência
+do [phasor~];
+#X text 687 444 freq do grão;
+#X text 886 393 freq;
+#X text 1123 414 freq do grão;
+#X text 826 28 Enfim abaixo temos o patch completo. Basta ligar o [phasor~]
+nos envelopes e multiplicar o [phasor~] pelo tamanho do grão em ms
+para ler o buffer circular com o [vd~]. Temos uma diferença de cálculo
+da frequência em função da razão \, onde a continha de "($f1 - 1) *
+-1" é substituída por "1 - $v1" que é equivalente e mais simples \,
+;
+#X msg 456 631 \; pd dsp 1 \; \$1-grao-set 75 \; \$1-cents-set -400
+;
+#X text 831 118 O tamanho do grão não influencia muito desde que não
+seja muito pequeno ou grande. Portanto é comum que seja um valor fixo.
+Se for muito pequeno \, ele gera artefatos de modulação de amplitude.
+Já quando muito grande perde todo o poder de ilusão de mudança de pitch
+- o que pode até ser um efeito interessante. Um bom valor de grão para
+pitch shifting é quando sua frequência está em torno de 10 a 15Hz.
+;
+#X obj 1010 481 line~;
+#X obj 456 576 loadbang;
+#X msg 1010 442 \$1 100;
+#X text 832 220 Faz sentido que o tamanho da linha do delay seja do
+tamanho do grão. Se for menor \, distroce a granulação. Se for maior
+é inútil \, mas permite que se mude o tamanho do grão até aquele valor.
+Aqui se permite um ajuste do grão (até 1000 ms) \, e um [line~] suaviza
+essa mudança;
+#X text 410 486 ajuste de freq;
+#X obj 686 649 delwrite~ \$0-buffer 1000;
+#X msg 686 601 open ../../../samples/bubul.wav \, 1;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 1 0 3 1;
+#X connect 2 0 1 1;
+#X connect 4 0 8 0;
+#X connect 5 0 9 0;
+#X connect 6 0 5 0;
+#X connect 6 0 14 0;
+#X connect 7 0 6 0;
+#X connect 8 0 0 1;
+#X connect 9 0 2 1;
+#X connect 10 0 4 0;
+#X connect 10 0 7 0;
+#X connect 10 0 13 0;
+#X connect 11 0 2 0;
+#X connect 12 0 0 0;
+#X connect 13 0 12 0;
+#X connect 14 0 11 0;
+#X connect 15 0 74 0;
+#X connect 15 1 75 0;
+#X connect 16 0 75 0;
+#X connect 18 0 51 0;
+#X connect 18 0 71 0;
+#X connect 19 0 52 0;
+#X connect 22 0 21 0;
+#X connect 22 0 21 1;
+#X connect 23 0 22 0;
+#X connect 26 0 28 0;
+#X connect 27 0 28 0;
+#X connect 28 0 25 0;
+#X connect 28 0 23 0;
+#X connect 29 0 26 0;
+#X connect 34 0 67 0;
+#X connect 38 0 40 0;
+#X connect 39 0 38 0;
+#X connect 40 0 42 1;
+#X connect 41 0 47 0;
+#X connect 42 0 41 0;
+#X connect 42 1 41 1;
+#X connect 43 0 55 0;
+#X connect 44 0 43 0;
+#X connect 45 0 42 0;
+#X connect 47 0 56 0;
+#X connect 49 0 10 0;
+#X connect 50 0 49 0;
+#X connect 51 0 49 1;
+#X connect 52 0 50 0;
+#X connect 55 0 57 0;
+#X connect 57 0 45 0;
+#X connect 69 0 13 1;
+#X connect 69 0 14 1;
+#X connect 70 0 34 0;
+#X connect 71 0 69 0;
+#X connect 75 0 15 0;

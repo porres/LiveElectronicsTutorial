@@ -1,0 +1,540 @@
+#N canvas 424 24 878 705 10;
+#X declare -lib bsaylor;
+#X obj 515 520 import bsaylor;
+#X obj 137 645 output~;
+#X obj 242 586 cnv 15 39 42 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 246 590 knob 32 32 0.005 0.49 1 0 \$0-fb fdgdfg empty 0 -8 192
+8 -228856 -262137 -1 0 1;
+#X text 234 564 Feedback;
+#N canvas 186 23 459 583 reverb-echo 0;
+#X obj 61 25 inlet~;
+#X obj 62 524 outlet~;
+#X obj 121 524 outlet~;
+#X obj 61 128 +~;
+#X obj 160 129 -~;
+#X obj 61 206 +~;
+#X obj 142 205 -~;
+#X obj 61 283 +~;
+#X obj 124 283 -~;
+#X obj 62 367 +~;
+#X obj 127 366 -~;
+#X obj 62 447 +~;
+#X obj 121 447 -~;
+#X obj 163 72 delwrite~ \$0-del1 5;
+#X obj 163 96 delread~ \$0-del1 5;
+#X obj 142 229 delwrite~ \$0-del3 13;
+#X obj 142 252 delread~ \$0-del3 13;
+#X obj 160 153 delwrite~ \$0-del2 8;
+#X obj 160 175 delread~ \$0-del2 8;
+#X obj 124 307 delwrite~ \$0-del4 21;
+#X obj 124 332 delread~ \$0-del4 21;
+#X obj 127 390 delwrite~ \$0-del5 34;
+#X obj 127 413 delread~ \$0-del5 34;
+#X obj 121 472 delwrite~ \$0-del6 55;
+#X obj 121 495 delread~ \$0-del6 55;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 0 0 13 0;
+#X connect 3 0 5 0;
+#X connect 3 0 6 0;
+#X connect 4 0 17 0;
+#X connect 5 0 7 0;
+#X connect 5 0 8 0;
+#X connect 6 0 15 0;
+#X connect 7 0 9 0;
+#X connect 7 0 10 0;
+#X connect 8 0 19 0;
+#X connect 9 0 11 0;
+#X connect 9 0 12 0;
+#X connect 10 0 21 0;
+#X connect 11 0 1 0;
+#X connect 12 0 23 0;
+#X connect 14 0 3 1;
+#X connect 14 0 4 1;
+#X connect 16 0 7 1;
+#X connect 16 0 8 1;
+#X connect 18 0 5 1;
+#X connect 18 0 6 1;
+#X connect 20 0 9 1;
+#X connect 20 0 10 1;
+#X connect 22 0 11 1;
+#X connect 22 0 12 1;
+#X connect 24 0 2 0;
+#X restore 116 568 pd reverb-echo;
+#N canvas 84 23 1090 436 reverb-feedback 0;
+#X obj 140 130 +~;
+#X obj 201 130 +~;
+#X obj 140 351 outlet~;
+#X obj 201 351 outlet~;
+#X obj 158 80 delread~ \$0-fb1 60;
+#X obj 233 311 delwrite~ \$0-fb1 60;
+#X obj 514 210 line~;
+#X text 570 156 Feedback;
+#X obj 514 158 r \$0-fb;
+#X msg 514 184 \$1 10;
+#X obj 233 165 expr~ ($v1 + $v2 + $v3 + $v4) * $v5 \; (($v1 - $v2)
++ ($v3 - $v4)) * $v5 \; (($v1 + $v2) - ($v3 + $v4)) * $v5 \; (($v1
+- $v2) - ($v3 - $v4)) * $v5;
+#X obj 219 105 delread~ \$0-fb2 72;
+#X obj 357 102 delread~ \$0-fb3 87;
+#X obj 419 130 delread~ \$0-fb4 96;
+#X obj 482 238 delwrite~ \$0-fb4 96;
+#X obj 399 262 delwrite~ \$0-fb3 87;
+#X obj 316 287 delwrite~ \$0-fb2 72;
+#X obj 21 50 inlet~;
+#X obj 81 51 inlet~;
+#X text 666 149 Temos uma entrada de sinal estéreo somada com duas
+linhas de delay em feedback \, porém temos quatro linhas ao todo \,
+sendo que as duas outras linhas acabam interferindo também.;
+#X text 666 210 Veja que a interferência ocorre porque as quatro linhas
+de delay são somadas de formas diferentes - com inversões de fase (note
+a subtração) - e cada forma resulta em um dos delays em feedback.;
+#X connect 0 0 2 0;
+#X connect 0 0 10 0;
+#X connect 1 0 3 0;
+#X connect 1 0 10 1;
+#X connect 4 0 0 1;
+#X connect 6 0 10 4;
+#X connect 8 0 9 0;
+#X connect 9 0 6 0;
+#X connect 10 0 5 0;
+#X connect 10 1 16 0;
+#X connect 10 2 15 0;
+#X connect 10 3 14 0;
+#X connect 11 0 1 1;
+#X connect 12 0 10 2;
+#X connect 13 0 10 3;
+#X connect 17 0 0 0;
+#X connect 18 0 1 0;
+#X restore 116 615 pd reverb-feedback;
+#X obj 180 379 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 180 422 pd teste;
+#N canvas 73 125 1129 561 pvoc-reverb 0;
+#X obj 80 498 outlet~;
+#X obj 80 24 inlet~;
+#X msg 367 421 set \$1 4;
+#X obj 367 455 block~;
+#X obj 529 74 inlet;
+#N canvas 355 51 666 355 switch 0;
+#X obj 62 152 expr~ $v1 > $v2 && $v1 > $v3 && $v1 > $v4;
+#X obj 62 279 outlet~;
+#X obj 62 38 inlet~;
+#X obj 346 113 tabreceive~ \$0-last-fft-amp;
+#X obj 251 105 lrshift~ 1;
+#X obj 156 105 lrshift~ -1;
+#X text 160 196 Fazemos uma comparação entre a amplitude das bandas
+de FFT e suas vizinhas. Também comparamos amplitude da FFT com a amplitude
+da última saída de FFT. Se a amplitude é maior que as das bandas vizinhas
+e também da última saída de FFT \, temos uo valor de 1 \, e 0 caso
+contrário.;
+#X text 364 85 amplitude da última saída de FFT;
+#X text 205 128 bandas vizinhas;
+#X text 160 283 Chamamos essa saída de "switch" \, pois será usada
+para um "gate" nos próximos subpatches.;
+#X text 68 309 switch;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 2 0 4 0;
+#X connect 2 0 5 0;
+#X connect 3 0 0 3;
+#X connect 4 0 0 2;
+#X connect 5 0 0 1;
+#X restore 210 182 pd switch;
+#N canvas 778 103 458 316 FFT 0;
+#X obj 44 27 inlet~;
+#X obj 44 92 *~;
+#X obj 44 123 rfft~;
+#X obj 62 63 tabreceive~ \$0-hann;
+#X obj 97 219 outlet~;
+#X obj 37 219 outlet~;
+#X obj 37 179 cartopol~;
+#X text 156 138 Análise de FFT \, saída é amplitude e fase;
+#X text 46 244 Amp;
+#X text 109 246 Fase;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 1 1;
+#X connect 6 0 5 0;
+#X connect 6 1 4 0;
+#X restore 80 129 pd FFT;
+#N canvas 547 110 507 316 phase-dif 0;
+#X obj 65 248 outlet~;
+#X obj 65 45 inlet~;
+#X obj 65 130 expr~ $v1 - $v2 \; $v1;
+#X text 99 216 Subtraímos a fase da última análise da análise atual
+;
+#X obj 174 97 tabreceive~ \$0-phase-dif;
+#X obj 174 181 tabsend~ \$0-phase-dif;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 2 1 5 0;
+#X connect 4 0 2 1;
+#X restore 305 182 pd phase-dif;
+#X text 55 161 Amp;
+#X text 123 167 Fase;
+#X obj 529 287 line~;
+#X msg 529 258 \$1 10;
+#X floatatom 529 176 0 0 0 0 - - -;
+#X obj 236 275 tabsend~ \$0-last-phase-dif;
+#X obj 298 218 tabreceive~ \$0-last-phase-dif;
+#X text 459 176 feedback;
+#N canvas 181 22 767 371 Gate-FFT 0;
+#X obj 260 316 outlet~;
+#X obj 53 314 outlet~;
+#X obj 53 92 inlet~;
+#X obj 104 92 inlet~;
+#X obj 480 86 inlet~;
+#X obj 53 194 expr~ if ($v5 == 1 \, $v1 \, $v3) \; if ($v5 == 1 \,
+$v2 \, $v4);
+#X obj 166 120 tabreceive~ \$0-last-fft-phase;
+#X obj 156 91 tabreceive~ \$0-last-fft-amp;
+#X text 338 194 De acordo com o inlet direito este subpatch passa a
+informação de FFT atual ou anterior.;
+#X text 56 56 FFT atual;
+#X text 208 58 FFT anterior;
+#X text 344 248 Se switch = 1 \, passa a FFT Atual;
+#X text 342 271 Se switch = 0 \, passa a FFT Anterior;
+#X text 481 59 Switch;
+#X connect 2 0 5 0;
+#X connect 3 0 5 1;
+#X connect 4 0 5 4;
+#X connect 5 0 1 0;
+#X connect 5 1 0 0;
+#X connect 6 0 5 3;
+#X connect 7 0 5 2;
+#X restore 80 208 pd Gate-FFT;
+#N canvas 0 107 505 338 Gate-Phase 0;
+#X obj 49 261 outlet~;
+#X obj 49 94 inlet~;
+#X obj 149 92 inlet~;
+#X obj 49 166 expr~ if ($v1 == 1 \, $v2 \, $v3);
+#X obj 249 119 inlet~;
+#X text 124 204 Se switch = 1 \, passa a Phase de "phase-dif";
+#X text 51 62 Switch;
+#X text 228 91 "last-Phase-Dif";
+#X text 140 65 "phase-dif";
+#X text 122 227 Se switch = 0 \, passa a Phase de "last-phase-dif"
+;
+#X connect 1 0 3 0;
+#X connect 2 0 3 1;
+#X connect 3 0 0 0;
+#X connect 4 0 3 2;
+#X restore 210 244 pd Gate-Phase;
+#N canvas 0 22 417 366 iFFT 0;
+#X obj 65 283 outlet~;
+#X obj 65 208 *~;
+#X obj 65 122 rifft~;
+#X obj 83 174 tabreceive~ \$0-hann;
+#X obj 65 57 inlet~;
+#X obj 125 58 inlet~;
+#X obj 65 246 /~;
+#X obj 119 240 expr $f1 * 3/2;
+#X obj 65 90 poltocar~;
+#X obj 119 214 r window-size;
+#X text 191 120 FFT inversa;
+#X connect 1 0 6 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 1;
+#X connect 4 0 8 0;
+#X connect 5 0 8 1;
+#X connect 6 0 0 0;
+#X connect 7 0 6 1;
+#X connect 8 0 2 0;
+#X connect 8 1 2 1;
+#X connect 9 0 7 0;
+#X restore 80 362 pd iFFT;
+#X text 649 96 2) [pd switch]: Fazemos uma comparação entre a amplitude
+das bandas de FFT e suas vizinhas. Também comparamos amplitude da FFT
+com a amplitude da última saída de FFT. Se a amplitude é maior que
+as das bandas vizinhas e também da última saída de FFT \, temos uo
+valor de 1 \, e 0 caso contrário. Chamamos essa saída de "switch" \,
+pois será usada para um "gate" nos próximos subpatches.;
+#X text 649 52 1) [pd FFT]: Fazemos uma análise normal de FFT \, cuja
+saída é amplitude e fase.;
+#X text 55 129 1);
+#X text 189 182 2);
+#X text 55 208 3);
+#X text 649 218 3) [pd Gate-FFT]: Se o valor do switch é um \, o gate
+deixa passar a FFT atual \, caso contrária passa a anterior.;
+#X text 286 182 4);
+#X text 648 264 4) [pd phase-dif]: Paralelamente \, em relação à fase
+\, subtraímos a fase da última análise do valor de fase da análise
+atual. Chamamos essa saída de "Phase-dif".;
+#X text 649 327 5) [pd Gate-Phase]: No próximo estágio da fase \, um
+outro gate deixa passar a "phase-dif" se o switch é igual a 1 \, ou
+"last-phase-dif" se igual a 0 \, que é a "phase-dif" da análise anterior.
+;
+#X text 185 241 5);
+#X text 650 401 6) [pd last-FFT]: A saída de FFT é usada para feedback
+(como "última FFT". A amplitude é multiplicada pelo valor de feedback
+e a Fase é somada com a saída do gate da fase.;
+#N canvas 182 33 492 342 last-FFT 0;
+#X obj 132 177 +~;
+#X obj 90 153 *~;
+#X obj 132 204 tabsend~ \$0-last-fft-phase;
+#X obj 90 235 tabsend~ \$0-last-fft-amp;
+#X text 331 222 <= Última FFT;
+#X obj 216 82 inlet~;
+#X obj 150 81 inlet~;
+#X obj 84 80 inlet~;
+#X obj 29 80 inlet~;
+#X text 225 52 feedback;
+#X text 143 50 gate-Phase;
+#X text 47 52 Gate-FFT;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 5 0 1 1;
+#X connect 6 0 0 1;
+#X connect 7 0 0 0;
+#X connect 8 0 1 0;
+#X restore 161 331 pd last-FFT;
+#X text 140 330 6);
+#X text 56 361 7);
+#X text 650 466 7) [pd iFFT]: Por fim \, a iFFT;
+#N canvas 919 432 329 238 init 0;
+#X obj 118 60 loadbang;
+#N canvas 0 22 450 300 resize 0;
+#X obj 110 27 inlet;
+#X msg 69 106 resize \$1;
+#X obj 69 73 / 2;
+#N canvas 25 256 357 339 hann 0;
+#X obj 219 186 osc~;
+#X obj 219 211 *~ -0.5;
+#X obj 219 235 +~ 0.5;
+#X obj 66 148 samplerate~;
+#X obj 74 231 /;
+#X msg 96 90 resize \$1;
+#X obj 96 114 s \$0-hann;
+#X msg 223 151 0;
+#X obj 171 152 t f b;
+#X obj 48 53 t b f;
+#X obj 48 22 inlet;
+#X obj 172 268 tabwrite~ \$0-hann;
+#X obj 76 263 * 4;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 11 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 6 0;
+#X connect 7 0 0 1;
+#X connect 8 0 0 0;
+#X connect 8 1 7 0;
+#X connect 8 1 11 0;
+#X connect 9 0 3 0;
+#X connect 9 1 5 0;
+#X connect 9 1 4 1;
+#X connect 10 0 9 0;
+#X connect 12 0 8 0;
+#X restore 108 74 pd hann;
+#X obj 190 79 s window-size;
+#X msg 188 26 set \$1;
+#X obj 189 51 s window-size-nbx;
+#X obj 84 219 s \$0-last-fft-phase;
+#X obj 92 194 s \$0-last-fft-amp;
+#X obj 96 163 s \$0-last-phase-dif;
+#X obj 105 135 s \$0-phase-dif;
+#X connect 0 0 2 0;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 0 0 5 0;
+#X connect 1 0 7 0;
+#X connect 1 0 8 0;
+#X connect 1 0 9 0;
+#X connect 1 0 10 0;
+#X connect 2 0 1 0;
+#X connect 5 0 6 0;
+#X restore 29 122 pd resize;
+#N canvas 0 22 233 187 tables 0;
+#X obj 16 21 table \$0-hann;
+#X obj 14 128 table \$0-last-fft-phase;
+#X obj 14 105 table \$0-last-fft-amp;
+#X obj 14 76 table \$0-last-phase-dif;
+#X obj 14 51 table \$0-phase-dif;
+#X restore 93 171 pd tables;
+#X obj 29 88 inlet;
+#X msg 118 86 \; window-size-nbx 4096 \; pd dsp 1;
+#X connect 0 0 4 0;
+#X connect 3 0 1 0;
+#X restore 295 427 pd init \; tables;
+#X obj 340 387 nbx 5 18 -1e+37 1e+37 0 0 window-size-nbx-snd window-size-nbx
+empty 0 -8 0 15 -262130 -1 -1 4096 256;
+#X text 330 361 janela de FFT;
+#X text 336 342 tamanho da;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 12 0;
+#X connect 5 0 16 2;
+#X connect 5 0 17 0;
+#X connect 6 0 16 0;
+#X connect 6 0 5 0;
+#X connect 6 1 16 1;
+#X connect 6 1 7 0;
+#X connect 7 0 17 1;
+#X connect 10 0 30 3;
+#X connect 11 0 10 0;
+#X connect 12 0 11 0;
+#X connect 14 0 17 2;
+#X connect 16 0 18 0;
+#X connect 16 0 30 0;
+#X connect 16 1 18 1;
+#X connect 16 1 30 1;
+#X connect 17 0 13 0;
+#X connect 17 0 30 2;
+#X connect 18 0 0 0;
+#X connect 35 0 34 0;
+#X connect 35 0 2 0;
+#X restore 275 456 pd pvoc-reverb;
+#X obj 320 396 cnv 15 39 42 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 324 400 knob 32 32 0.1 0.99 0 0 empty fdgdfg empty 0 -8 64 8
+-228856 -262137 -1 0 1;
+#X text 314 374 Feedback;
+#X obj 275 494 output~;
+#X obj 37 611 output~;
+#X obj 173 496 output~;
+#X obj 483 272 soundfiler;
+#X floatatom 483 294 0 0 0 0 - - -;
+#X obj 670 249 bng 25 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 668 312 dac~;
+#X obj 625 558 output~;
+#X obj 644 449 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 644 492 pd teste;
+#X obj 711 492 r \$0-conv;
+#X obj 483 344 s \$0-conv;
+#X obj 670 283 tabplay~ IR;
+#X obj 585 669 FIR~ IR 4096;
+#X obj 578 299 table IR;
+#X msg 483 250 read -resize \$1 IR;
+#X obj 550 190 loadbang;
+#X obj 483 214 openpanel;
+#X obj 483 190 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X msg 483 319 set IR;
+#X text 548 336 ressetar objeto [partconv~] depois de \; carregar IR
+na tabela;
+#X text 44 89 Normalmente falar de reverberação diz respeito às refrações
+sonoras ocorridas em um ambiente \, como uma sala. Isso implica em
+refrações como "ecos" e "feedbacks".;
+#X text 46 137 Qualquer ambiente \, desse modo \, funciona como um
+"filtro" \, no sentido de que certas frequências sonoras encontrarão
+ressonância por meio de suas refrações no espaço.;
+#X text 47 185 Vimos que a implementação de filtros \, aliás \, se
+dá por meio de linhas de delay \, fortalecendo a relação do conceito
+de reverberação com filtragem. Além do mais \, como já apontado na
+primeira definição de filtros \, se pensarmos um pouco \, percebemos
+como tudo é filtro \, já que filtro \, em um sentido amplo \, se caracteriza
+como qualquer entidade que afeta o som de um modo ou de outro. Uma
+sala não seria diferente.;
+#X text 50 283 Vejamos então os exemplos já apresentados. Abaixo temos
+um reverberador formado por uma seção de "echo" (delays em feedforward)
+e outra de delays em feedback. Compare este exemplo com o reverberador
+que vimos na seção de Phase Vocoder [pd pvoc-reverb].;
+#X text 456 126 Vejamos um exemplo disso com o [partconv~] da biblioteca
+bsaylor. Abaixo carregamos o IR em uma tabela \, trata-se \, aliás
+\, de um IR gravado em uma igreja.;
+#X text 43 16 Reverb é uma área rica \, e a implementação deles é uma
+ciência à parte. Vimos um pouco do tópico pingado em diferentes seções
+deste matrial. Vejamos agora uma revisão do que já foi apresentado.
+Antes \, entretanto \, vejamos algumas considerações sobre a teoria
+de reverberação.;
+#X text 454 12 Vimos também a teoria de convolução \, que pode ser
+aplicada em filtros e \, igualmente \, em reverberação. Há \, aliás
+\, inúmeras bibliotecas por aí de "IR" - que você pode encontrar em
+formatos de arquivo de som como .wav ou .aif que codificam a resposta
+de frequência de uma sala ou espaço qualquer. Se estiver em poder de
+alguma biblioteca como essa \, basta carregar os arquivos sonoros em
+tabelas no Pd e pronto!;
+#X text 461 386 Enfim \, abaixo \, podemos testar e comparar esse reverberador
+com os dos exemplos à esquerda. Lembrando que foi indicado também por
+aqui o trabalho de William Brent e seus externals de convolução!;
+#X msg 550 216 symbol ../../samples/church.wav;
+#X obj 644 524 partconv~ IR 512;
+#X obj 719 668 buffir~;
+#X text 465 618 Para IRs menores \, temos também o objeto [FIR~] \,
+que não faz uma convolução particionada. Outra opção similar é o objeto
+[buffir~].;
+#X connect 5 0 6 0;
+#X connect 5 0 14 0;
+#X connect 5 1 6 1;
+#X connect 5 1 14 1;
+#X connect 6 0 1 0;
+#X connect 6 1 1 1;
+#X connect 7 0 8 0;
+#X connect 8 0 5 0;
+#X connect 8 0 9 0;
+#X connect 8 0 15 0;
+#X connect 8 0 15 1;
+#X connect 9 0 13 0;
+#X connect 9 0 13 1;
+#X connect 11 0 9 1;
+#X connect 16 0 17 0;
+#X connect 17 0 32 0;
+#X connect 18 0 25 0;
+#X connect 21 0 22 0;
+#X connect 22 0 43 0;
+#X connect 23 0 43 0;
+#X connect 25 0 19 0;
+#X connect 25 0 19 1;
+#X connect 28 0 16 0;
+#X connect 29 0 42 0;
+#X connect 30 0 28 0;
+#X connect 31 0 30 0;
+#X connect 32 0 24 0;
+#X connect 42 0 28 0;
+#X connect 43 0 20 0;
+#X connect 43 0 20 1;

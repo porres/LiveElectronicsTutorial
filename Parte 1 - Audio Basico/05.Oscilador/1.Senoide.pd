@@ -1,0 +1,253 @@
+#N canvas 104 74 972 598 10;
+#X obj 105 100 cnv 5 755 250 empty empty empty 20 12 0 12 -1 -262144
+0;
+#X obj 113 137 bng 204 250 50 0 dd ss empty 17 7 0 10 -262130 -262130
+-1;
+#X obj 197 353 nbx 5 14 -1e+37 1e+37 0 0 non \$0-sin Amplitude 0 22
+0 10 -262130 -1 -1 0.904876 256;
+#X obj 348 136 cnv 15 498 202 empty \$0-time . 140 -9 0 66 -257983
+-258113 0;
+#N canvas 391 118 975 563 (subpatch) 0;
+#X array \$0-Amp 1 float 2;
+#X coords 0 1.01 1 -1.01 520 204 1;
+#X restore 326 136 graph;
+#N canvas 391 118 975 563 (subpatch) 0;
+#X array \$0-Senoide 200 float 0;
+#X coords 0 1.01 199 -1.01 499 203 1;
+#X restore 347 136 graph;
+#X obj 326 138 vsl 20 199 -1 1 0 0 \$0-amp-slider \$0-amp-slider-set
+empty 0 -9 0 10 -228856 -228856 -1 18858 1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X coords 0 1 100 -1 251 101 1;
+#X restore 346 137 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X coords 0 1 100 -1 251 101 1;
+#X restore 346 239 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X coords 0 1 100 -1 249 101 1;
+#X restore 598 137 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X coords 0 1 100 -1 249 101 1;
+#X restore 598 239 graph;
+#X text 331 183 A;
+#X text 331 194 M;
+#X text 331 207 P;
+#X text 331 218 L;
+#X text 331 229 I;
+#X text 331 242 T;
+#X text 331 253 U;
+#X text 331 264 D;
+#X text 331 277 E;
+#X obj 349 115 hsl 496 20 0 1 0 0 \$0-phase-slider \$0-phase-slider-set
+empty -2 -8 0 10 -228856 -228856 -1 15840 0;
+#X text 583 116 FASE;
+#X text 591 366 pi;
+#X text 836 366 2*pi;
+#X text 346 366 0;
+#X text 462 366 pi/2;
+#X text 701 366 3*pi/2;
+#X text 277 366 Radianos:;
+#X text 346 352 0;
+#X text 289 352 linear:;
+#X text 462 352 0.25;
+#X text 587 352 0.5;
+#X text 711 352 0.75;
+#X text 841 352 1;
+#X obj 213 240 bng 8 250 50 0 empty empty empty 17 7 0 10 -262130 -262130
+-1;
+#X obj 213 138 vsl 8 202 -1 1 0 0 \$0-sin \$0-sin-set empty 0 -9 0
+10 -262130 -258113 -1 19144 1;
+#X obj 169 143 bng 8 250 50 0 \$0-b1 \$0-b1-set empty 17 7 0 10 -262130
+-262130 -1;
+#X obj 169 143 cnv 8 8 8 empty \$0-gamb empty 20 12 0 14 -262130 -66577
+0;
+#X obj 105 241 cnv 5 5 5 empty \$0-pos . 47 -116 0 69 -1 -258113 0
+;
+#X obj 107 137 cnv 6 6 204 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#X obj 317 137 cnv 6 6 204 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#X obj 105 340 cnv 6 221 6 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X coords 0 1 100 -1 221 123 1;
+#X restore 105 117 graph;
+#X obj 105 131 cnv 6 221 6 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#X obj 106 113 cnv 10 223 23 empty empty SenÃ³ide 16 6 0 23 -1 -262144
+0;
+#X obj 703 341 cnv 5 50 5 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#X obj 848 224 cnv 5 10 30 empty empty empty 20 12 0 14 -1 -66577 0
+;
+#X obj 503 106 bng 8 250 50 0 empty \$0-fase-bng1 empty 17 7 0 10 -1
+-1 -1;
+#X obj 503 340 bng 8 250 50 0 empty \$0-fase-bng2 empty 17 7 0 10 -1
+-1 -1;
+#X obj 348 109 cnv 5 5 5 empty \$0-label 0.32 149 0 1 15 -1 -258113
+0;
+#X obj 221 226 nbx 4 14 -1e+37 1e+37 0 0 \$0-phase \$0-phase-set Graus
+6 -8 0 10 -258113 -262144 -1 115 256;
+#X text 346 381 0;
+#X text 295 380 graus:;
+#X text 467 381 90;
+#X text 587 381 180;
+#X text 711 381 270;
+#X text 836 381 360;
+#N canvas 449 23 917 684 plotar 0;
+#X obj 422 494 s \$0-pos;
+#X obj 422 440 pack;
+#X msg 422 466 label_pos \$2 \$1;
+#X obj 385 532 s \$0-sin-set;
+#X obj 385 158 tgl 15 0 empty \$0-tgl empty 17 7 0 10 -228856 -1 -1
+1 1;
+#X obj 260 336 moses 180;
+#X obj 311 360 - 360;
+#X obj 260 390 expr rint($f1);
+#X obj 260 416 s \$0-phase-set;
+#X obj 55 355 r \$0-phase-slider;
+#X obj 343 594 r \$0-amp-slider;
+#X obj 343 645 s \$0-Amp;
+#X obj 343 570 s \$0-amp-slider-set;
+#X obj 62 331 s \$0-phase-slider-set;
+#X obj 473 11 loadbang;
+#X msg 634 66 \; pd dsp 1;
+#X obj 572 290 tabwrite~ \$0-Senoide;
+#X obj 572 255 osc~;
+#X msg 677 257 0.75;
+#X obj 572 199 expr sr_\$0 / 200;
+#X obj 624 115 samplerate~;
+#X obj 624 138 v sr_\$0;
+#X msg 584 84 1;
+#X obj 584 109 atan;
+#X obj 584 164 v pi_\$0;
+#X obj 584 135 * 4;
+#X obj 473 35 trigger bang bang bang;
+#X obj 260 309 * 360;
+#X msg 74 486 label_pos \$1 0;
+#X obj 54 521 s \$0-label;
+#X obj 385 267 expr sin($f1 * 2*pi_\$0) \; cos($f1 * 2*pi_\$0);
+#X msg 55 459 label 0.\$1;
+#X msg 594 554 label_pos \$2 \$1;
+#X obj 594 582 s \$0-time;
+#X obj 594 528 pack;
+#X obj 656 448 pack 0 0;
+#X obj 656 525 s \$0-b1-set;
+#X msg 656 473 pos \$1 \$2;
+#X obj 701 398 * -101;
+#X obj 671 498 s \$0-gamb;
+#X obj 471 388 * 101;
+#X obj 422 387 * -102;
+#X obj 656 397 * 102;
+#X obj 701 421 + 235;
+#X obj 656 421 + 213;
+#X obj 471 441 + 91;
+#X obj 422 409 - 24;
+#X obj 572 227 trigger float bang;
+#X obj 620 327 expr ((($f1 - 1) / 2) * -202) - 19;
+#X obj 615 508 - 20;
+#X obj 615 481 * 501;
+#X obj 178 527 s \$0-fase-bng1;
+#X obj 190 501 s \$0-fase-bng2;
+#X obj 55 386 expr int($f1 * 100) \; ($f1 * 494) - 9 \; rint($f1 *
+500) + 343;
+#X msg 178 446 pos \$1 106;
+#X msg 190 477 pos \$1 340;
+#X msg 343 620 0 \$1;
+#X obj 385 235 line;
+#X msg 385 210 0 \, 1 10000;
+#X obj 385 185 metro 10000;
+#X floatatom 749 446 5 0 0 0 - - -;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 59 0;
+#X connect 5 0 7 0;
+#X connect 5 1 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 9 0 53 0;
+#X connect 10 0 56 0;
+#X connect 14 0 26 0;
+#X connect 17 0 16 0;
+#X connect 18 0 17 1;
+#X connect 19 0 47 0;
+#X connect 20 0 21 0;
+#X connect 22 0 23 0;
+#X connect 23 0 25 0;
+#X connect 25 0 24 0;
+#X connect 26 0 4 0;
+#X connect 26 1 19 0;
+#X connect 26 2 15 0;
+#X connect 26 2 20 0;
+#X connect 26 2 22 0;
+#X connect 27 0 5 0;
+#X connect 28 0 29 0;
+#X connect 30 0 3 0;
+#X connect 30 0 12 0;
+#X connect 30 0 38 0;
+#X connect 30 0 41 0;
+#X connect 30 0 48 0;
+#X connect 30 1 40 0;
+#X connect 30 1 42 0;
+#X connect 31 0 29 0;
+#X connect 32 0 33 0;
+#X connect 34 0 32 0;
+#X connect 35 0 37 0;
+#X connect 37 0 36 0;
+#X connect 37 0 39 0;
+#X connect 38 0 43 0;
+#X connect 40 0 45 0;
+#X connect 41 0 46 0;
+#X connect 42 0 44 0;
+#X connect 43 0 35 1;
+#X connect 44 0 35 0;
+#X connect 45 0 1 1;
+#X connect 46 0 1 0;
+#X connect 47 0 17 0;
+#X connect 47 1 18 0;
+#X connect 47 1 16 0;
+#X connect 48 0 34 0;
+#X connect 49 0 34 1;
+#X connect 50 0 49 0;
+#X connect 53 0 31 0;
+#X connect 53 1 28 0;
+#X connect 53 2 54 0;
+#X connect 53 2 55 0;
+#X connect 54 0 51 0;
+#X connect 55 0 52 0;
+#X connect 56 0 11 0;
+#X connect 57 0 13 0;
+#X connect 57 0 27 0;
+#X connect 57 0 50 0;
+#X connect 57 0 30 0;
+#X connect 58 0 57 0;
+#X connect 59 0 58 0;
+#X connect 60 0 44 1;
+#X restore 105 82 pd plotar;
+#X text 126 477 Na "animação" acima \, à esquerda \, temos a variação
+de um ângulo e um valor correspondente de amplitude (entre -1 e 1)
+que é dado pelo seno desse ângulo - perceba que o seno é a projeção
+no eixo vertical. À direita \, há uma projeção do valor de amplitude
+de acordo com a fase/ângulo \, que desenha a forma de onda de uma senóide.
+;
+#X text 533 424 A velocidade em que a fase "corre" determina a frequência
+de oscilação. Como fase é nada mais nada menos que um ângulo \, essa
+velocidade também é chamada de "Velocidade Angular" \, que é uma medida
+de ângulo por tempo.;
+#X text 532 484 De tal maneira \, a frequência de oscilação é medida
+em velocidade angular. Hertz \, por exemplo \, é uma medida de um ciclo
+(uma volta completa de 360 graus) em um segundo. Ou seja \, em 100
+Hertz (ou apenas "hz") \, a fase corre 100 ciclos completos em um segundo.
+;
+#X text 125 426 Veremos na próxima pasta em detalhes sobre o conceito
+de Fase. Por hora \, definimos aqui que fase é um sinônimo de ângulo
+\, e que indica um ponto/posição no círculo!;
+#X text 117 19 Um "tom puro" possui apenas uma frequência e é obtido
+com um oscilador senoidal \, que é o oscilador mais simples e comum
+que temos.;
+#X text 502 11 Um oscilador senoidal pode ser construido a partir de
+uma função seno/cosseno. A entrada dessas funções é um ângulo \, ou
+"fase" \, que pode ser dada de diferentes maneiras: em graus (0 a 360)
+\, radianos (0 a 2pi) ou ainda em valores lineares (0 a 1).;
+#X connect 36 0 34 0;
+#X connect 47 0 48 0;

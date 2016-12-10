@@ -1,0 +1,337 @@
+#N canvas 96 27 839 705 10;
+#X obj 90 431 bang~;
+#X obj 155 600 tabread4~ \$0-sample;
+#X obj 151 548 vline~;
+#X obj 89 525 float;
+#X obj 209 630 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 338 53 413 407 sampler 0;
+#X obj 74 300 soundfiler;
+#X obj 245 290 table \$0-sample;
+#X obj 74 52 inlet;
+#X obj 287 132 samplerate~;
+#X obj 287 167 / 1000;
+#X obj 337 162 v sr;
+#X obj 287 193 v sr_KHz;
+#X obj 157 84 loadbang;
+#X obj 157 109 t b b b;
+#X obj 74 90 bng 24 250 50 0 empty empty empty 17 7 0 10 -220652 -1
+-1;
+#X obj 74 247 list append \$0-sample;
+#X msg 74 272 read -resize \$1 \$2;
+#X obj 74 126 openpanel;
+#X obj 74 223 symbol ../../../samples/bubul.wav;
+#X obj 74 357 s \$0-sample_size;
+#X floatatom 74 329 0 0 0 0 - - -;
+#X msg 176 140 \; tempo 5 \; cents -400 \; grao 4096 \; pd dsp 1;
+#X connect 0 0 15 0;
+#X connect 2 0 9 0;
+#X connect 3 0 4 0;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 7 0 8 0;
+#X connect 8 0 13 0;
+#X connect 8 1 16 0;
+#X connect 8 2 3 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 0 0;
+#X connect 12 0 13 0;
+#X connect 13 0 10 0;
+#X connect 15 0 14 0;
+#X restore 172 400 pd sampler;
+#X obj 505 632 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X text 515 558 cents;
+#X obj 505 578 nbx 5 16 -1e+37 1e+37 0 0 empty cents empty 0 -8 0 13
+-236782 -1 -1 -400 256;
+#X obj 444 578 nbx 4 16 -1e+37 1e+37 0 0 empty tempo empty 0 -8 0 13
+-183865 -1 -1 5 256;
+#X obj 578 578 nbx 4 16 64 8192 0 0 empty grao empty 0 -8 0 13 -257904
+-1 -1 4096 256;
+#X text 639 576 grão;
+#X obj 172 373 bng 20 250 50 0 empty empty empty 17 7 0 10 -241326
+-1 -1;
+#X text 200 373 Abrir outro arquivo;
+#X obj 134 475 + 64;
+#X text 199 500 loop;
+#X text 255 554 bloco em ms;
+#X text 208 576 loop;
+#X text 434 479 Esse mesmo patch será ainda a base para um Phase Vocoder
+implementado em FFT \, com o mesmo objetivo de controle independente
+de velocidade e transposição.;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 155 652 pd output;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 451 654 pd output;
+#X text 27 133 O tamanho do bloco é \, por padrão \, de 64 amostras.
+Podemos mudar com o objeto [block~] \, que define um novo tamanho de
+bloco em um patch ou subpatch. O problema de mudar o tamanho do bloco
+na janela principal é que o [dac~] e o [adc~] só funcionam mesmo com
+um bloco de 64 amostras. Por isso costumamos mudar o tamanho do bloco
+em um subpatch.;
+#X obj 155 575 pong~ 1;
+#X obj 234 534 expr 64 / sr_KHz;
+#X obj 234 510 loadbang;
+#X obj 134 500 zexy/wrap;
+#X obj 194 476 r \$0-sample_size;
+#X obj 151 525 pack;
+#X text 132 454 + tamanho do bloco;
+#X text 406 558 velocidade (%);
+#N canvas 57 23 1081 636 Sampler_Granulacao 0;
+#X obj 317 592 outlet~;
+#X obj 230 57 inlet;
+#X obj 338 57 inlet;
+#X text 322 34 transposição;
+#X obj 495 57 inlet;
+#X text 219 33 velocidade;
+#X obj 677 39 cnv 15 385 105 empty empty Velocidade: 11 12 0 14 -188027
+-66577 0;
+#X obj 677 153 cnv 15 385 140 empty empty TransposiÃ§Ã£o: 8 13 0 14
+-236782 -66577 0;
+#X obj 677 304 cnv 15 385 110 empty empty Leitura: 5 12 0 14 -232608
+-66577 0;
+#X obj 677 427 cnv 15 385 160 empty empty Overlap: 5 12 0 14 -228911
+-66577 0;
+#X text 689 236 Isso se dá porque lemos o grão em um mesmo período
+de tempo. É a mesma ideia de aumentar ou diminuir a velocidade de rotação
+de um vinil \, ou de leitura de fita.;
+#X text 688 176 Convertemos cents para razão e multiplicamos pelo tamanho
+do bloco \, gerando um novo tamanho de grão - que \, se for o dobro
+\, dá uma oitava acima \, se for a metade \, uma oitava abaixo \, e
+assim por diante.;
+#X obj 81 171 cnv 15 250 55 empty empty empty 11 12 0 14 -188027 -66577
+0;
+#X obj 92 145 bang~;
+#X msg 210 333 \$1 \, \$2 \$3;
+#X obj 210 355 vline~;
+#X text 71 119 bang a cada bloco;
+#X obj 384 432 phasor~;
+#X obj 384 455 /~ 2;
+#X obj 384 478 sin~;
+#X obj 317 529 *~;
+#X text 423 455 Envelope;
+#X obj 338 95 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-236782 -1 -1 -400 256;
+#X obj 154 492 tabread4~ \$0-sample;
+#X obj 369 512 *~;
+#X obj 317 564 +~;
+#X obj 128 201 zexy/wrap;
+#X obj 199 202 r \$0-sample_size;
+#X obj 338 128 expr pow(2 \, $f1/1200);
+#X obj 230 139 v speed_\$0;
+#X obj 230 117 / 100;
+#X obj 128 177 expr $f1 + (speed_\$0 * block_\$0);
+#X obj 274 279 +;
+#X msg 518 203 set \$1;
+#X obj 495 123 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-257904 -1 -1 4096 256;
+#X text 580 123 bloco/grão;
+#X obj 515 224 cnv 15 50 30 empty empty empty 20 12 0 14 -183930 -66577
+0;
+#X obj 518 231 block~;
+#X text 393 157 razão;
+#X obj 230 87 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-204800 -1 -1 5 256;
+#X obj 210 306 pack float float float;
+#X obj 210 280 t f f;
+#X text 420 96 cents;
+#X floatatom 338 158 8 0 0 0 - - -;
+#X floatatom 289 247 0 0 0 0 - - -;
+#X text 222 242 novo grão;
+#X floatatom 425 267 0 0 0 0 - - -;
+#X text 357 265 grão em ms;
+#X obj 272 421 r \$0-sample_size;
+#X obj 154 446 pong~ 1;
+#X obj 495 306 / 2;
+#X floatatom 516 411 8 0 0 0 - - -;
+#X floatatom 374 342 0 0 0 0 - - -;
+#X obj 210 394 +~;
+#X obj 210 450 tabread4~ \$0-sample;
+#X obj 210 416 pong~ 1;
+#X obj 92 189 f;
+#X obj 338 203 expr $f1 * $f2 \; $f2 / sr_KHz;
+#X text 522 304 overlap;
+#X obj 338 181 cyclone/bondo 2;
+#X text 212 86 %;
+#X obj 374 310 / 2;
+#X text 320 341 overlap;
+#X obj 527 169 v block_\$0;
+#X obj 384 410 expr~ sr / block_\$0;
+#X text 18 187 Contador:;
+#X text 34 242 pontos de leitura =>;
+#X text 695 61 O tamanho do passo de leitura define a velocidade e
+é uma porcentagem do tamanho do bloco (50 = metade \, 200 = dobro \,
+etc). O [bang~] aciona o contador de acordo com o tamanho de bloco.
+Os passos de leitura são dados pela seção do "Contador". Velocidades
+negativas lêem o sample em passos no sentido contrário.;
+#X text 692 332 O [vline~] lê o sample pelo [tabread4~] e recebe 3
+dados: a) um ponto de início de leitura do sample \, gerado no contador
+\, b) esse ponto de partida somado ao tamanho do bloco vezes a transposição
+- indicando o ponto de chegada - e c) o tempo de duração do bloco/grão
+em ms.;
+#X text 692 455 Por fim \, aplicamos um envelope em dois grãos em overlap.
+A frequência do envelope é dada pela taxa de amostragem dividida pelo
+tamanho do bloco. O tamanho do overlap é a metade do bloco.;
+#X text 691 513 Temos então dois grãos defasados e sobrepostos. A diferença
+em samples entre um grão e outro é a metade do novo tamanho de grão.
+O grão que está mais à frente é atrasado e defasado de fato com um
+objeto [delay~] pela metade do tamanho original do grão .;
+#X text 241 393 defasagem;
+#X text 451 536 defasagem;
+#X obj 369 538 delay~ 4096;
+#X connect 1 0 39 0;
+#X connect 2 0 22 0;
+#X connect 4 0 34 0;
+#X connect 13 0 56 0;
+#X connect 14 0 15 0;
+#X connect 15 0 53 0;
+#X connect 15 0 49 0;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 1;
+#X connect 19 0 24 1;
+#X connect 20 0 25 0;
+#X connect 22 0 28 0;
+#X connect 23 0 20 0;
+#X connect 24 0 73 0;
+#X connect 25 0 0 0;
+#X connect 26 0 56 1;
+#X connect 27 0 26 1;
+#X connect 28 0 43 0;
+#X connect 30 0 29 0;
+#X connect 31 0 26 0;
+#X connect 32 0 40 1;
+#X connect 33 0 37 0;
+#X connect 34 0 33 0;
+#X connect 34 0 59 1;
+#X connect 34 0 50 0;
+#X connect 34 0 63 0;
+#X connect 39 0 30 0;
+#X connect 40 0 14 0;
+#X connect 41 0 40 0;
+#X connect 41 1 32 0;
+#X connect 43 0 59 0;
+#X connect 44 0 32 1;
+#X connect 44 0 61 0;
+#X connect 46 0 40 2;
+#X connect 48 0 49 2;
+#X connect 48 0 55 2;
+#X connect 49 0 23 0;
+#X connect 50 0 51 0;
+#X connect 51 0 73 1;
+#X connect 52 0 53 1;
+#X connect 53 0 55 0;
+#X connect 54 0 24 0;
+#X connect 55 0 54 0;
+#X connect 56 0 31 0;
+#X connect 56 0 41 0;
+#X connect 57 0 44 0;
+#X connect 57 1 46 0;
+#X connect 59 0 57 0;
+#X connect 59 1 57 1;
+#X connect 61 0 52 0;
+#X connect 64 0 17 0;
+#X connect 73 0 25 1;
+#X restore 451 604 pd Sampler_Granulacao;
+#X text 433 347 No subpatch abaixo \, usamos o [block~] para definir
+um tamanho de bloco (ou grão) maior que 64 \, desde que seja igual
+a uma potência de 2 \, (pois é uma restrição do [block~]).;
+#X text 29 223 O exemplo abaixo apenas exemplifica o mecanismo de leitura
+dos grãos (que correspondem a um tamanho de bloco de 64 amostras).
+O patch é apenas capaz de ler um arquivo de som na velocidade normal.
+;
+#X text 31 524 contador;
+#X text 24 69 A base é um [vline~] que recebe os grãos de leitura a
+partir de um contador. No caso \, o tamanho do grão é sempre igual
+ao tamanho do bloco. O contador é alimentado por um [bang~] \, que
+envia um bang a cada bloco.;
+#X text 29 284 O [vline~] recebe o ponto de chegada a partir do contador
+e o tempo em ms para chegar lá (correspondente ao tamanho do bloco
+\, dado pelo bloco divido pela taxa de amostragem em KHz). Temos um
+mecanismo de loop tanto no contador (com o objeto [zexy/wrap]) quanto
+na leitura da tabela (objeto [pong~]).;
+#X text 432 72 Quando lemos mais rápido o arquivo de som \, além do
+tempo de leitura ser mais curto \, a altura fica mais aguda. Todavia
+\, a partir de uma granulação \, é possível manter a mesma velocidade
+de leitura se mantivermos uma diferença (ou passo) de leitura entre
+um grão e outro que corresponde à velocidade original.;
+#X text 433 162 No caso de um pitch shifting ao agudo em uma oitava
+\, por exemplo \, dobramos o tamanho do grão e o lemos na mesma janela
+de tempo (ou seja \, lemos o grão duas vezes mais rápido). Mas se o
+passo de leitura corresponder ao novo tamanho de grão \, a velocidade
+também dobrará. Portanto \, para manter a mesma velocidade \, "seguramos"
+o passo de leitura dos grãos para corresponder com a velocidade original
+\, que no caso é a metade do novo tamanho de grão.;
+#X text 432 282 O tamanho do passo é o que define a velocidade e é
+dado pelo contador. Passos maiores que o original acabam pulando alguns
+trechos do áudio \, fazendo com que sua leitura seja mais rápida. Já
+passos menores tornam a leitura mais lenta.;
+#X text 432 10 O parâmetro Transposição define o tamanho do grão/janela.
+Se o tamanho é maior que o original \, precisamos ler mais rápido (ficando
+mais agudo) \, enquanto uma janela menor muda pro grave.;
+#X text 434 408 Abra o subpatch para ver como é possível \, baseado
+nesse princípio de granulação \, um controle independente de compressão
+e expansão de tempo (Time Strech/Time Compress) em porcentagem e mudança
+de altura (Pitch Shifting) em cents.;
+#X msg 720 594 2048;
+#X text 694 548 Potências de 2;
+#X msg 727 616 4096;
+#X msg 732 637 8192;
+#X msg 711 572 1024;
+#X obj 670 665 s \$0-grao;
+#X text 23 12 Desenvolvemos agora os princípios de granulação para
+implementar um controle independente de transposição de altura (Pitch
+Shifting) e velocidade de leitura (Time Stretching).;
+#X connect 0 0 3 0;
+#X connect 1 0 19 0;
+#X connect 2 0 22 0;
+#X connect 3 0 14 0;
+#X connect 4 0 19 1;
+#X connect 6 0 20 1;
+#X connect 8 0 30 1;
+#X connect 9 0 30 0;
+#X connect 10 0 30 2;
+#X connect 12 0 5 0;
+#X connect 14 0 25 0;
+#X connect 22 0 1 0;
+#X connect 23 0 27 1;
+#X connect 24 0 23 0;
+#X connect 25 0 3 1;
+#X connect 25 0 27 0;
+#X connect 26 0 25 1;
+#X connect 26 0 22 2;
+#X connect 27 0 2 0;
+#X connect 30 0 20 0;
+#X connect 41 0 46 0;
+#X connect 43 0 46 0;
+#X connect 44 0 46 0;
+#X connect 45 0 46 0;

@@ -1,0 +1,112 @@
+#N canvas 127 29 1035 592 10;
+#X obj 195 402 +~;
+#X obj 137 302 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 400 256;
+#X obj 203 257 cnv 15 140 110 empty empty empty 20 12 0 14 -166433
+-66577 0;
+#X obj 210 318 osc~;
+#X obj 210 340 *~;
+#X obj 210 295 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 285 295 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 285 314 \$1 10;
+#X obj 285 334 line~;
+#X text 70 300 Portadora;
+#X text 208 276 Moduladora;
+#X text 71 286 Frequência;
+#X obj 137 327 sig~;
+#X text 60 371 sinal portador =>;
+#X text 221 378 <= sinal modulador;
+#X text 207 261 Frequência;
+#X text 280 262 Índice de;
+#X text 281 275 Modulação;
+#X obj 169 508 output~;
+#X text 209 427 <= sinal de frequência modulada;
+#X text 103 465 oscilador =>;
+#X obj 195 467 osc~;
+#X obj 640 276 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 400 256;
+#X text 573 274 Portadora;
+#X text 574 260 Frequência;
+#X obj 640 301 sig~;
+#X text 573 384 sinal portador =>;
+#X obj 672 504 output~;
+#X text 472 403 oscilador =>;
+#X obj 640 342 phasor~;
+#X obj 725 248 cnv 15 140 110 empty empty empty 20 12 0 14 -166433
+-66577 0;
+#X obj 732 309 osc~;
+#X obj 732 331 *~;
+#X obj 732 286 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 807 286 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 807 305 \$1 10;
+#X obj 807 325 line~;
+#X text 730 267 Moduladora;
+#X text 729 383 <= sinal modulador;
+#X text 729 252 Frequência;
+#X text 802 253 Índice de;
+#X text 803 266 Modulação;
+#X obj 698 406 +~;
+#X obj 698 463 cos~;
+#X text 718 429 <= sinal de fase modulada;
+#X text 546 458 ||;
+#X text 556 461 ======================>;
+#X text 546 448 ||;
+#X text 546 438 ||;
+#X text 546 428 ||;
+#X text 546 418 ||;
+#X text 546 408 ||;
+#X text 546 398 ||;
+#X text 546 388 ||;
+#X text 546 378 ||;
+#X text 546 368 ||;
+#X text 546 358 ||;
+#X text 546 348 ||;
+#X text 557 342 ============>;
+#X text 67 16 Já vimos a estrutura básica de uma modulação de frequência.
+Vimos também sobre a relação entre um sinal de frequência e um sinal
+de Fase Corrente \, onde ambos são dois lados de uma moeda \, já que
+um sinal de frequência gera um respectivo sinal de Fase Corrente e
+vice-versa.;
+#X text 68 94 Dessa forma \, vimos como implementar um mesmo resultado
+de uma modulação de frequência via uma modulação dos sinais de Fase
+corresnpodentes. Porém \, neste exemplo \, apresentamos uma estrutura
+clássica de Modulação de Fase e percebemos que não equivale à estrutura
+clássica de uma modulação de frequência.;
+#X text 549 125 Não obstante \, na sequência deste material didático
+\, veremos ainda como obter equivalências entre essas estruturas clássicas
+de modulação de frequência e fase.;
+#X text 599 212 Estrutura Clássica de Modulação de Fase;
+#X text 80 219 Estrutura Clássica de Modulação de Frequência;
+#X text 548 22 Anteriormente \, tínhamos o sinal de modulação usado
+na modulação de frequência passando por um [phasor~] \, que retornava
+o sinal de Fase corrente correspondente \, gerando assim uma equivalência
+entre os dois processos. O que temos aqui agora é um exato mesmo sinal
+modulador modulando tanto o sinal de Frequência como a Fase. Logo \,
+o resultado é claramente bem distinto.;
+#X connect 0 0 21 0;
+#X connect 1 0 12 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 1;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 4 1;
+#X connect 12 0 0 0;
+#X connect 21 0 18 0;
+#X connect 21 0 18 1;
+#X connect 22 0 25 0;
+#X connect 25 0 29 0;
+#X connect 29 0 42 0;
+#X connect 31 0 32 0;
+#X connect 32 0 42 1;
+#X connect 33 0 31 0;
+#X connect 34 0 35 0;
+#X connect 35 0 36 0;
+#X connect 36 0 32 1;
+#X connect 42 0 43 0;
+#X connect 43 0 27 0;
+#X connect 43 0 27 1;

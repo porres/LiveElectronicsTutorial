@@ -1,0 +1,230 @@
+#N canvas 71 23 1274 677 10;
+#X obj 262 381 table \$0-buffer;
+#X obj 170 372 soundfiler;
+#X obj 170 288 loadbang;
+#X obj 527 504 phasor~;
+#X obj 527 556 tabread4~ \$0-buffer;
+#X obj 260 575 v Hz_\$0;
+#X obj 527 531 expr~ $v1 * size_\$0;
+#X obj 527 253 nbx 5 18 -1e+37 1e+37 0 0 empty tempo empty 0 -8 0 13
+-261234 -1 -1 100 256;
+#X floatatom 184 397 0 0 0 0 - - -;
+#X floatatom 260 549 0 0 0 0 - - -;
+#X obj 170 494 samplerate~;
+#X obj 260 525 /;
+#X obj 170 469 trigger bang float;
+#X obj 575 581 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 527 603 pd ganho;
+#X obj 685 398 bng 25 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 527 164 metro;
+#X obj 527 229 line;
+#X obj 527 125 tgl 30 0 empty empty empty 17 7 0 10 -262130 -1 -1 0
+1;
+#X floatatom 685 485 0 0 0 0 - - -;
+#X obj 196 420 s \$0-size;
+#X obj 718 413 r \$0-size;
+#X obj 685 439 random;
+#X obj 685 462 /;
+#X text 120 549 Frequência de leitura:;
+#X obj 30 285 openpanel;
+#X obj 30 308 list append \$0-buffer;
+#X msg 30 332 read -resize \$1 \$2;
+#X obj 30 255 bng 25 250 50 0 empty empty empty 17 7 0 10 -262130 -1
+-1;
+#X obj 893 527 tabread4~ \$0-buffer;
+#X obj 893 503 line~;
+#X text 43 73 Para definir a frequência do [phasor~] \, basta dividir
+a taxa de amostragem pelo tamanho da tabela como abaixo.;
+#X text 45 191 A fase do [phasor~] pode ser usada para pular para um
+ponto específico de leitura.;
+#X obj 170 523 v sr;
+#X obj 337 428 loadbang;
+#X text 59 259 Escolher arquivo;
+#X text 598 255 Velocidade (%);
+#X obj 970 171 r \$0-size;
+#X obj 937 205 random;
+#X obj 893 205 random;
+#X obj 893 146 bng 25 250 50 0 empty empty empty 17 7 0 10 -171370
+-1 -1;
+#X obj 893 181 t b b;
+#X floatatom 1022 284 0 0 0 0 - - -;
+#X floatatom 1022 340 0 0 0 0 - - -;
+#X obj 1022 310 expr ($f1 / sr) * 1000;
+#X obj 1099 339 nbx 5 18 -1e+37 1e+37 0 0 empty tempo empty 0 -8 0
+13 -261234 -1 -1 100 256;
+#X floatatom 1022 400 0 0 0 0 - - -;
+#X obj 893 428 pack float float float;
+#X msg 893 455 \$1 \, \$2 \$3;
+#X obj 893 232 expr $f1 \; $f2 \; abs($f1 - $f2);
+#X text 961 285 diferença;
+#X text 1004 339 ms;
+#X text 1171 339 Velocidade;
+#X floatatom 893 401 0 0 0 0 - - -;
+#X floatatom 957 401 0 0 0 0 - - -;
+#X text 1002 399 ms;
+#X obj 1022 371 /;
+#X obj 1099 364 / 100;
+#X obj 941 558 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 893 584 pd ganho;
+#X obj 527 276 / 100;
+#X obj 527 473 expr~ Hz_\$0 * $v1;
+#X obj 595 310 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#X obj 527 453 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 1 256;
+#X obj 595 337 expr pow(2 \, $f1/1200);
+#X text 666 311 Cents;
+#X obj 1100 388 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+13 -261682 -1 -1 0 256;
+#X obj 1100 415 expr pow(2 \, $f1/1200);
+#X text 1173 387 Cents;
+#X text 485 452 Razão;
+#X text 44 107 A velocidade de leitura aqui é dada em porcentagem \,
+basta dividir esse valor por 100 para obter uma razão \, a ser multiplicada
+pela frequência de leitura. Temos também um controle de transposição
+em cents \, que converte pra razão. Valores negativos de velocidade
+(ou razão) lê a tabela no sentido oposto.;
+#X text 605 395 fase/posição;
+#X text 622 408 aleatória;
+#X text 566 130 Velocidades aleatórias;
+#X text 122 566 Taxa de Amostragem;
+#X text 122 583 Dividida pelo Tamnho;
+#X text 154 599 da tabela;
+#X obj 184 443 value size_\$0;
+#X text 456 41 O [phasor~] pode ser interrompido com uma frequência
+de 0 Hz. Mas \, por sua natureza cíclica \, ele é conveniente para
+ler uma tabela (ou trecho) em loop constante \, além de mudar a velocidade/frequência
+de leitura de forma imediata.;
+#X msg 911 481 stop;
+#X text 946 481 congela no valor atual;
+#X text 869 23 No patch abaixo usamos o [line~] para realizar a leitura.
+Sorteamos uma amostra para o início e outra de chegada \, pegamos a
+diferença absoluta e calculamos seu tempo em ms. Por fim \, temos um
+ajuste desse tempo de acordo com um parâmetro de velocidade em porcentagem
+ou em cents.;
+#X obj 527 190 expr random(60 \, 120) \; random(700 \, 1700);
+#X text 42 25 Com o [tabread4~] \, temos recursos como tocar o arquivo
+em diferentes velocidades e também tocar ao contrário. A leitura pode
+ser feita com um [phasor~] ou um [line~].;
+#X msg 337 450 \; tempo 100 \; pd dsp 1;
+#X obj 1119 526 cnv 15 100 60 empty empty empty 20 12 0 14 -256359
+-66577 0;
+#N canvas 213 84 450 300 onset 0;
+#X obj 147 116 tabread4~;
+#X text 202 90 Onset;
+#X text 35 28 Este subpatch serve apenas para chamar a atenção para
+problemas de precisão e a necessidade de um onset.;
+#X text 35 159 O [tabread4~] possui um inlet direito para "onset".
+Isso porque pode haver problemas de precisão na leitura de tabelas
+muito grandes \, pois a precisão em bits pode não ser suficiente para
+indicar os índices de uma tabela a ser lida \, em casos em que o foi
+compilado em 32 bits \, por exemplo. Veja o exemplo B15.tabread4~-onset
+para mais detalhes.;
+#X restore 1161 557 pd onset;
+#X text 1121 537 Importante \; abra:;
+#X obj 170 314 symbol \$0-buffer;
+#X text 868 96 A diferença em usar o [line~] (ou [vline~]) é que a
+velocidade de leitura é constante por comando.;
+#X text 877 614 O exemplo acima gera "clicks" \, veremos como evita-los
+com envelopes na pasta de granulação.;
+#X msg 170 343 read -resize ../../samples/violin.wav \$1;
+#X connect 1 0 8 0;
+#X connect 1 0 12 0;
+#X connect 2 0 88 0;
+#X connect 3 0 6 0;
+#X connect 4 0 14 0;
+#X connect 6 0 4 0;
+#X connect 7 0 60 0;
+#X connect 8 0 20 0;
+#X connect 8 0 77 0;
+#X connect 9 0 5 0;
+#X connect 10 0 11 0;
+#X connect 10 0 33 0;
+#X connect 11 0 9 0;
+#X connect 12 0 10 0;
+#X connect 12 1 11 1;
+#X connect 13 0 14 1;
+#X connect 15 0 22 0;
+#X connect 16 0 82 0;
+#X connect 17 0 7 0;
+#X connect 18 0 16 0;
+#X connect 19 0 3 1;
+#X connect 21 0 22 1;
+#X connect 21 0 23 1;
+#X connect 22 0 23 0;
+#X connect 23 0 19 0;
+#X connect 25 0 26 0;
+#X connect 26 0 27 0;
+#X connect 27 0 1 0;
+#X connect 28 0 25 0;
+#X connect 29 0 59 0;
+#X connect 30 0 29 0;
+#X connect 34 0 84 0;
+#X connect 37 0 38 1;
+#X connect 37 0 39 1;
+#X connect 38 0 49 1;
+#X connect 39 0 49 0;
+#X connect 40 0 41 0;
+#X connect 41 0 39 0;
+#X connect 41 1 38 0;
+#X connect 42 0 44 0;
+#X connect 43 0 56 0;
+#X connect 44 0 43 0;
+#X connect 45 0 57 0;
+#X connect 46 0 47 2;
+#X connect 47 0 48 0;
+#X connect 48 0 30 0;
+#X connect 49 0 53 0;
+#X connect 49 1 54 0;
+#X connect 49 2 42 0;
+#X connect 53 0 47 0;
+#X connect 54 0 47 1;
+#X connect 56 0 46 0;
+#X connect 57 0 56 1;
+#X connect 58 0 59 1;
+#X connect 60 0 63 0;
+#X connect 61 0 3 0;
+#X connect 62 0 64 0;
+#X connect 63 0 61 0;
+#X connect 64 0 63 0;
+#X connect 66 0 67 0;
+#X connect 67 0 56 1;
+#X connect 79 0 30 0;
+#X connect 82 0 17 0;
+#X connect 82 1 16 1;
+#X connect 82 1 17 1;
+#X connect 88 0 91 0;
+#X connect 91 0 1 0;

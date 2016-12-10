@@ -1,0 +1,163 @@
+#N canvas 122 33 1191 601 10;
+#X msg 112 446 \; pd dsp 1;
+#X obj 112 421 loadbang;
+#X text 900 392 1;
+#X text 894 526 -1;
+#X text 900 459 0;
+#X obj 916 399 cnv 15 198 138 empty empty empty 20 12 0 14 -183930
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Mix 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1 440 -1 200 140 1;
+#X restore 915 398 graph;
+#X obj 520 244 hsl 128 15 0 0.5 0 0 empty empty empty -2 -6 0 10 -204800
+-1 -1 0 1;
+#X obj 502 334 *~;
+#X obj 662 406 +~;
+#X text 696 405 Somar = Mixar;
+#X obj 695 245 hsl 128 15 0 0.5 0 0 empty empty empty -2 -6 0 10 -203904
+-1 -1 0 1;
+#X obj 677 335 *~;
+#X text 567 224 vol 0 a 0.5;
+#X text 752 221 vol 0 a 0.5;
+#X floatatom 502 189 5 0 0 0 - osc1 -;
+#X floatatom 552 190 5 0 0 0 - ph1 -;
+#X obj 502 217 osc~;
+#X floatatom 677 189 5 0 0 0 - osc2 -;
+#X floatatom 727 190 5 0 0 0 - ph2 -;
+#X obj 677 218 osc~;
+#X text 895 212 1;
+#X text 889 346 -1;
+#X text 895 279 0;
+#X obj 911 219 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array osc2 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1 440 -1 200 140 1;
+#X restore 910 218 graph;
+#X text 894 35 1;
+#X text 888 169 -1;
+#X text 894 102 0;
+#X obj 910 42 cnv 15 198 138 empty empty empty 20 12 0 14 -204800 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array osc1 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1 440 -1 200 140 1;
+#X restore 909 41 graph;
+#X obj 230 401 r set;
+#X obj 407 130 s set;
+#X msg 230 426 \; osc1 \$1 \; ph1 \$2 \; osc2 \$3 \; ph2 \$4;
+#X text 997 188 +;
+#X text 1000 372 =;
+#N canvas 49 22 406 259 plotar 0;
+#X obj 39 43 inlet~;
+#X obj 154 45 inlet~;
+#X obj 278 44 inlet~;
+#X obj 85 73 loadbang;
+#X obj 85 99 tgl 15 0 empty empty empty 17 7 0 10 -162995 -1 -1 1 1
+;
+#X obj 278 173 tabwrite~ Mix;
+#X obj 40 170 tabwrite~ osc1;
+#X obj 154 174 tabwrite~ osc2;
+#X obj 85 118 metro 200;
+#X connect 0 0 6 0;
+#X connect 1 0 7 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 8 0;
+#X connect 8 0 5 0;
+#X connect 8 0 6 0;
+#X connect 8 0 7 0;
+#X restore 576 449 pd plotar;
+#X msg 429 100 400 0 401 0;
+#X obj 692 300 line~;
+#X obj 662 448 *~ 0.5;
+#X msg 692 274 \$1 10;
+#X obj 517 300 line~;
+#X msg 517 274 \$1 10;
+#X obj 653 502 dac~;
+#X msg 407 68 400 0 400 0.5;
+#X text 502 67 exemplo 1: Cancelamento de Fase entre 2 ondas de 400hz
+;
+#X text 512 99 exemplo 2: Batimentos entre 400hz e 401hz;
+#X text 34 68 Este patch trata da soma de osciladores em defasagem
+e em frequências próximas (gerando batimentos). Clique nas mensagens
+ao lado para ver esses dois exemplos em ação.;
+#X text 35 169 No primeiro exemplo temos duas frequências iguais (400hz)
+\, mas com fases opostas (ou invertidas). Quando somamos ambas com
+um mesmo ganho \, o resultado é um cancelamento total do sinal. Fica
+fácil entender o cancelamento ao vermos os desenhos de ambos os osciladores
+com a fase invertida \; .;
+#X text 36 251 O segundo exemplo é de Batimentos. Somamos duas frequências
+muito próximas que \, por isso \, acabam entrando e saindo de fase.
+Ou seja \, em um momento elas se somam por estarem em fase \, mas logo
+acabam se cancelando por estarem em fases opostas. O ciclo de um Batimento
+tem a mesma duração da diferença em Herts entre as frequências das
+ondas. Neste exemplo \, ele dura um segundo \, pois a diferença entre
+400hz e 401hz é 1hz (um ciclo por segundo).;
+#X connect 1 0 0 0;
+#X connect 7 0 42 0;
+#X connect 8 0 9 0;
+#X connect 8 0 36 0;
+#X connect 9 0 36 2;
+#X connect 9 0 39 0;
+#X connect 11 0 40 0;
+#X connect 12 0 9 1;
+#X connect 12 0 36 1;
+#X connect 15 0 17 0;
+#X connect 16 0 17 1;
+#X connect 17 0 8 0;
+#X connect 18 0 20 0;
+#X connect 19 0 20 1;
+#X connect 20 0 12 0;
+#X connect 31 0 33 0;
+#X connect 37 0 32 0;
+#X connect 38 0 12 1;
+#X connect 39 0 43 0;
+#X connect 39 0 43 1;
+#X connect 40 0 38 0;
+#X connect 41 0 8 1;
+#X connect 42 0 41 0;
+#X connect 44 0 32 0;

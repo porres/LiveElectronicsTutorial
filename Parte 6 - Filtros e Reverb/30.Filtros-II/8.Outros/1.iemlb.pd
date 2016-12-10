@@ -1,0 +1,107 @@
+#N canvas 32 40 1232 605 10;
+#X obj 587 466 vcf_bp2~;
+#X obj 587 486 vcf_bp4~;
+#X obj 587 506 vcf_bp6~;
+#X obj 587 526 vcf_bp8~;
+#X obj 523 466 vcf_hp2~;
+#X obj 523 486 vcf_hp4~;
+#X obj 523 506 vcf_hp6~;
+#X obj 523 526 vcf_hp8~;
+#X obj 459 466 vcf_lp2~;
+#X obj 459 486 vcf_lp4~;
+#X obj 459 506 vcf_lp6~;
+#X obj 459 526 vcf_lp8~;
+#X obj 651 466 vcf_rbp2~;
+#X obj 651 486 vcf_rbp4~;
+#X obj 651 506 vcf_rbp6~;
+#X obj 651 526 vcf_rbp8~;
+#X obj 143 527 bpq2~;
+#X obj 182 527 bpw2~;
+#X obj 221 527 bsq2~;
+#X obj 197 448 hp1~;
+#X obj 227 448 hp2~;
+#X obj 108 448 lp1~;
+#X obj 138 448 lp2~;
+#X obj 472 125 lp2_butt~;
+#X obj 472 145 lp2_cheb~;
+#X obj 472 165 lp2_crit~;
+#X obj 169 364 filter~;
+#X obj 472 105 lp2_bess~;
+#X obj 471 221 hp2_bess~;
+#X obj 471 241 hp2_butt~;
+#X obj 471 261 hp2_cheb~;
+#X obj 471 281 hp2_crit~;
+#X text 41 19 A biblioteca "iemlib" traz um bom número de filtros e
+abstrações de filtros.;
+#X obj 144 122 maverage~;
+#X text 42 58 A começar \, temos um objeto para filtro de média \,
+do tipo que vimos aqui na seção de introdução sobre filtros. Consulte
+a ajuda.;
+#X text 43 156 Ademais \, temos um passabanda paramétrico de segunda
+ordem:;
+#X obj 150 190 para_bp2~;
+#X obj 162 265 hml_shelf~;
+#X text 42 325 E aí temos uma série de abstrações baseadas no objeto
+[filter~].;
+#X text 33 300 ============================================================
+;
+#X text 535 132 ...;
+#X text 535 248 ...;
+#X text 435 26 E terminando com filtros Passa Baixa e Passa Alta de
+segunda até décima ordem pulando as ordens ímpares (mude apenas o número):
+;
+#X text 420 327 ============================================================
+;
+#X obj 667 105 lp10_bess~;
+#X obj 667 125 lp10_butt~;
+#X obj 667 145 lp10_cheb~;
+#X obj 667 165 lp10_crit~;
+#X text 637 132 ...;
+#X obj 671 219 hp10_bess~;
+#X obj 671 239 hp10_butt~;
+#X obj 671 259 hp10_cheb~;
+#X obj 671 279 hp10_crit~;
+#X text 638 247 ...;
+#X obj 568 105 lp6_bess~;
+#X obj 568 125 lp6_butt~;
+#X obj 568 220 hp6_bess~;
+#X obj 568 145 lp6_cheb~;
+#X obj 568 165 lp6_crit~;
+#X obj 568 240 hp6_butt~;
+#X obj 568 260 hp6_cheb~;
+#X obj 568 280 hp6_crit~;
+#X obj 289 448 ap1~;
+#X obj 322 448 ap2~;
+#X obj 828 56 cnv 15 380 370 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 841 346 Chebyshev: Possuem bastante ondulação (ou "ripple")
+na resposta de frequência em torno da frequência de corte.;
+#X text 40 230 Um filtro shelving de alta \, média e baixa frequência:
+;
+#X text 42 397 Vejamos primeiro os filtros Passa Baixa \, Passa Alta
+e Passa Tudo de primeira e segunda ordem.;
+#X text 43 486 E agora uma série de filtros de Banda de segunda ordem:
+;
+#X text 442 196 Passa Alta:;
+#X text 435 79 Passa Baixa:;
+#X text 438 356 Uma outra série de abstrações é baseada no objeto [vcf_filter~].
+Trata-se de uma Série de filtros Passa Baixa Ressonante \, Passa Alta
+Ressonante \, Passa Banda e Passa Banda Ressonante de segunda à oitava
+ordem. Todos com entrada de sinal para controle de Frequência em Hz
+e Q.;
+#X text 840 252 Bessel: Possuem a resposta de fase mais plana possível.
+São comumente utilizados em sistemas de crossover de áudio.;
+#X text 840 292 Butterworth: Possuem a resposta de frequência mais
+plana possível e uma transição contínua ao negativo infinito após a
+frequência de corte.;
+#X text 838 70 Topologia de filtros:;
+#X text 844 106 Alguns dos filtros da biblioteca iemlib indicam suas
+topologias \, são elas \; - Bessel: para os objetos à esquerda que
+terimnam em "bess~" \; - Butterworth: para os que terminam em "butt~"
+\; - Chebyshev: para os que terminam em "cheb~".;
+#X text 843 200 Essas são três das mais importantes topologias de filtros
+\, que podem ser decritas brevemente da seguinte maneira:;
+#X text 844 454 As diferenças entre as topologias \, entretanto \,
+não são muito relevantes para sistemas de ordem menores \, como sistemas
+de segunda ordem \, e se tornam mais relevantes na medida em que a
+ordem so sistema é maior.;

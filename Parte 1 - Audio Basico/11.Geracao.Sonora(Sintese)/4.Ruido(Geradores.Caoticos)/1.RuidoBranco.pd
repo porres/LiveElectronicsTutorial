@@ -1,0 +1,84 @@
+#N canvas 375 191 1084 682 12;
+#X obj 193 351 output~;
+#X obj 241 122 noise~;
+#X obj 222 165 output~;
+#X text 58 236 O ruído branco pode ser gerado com uma sequência de
+números aleatóreos. Fazemos isso no subpatch abaixo. Abra e confira.
+;
+#X obj 85 583 output~;
+#X obj 177 578 env~;
+#X floatatom 177 605 5 0 0 0 - - -;
+#X obj 278 342 env~;
+#X floatatom 278 369 5 0 0 0 - - -;
+#X text 60 442 No subpatch abaixo temos uma variação em que os valores
+de amplitude são somente -1 ou 1 \, abra e confira. Note também que
+a qualidade sonora não muda muito. A grande diferença é a amplitude
+rms que está fixa em 100 dB!;
+#X obj 705 248 output~;
+#N canvas 38 144 837 273 Ruído_Branco_1 0;
+#X obj 81 162 outlet~;
+#X obj 175 113 block~ 1;
+#X text 365 46 A função "random" do [expr~] é um gerador de números
+aleatóreos. Geramos com ela números que vão de -1000 a 1000 \, e depois
+dividimos por 1000 \, ou seja \, temos como resultado valores de amplitude
+que vão de -1 a 1 \, com a possibiidade de 2000 valores.;
+#X text 367 140 O objeto [block~] está setado para apenas uma amostra.
+Isso significa que um número aleatóreo é gerado a cada amostra \, o
+que é necessário para gerarmos o ruído branco.;
+#X obj 81 66 expr~ random(-1000 \, 1001)/1000.;
+#X connect 4 0 0 0;
+#X restore 222 307 pd Ruído_Branco_1;
+#N canvas 38 144 796 227 Ruído_Branco_2 0;
+#X obj 81 162 outlet~;
+#X obj 143 113 block~ 1;
+#X obj 81 66 expr~ if(random(0 \, 2) == 1 \, 1 \, -1);
+#X text 351 92 Gera números 0 ou 1 aleatoreamente. Se for igual a 1
+\, continua 1 \, se for diferente \, vira -1 \, voilà!;
+#X connect 2 0 0 0;
+#X restore 114 532 pd Ruído_Branco_2;
+#N canvas 38 144 694 254 Ruído_Branco_3 0;
+#X obj 81 162 outlet~;
+#X obj 175 113 block~ 1;
+#X obj 81 117 osc~;
+#X text 281 63 Frequências aleatóres de 0 a 44100 Hz;
+#X obj 81 66 expr~ random(0 \, 44101);
+#X connect 2 0 0 0;
+#X connect 4 0 2 0;
+#X restore 717 195 pd Ruído_Branco_3;
+#X text 587 101 No último exemplo \, temos um gerador de números aleatóreos
+nos dando valores de frequência que alimentam um oscilador. Confira
+como isso também funciona.;
+#X text 597 334 O nome do ruído branco vem da analogia com a luz \,
+em que a luz branca contém todas as cores (ou frequências) do arco-íris.
+;
+#X text 53 30 O ruído branco possui energia distribuida uniformemente
+por todo o o registro do espectro sonoro. Isso significa que há frequências
+que vão de 0 Hz até a frequência de Nyquist. O objeto [noise~] é um
+gerador de ruído branco.;
+#X text 591 424 ============================================================
+;
+#X text 598 470 O ruído branco é apenas um dentre diversos geradores
+sonoros caóticos (indeterminados). Porém \, é de longe o mais comum.
+Seu uso é bem comum em síntese \, pois é uma fonte sonora rica que
+pode ser filtrada de diferentes maneiras.;
+#X text 597 552 Outra aplicação é como gerador de sinal aleatóreo \,
+como veremos.;
+#X obj 270 575 expr~ if($v1 > 0 \, 1 \, -1);
+#X obj 270 548 noise~;
+#X obj 386 125 loadbang;
+#X msg 385 157 \; pd dsp 1;
+#X text 330 547 outra opção;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X connect 5 0 6 0;
+#X connect 7 0 8 0;
+#X connect 11 0 0 0;
+#X connect 11 0 0 1;
+#X connect 11 0 7 0;
+#X connect 12 0 4 0;
+#X connect 12 0 4 1;
+#X connect 12 0 5 0;
+#X connect 13 0 10 0;
+#X connect 13 0 10 1;
+#X connect 21 0 20 0;
+#X connect 22 0 23 0;

@@ -1,0 +1,97 @@
+#N canvas 162 38 1061 493 10;
+#X floatatom 609 81 0 0 0 0 - - -;
+#X obj 612 56 hsl 128 15 0.01 5 0 0 empty LFO empty -2 -8 0 10 -262130
+-1 -1 1756 1;
+#X obj 663 368 +~;
+#X obj 646 410 output~;
+#X obj 609 232 vd~ \$0-ch1;
+#X obj 786 222 vd~ \$0-ch2;
+#X obj 880 148 hsl 128 15 -1 1 0 0 empty feedback empty -2 -8 0 10
+-204786 -1 -1 4445 1;
+#X text 916 147 Feedback;
+#X obj 238 274 loadbang;
+#X floatatom 877 176 0 0 0 0 - - -;
+#X obj 877 224 line~;
+#X msg 877 203 \$1 10;
+#X obj 740 277 expr~ $v1 * $v3 \; $v2 * $v3;
+#X floatatom 786 105 0 0 0 0 - - -;
+#X obj 786 153 line~;
+#X msg 786 132 \$1 10;
+#X obj 789 81 hsl 128 15 1 100 1 0 empty depth empty -2 -8 0 10 -204800
+-1 -1 4326 1;
+#X text 828 80 Depth;
+#X obj 609 123 line~;
+#X msg 609 102 \$1 10;
+#X text 650 55 Rate;
+#X text 357 291 Spacey;
+#X text 261 293 Chorus;
+#X text 454 292 Flangy;
+#X msg 238 311 \; pd dsp 1 \; LFO 0.7 \; depth 4.8 \; feedback -0.3
+;
+#X msg 435 311 \; pd dsp 1 \; LFO 0.09 \; depth 5.2 \; feedback 0.94
+;
+#X obj 678 286 +~;
+#X obj 144 210 loadbang;
+#X obj 144 266 readsf~;
+#X obj 144 297 s~ \$0-in;
+#X obj 593 285 r~ \$0-in;
+#X msg 335 311 \; pd dsp 1 \; LFO 0.35 \; depth 50 \; feedback -0.8
+;
+#X obj 609 178 expr~ $v1 * (0.5 + 0.5) * $v2 \; -$v1 * (0.5 + 0.5)
+* $v2;
+#X text 60 25 Temos agora um exemplo mais aprimorado de Chorus com
+dois canais de delay sendo controlados por dois LFOs senoidas com fase
+oposta. Note que invertemos a polaridade do sinal do LFO na segunda
+equação do [expr~];
+#X text 426 192 (-$v1 = polaridade invertida);
+#X obj 725 361 +~;
+#X obj 818 335 +~;
+#X obj 553 152 rand~;
+#X text 497 150 LFNoise;
+#X text 647 151 LFO;
+#X text 154 422 Uma ideia interessante é trocar o LFO pelo [rand~]
+\, onde temos um controle mais aleatóreo do vibrato. Experimente.;
+#X text 63 90 No primeiro exemplo de vibrato/chorus \, tínhamos somente
+um canal de delay e vimos que somar o sinal original com o sinal de
+vibrato dava um efeito de chorus. Uma diferença agora é que somamos
+o sinal com dois sinais de vibrato. Outra diferença mais relevante
+é que temos o sinal de delay em feedback \, o que aproxima esse processamento
+também com o exemplo anterior de flanger.;
+#X obj 725 385 delwrite~ \$0-ch1 200;
+#X obj 818 361 delwrite~ \$0-ch2 200;
+#X msg 144 236 open ../../../samples/guitar.wav \, 1;
+#X obj 609 150 osc~;
+#X connect 0 0 19 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 2 0 3 1;
+#X connect 4 0 12 0;
+#X connect 4 0 26 0;
+#X connect 5 0 12 1;
+#X connect 5 0 26 1;
+#X connect 6 0 9 0;
+#X connect 8 0 24 0;
+#X connect 9 0 11 0;
+#X connect 10 0 12 2;
+#X connect 11 0 10 0;
+#X connect 12 0 35 1;
+#X connect 12 1 36 1;
+#X connect 13 0 15 0;
+#X connect 14 0 32 1;
+#X connect 15 0 14 0;
+#X connect 16 0 13 0;
+#X connect 18 0 45 0;
+#X connect 19 0 18 0;
+#X connect 26 0 2 1;
+#X connect 27 0 44 0;
+#X connect 28 0 29 0;
+#X connect 28 1 44 0;
+#X connect 30 0 2 0;
+#X connect 30 0 35 0;
+#X connect 30 0 36 0;
+#X connect 32 0 4 0;
+#X connect 32 1 5 0;
+#X connect 35 0 42 0;
+#X connect 36 0 43 0;
+#X connect 44 0 28 0;
+#X connect 45 0 32 0;

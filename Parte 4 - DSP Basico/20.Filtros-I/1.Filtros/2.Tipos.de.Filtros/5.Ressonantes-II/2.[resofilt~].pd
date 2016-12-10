@@ -1,0 +1,76 @@
+#N canvas 184 23 863 521 10;
+#X obj 85 320 blosc~ saw;
+#X obj 85 294 sig~ 70;
+#X obj 164 292 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 331.496 256;
+#X obj 196 350 nbx 5 14 0 10 0 0 empty empty empty 0 -8 0 10 -4032
+-1 -1 5.66929 256;
+#X obj 167 267 hsl 128 15 100 5000 0 0 empty cutoff empty -2 -8 0 10
+-204800 -1 -1 600 1;
+#X obj 199 329 hsl 128 15 0 10 0 0 empty Q empty -2 -8 0 10 -4032 -1
+-1 7200 1;
+#X obj 249 397 loadbang;
+#X obj 125 432 output~;
+#X text 442 27 AUTO OSCILAÇÃO (Self Oscillation):;
+#X text 457 59 Uma propriedade muito comum de alguns filtros ressonantes
+analógicos é a capacidade de entrar em auto oscilação.;
+#X text 457 91 Como já dito algumas vezes por aqui \, filtros ressonântes
+implicam em um ganho em torno da frequência ressonante. Porém \, quando
+o parâmetro de ressonância é relativamente alto \, o sistema e capaz
+de ressoar na frequência de ressonância mesmo sem nenhuma entrada de
+sinal/excitação.;
+#X text 459 164 Em outras palavras \, o filtro começa a gerar sinal
+sozinho e atuar como um oscilador. De fato \, podemos encontrar alguns
+osciladores analógicos que são nada mais nada menos que filtros ressonantes.
+;
+#X obj 546 434 output~;
+#X obj 589 377 nbx 5 14 -1e+37 1e+37 0 0 empty Hz empty 0 -8 0 10 -261682
+-1 -1 341.732 256;
+#X msg 249 427 \; cutoff 500 \; Q 0.5 \; Hz 440;
+#X obj 533 373 click~;
+#X obj 533 345 bng 20 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 592 353 hsl 128 15 200 2000 0 0 empty empty empty -2 -8 0 10
+-261682 -1 -1 1000 1;
+#X obj 558 401 resofilt~ 4;
+#X text 460 226 Para valores de ressonância maiores do que 1 \, o [resofilt~]
+começa a distorcer e pode entrar em auto-oscilação. Veja abaixo ele
+atuando como um oscilador sem nenhuma entrada sonora. Mas ele precisa
+\, pelo menos \, receber uma excitação como um impulso do objeto [click~]
+para pegar no tranco. Mas o bacana mesmo é que ele entre em auto oscilação
+enquanto filtra um sinal.;
+#X text 223 328 Q/Resonância;
+#X text 44 17 O [resofilt~] apresenta duas implementações de filtros
+Passa Baixa Ressonantes. Uma delas é ainda outra implementação do filtro
+Moog. Já a outra implementa o filtro do TB-303.;
+#X text 44 77 O filtro do Moog é um filtro de 4 polos (veremos o que
+é um polo em uma seção futura). Já o filtro do TB-303 é de 3 polos.
+O filtro analógico do TB-303 possui um circuito bem próximo do filtro
+da moog. Inclusive removeram um polo do tb303 para justamente não ferir
+a patente da Moog.;
+#X text 44 152 O argumento do [resofilt~] indica o número de polos
+do filtro e tem duas opções: 3 (TB-303) e 4 (Moog). Há uma implicação
+prática do número de polos de um filtro na resposta de frequência em
+que cada polo promove uma queda de 6dB por oitava. Ou seja \, o TB-303
+(3 polos) tem um decaimento de 18dB por oitava e o Moog (4 polos) tem
+um decaimento de 24dB por oitava.;
+#X text 201 267 Frequência;
+#X obj 133 382 resofilt~ 3;
+#X text 698 399 Q;
+#X obj 648 400 sig~ 10;
+#X connect 0 0 25 0;
+#X connect 1 0 0 0;
+#X connect 2 0 25 1;
+#X connect 3 0 25 2;
+#X connect 4 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 14 0;
+#X connect 13 0 18 1;
+#X connect 15 0 18 0;
+#X connect 16 0 15 0;
+#X connect 17 0 13 0;
+#X connect 18 0 12 0;
+#X connect 18 0 12 1;
+#X connect 25 0 7 0;
+#X connect 25 0 7 1;
+#X connect 27 0 18 2;

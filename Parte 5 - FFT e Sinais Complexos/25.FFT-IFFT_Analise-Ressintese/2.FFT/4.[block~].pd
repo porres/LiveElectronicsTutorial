@@ -1,0 +1,241 @@
+#N canvas 78 23 871 697 10;
+#X obj 131 350 cnv 15 100 50 empty empty empty 20 12 0 14 -203175 -66577
+0;
+#X floatatom 140 265 5 0 0 0 - - -;
+#X text 238 366 <= clique e abra;
+#X obj 264 200 loadbang;
+#N canvas 397 22 499 282 Hann 0;
+#X obj 38 158 osc~;
+#X obj 38 105 samplerate~;
+#X msg 140 124 0.5;
+#X obj 233 99 cnv 15 198 118 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 232 99 graph;
+#X obj 38 187 expr~ $v1 * 0.5 + 0.5;
+#X obj 30 49 inlet;
+#X obj 30 80 trigger bang bang bang float;
+#X obj 38 132 /;
+#X obj 30 212 tabwrite~ \$0-hann;
+#X connect 0 0 5 0;
+#X connect 1 0 8 0;
+#X connect 2 0 0 1;
+#X connect 5 0 9 0;
+#X connect 6 0 7 0;
+#X connect 7 0 9 0;
+#X connect 7 1 1 0;
+#X connect 7 2 2 0;
+#X connect 7 3 8 1;
+#X connect 8 0 0 0;
+#X restore 178 224 pd Hann;
+#X obj 178 203 nbx 5 14 -1e+37 1e+37 0 0 empty window empty 0 -8 0
+10 -204786 -1 -1 2048 256;
+#X text 63 201 Tamanho da janela:;
+#X text 67 224 cria janela Hann:;
+#X msg 264 230 \; pd dsp 1 \; window 2048;
+#N canvas 108 23 1258 698 FFT-Graphs 0;
+#X obj 78 425 cnv 15 330 160 empty empty empty 20 12 0 14 -203822 -66577
+0;
+#X obj 30 227 cnv 15 500 60 empty empty empty 20 12 0 14 -162285 -66577
+0;
+#X obj 30 288 cnv 15 500 100 empty empty empty 20 12 0 14 -203175 -66577
+0;
+#X obj 53 310 cnv 15 120 60 empty empty empty 20 12 0 14 -199719 -66577
+0;
+#X obj 85 249 rfft~;
+#X obj 85 55 inlet~;
+#X text 136 443 Tamanho da Janela = 2048 / 4 Overlaps;
+#X text 213 310 SINAL COMPLEXO NO DOMÍNIO DO TEMPO;
+#X text 198 343 Forma Cartesiana (parte real & imaginária);
+#X text 138 54 <= Input: Domínio do Tempo;
+#N canvas 159 39 467 405 plotar 0;
+#X obj 42 41 inlet~;
+#X obj 104 40 inlet~;
+#X obj 42 221 cartopol~;
+#X obj 260 80 loadbang;
+#X obj 260 105 tgl 15 0 empty empty empty 0 -6 0 10 -262130 -1 -1 1
+1;
+#X obj 260 126 metro 205;
+#X obj 181 337 tabwrite~ \$0-Amplitude;
+#X obj 145 183 tabwrite~ \$0-Re;
+#X obj 277 184 tabwrite~ \$0-Im;
+#X obj 241 308 tabwrite~ \$0-Fase;
+#X text 182 36 Este subpatch plota os gráficos da FFT;
+#X connect 0 0 2 0;
+#X connect 0 0 7 0;
+#X connect 1 0 2 1;
+#X connect 1 0 8 0;
+#X connect 2 0 6 0;
+#X connect 2 1 9 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 5 0 7 0;
+#X connect 5 0 8 0;
+#X connect 5 0 9 0;
+#X restore 75 326 pd plotar;
+#X text 79 346 gráficos;
+#X obj 58 144 cnv 15 210 70 empty empty empty 20 12 0 14 -223969 -66577
+0;
+#X obj 100 158 tabreceive~ \$0-hann;
+#X obj 85 187 *~;
+#X text 135 181 janela hann;
+#X obj 200 469 block~ 2048 4;
+#X text 126 551 é feito automaticamente neste subpatch!;
+#X text 276 169 Suavização na entrada com envelope hann;
+#X text 142 246 FFT para sinal real: Decompõe em Componentes de Tons
+Puros;
+#X text 106 506 O objeto [block~] também define o overlapping;
+#X text 104 529 como segundo argumento! Dessa forma \, o overlap;
+#X obj 565 34 cnv 15 650 630 empty empty empty 20 12 0 14 -33289 -66577
+0;
+#X obj 590 50 cnv 15 600 280 empty empty Cartesiana 20 12 0 14 -262130
+-4160 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Re 1024 float 0;
+#X coords 0 256 1023 -256 256 200 1;
+#X restore 622 102 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Im 1024 float 0;
+#X coords 0 256 1023 -256 256 200 1;
+#X restore 898 101 graph;
+#X obj 623 103 cnv 15 254 198 empty empty empty 20 12 0 14 -236717
+-66577 0;
+#X text 842 301 Nyquist;
+#X text 620 300 0;
+#X text 1129 300 Nyquist;
+#X text 896 299 0;
+#X obj 899 102 cnv 15 254 198 empty empty empty 20 12 0 14 -257521
+-66577 0;
+#X text 607 190 0;
+#X text 885 192 0;
+#X obj 590 363 cnv 15 600 280 empty empty Polar 20 12 0 14 -262130
+-4160 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Amplitude 1024 float 0;
+#X coords 0 512 1023 0 256 200 1;
+#X restore 621 408 graph;
+#X obj 622 409 cnv 15 254 198 empty empty empty 20 12 0 14 -204786
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Fase 1024 float 0;
+#X coords 0 -3.14 1023 3.14 256 200 1;
+#X restore 898 408 graph;
+#X obj 899 409 cnv 15 254 198 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#X text 1129 609 Nyquist;
+#X text 896 606 0;
+#X text 841 610 Nyquist;
+#X text 619 606 0;
+#X text 885 498 0;
+#X text 607 597 0;
+#X text 727 76 Cosseno;
+#X text 1010 79 Seno;
+#X connect 4 0 10 0;
+#X connect 4 1 10 1;
+#X connect 5 0 14 0;
+#X connect 13 0 14 1;
+#X connect 14 0 4 0;
+#X restore 140 366 pd FFT-Graphs;
+#X text 454 23 Vimos que o objeto [block~] e seu irmão [switch~] podem
+mudar o tamanho do bloco e fazer um resampleamento. Agora estamos vendo
+que também são capazes de fazer overlaping. Já foi explicado como o
+resampleamento tem a ver com o tamanho do bloco \, porque mudar a taxa
+de amostragem \, além de implicar em uma mudança da velocidade de leitura
+\, também implica em uma mudança do tamanho do bloco.;
+#X text 454 136 O overlap também acaba funcionando de modo parecido
+\, aumentando o tamanho do bloco como num resampleamento \, mas com
+um algoritmo um pouco mais complicado.;
+#X text 456 353 Toda essa explicação serve também para justificar um
+problema que ocorre quando tentamos fazer alguma geração sonora em
+um suboatch com overlaping.;
+#X text 455 406 Um oscilador \, por exemplo \, vai gerar o sinal sem
+saber que o bloco de áudio aumentou. Portanto já gera o som em uma
+frequência diferente. Fora isso \, seu sinal será dividido e sobreposto
+\, gerando descontinuidades no sinal;
+#X text 464 476 Por isso deve haver um cuidado quando se trabalha com
+overlapping. O subpatch com overlap deve ser usado somente para análise
+de FFT e processamento espectral. A geração sonora deve ser feita fora
+do subpatch e a comunicação com o subpatch deve ser feita via [inlet~]
+e [outlet~]!;
+#X text 456 286 Isso tudo ocorre automaticamente nos objetos [inlet~]
+e [outlet~] \, que cuidam da comunicação com o subpatch e são responsáveis
+pela conversão do tamanho do bloco \, resampling e overlaping.;
+#X obj 613 637 nbx 5 14 -1e+37 1e+37 0 0 empty window empty 0 -8 0
+10 -204786 -1 -1 2048 256;
+#X text 468 556 É por isso que o cálculo da janela hann acaba sendo
+feito em um patch separado. Se for feito em um subpatch com overlapping
+\, precisamos ajustar o cálculo da frequência \, veja abaixo.;
+#X text 36 28 No Pd \, a sobreposição (overlapping) é feita automaticamente
+e definida no objeto [block~] ou [switch~]. Basta setar o número de
+overlaps como segundo argumento e pronto \, não há mais nada com o
+que se preocupar.;
+#X text 36 99 Temos abaixo um subpatch que cria a janela hann de acordo
+com o tamanho da janela de análise (2048 neste exemplo) \, e logo abaixo
+o patch que faz a análise de FFT agora com janelamento e overlapping.
+;
+#X obj 140 292 sig~ 100;
+#X obj 140 316 blosc~ saw;
+#X text 455 186 Com um overlap de 2 \, o Pd processa o dobro de amostras
+no subpatch \, de modo que o bloco \, na prática \, dobra de tamanho!
+Ao voltar pro patch pai sem overlaps \, precisamos converter e reduzir
+o número de amostras \, mas dessa vez o algoritmo faz isso ao realizar
+um overlapping mesmo \, que significa dividir o bloco em duas metades
+e alinha-las com uma defasagem de um hop \, para então somar esses
+valores.;
+#N canvas 397 22 766 497 Hann_2 0;
+#X obj 413 247 cnv 15 198 118 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann2 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 412 247 graph;
+#X obj 444 180 block~ 2048 4;
+#X obj 158 262 cnv 15 40 30 empty empty empty 20 12 0 14 -258113 -66577
+0;
+#X obj 167 305 osc~;
+#X obj 167 212 samplerate~;
+#X msg 269 231 0.5;
+#X obj 167 334 expr~ $v1 * 0.5 + 0.5;
+#X obj 159 116 inlet;
+#X obj 159 187 trigger bang bang bang float;
+#X obj 167 239 /;
+#X obj 159 359 tabwrite~ \$0-hann2;
+#X obj 167 269 * 4;
+#X text 294 82 Neste subatch temos um overlap de 4 \, por isso precisamos
+multiplicar a frequência do oscilador por 4 \, já que ele não sabe
+que \, na prática \, o bloco de áudio está 4 vezes maior.;
+#X text 39 260 ajuste de acordo;
+#X text 58 277 com overlap;
+#X connect 4 0 7 0;
+#X connect 5 0 10 0;
+#X connect 6 0 4 1;
+#X connect 7 0 11 0;
+#X connect 8 0 9 0;
+#X connect 9 0 11 0;
+#X connect 9 1 5 0;
+#X connect 9 2 6 0;
+#X connect 9 3 10 1;
+#X connect 10 0 12 0;
+#X connect 12 0 4 0;
+#X restore 613 658 pd Hann_2;
+#X text 48 548 ============================================================
+;
+#X text 54 440 Você deve perceber que agora os valores de amplitude
+são menores. Isso decorre do uso do janelamento. No caso da janela
+hann \, um componente espectral com valor de amplitude igual a 1 reflete
+em um valor de amplitude de análise que é igual a um quarto do tamanho
+da janela (sem o janelamento é a metade).;
+#X text 50 595 Como o overlap ocorre automaticamente no Pd \, não precisamos
+nos preocupar muito de fato. Porém \, precisamos explicar melhor como
+isso acontece porque há algumas implicações que são relevantes em alguns
+casos. Um deles é a geração de uma janela hann \, como veremos ao lado.
+;
+#X connect 1 0 20 0;
+#X connect 3 0 8 0;
+#X connect 5 0 4 0;
+#X connect 16 0 23 0;
+#X connect 20 0 21 0;
+#X connect 21 0 9 0;

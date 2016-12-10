@@ -1,0 +1,152 @@
+#N canvas 72 31 1236 676 10;
+#X obj 40 445 loadbang;
+#X obj 685 358 v pi;
+#X obj 40 468 samplerate~;
+#X obj 489 348 nbx 7 14 -1e+37 1e+37 0 0 hz empty empty 0 -8 0 10 -261682
+-1 -1 0 256;
+#X obj 489 407 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X text 571 406 Radianos por Amostra;
+#X text 564 463 Hz;
+#X obj 489 463 nbx 7 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 563 346 Hz/cps;
+#X obj 898 332 *;
+#X obj 913 266 nbx 7 14 -1e+37 1e+37 0 0 empty hz empty 0 -8 0 10 -261682
+-1 -1 0 256;
+#X text 991 264 Hz;
+#X obj 898 237 nbx 5 14 0 1e+37 0 0 empty empty empty 0 -8 0 10 -204786
+-1 -1 0 256;
+#X obj 898 412 nbx 9 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-192317 -1 -1 0 256;
+#X floatatom 913 310 7 0 0 0 - - -;
+#X text 958 235 n = Amostra;
+#X text 994 411 x[n];
+#X floatatom 898 358 7 0 0 0 - - -;
+#X text 948 358 radianos;
+#X text 929 332 n.w = radianos;
+#X text 961 310 w = radianos/amostra;
+#X obj 898 384 sin;
+#X obj 492 320 hsl 128 15 0 22050 0 0 empty empty empty -2 -8 0 10
+-261682 -1 -1 0 1;
+#X text 846 197 Abaixo temos isso implementado explicitamente em um
+patch.;
+#X obj 999 596 cnv 15 180 40 empty empty empty 20 12 0 14 -196478 -66577
+0;
+#X text 841 564 Senóide em função do tempo (número de amostra):;
+#X text 437 125 O valor de tempo de uma amostra depende \, claramente
+\, do valor da Taxa de Amostragem. Uma taxa de 44100 por segundo nos
+dá 1 / 44100 segundo por amostra \, que é um intervalo de tempo minúsculo
+\, em torno de 0.227 ms.;
+#X obj 40 490 v sr;
+#X obj 90 221 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 150 219 Hz/cps;
+#X obj 90 282 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 0 256;
+#X obj 90 249 expr 1000 / $f1;
+#X obj 241 251 expr 1000 / $f1;
+#X obj 241 276 nbx 5 14 -1e+37 1e+37 0 0 hz empty empty 0 -8 0 10 -261682
+-1 -1 0 256;
+#X text 301 274 Hz/cps;
+#X obj 241 224 nbx 5 14 -1e+37 1e+37 0 0 hz empty empty 0 -8 0 10 -262130
+-1 -1 0 256;
+#X text 303 222 ms;
+#X text 151 282 ms;
+#X obj 685 331 pi;
+#X obj 125 439 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 185 437 Hz/cps;
+#X obj 125 504 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 0 256;
+#X obj 125 471 expr sr / $f1;
+#X text 439 255 Abaixo fazemos as conversões de Hz para Radianos por
+amostra e vice-versa.;
+#X text 438 190 Converter Hz para Radianos por Amostra não é difícil.
+Primeiro multiplicamos por 2pi \, que é o valor de ângulo de um ciclo
+em radianos. Agora falta apenas ajustar a medida de tempo \, que é
+só dividir pela taxa de amostragem.;
+#X text 851 61 onde \; - x[n] é a amplitude em função do número de
+amostra \; - n é um número inteiro que representa a amostra \; - w
+é a velocidade angular em radianos/amostra \;;
+#X text 1017 608 x[n] = a*sin(n*w + ø);
+#X obj 489 437 expr $f1 * sr / (2*pi);
+#X obj 913 287 expr $f1 * 2*pi / sr;
+#X obj 489 379 expr $f1 * 2*pi / sr;
+#X text 38 29 A esse ponto já deve estar claro como a Frequência é
+dada por uma velocidade angular! Vimos que a velocidade em que a fase
+(ou ângulo) corre determina a frequência de oscilação. O objeto [phasor~]
+\, como apresentado aqui \, gera esse sinal de "fase corrente" de acordo
+com uma frequência.;
+#X text 38 108 Cada ciclo de oscilação possui um período \, que é o
+inverso da frequência. ou seja \, uma frequência de 100 ciclos por
+segundo dá um período de 0.01 segundo \, ou 10 ms. Abaixo \, temos
+a conversão de frequência em Hz/cps para um período em ms \, que é
+o mesmo que a conversão contråria. Basta inverter e multiplicar por
+1000 (ou dividir 1000 pelo valor).;
+#X obj 246 495 nbx 5 14 -1e+37 1e+37 0 0 hz empty empty 0 -8 0 10 -261682
+-1 -1 0 256;
+#X text 306 493 Hz/cps;
+#X obj 246 443 nbx 5 14 -1e+37 1e+37 0 0 hz empty empty 0 -8 0 10 -262130
+-1 -1 0 256;
+#X text 123 524 período em amostras;
+#X obj 246 470 expr sr / $f1;
+#X text 308 441 período (amostras);
+#X text 63 331 Outra forma de definir o tempo do período é em número
+de amostras. Para essa conversão \, precisamos do valor da taxa de
+Amostragem. Basta então dividir a taxa de amostragem pelo valor em
+Hz \, a conversão inversa é também a mesma.;
+#X text 47 564 A velocidade angular é uma medida de ângulo por tempo.
+Um ciclo de oscilação compreende a volta inteira num círculo. Logo
+\, uma volta por segundo é o mesmo que dizer 360 graus por segundo.
+Por isso \, Hertz pode ser considerada como uma medida de velocidade
+angular.;
+#X text 445 511 Entenda que \, em radianos por amostra \, o registro
+de 0 Hz até a frequência de Nyquist equivale ao intervalo entre 0 e
+pi (e a taxa de amostragem é igual 2pi).;
+#X text 438 27 Podemos ter outras medidas de velocidade angular \,
+basta adotar outras medidas de ângulo e de tempo. O ângulo \, por exemplo
+\, ser dado em radianos \, já o valor de tempo pode ser a taxa de amostragem
+(diferença de tempo entre uma amostra e outra). Essa medida de velocidade
+angular é chamada de "Radianos por Amostra" e indica a diferença de
+ângulo em radianos entre uma amostra e outra!;
+#X text 449 566 A velocidade angular em radianos por amostra é útil
+em computação musical em diferentes momentos \, como para definir a
+amplitude em função do número da amostra. Considere a fórmula a seguir.
+;
+#X obj 905 24 cnv 15 196 37 empty empty empty 20 12 0 14 -237312 -66577
+0;
+#X text 909 27 Amplitude em função da amostra \; x[n] = sin(n*w);
+#X text 844 134 Vemos então que \, ao multiplicarmos o número da amostra
+pela velocidade angular \, temos um valor em radianos \, que alimenta
+uma função como a seno [sin] e nos dá um valor de amplitude.;
+#X text 842 448 A seguir \, temos uma fórmula mais completa e clássica
+de uma senóide em computação musical \, que inclui um ajuste final
+de amplitude/ganho (variável "a") e também considera a fase inicial
+em radianos (variável "ø"). Esta fórmula define uma senóide em função
+do número de amostra e deve estar claro como ela é em função de uma
+medida de tempo \, já que o número de amostra é uma medida de tempo
+definida pela Taxa de Amostragem.;
+#X connect 0 0 2 0;
+#X connect 2 0 27 0;
+#X connect 3 0 49 0;
+#X connect 4 0 47 0;
+#X connect 9 0 17 0;
+#X connect 10 0 48 0;
+#X connect 12 0 9 0;
+#X connect 14 0 9 1;
+#X connect 17 0 21 0;
+#X connect 21 0 13 0;
+#X connect 22 0 3 0;
+#X connect 28 0 31 0;
+#X connect 31 0 30 0;
+#X connect 32 0 33 0;
+#X connect 35 0 32 0;
+#X connect 38 0 1 0;
+#X connect 39 0 42 0;
+#X connect 42 0 41 0;
+#X connect 47 0 7 0;
+#X connect 48 0 14 0;
+#X connect 49 0 4 0;
+#X connect 54 0 56 0;
+#X connect 56 0 52 0;

@@ -1,0 +1,190 @@
+#N canvas 277 48 957 620 10;
+#X obj 291 539 hsl 100 16 0 3 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204800 -1 -1 0 1;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 249 561 pd gain;
+#X obj 626 472 nbx 5 14 64 1e+37 0 0 empty empty empty 0 -8 0 10 -262130
+-1 -1 4096 256;
+#X text 684 469 tamanho da janela;
+#X obj 626 424 hradio 15 1 0 8 empty \$0-set-window empty 0 -8 0 10
+-262130 -1 -1 6;
+#X obj 626 447 expr pow(2 \, $f1 + 6);
+#N canvas 250 34 539 448 Window 0;
+#X obj 90 363 osc~;
+#X obj 71 408 tabwrite~ \$0-hann;
+#X msg 111 339 0.5;
+#X obj 30 67 cnv 15 198 118 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 4096 float 0;
+#X coords 0 1 4095 0 200 120 1;
+#X restore 29 67 graph;
+#X obj 90 306 expr sr_\$0 / w_size_\$0;
+#X obj 71 280 t b b b;
+#X obj 90 385 expr~ ($v1 * 0.5) + 0.5;
+#X obj 259 363 s \$0-set-block;
+#X obj 259 307 pack float float;
+#X msg 259 336 set \$1 \$2;
+#X obj 259 165 t b f;
+#X msg 293 192 resize \$1;
+#X obj 293 214 s \$0-hann;
+#X obj 259 281 v w_size_\$0;
+#X obj 393 279 v overlap_\$0;
+#X obj 396 171 samplerate~;
+#X obj 396 196 v sr_\$0;
+#X obj 396 63 loadbang;
+#X obj 396 84 \$0;
+#X obj 259 21 inlet;
+#X obj 366 22 inlet;
+#X obj 366 250 t b f;
+#X obj 286 237 s \$0-w_size;
+#X msg 396 105 bang \; pd dsp 1 \; \$1-set-window 6 \; \$1-overlap-set
+8;
+#X connect 0 0 7 0;
+#X connect 2 0 0 1;
+#X connect 5 0 0 0;
+#X connect 6 0 1 0;
+#X connect 6 1 5 0;
+#X connect 6 2 2 0;
+#X connect 7 0 1 0;
+#X connect 9 0 10 0;
+#X connect 10 0 8 0;
+#X connect 11 0 14 0;
+#X connect 11 0 6 0;
+#X connect 11 1 12 0;
+#X connect 11 1 14 0;
+#X connect 11 1 23 0;
+#X connect 12 0 13 0;
+#X connect 14 0 9 0;
+#X connect 16 0 17 0;
+#X connect 18 0 19 0;
+#X connect 19 0 24 0;
+#X connect 20 0 11 0;
+#X connect 21 0 22 0;
+#X connect 22 0 14 0;
+#X connect 22 1 15 0;
+#X connect 22 1 9 1;
+#X connect 24 0 16 0;
+#X coords 0 0 1 1 120 60 0;
+#X restore 626 497 pd Window;
+#X obj 697 494 nbx 2 14 1 1e+37 0 1 \$0-overlap \$0-overlap-set empty
+0 -8 0 10 -204786 -1 -1 8 256;
+#X text 728 493 overlaps;
+#X text 103 28 Este é um processamento extremamente simples que consiste
+apenas em zerar a informção de fase da FFT. As implicações e a compreensão
+do resultado não é tão trivial \, entretanto.;
+#N canvas 550 23 600 454 Zerar-Fase 0;
+#X obj 64 83 *~;
+#X obj 64 17 inlet~;
+#X obj 79 54 tabreceive~ \$0-hann;
+#X obj 65 332 *~;
+#X obj 80 307 tabreceive~ \$0-hann;
+#X obj 65 402 outlet~;
+#X obj 314 133 block~;
+#X obj 314 106 r \$0-set-block;
+#X obj 65 364 expr~ $v1 / (w_size_\$0 * overlap_\$0 * 0.375);
+#X obj 47 156 cnv 15 100 80 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 64 112 rfft~;
+#X obj 64 259 rifft~;
+#X obj 64 168 cartopol~;
+#X obj 64 208 poltocar~;
+#X text 161 192 <= Apenas desconsideramos a fase \, zerando seus valores
+;
+#X connect 0 0 10 0;
+#X connect 1 0 0 0;
+#X connect 2 0 0 1;
+#X connect 3 0 8 0;
+#X connect 4 0 3 1;
+#X connect 7 0 6 0;
+#X connect 8 0 5 0;
+#X connect 10 0 12 0;
+#X connect 10 1 12 1;
+#X connect 11 0 3 0;
+#X connect 12 0 13 0;
+#X connect 13 0 11 0;
+#X connect 13 1 11 1;
+#X restore 249 495 pd Zerar-Fase;
+#X obj 330 404 readsf~;
+#X obj 330 353 loadbang;
+#X obj 249 402 blosc~ saw;
+#X obj 249 325 osc~ 0.1;
+#X obj 249 350 *~ 380;
+#X obj 249 375 +~ 420;
+#X msg 154 414 choice \$1;
+#X text 182 358 sample;
+#X text 192 386 synth;
+#X obj 154 331 loadbang;
+#X msg 154 361 2;
+#X msg 164 386 1;
+#X text 104 78 Precisa estar claro somente como a FFT pode ser pensado
+como um grande filtro equalizador \, em vez de um banco de osciladores
+em uma série harmônica \, como costuma-se pensar de modo não adequado.
+;
+#X text 104 143 Sim \, em princípio \, a ressíntese da FFT se baseia
+em uma reconstrução de um sinal a partir de uma série harmônica. Mas
+aqui deverá ficar mais que claro como \, na prática \, as qualidades
+tonais do sinal dependem da informação de Fase Inicial.;
+#X text 105 220 Afinal \, neste exemplo eliminaremos completamente
+a informação de Fase Inicial e \, assim \, será possível ter a ressíntese
+de FFT como apenas um banco de osciladores em uma série harmônica.
+;
+#X text 508 26 O resultado \, como podemos deduzir \, é que qualquer
+entrada sonora estará restrita a apenas uma reconstrução a partir de
+uma série harmônica \, que é a série determinada pelo tamanho da janela
+de análise.;
+#X text 508 89 A qualidade tonal \, portanto \, é dessa série harmônica
+\, e a amplitude de cada ponto da FFT será comtrolada pela amplitude
+da análise de FFT do sinal de entrada.;
+#X obj 249 451 polygate~ 3 10;
+#X obj 367 441 noise~;
+#X msg 113 366 3;
+#X text 72 364 ruído;
+#X text 508 140 Temos três opções de entrada \, um sample \, um oscilador
+cuja frequência é controlada por um LFO e ruído branco.;
+#X text 510 182 A informação de fase é zerada \, mas o mais importante
+é que ela é estável. Visto que se tivéssemos valores diferentes de
+fase para cada ponto da FFT \, o resultado sonoro não mudaria muito
+\, já que a informação de fase não é tão relevante perceptivamente
+como a amplitude.;
+#X text 512 254 E assim fica evidente como não bem a informação de
+fase é responsável pela qualidade tonal \, mas a diferença de fase
+entre uma análise e outra. Ou ainda entre um grão e outro \, se considerarmos
+cada janela de análise como um grão - de onde decorre-se que a FFT
+funciona mais como uma síntese granular que uma síntese aditiva!;
+#X msg 330 377 open ../../samples/kantele.wav \, start;
+#X connect 0 0 1 1;
+#X connect 2 0 6 0;
+#X connect 4 0 5 0;
+#X connect 5 0 2 0;
+#X connect 7 0 6 1;
+#X connect 10 0 1 0;
+#X connect 11 0 28 1;
+#X connect 11 1 35 0;
+#X connect 12 0 35 0;
+#X connect 13 0 28 0;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 16 0 13 0;
+#X connect 17 0 28 0;
+#X connect 20 0 21 0;
+#X connect 21 0 17 0;
+#X connect 22 0 17 0;
+#X connect 28 0 10 0;
+#X connect 29 0 28 2;
+#X connect 30 0 17 0;
+#X connect 35 0 11 0;

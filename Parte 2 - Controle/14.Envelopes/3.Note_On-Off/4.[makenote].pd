@@ -1,0 +1,112 @@
+#N canvas 124 151 1135 536 10;
+#X obj 600 430 *~;
+#X obj 588 454 dac~;
+#X obj 615 392 vline~;
+#X msg 615 347 0 50;
+#X msg 522 88 69;
+#X text 473 83 pitch;
+#X text 662 140 velocity;
+#X obj 522 140 mtof;
+#X text 475 95 MIDI;
+#X text 493 155 Hz;
+#X obj 522 245 osc~;
+#X floatatom 522 170 5 0 0 0 - - -;
+#X floatatom 568 89 5 0 0 0 - - -;
+#X floatatom 621 90 5 0 0 0 - - -;
+#X text 656 89 ms;
+#X text 708 50 velocity;
+#X text 625 71 duração;
+#X msg 671 357 \$1 50 \, \$2 100 50;
+#X obj 671 276 t f f;
+#X obj 671 331 pack;
+#X obj 698 301 * 0.5;
+#X obj 671 252 / 127;
+#X obj 615 142 t f f;
+#X obj 671 226 f;
+#X obj 615 172 == 0;
+#X obj 615 197 sel 1 0;
+#X obj 571 51 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 522 117 makenote 127 650;
+#X obj 871 425 *~;
+#X obj 811 347 osc~ 440;
+#X obj 859 459 dac~;
+#X obj 886 387 vline~;
+#X msg 886 339 1 50 \, 0.5 100 50;
+#X obj 907 253 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X obj 907 295 select 1 0;
+#X msg 1007 339 0 50;
+#X text 947 258 ON / OFF;
+#X obj 907 132 bng 30 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 949 205 delay 650;
+#X text 65 356 Mantendo o mesmo exemplo anterior \, temos aqui um attack
+de 50 ms \, um decay de 100 ms \, um sustain de 500 ms e um release
+de 50 ms. Para comparação \, temos o patch do exemplo passado com esses
+parâmetros.;
+#X text 67 420 A diferença é que o exemplo deste patch permite outros
+valores para velocidade e já ajusta o valor de amplitude do decay automaticamente
+para a metade disso.;
+#X text 61 58 O objeto [makenote] serve para emular um Note On/Off.
+Na verdade ele agenda o Note Off com um atraso em ms. Logo \, podemos
+usa-lo para programar um envelope.;
+#X text 60 110 Ele também recebe o valor de "velocity" \, que é um
+termo para amplitude em síntese. Isso porque a velocidade com que você
+aciona uma tecla no seu controlador MIDI determina a amplitude. Como
+em tudo no MIDI \, os valores vão de 0 a 127 - vamos considerar neste
+exemplo então um velocity de 100 \, que dividiremos por 127 para obter
+o valor correto de amplitude (mas nada impediria de usarmos valores
+já de amplitude linear).;
+#X text 62 224 Pensando ainda no contexto do MIDI \, o valor da nota
+também será de 0 a 127 e convertido para frequência em Hertz. Mas também
+poderíamos já dar esse valor e Hz.;
+#X text 63 277 O [makenote] cospe o valor do pitch e velocity assim
+que recebe um valor de pitch no inlet esquerdo. No tempo agendado \,
+ele manda o Note Off que cosiste apenas em uma velocidade de 0 e o
+mesmo valor de pitch \, como se dissesse que aquela nota está sendo
+desligada.;
+#X obj 516 48 bng 30 250 50 0 empty empty empty 17 7 0 10 -203904 -1
+-1;
+#X obj 971 405 loadbang;
+#X msg 971 434 \; pd dsp 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 27 0;
+#X connect 7 0 11 0;
+#X connect 10 0 0 0;
+#X connect 11 0 10 0;
+#X connect 12 0 27 1;
+#X connect 13 0 27 2;
+#X connect 13 0 38 1;
+#X connect 17 0 2 0;
+#X connect 18 0 19 0;
+#X connect 18 1 20 0;
+#X connect 19 0 17 0;
+#X connect 20 0 19 1;
+#X connect 21 0 18 0;
+#X connect 22 0 24 0;
+#X connect 22 1 23 1;
+#X connect 23 0 21 0;
+#X connect 24 0 25 0;
+#X connect 25 0 3 0;
+#X connect 25 1 23 0;
+#X connect 26 0 12 0;
+#X connect 27 0 7 0;
+#X connect 27 1 22 0;
+#X connect 28 0 30 0;
+#X connect 28 0 30 1;
+#X connect 29 0 28 0;
+#X connect 31 0 28 1;
+#X connect 32 0 31 0;
+#X connect 33 0 34 0;
+#X connect 34 0 32 0;
+#X connect 34 1 35 0;
+#X connect 35 0 31 0;
+#X connect 37 0 33 0;
+#X connect 37 0 38 0;
+#X connect 38 0 33 0;
+#X connect 45 0 4 0;
+#X connect 46 0 47 0;

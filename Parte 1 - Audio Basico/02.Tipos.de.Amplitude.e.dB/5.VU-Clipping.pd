@@ -1,0 +1,136 @@
+#N canvas 241 22 815 683 10;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array clip 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1 440 -1 202 142 1;
+#X restore 554 266 graph;
+#X obj 555 267 cnv 15 200 140 empty empty empty 20 12 0 14 -204800
+-66577 0;
+#X text 540 261 1;
+#X text 532 397 -1;
+#X obj 546 72 hsl 128 15 0 5 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#X obj 528 119 *~;
+#X obj 528 43 osc~ 200;
+#X obj 472 164 env~;
+#X floatatom 472 187 5 0 0 0 - - -;
+#X obj 473 277 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 472 212 - 100;
+#X floatatom 472 237 5 0 0 0 - - -;
+#X floatatom 543 96 5 0 0 0 - - -;
+#X text 540 328 0;
+#N canvas 127 24 306 342 vu 0;
+#X obj 110 135 vu 15 120 empty empty -1 -8 0 10 -1 -1 1 0;
+#X obj 109 33 env~;
+#X obj 109 60 - 100;
+#X obj 157 79 - 100;
+#X obj 157 55 rmstodb;
+#X obj 109 -14 inlet~;
+#X obj 157 32 peakamp~ 50;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 1;
+#X connect 4 0 3 0;
+#X connect 5 0 1 0;
+#X connect 5 0 6 0;
+#X connect 6 0 4 0;
+#X coords 0 -1 1 1 60 170 1 100 100;
+#X restore 82 478 pd vu;
+#X obj 82 456 osc~ 200;
+#N canvas 127 24 261 374 vu 0;
+#X obj 128 134 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 154 45 inlet~;
+#X obj 154 72 prvu~;
+#X obj 111 134 vu 15 120 empty empty -1 -8 0 10 -66577 -1 0 0;
+#X obj 110 45 inlet~;
+#X obj 110 72 prvu~;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
+#X coords 0 -1 1 1 80 165 1 100 100;
+#X restore 601 482 pd vu;
+#X obj 674 458 osc~ 200;
+#X obj 601 459 osc~ 200;
+#N canvas 171 30 701 434 plotar 0;
+#X obj 129 56 inlet~;
+#X obj 129 334 tabwrite~ clip;
+#X obj 159 290 metro 100;
+#X obj 159 263 tgl 15 0 empty empty empty 17 7 0 10 -204800 -1 -1 1
+1;
+#X obj 159 239 loadbang;
+#X msg 238 271 \; pd dsp 1;
+#X obj 129 100 clip~ -1 1;
+#X text 211 92 o [clip~] mantém o sinal dentro de;
+#X text 210 112 um limite (no caso entre -1 e 1);
+#X text 252 144 * O "clipping" não ocorre internamente no Pd \, mas
+sim na saída do seu sistema de som digital. Apenas a título de representação
+\, colocamos o objeto [clip~] para demonstrar o que ocorre com o sinal
+distorcido e clipado.;
+#X text 234 336 plota no gráfico a cada "bang";
+#X connect 0 0 6 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 4 0 5 0;
+#X connect 6 0 1 0;
+#X restore 558 173 pd plotar;
+#X text 627 164 subpatch para plotar;
+#X text 635 184 no gráfico abaixo;
+#X text 186 592 Abra os subpatches para estudar melhor os objetos \,
+consulte o help dos mesmos e também do próprio [vu].;
+#X text 55 323 Assim sendo \, para conectar o resultado do [env~] ao
+[vu] \, precisamos converter para dBFS como à direita (bastando apenas
+subtrair por 100). Lembre-se que o [env~] dá valores em RMS \, e não
+de pico máximo \, e veja que valores acima de 0 dB acusam como vermelho
+\, sinal de perigo!!!;
+#X text 55 38 A prática de colocar um valor máximo de amplitude como
+referência para 0 dB vem do uso do VU (de "Volume Meter") em áudio
+analógico \, que é um equipamento que costuma ser calibrado para que
+o 0 dB seja o valor máximo que o equipamento pode lidar sem distorção.
+Em áudio digital é a mesma coisa \, porém a distorção no áudio digital
+é de um tipo específico \, chamada "clipping".;
+#X text 56 140 Como já informado \, o valor de amplitude linear de
+pico 1 (nosso 0 dB agora) é um limite máximo \, pois representa o maior
+valor possível em uma resolução qualquer em bits. Valores acima serão
+desconsiderados \, e assim dizemos que foram "clipados". Em termos
+práticos \, ocorre uma distorção no sinal como no exemplo à direita
+\, em que uma senóide acaba ficando "meio quadrada".;
+#X text 56 244 O Pd tem uma interface gráfica - o [vu] - que remete
+aos "VU Meters" \, só que ele apenas recebe um número \, logo não opera
+nenhuma análise no sinal. O [vu] recebe e mostra valores de dB no padrão
+dB Full Scale \, portanto precisamos enviar valores de dB já ajustados
+nesse padrão.;
+#X text 184 464 O [vu] também marca amplitude de pico \, recebida como
+segundo item de uma lista no inlet esquerdo ou como número em seu inlet
+direito. O subpatch à esquerda usa tanto o objeto [env~] quanto o [peakenv~]
+(que dá a amplitude de pico). Já à direita temos um outro subpatch
+que faz a mesma coisa \, mas usa um objeto externo apresentado só agora:
+o [prvu~] (de "peak-rms vu") \, já otimizado para funcionar diretamente
+com o [vu]. O subpatch da direita também foi programado para trabalhar
+com sinal estéreo.;
+#X connect 4 0 12 0;
+#X connect 5 0 7 0;
+#X connect 5 0 19 0;
+#X connect 6 0 5 0;
+#X connect 7 0 8 0;
+#X connect 8 0 10 0;
+#X connect 10 0 11 0;
+#X connect 11 0 9 0;
+#X connect 12 0 5 1;
+#X connect 15 0 14 0;
+#X connect 17 0 16 1;
+#X connect 18 0 16 0;

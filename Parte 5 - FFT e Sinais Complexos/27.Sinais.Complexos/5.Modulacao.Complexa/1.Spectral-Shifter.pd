@@ -1,0 +1,196 @@
+#N canvas 117 28 858 660 10;
+#X obj 510 341 cnv 15 180 40 empty empty empty 20 12 0 14 -171382 -66577
+0;
+#N canvas 77 67 612 360 hilbert~ 0;
+#X obj 308 157 biquad~ 0.83774 -0.06338 0.06338 -0.83774 1;
+#X obj 308 129 biquad~ 1.94632 -0.94657 0.94657 -1.94632 1;
+#X obj 28 132 biquad~ -0.02569 0.260502 -0.260502 0.02569 1;
+#X obj 28 158 biquad~ 1.8685 -0.870686 0.870686 -1.8685 1;
+#X obj 308 26 inlet~;
+#X obj 308 183 outlet~;
+#X obj 28 186 outlet~;
+#X obj 405 271 hilbert~;
+#X text 297 271 clique e abra =>;
+#X text 119 240 Copiado da abstração [hilbert~] que vem no Pd-Vanilla.
+;
+#X connect 0 0 5 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 1 0;
+#X connect 4 0 2 0;
+#X restore 514 294 pd hilbert~;
+#X text 498 314 Re1;
+#X text 555 314 Im1;
+#X text 597 290 Re2;
+#X text 638 290 Im2;
+#X obj 578 409 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 267 136 529 373 gain 0;
+#X obj 234 176 *~;
+#X obj 222 208 dac~;
+#X obj 263 146 line~;
+#X msg 263 120 \$1 10;
+#X obj 263 94 pow 4;
+#X obj 263 67 inlet;
+#X obj 234 36 inlet~;
+#N canvas 131 60 278 287 plot-spectrum 0;
+#X obj 53 64 inlet~;
+#X obj 53 99 rfft~;
+#X obj 132 98 loadbang;
+#X obj 132 146 metro 250;
+#X obj 132 125 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1
+1;
+#X obj 89 224 block~ 4096;
+#X obj 41 137 cartopol~;
+#X obj 51 188 tabwrite~ \$0-Espectro;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 1 1 6 1;
+#X connect 2 0 4 0;
+#X connect 3 0 7 0;
+#X connect 4 0 3 0;
+#X connect 6 0 7 0;
+#X restore 165 250 pd plot-spectrum;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 7 0;
+#X restore 536 433 pd gain;
+#X text 34 380 ============================================================
+;
+#X obj 467 490 cnv 15 298 138 empty empty empty 20 12 0 14 -174629
+-66577 0;
+#N canvas 0 22 478 328 (subpatch) 0;
+#X array \$0-Espectro 128 float 0;
+#X coords 0 3248 127 0 300 140 1;
+#X restore 466 489 graph;
+#X text 558 629 500Hz;
+#X text 505 628 250Hz;
+#X text 465 628 50Hz;
+#X text 613 628 750Hz;
+#X text 672 628 1KHz;
+#X text 717 629 1.25KHz;
+#X obj 514 213 phasor~ 100;
+#X obj 618 177 nbx 5 16 -2000 2000 0 0 empty empty empty 0 -8 0 13
+-204800 -1 -1 0 256;
+#X obj 618 262 cos~;
+#X obj 659 262 cos~;
+#X obj 618 213 phasor~;
+#X obj 659 241 -~ 0.25;
+#X obj 514 177 nbx 5 16 -2000 2000 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#N canvas 244 63 917 401 Modulação-Complexa 0;
+#X obj 393 159 *~;
+#X obj 420 159 *~;
+#X obj 399 206 -~;
+#X obj 575 248 expr~ ($v1 * $v3) - ($v2 * $v4);
+#X text 350 183 Re1*Re2;
+#X text 428 183 Im1*Im2;
+#X text 407 224 (Re1*Re2 - Im1*Im2);
+#X text 584 230 Re1;
+#X text 646 231 Re2;
+#X text 702 228 Im1;
+#X text 765 229 Im2;
+#X obj 253 58 inlet~;
+#X obj 305 58 inlet~;
+#X obj 393 58 inlet~;
+#X obj 444 58 inlet~;
+#X text 257 31 Re1;
+#X text 395 28 Re2;
+#X text 314 30 Im1;
+#X text 447 27 Im2;
+#X obj 206 309 outlet~;
+#X obj 205 158 cartopol~;
+#X obj 205 224 poltocar~;
+#X obj 273 159 cartopol~;
+#X obj 256 194 +~;
+#X obj 205 194 *~;
+#X text 72 203 Soma as Fases;
+#X text 44 186 Multiplica as Amplitudes;
+#X text 84 264 Apenas a Parte Real;
+#X text 473 157 Forma Cartesiana (apenas cálculo da parte real);
+#X text 93 165 Forma Polar;
+#X text 614 197 versão [expr~]:;
+#X msg 806 65 \; pd dsp 1;
+#X obj 806 40 loadbang;
+#X connect 0 0 2 0;
+#X connect 1 0 2 1;
+#X connect 11 0 0 0;
+#X connect 11 0 20 0;
+#X connect 12 0 1 0;
+#X connect 12 0 20 1;
+#X connect 13 0 0 1;
+#X connect 13 0 22 0;
+#X connect 14 0 1 1;
+#X connect 14 0 22 1;
+#X connect 20 0 24 0;
+#X connect 20 1 23 0;
+#X connect 21 0 19 0;
+#X connect 22 0 24 1;
+#X connect 22 1 23 1;
+#X connect 23 0 21 1;
+#X connect 24 0 21 0;
+#X connect 32 0 31 0;
+#X restore 536 355 pd Modulação-Complexa;
+#X obj 442 263 adc~ 1;
+#X text 693 176 Moduladora;
+#X obj 42 494 cnv 15 95 15 empty empty empty 20 12 0 14 -171382 -66577
+0;
+#X text 428 75 Veja no subpatch abaixo as duas formas de implementar
+a modulação complexa: A Cartesiana e a Polar. A forma Polar é a que
+demonstra de modo explícito que se trata de uma soma das fases. Experimente
+também uma entrada de linha ou microfone (adc~) ligada na Transformada
+de Hilbert.;
+#X text 42 404 Uma outra forma de entender como ocorre a mudança de
+frequência acima ou abaixo é perceber que se trata de uma soma da frequência
+do sinal portador com a frequência da moduladora!;
+#X text 42 466 Pois \, como apresentado anteriormente \, uma multiplicação
+complexa acaba justamente por multiplicar as amplitudes e Somar As
+Fases!;
+#X text 41 522 E em Modulação de Fase/Frequência ficou evidente como
+somar as fases significa também somar as frequências. Portanto \, não
+é nada mais do que isso: com a modulação complexa \, conseguimos somar
+as frequências dos sinais!;
+#X text 426 15 Um detalhe de implementação é que apenas a parte real
+do sinal nos importa (já que é tudo que devemos escutar). Por isso
+podemos simplificar o cálculo e ignorar a parte imaginária.;
+#X text 443 177 Portadora;
+#X obj 514 263 triangle~;
+#X text 40 296 Não se trata de uma mudança de altura ("Pitch Shifter")
+\, pois isso requer que a relação proporcional entre os componentes
+espectrais permaneça igual. Já com essa técnica \, ocorre uma compressão
+ou expansão dessas relações quando \, respectivamente \, arrastamos
+para cima (frequência moduladora positiva) ou para baixo (frequência
+negativa).;
+#X text 40 224 Só que \, na prática \, é como se os componentes fossem
+"arrastados" acima ou abaixo de acordo com a frequência do sinal modulador.
+Por esse motivo \, essa técnica também é conhecida por "Spectral Shifting"
+ou ainda "Frequency Shifter";
+#X text 39 152 No caso da Modulação Complexa ocorre quase o mesmo \,
+o sinal original some \, porém ela gera apenas uma única banda lateral!
+Por isso essa técnica também se chama "Single Sideband Modulation"
+(Modulação de Banda Lateral Única) \, ou apenas "ssb".;
+#X text 37 51 Lembramos que a Modulação em Anel (RM) ocorre quando
+multiplicamos dois sinais reais. Neste exemplo temos uma forma similar
+de modulação em que multiplicamos dois Sinais Complexos. O resultado
+não é muito diferente da RM - onde os componentes originais são eliminados
+novos componentes são criados em duas bandas laterais de frequência
+(que corresponde à frequência do sinal modulador).;
+#X connect 1 0 24 0;
+#X connect 1 1 24 1;
+#X connect 6 0 7 1;
+#X connect 17 0 34 0;
+#X connect 18 0 21 0;
+#X connect 19 0 24 2;
+#X connect 20 0 24 3;
+#X connect 21 0 19 0;
+#X connect 21 0 22 0;
+#X connect 22 0 20 0;
+#X connect 23 0 17 0;
+#X connect 24 0 7 0;
+#X connect 34 0 1 0;

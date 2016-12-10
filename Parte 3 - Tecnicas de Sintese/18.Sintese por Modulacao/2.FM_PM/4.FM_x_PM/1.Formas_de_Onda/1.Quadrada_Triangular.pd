@@ -1,0 +1,176 @@
+#N canvas -179 27 1257 702 10;
+#X obj 522 228 phasor~;
+#X text 437 472 0 Hz;
+#X text 452 648 0;
+#N canvas 813 285 450 300 plot 0;
+#X obj 133 31 inlet~;
+#X obj 256 40 inlet~;
+#X obj 275 223 tabwrite~ fase;
+#X obj 174 223 tabwrite~ freq;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 300 132 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 300 79 loadbang;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 4 0 5 0;
+#X connect 6 0 2 0;
+#X connect 6 0 3 0;
+#X connect 7 0 6 0;
+#X restore 483 279 pd plot;
+#X text 535 201 <= Frequência (Velocidade Angular);
+#X text 533 250 <= Posição (Fase Corrente);
+#X obj 469 345 cnv 15 198 138 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 469 524 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq 882 float 0;
+#X coords 0 100 881 0 200 140 1;
+#X restore 468 344 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase 882 float 0;
+#X coords 0 1 881 0 200 140 1;
+#X restore 468 523 graph;
+#X text 453 513 1;
+#X text 541 494 20 ms;
+#X text 548 671 20 ms;
+#X text 425 336 100 hz;
+#X text 431 405 50 Hz;
+#X obj 522 176 sig~ 50;
+#X obj 801 236 phasor~;
+#X text 703 651 0;
+#N canvas 813 285 450 300 plot 0;
+#X obj 133 31 inlet~;
+#X obj 256 40 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 300 132 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 300 79 loadbang;
+#X obj 174 223 tabwrite~ freq2;
+#X obj 275 223 tabwrite~ fase2;
+#X connect 0 0 6 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 4 0 6 0;
+#X connect 4 0 7 0;
+#X connect 5 0 4 0;
+#X restore 762 287 pd plot;
+#X obj 725 345 cnv 15 198 138 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 719 524 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq2 882 float 0;
+#X coords 0 0 881 -100 200 140 1;
+#X restore 724 344 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase2 882 float 0;
+#X coords 0 1 881 0 200 140 1;
+#X restore 718 523 graph;
+#X text 704 516 1;
+#X text 800 490 20 ms;
+#X text 798 671 20 ms;
+#X obj 801 184 sig~ -50;
+#X text 691 336 0 hz;
+#X text 682 405 -50 Hz;
+#X text 676 472 -100 Hz;
+#X text 32 172 Nesta seção veremos quais são as formas de onda no sinal
+de fase que correspondem a formas de ondas clássicas no sinal de frequência
+(como onda quadrada \, triangular \, etc). Dessa forma seremos capazes
+de criar um patch de PM que corresponde a outro de FM e vice-versa.
+;
+#X text 31 264 Já foi dito como a conversão desses sinais e possível
+via a integral e derivada de uma função. Mais especificamente \, a
+Fase é a Integral da Frequência \, e a Frequência é a Derivada da Fase
+\, mas não entraremos aqui no mérito desses cálculos. Iremos apenas
+entender de forma intuitiva como se dá essa conversão.;
+#X obj 1056 238 phasor~;
+#N canvas 120 36 450 300 plot 0;
+#X obj 298 106 inlet~;
+#X obj 361 104 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 206 104 inlet;
+#X obj 176 218 tabwrite~ QUADRADA;
+#X obj 294 223 tabwrite~ TRIANGULAR;
+#X connect 0 0 5 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X restore 1017 280 pd plot;
+#X obj 1036 210 vline~;
+#X obj 1017 154 loadbang;
+#X text 990 653 0;
+#X obj 1010 344 cnv 15 198 138 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 1006 526 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array QUADRADA 1764 float 0;
+#X coords 0 100 1763 -100 200 140 1;
+#X restore 1009 343 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array TRIANGULAR 1764 float 0;
+#X coords 0 1 1763 0 200 140 1;
+#X restore 1005 525 graph;
+#X text 991 518 1;
+#X text 956 472 -100 Hz;
+#X text 1085 673 40 ms;
+#X text 974 404 0 Hz;
+#X text 961 338 100 Hz;
+#X msg 1036 183 50 \, -50 0 20;
+#X text 970 370 50 Hz;
+#X text 959 441 -50 Hz;
+#X text 840 18 Agora vamos pensar num sinal de frequência que possui
+uma forma "Quadrada" \, isso é \, da mesma forma que uma onda Quadrada
+- ou seja \, com uma parte positiva e negativa. Pois isso se trata
+apenas de uma junção dos exemplos anteriores. E o que podemos concluir
+é que um sinal de onda quadrada gera um sinal em forma de onda Triangular.
+;
+#X text 841 105 Logo \, a integral de uma onda quadrada é uma onda
+triangular e \, por sua vez \, a derivada de uma triangular é uma onda
+quadrada!;
+#X text 948 260 frequência ==>;
+#X text 1065 260 <== fase;
+#X text 444 28 Agora vamos lidar com uma frequência negativas. O conceito
+de frequência negativa já foi apresentado anteriormente. O que ocorre
+na prática é uma mudança no sentido em que a fase corre. Portanto \,
+o sinal de Fase Corrente inverte de ascendente para descendente.;
+#X text 1089 493 40 ms;
+#X text 31 58 A relação entre sinal de frequência e fase já tem sido
+discutida extensivamente por aqui \, sendo ela a responsável por uma
+equivalência entre FM e PM.;
+#X text 31 116 Vimos que a relação entre frequência e Fase é a mesma
+relação entre Velocidade e Posição e que um sinal de Fase possui um
+respectivo sinal de Frequência e vice-versa.;
+#X text 32 375 Vamos enfim investigar melhor essa relação \, começando
+com um exemplo em que nosso sinal modulador \, na FM \, é uma onda
+quadrada \, vejamos então que forma de onda obtemos no sinal de Fase.
+;
+#X text 35 445 Antes começamos com um primeiro passo bem simples \,
+onde investigamos o que ocorre com um sinal de frequência constante
+(valocidade angular). Nesse caso \, o sinal de Fase Corrente (posição)
+varia em uma taxa constante \, formando uma linha reta \, inclinada
+e ascendente. Porém \, como a fase é circular \, ao atingir o ponto
+"1" retornamos ao ponto "0".;
+#X text 44 556 Veja essa relação nos gráficos ao lado. Temos uma frequência
+constante de 50 hz. Em 20 ms de duração \, isso corresponde a um deslocamento
+de fase por um ciclo.;
+#X text 447 107 Abaixo temos outros gráficos com uma velocidade negativa
+constante na frequência e o sinal de fase correspondente.;
+#X connect 0 0 3 1;
+#X connect 15 0 0 0;
+#X connect 15 0 3 0;
+#X connect 16 0 18 1;
+#X connect 26 0 16 0;
+#X connect 26 0 18 0;
+#X connect 32 0 33 2;
+#X connect 34 0 32 0;
+#X connect 34 0 33 1;
+#X connect 35 0 33 0;
+#X connect 35 0 46 0;
+#X connect 46 0 34 0;

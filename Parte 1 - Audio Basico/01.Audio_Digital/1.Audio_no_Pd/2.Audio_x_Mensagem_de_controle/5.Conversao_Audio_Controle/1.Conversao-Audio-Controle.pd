@@ -1,0 +1,166 @@
+#N canvas 103 70 1313 733 10;
+#X obj 89 91 sig~;
+#X floatatom 89 66 5 0 0 0 - - -;
+#X obj 288 264 osc~ 440;
+#X floatatom 179 331 0 0 0 0 - - -;
+#X obj 179 304 snapshot~;
+#X obj 179 262 metro 200;
+#X obj 179 239 loadbang;
+#X floatatom 36 334 0 0 0 0 - - -;
+#X obj 36 304 cyclone/Snapshot~ 200;
+#X text 29 447 Conversão mais aprimorada:;
+#X obj 89 120 print~;
+#X obj 56 92 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856 -1
+-1;
+#X text 126 89 <= Converte dado pra áudio;
+#X obj 560 465 vsnapshot~;
+#X floatatom 560 490 2 0 0 0 - - -;
+#X floatatom 643 490 3 0 0 0 - - -;
+#X obj 643 465 snapshot~;
+#X obj 317 66 loadbang;
+#X msg 317 93 \; pd dsp 1;
+#X obj 577 197 print~;
+#X obj 498 195 snapshot~;
+#X floatatom 498 218 0 0 0 0 - - -;
+#X obj 498 125 bng 20 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 627 396 sampstoms~;
+#X obj 627 352 loadbang;
+#X obj 643 427 delay;
+#X floatatom 684 426 0 0 0 0 - - -;
+#X obj 560 389 bng 15 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 560 427 count~;
+#X text 490 537 Acima \, ressetamos o [count~] com um bang e atrasamos
+esse bang com o objeto [delay] em um valor em ms que corresponde a
+70 amostras (6 amostras a mais que um bloco de áudio).;
+#X text 490 649 O [snapshot~] retorna apenas o último valor desse bloco
+(63) \, enquanto o [vsnapshot~] retorna o valor exato da sexta amostra
+do bloco (5)!;
+#X text 488 490 valor exato;
+#X text 19 34 Conversão básica entre dados/áudio:;
+#X text 26 424 ============================================================
+;
+#X text 35 488 Há questões em relação ao bloco de áudio. Quando um
+objeto de áudio recebe um comando (como um "bang") \, ele só vai responder
+no próximo bloco de áudio. Por exemplo \, o objeto [print~] só imprime
+o bloco de áudio seguinte depois que recebe um bang. Já o [count~]
+\, que conta amostras de áudio \, é ressetado quando recebe um bang
+\, mas também só responde no bloco posterior ao que recebeu o bang.
+;
+#X text 641 136 <= resseta a cada 100 ms;
+#X text 536 218 <= sempre um bloco antes de ressetar com o bang.;
+#X text 727 425 ms;
+#X text 658 373 amostras;
+#X text 490 586 Logo \, o [vsnapshot~] e o [snapshot~] recebem o bang
+atrasado um pouco mais que um bloco de áudio \, e assim trabalham em
+sincronia com o bloco de áudio ressetado e gerado pelo [count~] - que
+são valores de 0 a 63!;
+#X obj 984 448 vline~;
+#X obj 974 379 bng 20 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 1071 403 random 100;
+#X obj 1071 443 sig~;
+#X obj 173 676 print~;
+#X obj 148 608 bng 20 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X text 88 609 clique =>;
+#X obj 173 642 cyclone/count~;
+#X text 465 38 Abaixo \, quando clicamos no bang \, o [count~] e [print~]
+estão em sincronia. Porém \, o [snapshot~] converte para dado um bloco
+de áudio antes do [count~] ser ressetado e do [print~] imprimir - e
+\, logo \, não está em sincronia com eles.;
+#X text 895 83 O [sig~] converte um dado para áudio \, mas o sinal
+de áudio somente será gerado no próximo ciclo de um bloco de áudio.
+;
+#X text 896 117 O problema de conversão é que o [sig~] é capaz apenas
+de converter um único dado para sinal de áudio. Ou seja \, por mais
+que recebe diversos valores entre um bloco de áudio e outro \, somente
+o último valor será convertido para áudio de forma constante.;
+#X obj 1071 351 loadbang;
+#X text 897 193 Para uma conversão mais acurada \, podemos usar o [vline~]
+\, que é também um gerador de linhas e de envelopes \, que será melhor
+retratado posteriormente. Entretanto \, ele já é aqui apresentado como
+um conversor mais aprimorado que o [sig~].;
+#X text 898 257 Abaixo \, temos um [metro] cuspindo bangs a cada 1
+ms e gerando valores aleatóreos de 0 a 99 a cada bang com o objeto
+[random].;
+#X floatatom 307 322 0 0 0 0 - - -;
+#X obj 307 296 unsig~ 200;
+#X obj 288 346 snaps~ 200;
+#X text 38 383 Já o [unsig~] e [snaps~] são abstrações do Pd-Extended
+cuja base é um [metro] e um [snapshot~].;
+#X text 899 314 Clique no bang e compare oresultado dos objetos [print~].
+;
+#X floatatom 1124 443 0 0 0 0 - - -;
+#X text 38 155 O [snapshot~] é um objeto nativo do Pd que converte
+áudio para dado quando recebe um bang. O [metro] envia bangs em um
+tepo especificado e pode ser usado para converter em um intervalo constante.
+Há ainda o snapshot clonado do MAX/MSP que já converte em um dado tempo
+constante.;
+#X text 913 517 Veja como o objeto [vline~] é capaz de gerar um bloco
+de áudio com mais de um valor aleatóreo \, convertendo o valor para
+a amostra mais próxima. Já o [sig~] é capaz apenas de gerar um sinal
+constante \, com o valor do último número aleatóreo recebido em todas
+as amostras.;
+#X obj 503 465 print~;
+#X text 665 490 Apenas último valor do bloco;
+#X obj 1071 481 print~ SIG;
+#X obj 974 479 print~ VLINE;
+#X obj 1071 377 metro 1;
+#X msg 627 374 70;
+#X obj 577 138 metro 100;
+#X obj 577 113 loadbang;
+#X obj 577 163 cyclone/count~;
+#X text 473 273 Outro detalhe é que o [snapshot~] não consegue converter
+mais do que um valor por bloco e converte apenas o último valor do
+bloco de áudio. Para uma conversão com precisão de até uma amostra
+de áudio \, é necessário usar o [vsnapshot~].;
+#X connect 0 0 10 0;
+#X connect 1 0 0 0;
+#X connect 1 0 11 0;
+#X connect 2 0 4 0;
+#X connect 2 0 8 0;
+#X connect 2 0 56 0;
+#X connect 2 0 55 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 5 0;
+#X connect 8 0 7 0;
+#X connect 11 0 10 0;
+#X connect 13 0 14 0;
+#X connect 16 0 15 0;
+#X connect 17 0 18 0;
+#X connect 20 0 21 0;
+#X connect 22 0 20 0;
+#X connect 22 0 19 0;
+#X connect 22 0 70 0;
+#X connect 23 1 25 1;
+#X connect 23 1 26 0;
+#X connect 24 0 67 0;
+#X connect 25 0 16 0;
+#X connect 25 0 13 0;
+#X connect 27 0 28 0;
+#X connect 27 0 25 0;
+#X connect 27 0 62 0;
+#X connect 28 0 13 0;
+#X connect 28 0 16 0;
+#X connect 28 0 62 0;
+#X connect 40 0 65 0;
+#X connect 41 0 64 0;
+#X connect 41 0 65 0;
+#X connect 42 0 43 0;
+#X connect 42 0 40 0;
+#X connect 42 0 59 0;
+#X connect 43 0 64 0;
+#X connect 45 0 44 0;
+#X connect 45 0 47 0;
+#X connect 47 0 44 0;
+#X connect 51 0 66 0;
+#X connect 55 0 54 0;
+#X connect 66 0 42 0;
+#X connect 67 0 23 0;
+#X connect 68 0 70 0;
+#X connect 69 0 68 0;
+#X connect 70 0 19 0;
+#X connect 70 0 20 0;

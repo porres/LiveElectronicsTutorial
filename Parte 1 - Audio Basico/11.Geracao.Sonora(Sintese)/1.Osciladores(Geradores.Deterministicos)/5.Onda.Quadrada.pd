@@ -1,0 +1,283 @@
+#N canvas 130 55 1188 692 10;
+#X obj 114 533 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Quadrada 441 float 1;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 -1 -1 -1;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 113 532 graph;
+#X text 99 527 1;
+#X text 93 659 -1;
+#X text 99 594 0;
+#X obj 80 458 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 206 23 348 358 ganho 0;
+#X obj 215 181 *~;
+#X obj 203 213 dac~;
+#X obj 244 151 line~;
+#X msg 244 125 \$1 10;
+#X obj 244 99 pow 4;
+#X obj 244 72 inlet;
+#X obj 215 41 inlet~;
+#X obj 34 178 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 34 202 metro 441;
+#X obj 104 257 tabwrite~ Quadrada;
+#X msg 70 144 \; pd dsp 1;
+#X obj 70 98 loadbang;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 9 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 11 0 10 0;
+#X connect 11 0 7 0;
+#X restore 32 482 pd ganho;
+#X obj 264 399 hsl 131 15 1 99 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#X obj 280 137 square~;
+#X floatatom 62 100 5 0 0 0 - - -;
+#N canvas 101 22 770 511 quadrada 0;
+#X obj 42 47 inlet;
+#X obj 42 137 Uzi;
+#X obj 152 249 l;
+#X obj 42 271 l;
+#X floatatom 42 81 5 0 0 0 - - -;
+#X obj 57 243 list prepend;
+#X text 67 153 p;
+#X msg 42 392 normalize 1;
+#X obj 42 363 trigger bang anything;
+#X obj 42 329 prepend sinesum 4096;
+#X obj 165 424 send square;
+#X msg 348 139 1 0 0.333333 0 0.2 0 0.142857 0 0.111111 0 0.090909
+0 0.076923 0 0.0666667 0 0.0588235 0 0.0526315 0 0.047619 0 0.0434782
+0 0.04 0 0.037037 0 0.0344827 0 0.0322581 0;
+#X text 189 226 Como a onda Dente de Serra \, mas \, se for par \,
+é zerado.;
+#X text 350 43 Quadrada: parciais decaem na taxa de "1/p" \, onde "p"
+é o número do termo da série harmônica. Os harmônicos pares são zerados.
+;
+#X text 441 108 Exemplo de 32 parciais.;
+#X obj 57 200 expr if($f1 % 2 == 0 \, 0 \, 1 / $f1);
+#X obj 42 109 t float bang;
+#X connect 0 0 4 0;
+#X connect 1 1 3 0;
+#X connect 1 2 15 0;
+#X connect 2 0 5 1;
+#X connect 3 0 9 0;
+#X connect 4 0 16 0;
+#X connect 5 0 2 0;
+#X connect 5 0 3 1;
+#X connect 7 0 10 0;
+#X connect 8 0 7 0;
+#X connect 8 1 10 0;
+#X connect 9 0 8 0;
+#X connect 15 0 5 0;
+#X connect 16 0 1 0;
+#X connect 16 1 5 1;
+#X restore 602 294 pd quadrada;
+#X obj 602 264 nbx 5 14 1 100 0 1 empty empty empty 0 -8 0 10 -262130
+-1 -1 9 256;
+#X obj 497 394 cnv 15 198 138 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 474 324 (subpatch) 0;
+#X array square 4099 float 0;
+#X coords 0 1 4098 -1 200 140 1;
+#X restore 496 394 graph;
+#X text 479 392 1;
+#X text 474 513 -1;
+#X obj 591 626 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 0 22 237 305 ganho 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 543 656 pd ganho;
+#X obj 543 587 tabosc4~ square;
+#X text 463 262 número de harmônicos:;
+#X text 418 34 O termo pulso indica \, na verdade \, uma série de valores
+constantes alternado com valores zerados. Por isso pode se dizer que
+a onda quadrada é um tipo de gerador de pulso (apesar de que a alternância
+de valores se dá \, aqui \, entre -1 e 1).;
+#X text 418 153 ============================================================
+;
+#X text 420 328 Porém \, dessa maneira \, temos apenas a possibilidade
+de gerar uma onda quadrada simétrica. Logo \, sem variação de pulso.
+;
+#X text 283 398 tamanho do pulso;
+#X text 419 107 Em todo caso \, uma onda quadrada "normal" \, por assim
+dizer \, remete a um tamanho de pulso simétrico (forma de onda simétrica).
+;
+#X obj 32 388 phasor~ 200;
+#X obj 62 129 phasor~;
+#X floatatom 261 422 5 0 0 0 - - -;
+#X obj 261 444 / 100;
+#X text 295 422 %;
+#X text 33 274 Abaixo \, temos uma variável chamada "width" \, valores
+dela \, de 0 a 1 \, representam o tamanho do pulso. Abaixo temos esse
+valor do tamanho em porcentagem. Com 50% \, temos uma Onda Quadrada
+simétrica \, como no [expr~] acima.;
+#X obj 32 413 expr~ if ($v1 < width \, 1 \, -1);
+#X obj 261 469 value width;
+#X text 32 201 Com o [expr] \, usamos uma condicional para gerar uma
+Onda Quadrada. Partimos de um objeto [phasor~] \, que gera valores
+entre 0 e 1 e fazemos uma lógica para converter em onda quadrada (se
+for menor que 0.5 \, então o sinal é igual a 1 \, e igual a -1 caso
+contrário).;
+#X obj 62 154 expr~ if ($v1 < 0.5 \, 1 \, -1);
+#X text 267 102 abstração do;
+#X text 278 116 extended;
+#X text 34 21 Há um objeto externo também para a Onda Quadrada \, o
+[square~] \, mas trata-se de uma abstração - disponível no Pd Extended
+- que parte de um princípio de comparação como abaixo.;
+#X text 422 179 Também é possível gerar uma onda quadrada a partir
+de uma somatória de senos \, veja detalhes no subpatch abaixo \, e
+escute com o [tabosc4~]. Como anteriormente \, uma onda quadrada perfeita
+implica em uma somatória infinita de harmônicos.;
+#X msg 229 391 50;
+#X obj 229 369 loadbang;
+#X obj 880 344 change~;
+#X obj 882 466 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array change 441 float 1;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 881 465 graph;
+#X text 867 460 1;
+#X text 861 592 -1;
+#X text 867 527 0;
+#X obj 954 373 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 206 23 348 358 ganho 0;
+#X obj 215 181 *~;
+#X obj 203 213 dac~;
+#X obj 244 151 line~;
+#X msg 244 125 \$1 10;
+#X obj 244 99 pow 4;
+#X obj 244 72 inlet;
+#X obj 215 41 inlet~;
+#X obj 34 178 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 34 202 metro 441;
+#X msg 70 144 \; pd dsp 1;
+#X obj 70 98 loadbang;
+#X obj 104 257 tabwrite~ change;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 11 0;
+#X connect 7 0 8 0;
+#X connect 8 0 11 0;
+#X connect 10 0 9 0;
+#X connect 10 0 7 0;
+#X restore 906 397 pd ganho;
+#X obj 880 315 triangle~ 0.5;
+#X obj 880 287 phasor~ 200;
+#X obj 968 289 hsl 131 15 0 1 0 0 empty empty empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#X text 987 288 tamanho do pulso;
+#X text 814 176 O [change~] detecta a direção do sinal de áudio: se
+ele está subindo \, o change retorna "1" \, se etá descendo retorna
+"-1". Já no caso do sinal se manter igual \, o [change~] retorna zero
+\, mas isso não ocorre em uma onda triangular \, que está sempre descendo
+ou subindo.;
+#X text 813 124 Há um modo de transformar uma onda triangular em onda
+quadrada com o [change~] \, que detecta variações de sentido no sinal
+de áudio.;
+#N canvas 786 159 450 300 sequencer 0;
+#X obj 195 193 mtof;
+#X obj 90 132 metro 200;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array sequencer 16 float 3;
+#A 0 -6 -8 -8 -3 -8 1 4 4 -3 -5 -5 -1 2 6 7 7;
+#X coords 0 12 16 -12 100 70 1;
+#X restore 223 104 graph;
+#X obj 90 193 v i;
+#X obj 90 107 inlet;
+#X obj 90 155 expr (i + 1) % 16 \; sequencer[i] + 43;
+#X obj 195 221 s \$0-freq;
+#X connect 0 0 6 0;
+#X connect 1 0 5 0;
+#X connect 4 0 1 0;
+#X connect 5 0 3 0;
+#X connect 5 1 0 0;
+#X restore 123 374 pd sequencer;
+#X obj 123 351 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 543 566 nbx 5 14 -1e+37 1e+37 0 1 empty hz empty 0 -8 0 10 -204800
+-1 -1 123.471 256;
+#X obj 32 364 nbx 5 14 -1e+37 1e+37 0 1 hz \$0-freq empty 0 -8 0 10
+-204800 -1 -1 123.471 256;
+#X connect 5 0 6 1;
+#X connect 7 0 27 0;
+#X connect 9 0 26 0;
+#X connect 11 0 10 0;
+#X connect 16 0 17 1;
+#X connect 18 0 17 0;
+#X connect 25 0 31 0;
+#X connect 26 0 34 0;
+#X connect 27 0 28 0;
+#X connect 28 0 32 0;
+#X connect 31 0 6 0;
+#X connect 39 0 27 0;
+#X connect 40 0 39 0;
+#X connect 41 0 48 0;
+#X connect 47 0 48 1;
+#X connect 49 0 41 0;
+#X connect 50 0 49 0;
+#X connect 51 0 49 1;
+#X connect 56 0 55 0;
+#X connect 57 0 18 0;
+#X connect 58 0 25 0;

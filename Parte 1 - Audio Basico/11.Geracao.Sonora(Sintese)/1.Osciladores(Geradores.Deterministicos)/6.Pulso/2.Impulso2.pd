@@ -1,0 +1,94 @@
+#N canvas 11 74 1397 657 10;
+#X obj 623 193 delta~;
+#X obj 598 273 output~;
+#X obj 623 156 phasor~;
+#X obj 623 129 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 0 256;
+#X text 84 357 ============================================================
+;
+#X obj 250 285 edge~;
+#X obj 250 314 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 250 259 impulse~ 1;
+#X text 89 214 Já uma forma de converter impulsos em "bangs" é possível
+com o objeto [edge~].;
+#X obj 214 546 zerox~;
+#X obj 214 473 sig~ 1;
+#X obj 214 514 osc~;
+#X obj 247 581 edge~;
+#X obj 247 610 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 88 144 Não obstante \, o [impulse~] pode ser usado como uma
+saída de áudio do Pd que pode controlar um synth modular analógico
+dessa maneira!;
+#X text 85 403 O objeto [zerox~] envia um impulso no outlet direito
+a cada vez que um sinal de áudio cruza o valor de zero. No caso \,
+a ideia é que marca o evento de cruzamento do zero \, reforçando a
+ideia do uso de pulsos em computação musical.;
+#X text 87 40 O gerador de impulsos possui um uso em síntese analógica
+que acaba sendo o de disparar ("trigar") certos processos. Ou seja
+\, seria uma espécie de "bang" no Pd. No Pd \, de fato \, não temos
+uma mesma utilidade de trigger para esse sinal de áudio no Pd e MAX/MSP
+\, já que costumamos usar "bangs" mesmo. Em vez de um gerador de impulso
+\, bastaria um [metro].;
+#X obj 623 227 expr~ abs($v1) > 0.5;
+#X text 549 36 Já o patch abaixo transforma o [phasor~] em um oscilador
+de impulso. O objeto [delta~] aponta a diferença entre uma amostra
+e a anterior \, quando o valor absoluto é maior que "0.5" é porque
+o ciclo reiniciou.;
+#X obj 618 508 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 618 476 phasor~ 1;
+#X obj 597 569 output~;
+#X text 533 345 Há uma forma mais simples de chegar a esse resultado
+com apenas um objeto \, o [fexpr~] \, que nos permite criar expressões
+matemáticas acessando diferentes amostras de um bloco de áudio. Portanto
+\, temos abaixo o equivalente ao patch acima.;
+#X obj 618 451 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 272 256;
+#X text 989 35 Frequência Negativa:;
+#X text 989 64 Infelizmente o [impulse~] não aceita frequências negativas.
+Vinos que frequências negativas apenas indicam um sentido contrário
+de oscilação e não haveria um motivo para previnir isso.;
+#X text 989 126 Em algum momento \, neste material didático \, veremos
+um patch onde seria necessário uma entrada de frequência negativa em
+um oscilador de impulso \, usado para controlar um sample and hold.
+;
+#X text 987 190 Como alternativa \, podemos usar a técnica que transforma
+o [phasor~] em oscilador de impulso \, que também acaba sendo uma versão
+de oscilador de impulso em Pd Vanilla.;
+#X text 988 243 Esse ainda não é um oscilador de impulso perfeito \,
+pois apenas consegue chegar à frequência de Nyquist. Para obter um
+oscilador de impulso que vá até a frequência da Taxa de Amostragem
+(como é o caso do [impulse~]) \, precisaríamos de um patch mais complexo
+\, ou de um novo external.;
+#X obj 1165 482 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 1165 450 phasor~ 1;
+#X obj 1168 396 hsl 128 15 -3 3 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X floatatom 1165 421 5 0 0 0 - - -;
+#X obj 1165 539 output~;
+#X obj 1016 499 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 988 321 Enfim \, confira abaixo como frequências negativas
+são possíveis dessa maneira.;
+#X connect 0 0 17 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 0;
+#X connect 5 0 6 0;
+#X connect 7 0 5 0;
+#X connect 9 1 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 9 0;
+#X connect 12 0 13 0;
+#X connect 17 0 1 0;
+#X connect 17 0 1 1;
+#X connect 19 0 21 0;
+#X connect 19 0 21 1;
+#X connect 20 0 19 0;
+#X connect 23 0 20 0;
+#X connect 29 0 33 0;
+#X connect 29 0 33 1;
+#X connect 30 0 29 0;
+#X connect 30 0 34 0;
+#X connect 31 0 32 0;
+#X connect 32 0 30 0;

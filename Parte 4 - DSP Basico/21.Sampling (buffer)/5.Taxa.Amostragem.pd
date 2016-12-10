@@ -1,0 +1,93 @@
+#N canvas 355 40 929 638 10;
+#X obj 464 556 table \$0-buffer;
+#X obj 170 478 soundfiler;
+#X obj 170 420 list append \$0-buffer;
+#X floatatom 170 503 0 0 0 0 - - -;
+#X obj 534 363 loadbang;
+#X obj 326 514 expr $f1 / sr;
+#X obj 326 422 soundfile_info;
+#X msg 326 452 \$1;
+#X msg 326 398 read \$1;
+#X obj 326 480 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-261234 -1 -1 0 256;
+#X obj 250 315 loadbang;
+#X msg 170 449 read -resize \$1 \$2;
+#X text 406 481 Taxa de Amostragem do arquivo;
+#X obj 428 410 samplerate~;
+#X obj 428 459 v sr;
+#X obj 250 370 trigger symbol symbol bang;
+#X obj 326 543 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 0 256;
+#X obj 326 571 v ratio_\$0;
+#X floatatom 170 554 0 0 0 0 - - -;
+#X obj 170 528 expr sr * ratio_\$0 / $f1;
+#X obj 170 580 s hz;
+#X msg 534 385 \; pd dsp 1 \; cents 0;
+#X text 68 45 Com o [tabread4~] \, já que temos recursos para tocar
+o arquivo em diferentes velocidades \, é possível também que toquemos
+arquivos de qualquer taxa de amostragem sem a necessidade de mudar
+a taxa do Pd ou fazer um resampleamento com o [block~]!;
+#X text 68 124 Basta saber a taxa de amostragem do arquivo e a taxa
+que o Pd está rodando. Se a taxa do arquivo é o dobro da do Pd \, o
+arquivo roda na metade da velocidade. Precisamos então multiplicar
+a frequência de leitura por 2! Ou seja \, basta multiplicar a frequência
+pela razão entre a taxa do arquivo com a taxa do Pd!;
+#X floatatom 428 435 0 0 0 0 - - -;
+#X obj 463 96 cnv 15 390 130 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 479 104 Erro de interpolação:;
+#X text 70 220 O objeto [soundfile_info] é um external capaz de descobrir
+a taxa de amostragem de um arquivo qualquer \, caso você não saiba.
+Estamos aqui abrindo um arquivo com a taxa de 88.2 Khz \, veja como
+fica em uma adaptação do exemplo anterior.;
+#X obj 101 531 s \$0-size;
+#X obj 661 365 r hz;
+#X obj 661 435 phasor~;
+#X obj 661 499 tabread4~ \$0-buffer;
+#X obj 661 468 *~;
+#X obj 693 469 r \$0-size;
+#X obj 661 535 output~;
+#X obj 711 353 nbx 5 18 -1e+37 1e+37 0 0 empty cents empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#X obj 711 380 expr pow(2 \, $f1/1200);
+#X obj 661 410 *~;
+#X text 787 351 Cents;
+#X floatatom 719 442 5 0 0 0 - - -;
+#X text 479 124 A interpolação sempre altera um pouco o sinal original
+\, e pode introduzir alguns artefatos. Para reduzir com eficiência
+o erro \, os preciosistas podem trabalhar com taxas de amostragem maiores
+\, como 88.2 KHz. No caso de tocar arquivos que foram gravados a 44.1
+KHz \, use um bom programa para ressamplear e dobrar a taxa de amostragem.
+Isso é o que foi feito com o arquivo deste exemplo.;
+#X obj 250 342 symbol ../../samples/sax.wav;
+#X connect 1 0 3 0;
+#X connect 2 0 11 0;
+#X connect 3 0 19 0;
+#X connect 3 0 28 0;
+#X connect 4 0 21 0;
+#X connect 5 0 16 0;
+#X connect 6 0 7 0;
+#X connect 7 0 9 0;
+#X connect 8 0 6 0;
+#X connect 9 0 5 0;
+#X connect 10 0 41 0;
+#X connect 11 0 1 0;
+#X connect 13 0 24 0;
+#X connect 15 0 2 0;
+#X connect 15 1 8 0;
+#X connect 15 2 13 0;
+#X connect 16 0 17 0;
+#X connect 18 0 20 0;
+#X connect 19 0 18 0;
+#X connect 24 0 14 0;
+#X connect 29 0 37 0;
+#X connect 30 0 32 0;
+#X connect 31 0 34 0;
+#X connect 31 0 34 1;
+#X connect 32 0 31 0;
+#X connect 33 0 32 1;
+#X connect 35 0 36 0;
+#X connect 36 0 37 1;
+#X connect 37 0 30 0;
+#X connect 39 0 32 1;
+#X connect 41 0 15 0;

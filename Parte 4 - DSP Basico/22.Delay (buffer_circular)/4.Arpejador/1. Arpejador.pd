@@ -1,0 +1,75 @@
+#N canvas 197 23 1024 755 10;
+#X text 564 302 E assim temos um "arpejo" em passos bem definidos e
+em loop (mais grave - original - mais agudo). O intervalo musical dependerá
+da frequência do LFO e do depth (amplitude máxima do ponto do delay).
+;
+#X obj 135 321 loadbang;
+#X obj 85 248 readsf~;
+#X obj 85 191 loadbang;
+#X obj 322 400 output~;
+#X obj 267 103 phasor~ 1;
+#X obj 336 149 tof/breakpoints~ 100 50;
+#X obj 345 89 loadbang;
+#X msg 345 113 0 0.33 1 0.34 1 0.33 0;
+#X floatatom 267 79 5 0 0 0 - - -;
+#X obj 270 48 hsl 128 15 0.1 5 1 0 empty LFO empty -2 -8 0 10 -261682
+-1 -1 10108 1;
+#X obj 379 308 line~;
+#X obj 334 313 *~;
+#X obj 382 231 hsl 128 15 10 500 0 0 empty depth empty -2 -8 0 10 -204800
+-1 -1 389 1;
+#X obj 379 259 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 25.0087 256;
+#X msg 379 283 \$1 100;
+#X obj 85 276 delwrite~ \$0-delay 2000;
+#X text 234 46 LFO;
+#X text 442 257 depth;
+#X text 241 78 Hz;
+#X msg 135 348 \; pd dsp 1 \; LFO 2.25 \; depth 25;
+#X msg 85 216 open ../../../samples/violin.wav \, 1;
+#X text 563 88 Seguimos com efeitos de delay variável para processamentos
+de arpejo/pitch-shifting! Este exemplo é muito similar ao de vibrato
+\, porém \, não nos fechamos em um LFO senoidal e assim temos ao lado
+uma forma de onda de trapézio.;
+#X text 565 148 Poderíamos ter usado o [trapezoid~] \, mas usamos o
+objeto [tof/breakpoints~] que nos permite desenhar diversos tipos de
+onda com facilidade.;
+#X text 564 204 No caso \, o primeiro trecho de subida do trapézio
+reflete em um acréscimo de atraso no delay \, que significa desascelerar
+a leitura do som mudando a altura pra mais grave. A seguir \, na reta
+do topo do trapézio \, não há asceleração nem desasceleração e a altura
+original é reestabelecida. Por fim \, na descida \, a altura irá subir
+por causa de uma asceleração.;
+#X text 563 365 Experimente outras desenhos no envelope diferentes
+de um trapézio para realizar outros tipos de arpejos.;
+#X obj 334 347 vd~ \$0-delay;
+#X obj 487 644 output~;
+#X obj 508 508 phasor~ 2.25;
+#X obj 508 603 vd~ \$0-delay;
+#X obj 508 536 trapezoid~ 0.33 0.67;
+#X obj 508 569 *~ 25;
+#X text 275 571 Versão com [trapezoid~] ==>;
+#X text 551 568 depth;
+#X connect 1 0 20 0;
+#X connect 2 0 16 0;
+#X connect 2 1 21 0;
+#X connect 3 0 21 0;
+#X connect 5 0 6 0;
+#X connect 6 0 12 0;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;
+#X connect 9 0 5 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 1;
+#X connect 12 0 26 0;
+#X connect 13 0 14 0;
+#X connect 14 0 15 0;
+#X connect 15 0 11 0;
+#X connect 21 0 2 0;
+#X connect 26 0 4 0;
+#X connect 26 0 4 1;
+#X connect 28 0 30 0;
+#X connect 29 0 27 0;
+#X connect 29 0 27 1;
+#X connect 30 0 31 0;
+#X connect 31 0 29 0;

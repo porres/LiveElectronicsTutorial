@@ -1,0 +1,114 @@
+#N canvas 253 23 930 703 10;
+#X obj 80 542 fexpr~ ($x1[0] + $x1[-1] + $x1[-2] + $x1[-3] + $x1[-4]
++ $x1[-5] + $x1[-6] + $x1[-7]) * 0.125;
+#X text 74 220 O número da amostra é dado entre colchetes \, sendo
+[0] a amostra atual \, [-1] a anterior \, [-2] duas amostras atrás
+e assim por diante.;
+#X obj 80 477 triangle~ 0;
+#X obj 80 635 output~;
+#X obj 80 452 phasor~ 300;
+#X obj 60 326 cnv 15 365 40 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 65 329 y[n] = x[n] + x[n-1] + x[n-2] + x[n-3] + x[n-4] + x[n-5]
++ x[n-6] + x[n-7]) * 0.125;
+#X text 501 29 Vejamos agora um exemplo com feedback de acordo com
+o diagrama abaixo:;
+#N canvas 76 218 437 382 feedback 0;
+#X obj 201 187 block~ 1;
+#X obj 49 29 inlet~;
+#X obj 64 137 delread~ \$0-x 1;
+#X obj 178 63 samplerate~;
+#X obj 178 88 expr 1000 / $f1;
+#X obj 178 38 loadbang;
+#X floatatom 178 116 0 0 0 0 - - -;
+#X obj 49 210 +~;
+#X obj 49 307 outlet~;
+#X obj 76 275 delwrite~ \$0-x 1;
+#X text 244 116 tempo de uma amostra em ms;
+#X obj 64 183 *~ 0.99;
+#X text 112 183 a = 0.99;
+#X connect 1 0 7 0;
+#X connect 2 0 11 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 4 0 6 0;
+#X connect 5 0 3 0;
+#X connect 7 0 9 0;
+#X connect 7 0 8 0;
+#X connect 11 0 7 1;
+#X restore 626 387 pd feedback;
+#X text 511 171 A equação que representa esse diagrama é a seguinte:
+;
+#X obj 617 423 output~;
+#X text 28 507 x[n] ==>;
+#X text 27 598 y[n] ==>;
+#X text 31 545 filtro:;
+#X obj 555 620 output~;
+#X obj 564 586 fexpr~ $x1[0] + $x2[0] * $y1[-1];
+#X text 502 500 Já abaixo temos uma versão em [fexpr~] \, onde o coeficiente
+"a" é dado como um sinal no segundo inlet.;
+#X obj 589 197 cnv 15 180 25 empty empty empty 5 12 0 14 -233017 -66577
+0;
+#X text 595 200 y[n] = x[n] + a[n] * y[n-1];
+#X obj 626 360 noise~;
+#X obj 564 562 noise~;
+#X text 73 20 O [fexpr~] é da mesma família de objetos [expr] e [expr~].
+Ele possui a mesma sintaxe \, mas é dedicado à equações de filtro e
+\, por isso \, possui uma sintaxe específica para equações de filtro
+- chamadas equações de diferença.;
+#X text 73 82 O sinal de entrada não é mais a variável $v \, e sim
+$x \, sendo $x1 o sinal de entrada do primeiro inlet \, $x2 o sinal
+do segundo inlet e assim por diante.;
+#X text 74 131 O [fexpr~] dá acesso à amostras atrasadas \, e como
+ele trabalha em um bloco de áudio \, o tamanho do atraso/delay em amostras
+é o tamanho do bloco. Como o padrão é 64 \, normalmente podemos atrasar
+até 64 amostras. Para atrasar mais que isso \, precisamos aumentar
+o tamanho do bloco com [block~] \, mas 64 já é suficiente para a maioria
+dos casos.;
+#X text 73 269 Seguindo o exemplo do filtro de média de 8 amostras
+do exemplo anterior \, a forma de codificar em uma expressão matemática
+(a chamada equação de diferença) seria assim:;
+#X text 73 389 Onde "n" é o número da amostra \, x[n] é o sinal de
+entrada e y[n] é o sinal de saída. Na sintaxe do [fexpr~] temos algo
+bem parecido:;
+#X obj 611 54 cnv 15 180 110 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 718 79 |;
+#X text 718 91 |;
+#X text 718 101 |;
+#X text 699 117 |;
+#X text 741 117 |;
+#X text 741 137 |;
+#X text 699 137 |;
+#X text 702 107 _______;
+#X text 702 137 _______;
+#X text 718 104 v;
+#X text 671 125 -(*)-;
+#X text 669 105 |;
+#X text 669 119 |;
+#X text 669 81 |;
+#X text 669 93 |;
+#X text 669 78 ^;
+#X text 747 66 >;
+#X text 699 127 | z^-1 |;
+#X text 682 134 a;
+#X text 617 67 x(n) ---(+)----------- y(n);
+#X text 516 235 Portanto \, temos um feedback \, onde somamos o sinal
+de entrada com a saída do filtro atrasada por uma amostra. Essa saída
+é multiplicada pelo coeficiente "a". Esse diagrama equivale à estrutura
+de delay em feedback que já foi apresentada anteriormente.;
+#X text 518 307 Vejamos como fica a implementação \, considerando a
+= 0.99 em um patch com os objetos [delwrite~] e [delread~].;
+#X obj 753 560 sig~ 0.99;
+#X text 724 558 a =;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 2 0 0 0;
+#X connect 4 0 2 0;
+#X connect 8 0 10 0;
+#X connect 8 0 10 1;
+#X connect 15 0 14 0;
+#X connect 15 0 14 1;
+#X connect 19 0 8 0;
+#X connect 20 0 15 0;
+#X connect 49 0 15 1;

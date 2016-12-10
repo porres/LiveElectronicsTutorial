@@ -1,0 +1,157 @@
+#N canvas 87 52 1254 559 10;
+#X obj 460 135 sqrt;
+#X floatatom 460 112 0 0 0 0 - - -;
+#X obj 460 88 * 0.001;
+#X msg 460 65 600;
+#X text 427 63 ohms;
+#X obj 460 204 expr 20 * log10($f1/1);
+#X text 434 239 dBV;
+#X obj 513 404 expr $f1 - dif;
+#X text 488 380 dBV;
+#X text 488 427 dBu;
+#X obj 647 403 expr $f1 + dif;
+#X text 622 379 dBu;
+#X text 622 424 dBV;
+#X msg 647 355 4;
+#X msg 513 357 -10;
+#X text 945 119 dBV;
+#X obj 971 140 expr $f1 - dif;
+#X text 946 161 dBu;
+#X obj 460 42 loadbang;
+#X text 857 367 dBV;
+#X text 1020 366 dBu;
+#X obj 971 92 expr 20 * log10($f1/1);
+#X text 421 88 watts;
+#X text 544 157 <= referência para 0 dBu!;
+#X text 254 382 ~;
+#X text 493 135 raiz quadrada;
+#X obj 883 395 expr pow(10 \, $f1 / 20);
+#X obj 1046 395 expr pow(10 \, $f1 / 20) * dBu_0;
+#X obj 469 182 value dBu_0;
+#X obj 460 263 value dif;
+#X obj 460 240 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 -2.21849 256;
+#X obj 460 159 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-229184 -1 -1 0.774597 256;
+#X obj 513 382 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 -10 256;
+#X obj 513 429 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-216565 -1 -1 -7.78151 256;
+#X obj 647 429 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 1.78151 256;
+#X obj 647 380 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-216565 -1 -1 4 256;
+#X obj 971 62 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-229184 -1 -1 7 256;
+#X obj 971 120 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 16.902 256;
+#X obj 971 163 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-216565 -1 -1 19.1204 256;
+#X obj 883 434 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-229184 -1 -1 3.98107 256;
+#X obj 883 368 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 12 256;
+#X obj 1046 368 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+10 -216565 -1 -1 10 256;
+#X obj 1046 434 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+10 -229184 -1 -1 2.44949 256;
+#X text 28 42 Vamos agora falar de padrões de dB importantes no áudio.
+Vimos que no áudio digital não há um valor de referência para intensidade
+sonora \, por isso usamos o dBFS. Mas em áudio analógico e acústica
+temos diversos outros padrões. Um exemplo de adoção do dB em acústica
+é o caso da Pressão Sonora \, em dB SPL \, cujo valor de referência
+é de 20 micropascais (limiar mínimo da audição em 1Khz) para 0 dB.
+;
+#X obj 529 81 cnv 15 270 30 empty empty empty 20 12 0 14 -249199 -66577
+0;
+#X text 635 82 2;
+#X text 584 88 Voltagem;
+#X text 532 88 Fórmula:;
+#X text 644 88 = Potência * Resistência;
+#X text 607 188 razão em relação ao valor de;
+#X text 632 217 e conversão para dB;
+#X text 527 263 diferença em dB entre 0 dBV e 0 dBu;
+#X text 396 158 Volts RMS;
+#X text 218 371 0 dBV = 1 Volt RMS;
+#X text 218 385 0 dBu = 0.7746 Volt RMS;
+#X text 602 203 referência de dBV (1 Volt RMS);
+#X text 915 61 Volt RMS;
+#X text 858 21 Outra conversão possível é entre amplitude dada em Volts
+RMS para valores em dBV e dBu.;
+#X obj 872 91 cnv 15 90 20 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 874 92 "rms to db" *;
+#X obj 839 190 cnv 15 370 97 empty empty empty 20 12 0 14 -228856 -66577
+0;
+#X text 828 432 Volt RMS;
+#X text 991 433 Volt RMS;
+#X text 846 191 * Perceba que estamos usando uma fórmula de conversão
+similar à do [rmstodb] \, em que dobrar o valor acrescenta em torno
+de 6 dB (diferente de [powtodb]). A ideia é que amplitudes costumam
+ser dados em RMS (como em Volts RMS acima). Apesar das confusões já
+apontadas \, é dessa prática que se acabou se aplicando o termo "rms"
+nesses objetos de conversão. Veremos sobre [powtodb] depois.;
+#X text 548 239 (equivalente de 0 dBu em dBV);
+#X text 28 231 É comum \, por exemplo \, que a placa de som de um computador
+receba e envie sinal de áudio em nível de linha \, com valores máximos
+de amplitude RMS em -10dBV \, +4dBu ou em ambos. O manual do equipamento
+deve detalhar isso \, e significa que o valor de referência para 0
+dBFS \, no seu sistema \, será esse valor especificado em dBV ou dBu.
+;
+#X text 27 144 Equipamentos de áudio analógico possuem nível de saída
+expressos em dB em \, principalmente \, dois padrões: -10dBV para sinal
+de linha de equipamentos de áudio comuns \, como um iPod ou CD player
+\, e +4dBu (é comum a notação explícita "+4" em vez de apenas "4")
+para sinal de linha de equipamentos profissionais de estúdio.;
+#X obj 830 395 db2v;
+#X text 865 394 =;
+#X text 845 294 Abaixo convertemos amplitude em dB para volts. Converter
+dBV é trivial e o mesmo que converter dB em razão (ou usar [db2v])
+\, pois o valor de referência é 1V. Já converter dBu nescessita multiplicar
+pelo valor de referência de dBu.;
+#X text 28 317 Lembrando que a amplitude do sinal de áudio analógico
+é dada por uma voltagem \, ambos os padrões de dBu e dBV lidam com
+valores de referência em Volts para 0 dB \, que são os seguintes:;
+#X text 30 414 Outro padrão em áudio \, o dBm \, tem 1 mW (miliwatt)
+como referência. O valor de referência do 0 dBu vem do cálculo da voltagem
+para dissipar a Potência de 0 dBm (logo \, 1mW) por uma resistência
+de 600 ohms. À direita \, fazemos essas contas - também comparamos
+e convertemos entre valores de dBu e dBV. Mas entenda como dBm e dBu
+possuem uma mesma referência \, portanto não precisam de conversão
+entre si!;
+#X text 430 298 Acima vemos que o valor de aproximadamente -2.2185
+dBV equivale a 0 dBu \, e indica também uma diferença que é o que precisamos
+para fazer a conversão entre dBu e dBV:;
+#X obj 418 461 cnv 15 380 60 empty empty empty 20 12 0 14 -204602 -66577
+0;
+#X text 430 467 E assim vemos que +4dBu dá em torno de 1.78 dBV. Logo
+\, a diferença entre -10dBV e +4dBu é em torno de 11.78 dB e não 14
+dB!;
+#X obj 835 460 cnv 15 380 60 empty empty empty 20 12 0 14 -220723 -66577
+0;
+#X text 846 465 Podemos conferir então que uma amplitude RMS de +4dBu
+dá em torno de 1.22765 Volts RMS \, e que a de -10dBV dá em torno de
+0.316228 Volts RMS.;
+#X connect 0 0 31 0;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 30 0;
+#X connect 7 0 33 0;
+#X connect 10 0 34 0;
+#X connect 13 0 35 0;
+#X connect 14 0 32 0;
+#X connect 16 0 38 0;
+#X connect 18 0 3 0;
+#X connect 21 0 37 0;
+#X connect 26 0 39 0;
+#X connect 27 0 42 0;
+#X connect 30 0 29 0;
+#X connect 31 0 28 0;
+#X connect 31 0 5 0;
+#X connect 32 0 7 0;
+#X connect 35 0 10 0;
+#X connect 36 0 21 0;
+#X connect 37 0 16 0;
+#X connect 40 0 26 0;
+#X connect 41 0 27 0;

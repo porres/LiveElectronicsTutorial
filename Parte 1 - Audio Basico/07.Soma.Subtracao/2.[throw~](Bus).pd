@@ -1,0 +1,22 @@
+#N canvas 623 366 565 466 10;
+#X obj 94 240 throw~ bus_1;
+#X obj 230 321 catch~ bus_1;
+#X obj 94 190 sig~ 1;
+#X obj 230 364 snaps~;
+#X obj 194 240 throw~ bus_1;
+#X obj 194 190 sig~ 1;
+#X obj 304 240 throw~ bus_1;
+#X obj 304 190 sig~ 1;
+#X obj 404 240 throw~ bus_1;
+#X obj 404 190 sig~ 1;
+#X text 92 35 O [throw~] é um "bus" de sinal \, um canal que você cria
+e pode "jogar" ou endereçar diversos sinais para esse bus. O [throw~]
+precisa de um nome para o canal e envia o Bus para um objeto [catch~]
+de mesmo nome.;
+#X text 94 106 Abaixo temos quatro sinais distintos sendo jogados no
+bus. Todos os sinais são somados ao chegarem no [catch~].;
+#X connect 1 0 3 0;
+#X connect 2 0 0 0;
+#X connect 5 0 4 0;
+#X connect 7 0 6 0;
+#X connect 9 0 8 0;

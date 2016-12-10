@@ -1,0 +1,290 @@
+#N canvas 122 23 1244 687 10;
+#X obj 144 137 cnv 15 100 40 empty empty empty 20 12 0 14 -260097 -66577
+0;
+#X obj 464 102 cnv 15 280 40 empty empty empty 20 12 0 14 -203905 -66577
+0;
+#X obj 968 375 cnv 15 110 70 empty empty empty 20 12 0 14 -1 -66577
+0;
+#X obj 585 258 nbx 4 14 0 44.1 0 0 empty Khz Khz 0 -6 0 10 -204800
+-1 -1 5 256;
+#X obj 585 288 * 1000;
+#X floatatom 468 296 0 0 0 0 - - -;
+#X text 448 295 Hz;
+#X obj 468 254 nbx 3 14 0 127 0 0 empty empty empty 0 -8 0 12 -261234
+-1 -1 0 256;
+#X obj 636 258 nbx 4 14 0 1 0 0 empty empty fase 0 -6 0 10 -203904
+-1 -1 0 256;
+#X msg 656 284 0;
+#X msg 691 284 0.25;
+#X msg 734 284 0.5;
+#X msg 768 284 0.75;
+#X obj 973 380 cnv 15 100 60 empty empty empty 20 12 0 14 -262068 -66577
+0;
+#X text 44 299 Portanto \, o objeto [fft~] cospe duas listas de amostras
+no domínio da frequência. Na saída da esquerda temos a Amplitude de
+Cosseno \, ou parte real \, e na direita a Amplitude de Seno \, ou
+parte imaginária. Essa é a Forma Cartesiana dos números complexos \,
+que podemos converter para a forma Polar (Amplitude e Fase).;
+#X text 43 396 O tamanho do bloco e a Taxa de Amostragem definem a
+Banda de Frequência - o espaço de frequência entre os pontos. Como
+se trata de uma progressão linear de frequência \, podemos considerar
+que se trata de uma série harmônica.;
+#X text 439 34 O subpatch abaixo nos mostra como calcular a Banda de
+Frequência \, e sua implicação em harmônicos e a periodicidade da FFT.
+;
+#X text 450 234 "Harmônico";
+#X text 625 394 Parte Imaginária;
+#X text 512 393 Parte Real;
+#N canvas 135 109 652 650 gráficos 0;
+#X obj 0 0 cnv 15 650 630 empty empty empty 20 12 0 14 -33289 -66577
+0;
+#X obj 25 16 cnv 15 600 280 empty empty Cartesiana 20 12 0 14 -262130
+-4160 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Re 128 float 0;
+#X coords 0 128 127 -128 256 200 1;
+#X restore 57 68 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Im 128 float 0;
+#X coords 0 128 127 -128 256 200 1;
+#X restore 333 67 graph;
+#X obj 58 69 cnv 15 254 198 empty empty empty 20 12 0 14 -236717 -66577
+0;
+#X text 161 265 Nyquist;
+#X text 55 264 0;
+#X text 302 264 sr;
+#X text 437 266 Nyquist;
+#X text 331 265 0;
+#X text 574 264 sr;
+#X obj 334 68 cnv 15 254 198 empty empty empty 20 12 0 14 -257521 -66577
+0;
+#X text 42 156 0;
+#X text 320 158 0;
+#X obj 25 329 cnv 15 600 280 empty empty Polar 20 12 0 14 -262130 -4160
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Amplitude 128 float 0;
+#X coords 0 128 127 0 256 200 1;
+#X restore 56 373 graph;
+#X obj 57 374 cnv 15 254 198 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Fase 128 float 0;
+#X coords 0 -3.14 127 3.14 256 200 1;
+#X restore 333 374 graph;
+#X obj 334 375 cnv 15 254 198 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#X text 437 573 Nyquist;
+#X text 331 572 0;
+#X text 574 571 sr;
+#X text 160 573 Nyquist;
+#X text 54 572 0;
+#X text 300 571 sr;
+#X text 320 464 0;
+#X text 162 42 Cosseno;
+#X text 445 44 Seno;
+#X restore 987 403 pd gráficos;
+#X text 844 27 Considerações finais:;
+#X obj 585 329 osc~ 5000;
+#X text 652 328 Senóide;
+#X obj 468 272 expr $i1 * banda;
+#N canvas 0 68 635 543 plotar 0;
+#X text 93 354 Amplitude;
+#X obj 297 262 bng 8 250 50 0 empty bangue empty 17 7 0 10 -228856
+-228856 -1;
+#X obj 40 268 bng 8 250 50 0 empty bangue empty 17 7 0 10 -228856 -228856
+-1;
+#X obj 162 332 cartopol~;
+#X obj 233 436 bng 8 250 50 0 empty bangue empty 17 7 0 10 -228856
+-228856 -1;
+#X obj 173 465 bng 8 250 50 0 empty bangue empty 17 7 0 10 -228856
+-228856 -1;
+#X obj 166 82 inlet~;
+#X obj 238 80 inlet~;
+#X obj 367 190 tgl 15 0 empty empty empty 0 -6 0 10 -262144 -1 -1 1
+1;
+#X obj 367 211 metro 205;
+#X obj 388 154 loadbang;
+#X obj 367 237 s bangue;
+#X obj 441 204 del 500;
+#X obj 40 288 tabwrite~ \$0-Re;
+#X obj 287 289 tabwrite~ \$0-Im;
+#X obj 162 481 tabwrite~ \$0-Amplitude;
+#X text 228 353 Fase Inicial;
+#X text 256 111 Parte Imaginária;
+#X text 68 110 Parte Real;
+#X obj 222 452 tabwrite~ \$0-Fase;
+#X text 96 30 Este subpatch plota os gráficos de resultados da FFT
+;
+#X obj 440 238 \$0;
+#X msg 441 282 \; pd dsp 1 \; Khz 5 \; \$1-Re xticks 0 32 1 \; \$1-Im
+xticks 0 32 1 \; \$1-Fase xticks 0 32 1 \; \$1-Amplitude xticks 0 32
+1;
+#X connect 1 0 14 0;
+#X connect 2 0 13 0;
+#X connect 3 0 15 0;
+#X connect 3 1 19 0;
+#X connect 4 0 19 0;
+#X connect 5 0 15 0;
+#X connect 6 0 3 0;
+#X connect 6 0 13 0;
+#X connect 7 0 3 1;
+#X connect 7 0 14 0;
+#X connect 8 0 9 0;
+#X connect 9 0 11 0;
+#X connect 10 0 8 0;
+#X connect 10 0 12 0;
+#X connect 12 0 21 0;
+#X connect 21 0 22 0;
+#X restore 570 429 pd plotar;
+#X text 444 160 Abaixo temos um Tom Puro sendo analisado. A caixa "harmônico"
+gera valores das Bandas de Frequências \, e um resultado de análise
+estável. Mude também os valores de Fase e perceba as mudanças nos gráficos.
+;
+#X text 70 540 Existem vários tipos e subtipos de Transformadas de
+Fourier que você pode encontrar por aí. Basicamente \, podemos ter
+a transformada na versão contínua (feita a partir de funções contínuas)
+ou discreta.;
+#X text 450 557 O algoritmo da FFT possui uma restrição em que o tamanho
+do bloco analisado deve ser uma potência de 2! No caso deste exemplo
+\, usamos um bloco de 128 (2 elevado a 7).;
+#X text 33 507 MAIS DETALHES:;
+#X text 10 481 ============================================================
+;
+#X text 370 481 ============================================================
+;
+#X text 730 481 ============================================================
+;
+#X text 1090 481 =======================;
+#X text 451 605 Para análise de áudio em que o conteúdo de frequência
+varia muito no tempo \, precisamos analisar trechos curtos de tempo
+(pequenos blocos de áudio) sucessivamente - o que nos leva a mais um
+tipo de análise \, a STFT.;
+#X text 842 507 A Tranformada Rápida de Tempo Curto \, ou "STFT" (de
+"Short Time Fourier Transform") \, combina diferentes janelas de áudio
+\, como veremos no próximo exemplo. A ideia é fazer uma média de trechos
+curtos de tempo para recriar o conteúdo de aspecto dinâmico do sinal
+analisado.;
+#X text 843 576 Podemos pensar em uma metáfora com o cinema \, onde
+diversas fotos instantâneas são usadas para dar a ilusão de variação
+ou movimento. Veremos mais sobre isso a seguir.;
+#X text 844 623 A STFT também pode ser feita tanto em tempo discreto
+como contínuo e \, claramente \, trabalharemos com o a STFT em Tempo
+Discreto \, a partir de FFT para ser mais exato!;
+#X obj 585 383 fft~;
+#X text 70 602 Como o tempo no áudio digital é discretizado em uma
+Taxa de Amostragem qualquer \, estamos aqui lidando com o grupo de
+Transformada de Fourier Discreta \, ou "DFT" (de "Dicrete Fourier Transform").
+;
+#X text 450 507 A Transformada Rápida de Fourier (FFT) é \, portanto
+\, um tipo de DFT. Mais especificamente \, trata-se de um algoritmo
+otimizado para computar a DFT de forma \, enfim \, "rápida".;
+#X text 845 151 Deve estar claro que \, para cada ponto de frequência
+\, os valores de Seno e Cosseno (partes real e imaginária) representam
+coordenadas no Plano Cartesiano \, da forma que vimos anteriormente.
+;
+#X text 845 208 Pereceba que há um espelhamento a partir da Frequência
+de Nyquist nos gráficos de Amplitude e Cosseno. Já os gráficos de Fase
+e Seno possuem um espelhamento e uma inversão dos valores também a
+partir de Nyquist.;
+#X text 845 265 Essa é uma questão matemática do objeto [fft~] que
+\, na verdade \, calcula a transformada para sinais complexos (que
+veremos posteriormente). Para sinais reais \, devemos usar o [rfft~]
+\, que é mais rápido por apenas computar a metade da tabela (até a
+Frequência de Nyquist). Mude e confira.;
+#X text 43 113 No Pd \, o tamanho do bloco é definido pelo objeto [block~].
+;
+#X text 44 38 O objeto [fft~] realiza uma "Transformada Rápida de Fourier"
+(Fast Fourier Transform) \, que decompõe um sinal periódico em componentes
+de Tons Puros (Seno e Cosseno). A "transformação" é feita em um bloco
+de amostras \, e é uma transformação do domínio do tempo para o da
+frequência.;
+#X text 42 202 No domínio do tempo \, as amostras trazem valores de
+Amplitudes no tempo. Já no domínio da frequência temos um par complexo
+- dois valores de amplitudes \, uma de Cosseno e outra de Seno - e
+cada ponto representa uma frequencia! E assim \, se temos um par de
+Cosseno e Seno de uma mesma frequência \, podemos gerar um Tom Puro
+de mesma frequência.;
+#N canvas 82 51 936 591 Bandas_de_Frequência_&_Periodicidade 0;
+#X obj 164 85 samplerate~;
+#X floatatom 164 109 8 0 0 0 - - -;
+#X obj 164 139 v sr;
+#X obj 35 61 trigger bang bang bang;
+#X obj 35 33 loadbang;
+#X obj 35 215 nbx 8 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 16
+-261234 -1 -1 344.531 256;
+#X obj 16 288 cnv 15 450 120 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 470 58 cnv 15 450 350 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 35 178 expr sr / block;
+#X obj 99 127 v block;
+#X msg 99 94 128;
+#X text 66 299 IMPORTANTE:;
+#X text 504 70 PERIODICIDADE:;
+#X text 165 216 Banda de Frequência em Hertz \, ou "fundamental";
+#X text 61 331 Deve estar claro que \, principalmente \, o tamanho
+do bloco define a resolução da Banda de Frequência! Quanto maior o
+bloco \, maior é a resolução \, ou seja \, menor é a Banda de Frequência!
+;
+#X obj 35 253 v banda;
+#X text 141 162 A Banda de Frequência é igual à \; Taxa de Amostragem
+dividida pelo bloco \; (Sample Rate / Block Size);
+#X obj 701 140 cnv 10 95 13 empty empty empty 20 12 0 14 -260097 -66577
+0;
+#X text 527 103 Um conceito muito importante da FFT é que a análise
+considera o bloco de amostras como um sinal PERIÓDICO!;
+#X text 527 138 Como dito \, a FFT decompõe um SINAL PERIÓDICO em Componentes
+de Tons Puros. Portanto \, se o bloco de amostras é tido como periódico
+\, entende-se que se trata de uma "forma de onda periódica". Para tal
+\, cada bloco de amostra deveria terminar no exato ponto de início
+\, caso contrário haverá um salto abrupto \, ou um "click".;
+#X text 527 224 Para que o sinal analisado seja de fato periódico \,
+todos os seus componentes não só devem ser harmônicos \, como devem
+ser parte da série harmônica implícita na FFT! Assim há um perfeito
+encaixe \, mas é claro que isso não ocorre na prática...;
+#X text 526 296 Na incapacidade da FFT em nos dar um conjunto de Componentes
+de Tons Puros que se encaixam na série \, o resultado de análise aparenta
+ser meio caótico.;
+#X text 525 340 Neste exemplo analisamos um oscilador senoidal. Apenas
+quando a frequência do oscilador é um perfeito harmônico da série \,
+a análise se mostra estável.;
+#X text 290 432 Neste exemplo temos um bloco de 128 amostras \, ou
+seja \, 128 pontos de frequências. Os valores de frequência vão então
+de 0 a 127 multiplicados pelo valor de banda de frequência (344.531
+Hz nesse caso).;
+#X text 291 495 Portanto \, temos valores de 0Hz a em torno de 43.755
+KHz (127 * 344.531 Hz). A frequência de Nyquist é o sexagésimo quinto
+ponto de frequência.;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 3 0 8 0;
+#X connect 3 1 10 0;
+#X connect 3 2 0 0;
+#X connect 4 0 3 0;
+#X connect 5 0 15 0;
+#X connect 8 0 5 0;
+#X connect 10 0 9 0;
+#X restore 486 113 pd Bandas_de_Frequência_&_Periodicidade;
+#X text 783 403 Clique e abra os gráficos ==>;
+#X obj 160 149 block~ 128;
+#X text 846 47 Músicos costumam ver só o gráfico de Amplitude (da Forma
+Polar) \, que informa a energia de cada componente espectral e é de
+fato mais fácil de interpretar visualmente!;
+#X text 845 92 Os valores de amplitude possuem um máximo igual à metade
+do tamanho do bloco \, mas note que a frequência de Nyquist e 0Hz chegam
+a um valor máximo igual ao tamanho do bloco. Isso muda com o tipo de
+janelamento \, como veremos depois.;
+#X connect 3 0 4 0;
+#X connect 4 0 22 0;
+#X connect 5 0 22 0;
+#X connect 7 0 24 0;
+#X connect 8 0 22 1;
+#X connect 9 0 22 1;
+#X connect 10 0 22 1;
+#X connect 11 0 22 1;
+#X connect 12 0 22 1;
+#X connect 22 0 38 0;
+#X connect 24 0 5 0;
+#X connect 38 0 25 0;
+#X connect 38 1 25 1;

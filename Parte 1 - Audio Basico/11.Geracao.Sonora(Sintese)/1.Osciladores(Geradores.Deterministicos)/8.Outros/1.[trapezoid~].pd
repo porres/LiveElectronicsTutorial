@@ -1,0 +1,55 @@
+#N canvas 235 35 618 591 10;
+#X obj 197 477 metro 441;
+#X obj 197 426 loadbang;
+#X obj 197 453 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 315 375 cnv 15 198 138 empty empty empty 20 12 0 14 -253696
+-66577 0;
+#N canvas 0 22 474 324 (subpatch) 0;
+#X array trapezoid 400 float 0;
+#X coords 0 1 399 -1 200 140 1;
+#X restore 314 374 graph;
+#X text 297 372 1;
+#X text 292 493 -1;
+#X obj 81 512 tabwrite~ trapezoid;
+#X obj 81 292 phasor~ 150;
+#X obj 102 443 output~;
+#X floatatom 102 341 2 0 0 0 - - -;
+#X obj 102 320 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 -1
+-1;
+#X msg 102 365 lo \$1;
+#X obj 81 399 trapezoid~ 0.2 0.8;
+#X text 98 40 O [trapezoid~] é um oscilador que gera formas de onda
+trapezoidais. A entrada de oscilação é dada por um [phasor~]. Os argumentos
+são a fração do ciclo para a subida e decida do trapézio. Neste exemplo
+temos 0.2 e 0.8 \, significando que a subida vai de 0 a 0.2 do ciclo
+e a decida de 0.8 a 1 ciclo.;
+#X msg 234 312 0 0;
+#X obj 213 338 unpack;
+#X msg 222 287 1 0;
+#X msg 213 261 0.5 0.5;
+#X text 267 296 Dente de serra;
+#X text 268 260 Triangular;
+#X text 102 204 O [trapezoid~] é capaz de se passar por outras formas
+de onda \, como dente de serra e triangular.;
+#X text 125 319 DC-Offset;
+#X text 100 130 Como o [triangle~] \, ele aceita os comandos "hi" e
+"lo". Por padrão \, sua amplitude vai de 0 a 1 \, mas temos controle
+do valor máximo e mínimo \, que não passa de um ajuste de DC Offset.
+Neste exemplo fazemos com que ele vá de -1 a 1 a partir de um toggle.
+;
+#X connect 0 0 7 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 8 0 13 0;
+#X connect 10 0 12 0;
+#X connect 11 0 10 0;
+#X connect 12 0 13 0;
+#X connect 13 0 9 0;
+#X connect 13 0 9 1;
+#X connect 13 0 7 0;
+#X connect 15 0 16 0;
+#X connect 16 0 13 1;
+#X connect 16 1 13 2;
+#X connect 17 0 16 0;
+#X connect 18 0 16 0;

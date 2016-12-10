@@ -1,0 +1,89 @@
+#N canvas 564 40 860 771 10;
+#X obj 126 581 vsnapshot~;
+#X obj 126 622 vline~;
+#X obj 216 650 vline~;
+#X obj 176 517 tgl 15 0 empty tgl empty 17 7 0 10 -261682 -1 -1 1 1
+;
+#N canvas 113 35 815 310 plot 0;
+#X obj 411 146 metro 201;
+#X obj 145 69 inlet~;
+#X obj 340 55 inlet~;
+#X obj 558 58 inlet~;
+#X obj 418 102 loadbang;
+#X obj 414 126 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 50 104 loadbang;
+#X obj 147 220 tabwrite~ original;
+#X obj 337 220 tabwrite~ sample_and_hold;
+#X obj 538 227 tabwrite~ interpolacao_linear;
+#X msg 50 132 \; pd dsp 1 \; tgl bang;
+#X connect 0 0 7 0;
+#X connect 0 0 8 0;
+#X connect 0 0 9 0;
+#X connect 1 0 7 0;
+#X connect 2 0 8 0;
+#X connect 3 0 9 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X connect 6 0 10 0;
+#X restore 107 704 pd plot;
+#X obj 501 149 cnv 15 298 148 empty empty empty 20 12 0 14 -224761
+-66577 0;
+#X obj 499 336 cnv 15 298 148 empty empty empty 20 12 0 14 -228857
+-66577 0;
+#X obj 499 510 cnv 15 298 148 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array original 1024 float 0;
+#X coords 0 1 1023 -1 300 150 1;
+#X restore 500 148 graph;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array sample_and_hold 1024 float 0;
+#X coords 0 1 1023 -1 300 150 1;
+#X restore 498 335 graph;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array interpolacao_linear 1024 float 0;
+#X coords 0 1 1023 -1 300 150 1;
+#X restore 498 509 graph;
+#X obj 176 541 metro 1;
+#X msg 216 628 \$1 1;
+#X obj 107 532 osc~ 100;
+#X text 60 268 Pois essa linha pode ser encarada como uma espécie de
+"interpolação" \, onde valores intermediários entre os dois pontos
+são criados. Mais especificamente \, se trata de uma interpolação linear.
+;
+#X text 60 43 Aqui temos um [vsnapshot~] convertendo sinal de áudio
+para dados em uma taxa que depende do metro. Logo após \, o sinal é
+convertido novamente para áudio com o [vline~]. Isso é \, na prática
+\, o mesmo processo de um [samphold~] \, pois a cada bang uma amostra
+é coletada e esse valor se mantém até a próxima coleta.;
+#X text 60 129 Já apresentamos o [vline~] como um objeto capaz de converter
+dados de controle para sinal de áudio \, como contrapartida do [vsnapshot~].
+Porém \, o [vline~] faz parte de uma família de objetos que são geradores
+de linha ([line] \, [line~] e [vline~]).;
+#X text 60 205 O [vline~] \, ao receber uma lista com dois números
+\, interpreta o primeiro valor como ponto de chegada e o segundo como
+um tempo (de interpolação) em ms para chegar lá \, gerando assim uma
+"linha".;
+#X text 62 338 Neste exemplo implementamos então com um [vsnapshot~]
+e um [vline~] uma redução da taxa de amostragem e fazemos um "upsampling"
+à taxa original de duas maneiras: - A primeira é um "sample and hold"
+como anteirormente \, e a segunda é uma interpolação linear.;
+#X text 63 419 Mais especificamente \, neste patch \, estamos coletando
+amostras a cada 1 ms \, o que seria uma taxa de amostragem de 1Khz.
+Confira o sinal original e o ressampleamento com "sample and hold"
+e interpolação linear.;
+#X text 136 642 sample and;
+#X text 137 656 hold;
+#X text 173 562 taxa de amostragem de 1 Khz (1 ms);
+#X text 254 625 geração de linha;
+#X text 201 679 interpolação linear;
+#X connect 0 0 1 0;
+#X connect 0 0 12 0;
+#X connect 1 0 4 1;
+#X connect 2 0 4 2;
+#X connect 3 0 11 0;
+#X connect 11 0 0 0;
+#X connect 12 0 2 0;
+#X connect 13 0 0 0;
+#X connect 13 0 4 0;

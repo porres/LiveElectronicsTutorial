@@ -1,0 +1,61 @@
+#N canvas 424 22 475 685 10;
+#X obj 170 301 v a;
+#X obj 113 326 rzero_rev~;
+#X text 183 324 =;
+#X obj 202 325 fexpr~ -a * $x1 + $x1[-1];
+#X obj 155 404 fexpr~ $x1 + ar * $y1[-1] - ai * $y2[-1] \; $x2 + ai
+* $y1[-1] + ar * $y2[-1];
+#X obj 48 415 cpole~;
+#X obj 70 389 v ar;
+#X obj 109 389 v ai;
+#X text 121 415 =;
+#X text 164 384 entrada real;
+#X text 284 384 entrada imaginária;
+#X text 165 438 saída real;
+#X text 292 437 saída imaginária;
+#X text 177 190 =;
+#X obj 125 190 rpole~;
+#X obj 158 166 v a;
+#X obj 198 190 fexpr~ $x1 + a * $y1[-1];
+#X text 181 253 =;
+#X obj 162 229 v a;
+#X obj 129 256 rzero~;
+#X obj 202 253 fexpr~ $x1 - a * $x1[-1];
+#X obj 69 486 v ar;
+#X obj 108 486 v ai;
+#X text 122 512 =;
+#X text 163 481 entrada real;
+#X text 283 481 entrada imaginária;
+#X text 164 535 saída real;
+#X text 291 534 saída imaginária;
+#X obj 47 512 czero~;
+#X obj 154 501 fexpr~ $x1 - ar * $x1[-1] + ai * $x2[-1] \; $x2 - ai
+* $x1[-1] - ar * $x2[-1];
+#X obj 72 588 v ar;
+#X obj 111 588 v ai;
+#X text 102 614 =;
+#X text 166 583 entrada real;
+#X text 286 583 entrada imaginária;
+#X text 167 637 saída real;
+#X text 294 636 saída imaginária;
+#X obj 54 614 czero_rev~;
+#X obj 157 603 fexpr~ $x1[-1] - $x1 * ar - $x2 * ai \; $x2[-1] - $x1
+* ai + $x2 *ar;
+#X text 47 19 O Pd vanilla oferece uma família de filtros crus \, que
+são \, basicamente \, polos e zeros. Além das versões de polo e zero
+real ([rpole~] e [rzero~]) \, há também as versões complexas [cpole~]
+e [czero~]. Por fim \, há as versões reversas dos zeros \, o [rzero_rev~]
+e [czero_rev~] \, que possuem uma resposta de frequência que correspondem
+\, respectivamente \, ao [rzero~] e [czero~] \, porém reversa no tempo.
+Abaixo temos a equação de diferença de todos esses filtros crus implementadas
+em [fexpr~].;
+#X text 133 615 =;
+#X connect 0 0 1 1;
+#X connect 6 0 5 2;
+#X connect 7 0 5 3;
+#X connect 15 0 14 1;
+#X connect 18 0 19 1;
+#X connect 21 0 28 2;
+#X connect 22 0 28 3;
+#X connect 30 0 37 2;
+#X connect 31 0 37 3;

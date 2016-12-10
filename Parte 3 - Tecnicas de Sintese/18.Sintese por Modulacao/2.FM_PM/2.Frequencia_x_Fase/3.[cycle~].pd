@@ -1,0 +1,136 @@
+#N canvas 145 115 1120 517 10;
+#X obj 320 373 +~;
+#X obj 292 340 phasor~;
+#X obj 320 395 cos~;
+#X obj 358 340 phasor~;
+#X obj 104 353 +~;
+#X obj 53 267 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 200 256;
+#X obj 112 248 cnv 15 120 95 empty empty empty 20 12 0 14 -166433 -66577
+0;
+#X obj 119 289 osc~;
+#X obj 119 311 *~;
+#X obj 119 266 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 180 280 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 180 299 \$1 10;
+#X obj 180 319 line~;
+#X text 45 247 Portadora;
+#X text 117 247 Moduladora;
+#X text 181 261 Índice;
+#X obj 351 233 cnv 15 120 95 empty empty empty 20 12 0 14 -166433 -66577
+0;
+#X obj 358 274 osc~;
+#X obj 358 296 *~;
+#X msg 419 284 \$1 10;
+#X obj 419 304 line~;
+#X text 284 272 Portadora;
+#X text 356 232 Moduladora;
+#X text 420 246 Índice;
+#X obj 637 220 cnv 15 120 95 empty empty empty 20 12 0 14 -166433 -66577
+0;
+#X obj 644 261 osc~;
+#X obj 644 283 *~;
+#X msg 705 271 \$1 10;
+#X obj 705 291 line~;
+#X text 642 219 Moduladora;
+#X text 706 233 Índice;
+#X obj 611 358 cycle~;
+#X obj 292 290 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 200 256;
+#X obj 358 252 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 419 266 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X obj 578 277 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 200 256;
+#X obj 644 239 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 705 253 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X text 568 255 Portadora;
+#X obj 104 381 osc~;
+#X obj 86 421 output~;
+#X obj 291 437 output~;
+#X obj 586 402 output~;
+#X text 99 38 Neste exemplo revisamos as estruturas de modulação já
+apresentadas anteriormente e incluimos uma nova opção equivalente com
+o objeto [cycle~].;
+#X obj 152 197 cnv 15 35 35 empty empty A 8 15 0 25 -203904 -66577
+0;
+#X obj 396 184 cnv 15 35 35 empty empty B 8 15 0 25 -203904 -66577
+0;
+#X obj 680 164 cnv 15 35 35 empty empty C 8 15 0 25 -203904 -66577
+0;
+#X text 100 90 O maior propósito desta seção é demonstrar como uma
+soma de frequências equivale a uma soma de sinal de fases. Vimos isso
+na prática com a comparação dos patches "A" e "B" abaixo.;
+#X obj 862 330 phasor~;
+#X obj 855 222 cnv 15 120 95 empty empty empty 20 12 0 14 -166433 -66577
+0;
+#X obj 862 263 osc~;
+#X obj 862 285 *~;
+#X msg 923 273 \$1 10;
+#X obj 923 293 line~;
+#X text 860 221 Moduladora;
+#X text 924 235 Índice;
+#X obj 829 360 cycle~;
+#X obj 796 279 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 200 256;
+#X obj 862 241 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 923 255 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X text 786 257 Portadora;
+#X obj 804 404 output~;
+#X obj 898 166 cnv 15 35 35 empty empty D 8 15 0 25 -203904 -66577
+0;
+#X obj 611 331 +~;
+#X text 609 61 Agora vejamos como fica com o objeto [cycle~] ns versões
+"C" e "D" abaixo. Em "C" temos a modulação no sinal de frequência \,
+mas como ele tem uma entrada de fase \, podemos usar essa entrada para
+modular a frequência. De modo que os patches abaixo são equivalente
+aos "A" e "B".;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 41 0;
+#X connect 2 0 41 1;
+#X connect 3 0 0 1;
+#X connect 4 0 39 0;
+#X connect 5 0 4 0;
+#X connect 7 0 8 0;
+#X connect 8 0 4 1;
+#X connect 9 0 7 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 8 1;
+#X connect 17 0 18 0;
+#X connect 18 0 3 0;
+#X connect 19 0 20 0;
+#X connect 20 0 18 1;
+#X connect 25 0 26 0;
+#X connect 26 0 63 1;
+#X connect 27 0 28 0;
+#X connect 28 0 26 1;
+#X connect 31 0 42 0;
+#X connect 31 0 42 1;
+#X connect 32 0 1 0;
+#X connect 33 0 17 0;
+#X connect 34 0 19 0;
+#X connect 35 0 63 0;
+#X connect 36 0 25 0;
+#X connect 37 0 27 0;
+#X connect 39 0 40 0;
+#X connect 39 0 40 1;
+#X connect 48 0 56 1;
+#X connect 50 0 51 0;
+#X connect 51 0 48 0;
+#X connect 52 0 53 0;
+#X connect 53 0 51 1;
+#X connect 56 0 61 0;
+#X connect 56 0 61 1;
+#X connect 57 0 56 0;
+#X connect 58 0 50 0;
+#X connect 59 0 52 0;
+#X connect 63 0 31 0;

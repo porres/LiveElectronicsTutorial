@@ -1,0 +1,60 @@
+#N canvas 245 124 1027 521 10;
+#X obj 217 136 sig~ 1;
+#X obj 269 135 sig~ 2;
+#X obj 318 136 sig~ 3;
+#X obj 368 136 sig~ 4;
+#X obj 287 240 snaps~;
+#X obj 266 268 snaps~;
+#X obj 245 296 snaps~;
+#X msg 63 140 \; pd dsp 1;
+#X obj 102 64 loadbang;
+#X msg 102 102 connect 0 0 \, connect 1 1 \, connect 2 2 \, connect
+3 2;
+#X obj 245 183 matrix~ 4 3;
+#X text 371 296 entrada 1;
+#X text 392 269 entrada 2;
+#X text 416 240 soma da entrada 3 e 4;
+#X text 333 182 necessita de pelo meos dois argumentos;
+#X obj 644 229 osc~ 440;
+#X obj 719 238 osc~ 880;
+#X obj 618 336 output~;
+#X msg 776 301 0 0 \$1 1000;
+#X obj 858 353 s matrix;
+#X obj 661 257 r matrix;
+#X obj 858 282 expr 1 - $f1;
+#X msg 858 312 1 0 \$1 1000;
+#X obj 831 231 hradio 15 1 0 2 empty empty empty 0 -8 0 10 -261682
+-1 -1 0;
+#X text 616 115 Em modo "mix" \, com um terceiro argumento igual a
+1 \, você pode setar volumes diferents para cada entrada de sinal de
+áudio e programar também um valor de rampa para ajustar o ganho. Isso
+permite \, dentre outras aplcações \, um crossfade entre duas entradas
+como abaixo.;
+#X text 868 229 <= clique;
+#X text 136 378 O [matrix~] é um clone do Max que é bem versátil e
+permite roteamentos bem complexos. O primeiro argumento é o número
+de entrada de sinais e o segundo argumento é o número de saídas. E
+assim você pode rotear qualquer entrada para qualquer saída. Se duas
+entradas vão para uma mesma saída \, os sinais são somados.;
+#X text 692 407 Veja o help para mais detalhes.;
+#X obj 644 283 matrix~ 2 1 1;
+#X connect 0 0 10 0;
+#X connect 1 0 10 1;
+#X connect 2 0 10 2;
+#X connect 3 0 10 3;
+#X connect 8 0 9 0;
+#X connect 8 0 7 0;
+#X connect 9 0 10 0;
+#X connect 10 0 6 0;
+#X connect 10 1 5 0;
+#X connect 10 2 4 0;
+#X connect 15 0 28 0;
+#X connect 16 0 28 1;
+#X connect 18 0 19 0;
+#X connect 20 0 28 0;
+#X connect 21 0 22 0;
+#X connect 22 0 19 0;
+#X connect 23 0 18 0;
+#X connect 23 0 21 0;
+#X connect 28 0 17 0;
+#X connect 28 0 17 1;

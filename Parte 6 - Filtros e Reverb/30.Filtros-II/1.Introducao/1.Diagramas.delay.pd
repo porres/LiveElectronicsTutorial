@@ -1,0 +1,192 @@
+#N canvas 75 70 1263 659 10;
+#X text 42 110 Podemos até usar os objetos [delwrite~] e [delread~]
+para implementar filtros \, mas sabemos que esse objetos operam com
+o atraso de pelo menos um bloco de áudio. Logo \, para atrasos menores
+\, precisamos criar um subpatch com um bloco de \, por exemplo \, apenas
+uma amostra. Mas veremos outras soluções mais convenientes.;
+#X obj 111 267 cnv 15 230 40 empty empty x(n)--->[filtro]--->y(n) 20
+17 0 14 -233017 -66577 0;
+#X obj 551 190 triangle~ 0;
+#X obj 474 259 output~;
+#X obj 575 460 triangle~ 0;
+#X obj 565 572 output~;
+#X obj 576 516 +~;
+#X obj 576 540 *~ 0.5;
+#N canvas 553 176 234 215 filtro_média[delay~] 0;
+#X obj 118 119 block~ 1;
+#X obj 49 29 inlet~;
+#X obj 49 100 +~;
+#X obj 49 130 *~ 0.5;
+#X obj 49 161 outlet~;
+#X obj 64 66 delay~ 1 1;
+#X connect 1 0 2 0;
+#X connect 1 0 5 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 5 0 2 1;
+#X restore 664 225 pd filtro_média[delay~];
+#N canvas 553 176 506 288 filtro_média[delwrite~] 0;
+#X obj 188 187 block~ 1;
+#X obj 49 29 inlet~;
+#X obj 74 91 delwrite~ \$0-x 1;
+#X obj 74 137 delread~ \$0-x 1;
+#X obj 188 83 samplerate~;
+#X obj 188 108 expr 1000 / $f1;
+#X obj 188 58 loadbang;
+#X floatatom 188 136 0 0 0 0 - - -;
+#X obj 49 170 +~;
+#X obj 49 200 *~ 0.5;
+#X obj 49 231 outlet~;
+#X text 254 135 atraso de uma amostra em ms;
+#X connect 1 0 2 0;
+#X connect 1 0 8 0;
+#X connect 3 0 8 1;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
+#X connect 5 0 7 0;
+#X connect 6 0 4 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X restore 474 229 pd filtro_média[delwrite~];
+#X obj 635 261 output~;
+#X obj 591 490 z~ 1;
+#X obj 937 278 triangle~ 0;
+#X obj 927 461 output~;
+#X obj 957 351 z~ 1;
+#X obj 991 351 z~ 2;
+#X obj 1026 350 z~ 3;
+#X obj 937 251 phasor~ 300;
+#X obj 1059 350 z~ 4;
+#X obj 1093 350 z~ 5;
+#X obj 1128 349 z~ 6;
+#X obj 1165 348 z~ 7;
+#X obj 938 419 *~ 0.125;
+#X obj 575 433 phasor~ 300;
+#X obj 551 167 phasor~ 300;
+#X text 851 47 Por fim \, temos a implementação de um filtro de média
+(também chamado "moving average filter") a partir de 8 amostras;
+#X text 41 36 Já vimos linhas de delay em "feedforwad" e "feedback"
+\, o que não vimos é que elas podem definir filtros! Sim \, isso mesmo
+\, a manipulação de delays está no cerne da teoria de filtros \, porém
+são atrasos bem curtos (em torno de algumas amostras apenas).;
+#X text 42 196 Vamos começar a trabalhar com diagramas de filtro. Abaixo
+temos a base de uma representação de filtros onde "x" representa o
+sinal de entrada e "y" o sinal de saída. A entrada e saída são em função
+de "n" \, que é o número da amostra.;
+#X text 49 515 Onde "x(n)" é o sinal de entrada em função da amostra
+e "y(n)" a saída. O Z elevado a -1 indica o atraso de apenas um sample
+\, e essa notação vem da Transformada Z (veremos isso com mais detalhes
+depois).;
+#X text 51 572 Analisando o diagrama \, temos a soma da amostra de
+entrada com a amostra anterior e esse resultado dividido por 2 \, ou
+seja \, trata-se apenas de uma média aritmética das duas amostras!
+;
+#X text 436 37 No subpatch abaixo \, temos a implementação desse diagrama
+de filtro com os objetos de delay básicos ([delwrite] e [delread~])
+e o external [delay~]. A implementação em um subpatch é necessária
+porque o atraso é de apenas uma amostra e \, assim \, precisamos ajustar
+o bloco para apenas uma amostra com o objeto [block~]. O [delay~] tem
+uma vantagem de trabalhar direto com númwro de amostra \, mas há uma
+desvantagem pois não permite feedback.;
+#X text 854 98 Frisando novamente a notação da Transformada Z \, o
+atraso de uma amostra é definido por z^-1 (z elevado a menos 1) \,
+já um atraso de duas amostras é z^-2 \, 3 é z^-3 e assim por diante.
+;
+#X text 443 327 Já abaixo \, temos uma implementação a partir do external
+[z~] \, que é um objeto de delay \, onde o argumento define o atraso
+em amostras. O "z" diz respeito à notação da Transformada Z \, como
+vimos no diagrama à esquerda. A vantagem desse objeto é não precisar
+ajustar o bloco de áudio. A desvantagem \, novamente \, é que não permite
+feedback!;
+#X text 855 158 Desse modo \, o argumento do objeto [z~] é o número
+de atraso em amostra \, e seria o número negativo pelo qual z está
+sendo elevado. O [z~] sempre atrasa pelo menos uma amostra e \, sem
+argumentos \, por padrão \, atrasa apenas uma amostra.;
+#N canvas 185 23 211 479 moving-average-filter 0;
+#X obj 57 69 triangle~ 0;
+#X obj 45 377 output~;
+#X obj 57 42 phasor~ 300;
+#X obj 56 335 *~ 0.125;
+#X obj 77 122 z~;
+#X obj 87 147 z~;
+#X obj 95 172 z~;
+#X obj 105 197 z~;
+#X obj 113 228 z~;
+#X obj 123 253 z~;
+#X obj 131 278 z~;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 2 0 0 0;
+#X connect 3 0 1 0;
+#X connect 3 0 1 1;
+#X connect 4 0 3 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 6 0 3 0;
+#X connect 7 0 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 9 0;
+#X connect 8 0 3 0;
+#X connect 9 0 10 0;
+#X connect 9 0 3 0;
+#X connect 10 0 3 0;
+#X restore 1011 602 pd moving-average-filter;
+#X text 869 536 No subpatch abaixo temos ainda outra forma de implementar
+esse filtro acima com o [z~] \, que seria em cascata em vez de em paralelo.
+;
+#X obj 84 382 cnv 15 243 110 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 192 411 |;
+#X text 192 421 |;
+#X text 192 430 |;
+#X text 173 442 |;
+#X text 215 442 |;
+#X text 215 462 |;
+#X text 173 462 |;
+#X text 176 432 _______;
+#X text 176 462 _______;
+#X text 143 434 |;
+#X text 143 444 |;
+#X text 143 414 |;
+#X text 143 424 |;
+#X text 192 405 ^;
+#X text 173 452 | z^-1 |;
+#X text 145 450 ---->;
+#X text 143 405 |;
+#X text 90 395 x(n) -----------(+)--(/2)--> y(n);
+#X text 38 326 Sigamos agora a um primeiro diagrama de filtros bem
+simples \, sem feedback. É filtro de média \, que é também um filtro
+de Passa baixa:;
+#X connect 2 0 9 0;
+#X connect 2 0 8 0;
+#X connect 4 0 6 0;
+#X connect 4 0 11 0;
+#X connect 6 0 7 0;
+#X connect 7 0 5 0;
+#X connect 7 0 5 1;
+#X connect 8 0 10 1;
+#X connect 8 0 10 0;
+#X connect 9 0 3 0;
+#X connect 9 0 3 1;
+#X connect 11 0 6 1;
+#X connect 12 0 14 0;
+#X connect 12 0 15 0;
+#X connect 12 0 16 0;
+#X connect 12 0 18 0;
+#X connect 12 0 19 0;
+#X connect 12 0 20 0;
+#X connect 12 0 21 0;
+#X connect 12 0 22 0;
+#X connect 14 0 22 0;
+#X connect 15 0 22 0;
+#X connect 16 0 22 0;
+#X connect 17 0 12 0;
+#X connect 18 0 22 0;
+#X connect 19 0 22 0;
+#X connect 20 0 22 0;
+#X connect 21 0 22 0;
+#X connect 22 0 13 0;
+#X connect 22 0 13 1;
+#X connect 23 0 4 0;
+#X connect 24 0 2 0;

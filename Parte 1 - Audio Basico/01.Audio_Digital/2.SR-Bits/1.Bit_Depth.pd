@@ -1,0 +1,109 @@
+#N canvas 101 22 1273 844 10;
+#X obj 383 133 image ./files/onda.gif;
+#X text 24 505 Teoricamente \, entre um momento e outro no tempo \,
+existem infinitas gradações. O mesmo ocorre no espaço que compreende
+a amplitude de uma onda sonora. Isso significa que amplitude e tempo
+são contínuos. Porém \, não podemos armazenar nada com resolução infinita
+no meio digital! Dentro do computador \, tudo é número e há um limite
+de armazenamento por maior que seja um HD ou memórias RAM.;
+#X text 26 606 Por isso temos que "discretizar" o tempo e o espaço
+- o que significa medir com um certo limite de resolução. A "Taxa de
+Amostragem" (sample rate) define a resolução do tempo e indica a taxa
+em que as amostras de amplitude do som são coletadas. Já a resolução
+da Amplitude é dada por um número em bits - enfatizando que \, no áudio
+analógico \, a forma de onda é contínua (oposto de discreta) \, ou
+seja \, sem taxa de amostragem ou resolução em bits.;
+#X text 26 264 Na figura acima \, temos uma representação gráfica de
+uma onda sonora gerada pela vibração de uma corda. O eixo vertical
+é a amplitude e o eixo horizontal é o tempo. Vemos que há um estágio
+que corresponde à compressão das moléculas de ar \, e outro de rarefação
+(descompressão).;
+#X text 25 340 No áudio analógico \, a amplitude (eixo vertical do
+gráfico acima) é dada em volts de uma corrente alternada. Os estágios
+de compressão e rarefaçãos correspondem aos dois sentidos da corrente
+\, enquanto 0 volts seria o ponto de repouso \, ou um silêncio.;
+#X text 25 419 Já no áudio digital \, os valores de amplitudes vão
+de -1 a 1 \, onde valores positivos e negativos correspondem aos diferentes
+estágios de compressão/rarefação (e zero um repouso). Porém \, entre
+-1 e 1 temos apenas uma quantidade de valores possíveis de amplitude
+\, dada pela resolução em bits.;
+#X msg 564 465 2;
+#X text 598 463 <- clique aqui;
+#X obj 564 516 nbx 11 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+12 -261682 -1 -1 0 256;
+#X obj 564 490 pow 16;
+#X text 611 489 (eleva a 16);
+#X text 26 719 1 bit é uma unidade binária \, que pode ser 0 ou 1 \,
+ou seja \, podemos ter apenas dois valores \, ou 2^1 (dois elevado
+a um). O cálculo dos valores possíveis de uma resolução em bits é simples
+\, basta elevar 2 pelo número de bits. No caso do protocolo MIDI \,
+por exemplo \, temos uma resolução de 7 bits \, que nos dá 2^7 = 128
+valores possíveis. É por isso que os valores de mensagens MIDI vão
+de 0 a 127 (totalizando 128 valores possíveis).;
+#X obj 921 245 nbx 11 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+12 -261682 -1 -1 0 256;
+#X obj 921 220 pow 24;
+#X text 968 219 (eleva a 24);
+#X msg 921 196 2;
+#X text 826 426 ============================================================
+;
+#X text 831 455 Registro dinâmico:;
+#X floatatom 1047 650 0 8 24 0 - - -;
+#X floatatom 1047 705 0 0 0 0 - - -;
+#X obj 1047 677 * 6.0206;
+#X text 955 194 <= clique aqui;
+#X text 1007 649 bits;
+#X text 842 574 24 bits dá em torno de 144.5 dB \, sendo que mesmo
+placas de som de 24 bits são capazes de operar \, na prática \, em
+um registro dinâmico em torno de 124 dB no máximo (21 bits \, aproximadamente).
+Veja abaixo a conversão de bits em registro dinâmico.;
+#X text 901 706 Registro Dinâmico (dB);
+#X text 434 489 valores possíveis;
+#X text 438 503 no padrão do CD;
+#X text 823 293 Mas e os valores de amplitude (de -1 a 1) \, qual seria
+a resolução deles? A resposta é que varia (mais bits para valores menores).
+A grosso modo \, podemos dizer que essa precisão é igual ou maior que
+os 24 bits! Aliás \, as placas de som profissionais atuais trabalham
+com um máximo de 24 bits.;
+#X text 824 378 Entretanto \, é um fato conhecido que elas não conseguem
+\, de fato \, converter com essa precisão toda (vide abaixo).;
+#X text 843 483 O ponto mais importante da resolução em bits é o registro
+dinâmico que ela te dá \, sendo que o registro dinâmico é a relação
+entre o sinal máximo e o ruído gerado pelo erro de quantização. Essa
+relação costuma ser dada em dB. Assim \, cada bit dá um registro dinâmico
+em torno de 6.0206 dB. Por exemplo \, 16 bits dá um registro próximo
+a 96.33 dB.;
+#X text 415 273 Ao converter um sinal analógico em digital \, precisamos
+sempre aproximar os valores para a resolução em bits. Desse modo \,
+os valores são arredondados nesse processo chamado de "Quantização"
+\, e isso gera um ruído de fundo \, ou de "chão" (noise floor). Quanto
+maior a resolução \, menor é o erro de quantização e seu ruído. O padrão
+de resolução em bits do CD \, por exemplo \, é de 16 bits \, que nos
+dá 2^16 valores (65.536 valores). O padrão do CD é de 16 bit "integer"
+(inteiro) \, onde os bits representam número s inteiros de 0 a 65.535
+\, mas a decodificação dos dados do CD faz com que esses valores sejam
+convertidos para o padrão do áudio digital (valores de -1 a 1) \,;
+#X text 418 564 O Pd possui precisão de 32 bits \, e essa precisão
+é usada para representar tanto dados de controle quanto sinal de áudio.
+Porém \, devemos notar que se trata de uma resolução de 32 bits "float"
+(e não "integer")!;
+#X text 419 626 Isso significa que os bits não representam apenas números
+inteiros \, mas também números com pontos decimais e em formato exponencial.
+Logo \, a resolução de 32 bits floats já comporta os valores não inteiros
+de amplitude entre -1 a 1 \, mas também representa números que extrapolam
+esse limite.;
+#X text 419 702 Portanto \, não temos uma real resolução de 2^32 valores
+possíveis \, porque alguns desses bits são usados para indicar a posição
+do ponto decimal \, se o valor é positivo ou negativo e também decodificar
+o formato exponencial.;
+#X text 416 770 O fato é que apenas 24 bits são usados na resolução
+de 32 bits floats para representar números inteiros. O que nos dá em
+torno de 16.777 milhões de valores.;
+#X text 824 144 Abaixo temos então \, em formato exponencial \, o maior
+número inteiro que o Pd consegue representar.;
+#X connect 6 0 9 0;
+#X connect 9 0 8 0;
+#X connect 13 0 12 0;
+#X connect 15 0 13 0;
+#X connect 18 0 20 0;
+#X connect 20 0 19 0;

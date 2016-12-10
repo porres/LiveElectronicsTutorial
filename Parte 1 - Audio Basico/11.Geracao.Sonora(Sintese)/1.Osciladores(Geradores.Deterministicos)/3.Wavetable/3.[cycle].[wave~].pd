@@ -1,0 +1,51 @@
+#N canvas 457 38 920 640 12;
+#X obj 107 421 output~;
+#X msg 154 331 set;
+#X obj 557 88 loadbang;
+#X text 66 31 O [cycle~] \, como no Max \, também é um oscilador de
+tabelas. Na realidade \, como oscilador de cosseno \, o que ele faz
+é ler uma tabela interna de cosseno por padrão.;
+#X text 230 294 <= seta pra tabela de mesmo nome;
+#X text 190 330 <= tabela para a tabela interna (cosseno);
+#X obj 59 313 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 73 289 Hz;
+#X obj 599 214 cnv 15 198 138 empty empty empty 20 12 0 14 -261682
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array wavetable 515 float 0;
+#X coords 0 1 514 -1 200 140 1;
+#X restore 598 213 graph;
+#X text 66 186 Ao lado \, usamos o comando sinesum para gerar uma somatória
+de senóides. Se você alterar a forma de onda desenhando com o mouse
+ou com outro comando \, é preciso clicar na mensagem "set wave" para
+que o oscilador atualize a tabela!;
+#X obj 641 522 output~;
+#X obj 660 408 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 674 384 Hz;
+#X text 66 86 Você pode chamar uma tabela como segundo argumento \,
+ou então setar uma tabela via mensagem (set + nome da tabela). Mantendo
+a compatibilidade com a versão do Max 5 \, as tabelas precisam ser
+de 512 pontos \, aliás. Apenas a mensagem "set" resseta o [cycle~]
+para a tabela interna de cosseno.;
+#X obj 660 437 phasor~ 220;
+#X msg 557 117 \; wavetable sinesum 512 1 1 1 1 1 \, normalize;
+#X obj 128 365 cycle~ 220 wavetable;
+#X msg 128 295 set wavetable;
+#X obj 660 475 wave~ wavetable;
+#X text 57 499 Outra opção de objetos clonados do Max é o [wave~] \,
+que precisa ser alimentado por um [phasor~]. Nesse caso \, qualquer
+mudança na tabela já é atualizada no objeto. A tabela pode ser de qualquer
+tamanho \, que não precisa ser especificado. O objeto aceita um valor
+de offset inicial e ponto final em ms.;
+#X connect 1 0 17 0;
+#X connect 2 0 16 0;
+#X connect 6 0 17 0;
+#X connect 12 0 15 0;
+#X connect 15 0 19 0;
+#X connect 17 0 0 0;
+#X connect 17 0 0 1;
+#X connect 18 0 17 0;
+#X connect 19 0 11 0;
+#X connect 19 0 11 1;

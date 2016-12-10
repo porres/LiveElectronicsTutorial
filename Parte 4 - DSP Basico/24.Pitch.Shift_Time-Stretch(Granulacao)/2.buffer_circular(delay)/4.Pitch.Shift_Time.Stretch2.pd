@@ -1,0 +1,201 @@
+#N canvas 123 66 674 506 10;
+#X obj 111 210 loadbang;
+#X obj 133 260 openpanel;
+#X obj 133 238 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X msg 111 315 open \$1 \, 1;
+#X obj 111 344 readsf~;
+#X text 567 314 cents;
+#X obj 497 315 nbx 5 16 -1e+37 1e+37 0 0 empty cents empty 0 -8 0 13
+-236782 -1 -1 -400 256;
+#X obj 374 314 nbx 4 16 -1e+37 1e+37 0 0 empty tempo empty 0 -8 0 13
+-183865 -1 -1 5 256;
+#X obj 435 314 nbx 4 16 64 8192 0 0 empty bloc-set empty 0 -8 0 13
+-257904 -1 -1 4096 256;
+#X text 455 295 grão;
+#X text 381 295 tempo;
+#N canvas 229 59 916 634 Sampler_Granulador 0;
+#X obj 62 192 bang~;
+#X msg 62 388 \$1 \, \$2 \$3;
+#X obj 131 187 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 3891.2 256;
+#X obj 183 593 outlet~;
+#X obj 131 29 inlet;
+#X obj 276 27 inlet;
+#X msg 276 98 set \$1;
+#X obj 283 434 phasor~;
+#X obj 283 458 /~ 2;
+#X obj 283 480 sin~;
+#X text 314 476 Envelope;
+#X obj 557 135 expr pow(2 \, ($f1/1200));
+#X obj 557 26 inlet;
+#X obj 557 102 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-236782 -1 -1 -400 256;
+#X text 565 83 transposição;
+#X text 640 99 (cents);
+#X obj 131 115 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-183865 -1 -1 5 256;
+#X text 39 115 velocidade (%);
+#X obj 276 53 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-257904 -1 -1 4096 256;
+#X text 363 53 bloco/grão;
+#X obj 268 538 delay~ 4096;
+#X obj 268 512 *~;
+#X obj 183 559 +~;
+#X text 517 163 razão;
+#X obj 273 119 cnv 15 50 30 empty empty empty 20 12 0 14 -183930 -66577
+0;
+#X obj 276 126 block~;
+#X obj 116 210 +;
+#X obj 62 501 vd~ \$0-ring_buffer;
+#X obj 183 531 *~;
+#X obj 152 472 vd~ \$0-ring_buffer;
+#X floatatom 445 407 4 0 0 0 - - -;
+#X obj 358 110 / 2;
+#X floatatom 557 164 0 0 0 0 - - -;
+#X obj 414 133 v block_ms_\$0;
+#X obj 738 47 loadbang;
+#X msg 738 170 \; tempo 5 \; cents -400 \; bloc-set 4096 \; pd dsp
+1;
+#X obj 62 222 f;
+#X text 132 260 passos em ms;
+#X obj 131 164 expr (1 - $f1) * $f2;
+#X obj 131 143 / 100;
+#X obj 283 407 expr~ 1000 / block_ms_\$0;
+#X obj 62 448 +~;
+#X text 511 282 A estrutura desse patch não difere muito do que já
+foi apresentado anteriormente. O ajuste de velocidade e transposição
+\, como nos exemplos anteriores de buffer circular \, contabilizam
+a velocidade de leitura normal de uma linha de delay.;
+#X text 512 357 Temos um contador que dá os passos de leitura de acordo
+com uma velocidade. Uma diferença é que esss passos são convertidos
+para valores em ms \, para fazer sentido como sinal de entrada em um
+objeto [vd~].;
+#X obj 806 144 s \$0-buf_size;
+#X obj 167 209 r \$0-buf_size;
+#X obj 116 233 zexy/wrap;
+#X obj 62 412 vline~;
+#X obj 424 106 s \$0-block_ms;
+#X obj 119 331 r \$0-block_ms;
+#X obj 62 261 sampstoms~;
+#X obj 357 83 sampstoms~;
+#X obj 749 121 mstosamps~;
+#X obj 766 99 s \$0-buf_ms;
+#X obj 164 411 r \$0-buf_ms;
+#X obj 62 475 pong~ 1;
+#X obj 152 449 pong~ 1;
+#X obj 143 90 trigger bang float;
+#X obj 169 372 / 2;
+#X obj 62 365 pack f f f;
+#X obj 90 334 +;
+#X text 176 233 loop;
+#X obj 62 300 t f f b;
+#X obj 557 191 v ratio_\$0;
+#X text 213 185 (1 - velocidade) * bloco;
+#X obj 118 300 expr (1 - ratio_\$0) * block_ms_\$0;
+#X text 514 425 A transposição é em função de uma razão do tamanho
+do bloco (grão). E assim \, como antes \, temos um ponto de partida
+e um ponto de chegada para o [vline~] no tempo do bloco/grão \, que
+altera a velocidade de leitura do bloco/grão como desejado.;
+#X text 516 499 Para manter dois grãos defasados \, temos uma soma
+em um dos grãos \, que reflete em um grão anterior em relação ao outro
+\, já que somar valores de leitura em uma linha de delay significa
+ir "pra trás" no buffer. Já o outro grão que está "à frente" é atrasado
+com o objeto [delay~].;
+#X msg 749 74 6000;
+#X connect 0 0 36 0;
+#X connect 1 0 47 0;
+#X connect 2 0 26 1;
+#X connect 4 0 16 0;
+#X connect 5 0 18 0;
+#X connect 6 0 25 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 21 1;
+#X connect 9 0 28 1;
+#X connect 11 0 32 0;
+#X connect 12 0 13 0;
+#X connect 13 0 11 0;
+#X connect 16 0 39 0;
+#X connect 18 0 6 0;
+#X connect 18 0 31 0;
+#X connect 18 0 51 0;
+#X connect 18 0 57 0;
+#X connect 20 0 22 1;
+#X connect 21 0 20 0;
+#X connect 22 0 3 0;
+#X connect 26 0 46 0;
+#X connect 27 0 28 0;
+#X connect 28 0 22 0;
+#X connect 29 0 21 0;
+#X connect 30 0 20 1;
+#X connect 31 0 30 0;
+#X connect 32 0 63 0;
+#X connect 34 0 68 0;
+#X connect 34 0 35 0;
+#X connect 36 0 26 0;
+#X connect 36 0 50 0;
+#X connect 38 0 2 0;
+#X connect 39 0 38 0;
+#X connect 40 0 7 0;
+#X connect 41 0 55 0;
+#X connect 45 0 46 1;
+#X connect 46 0 36 1;
+#X connect 47 0 41 0;
+#X connect 47 0 56 0;
+#X connect 49 0 59 2;
+#X connect 50 1 62 0;
+#X connect 51 1 48 0;
+#X connect 51 1 33 0;
+#X connect 52 1 44 0;
+#X connect 54 0 55 2;
+#X connect 54 0 56 2;
+#X connect 55 0 27 0;
+#X connect 56 0 29 0;
+#X connect 57 0 16 0;
+#X connect 57 1 38 1;
+#X connect 58 0 41 1;
+#X connect 59 0 1 0;
+#X connect 60 0 59 1;
+#X connect 60 0 58 0;
+#X connect 62 0 59 0;
+#X connect 62 1 60 0;
+#X connect 62 2 65 0;
+#X connect 65 0 60 1;
+#X connect 68 0 52 0;
+#X connect 68 0 53 0;
+#X restore 374 345 pd Sampler_Granulador;
+#X msg 429 208 512;
+#X msg 452 274 1024;
+#X msg 443 231 2048;
+#X text 488 251 Potências de 2;
+#X msg 408 184 8192;
+#X msg 447 253 4096;
+#X obj 345 385 output~;
+#X text 115 23 Adaptamos o patch de granulação em buffer circular para
+adequa-lo ao esquema já apresentado \, de granulação via um tamanho
+de bloco.;
+#X text 117 74 A granulação é feita em um subpatch e com a leitura
+do buffer ocorre por meio de um [vline~] alimentado por um contador
+\, em vez de um [phasor~].;
+#X text 117 125 Este patch será a base de um patch de Phase Vocoder
+para Time Stretch e Pitch Shiffting apresentado posteriormente.;
+#X obj 111 284 symbol ../../../samples/bubul.wav;
+#X obj 111 379 delwrite~ \$0-ring_buffer 6000;
+#X connect 0 0 22 0;
+#X connect 1 0 22 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 23 0;
+#X connect 4 1 22 0;
+#X connect 6 0 11 2;
+#X connect 7 0 11 0;
+#X connect 8 0 11 1;
+#X connect 11 0 18 0;
+#X connect 11 0 18 1;
+#X connect 12 0 8 0;
+#X connect 13 0 8 0;
+#X connect 14 0 8 0;
+#X connect 16 0 8 0;
+#X connect 17 0 8 0;
+#X connect 22 0 3 0;

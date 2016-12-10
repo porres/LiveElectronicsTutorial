@@ -1,0 +1,49 @@
+#N canvas 389 23 561 701 10;
+#X text 88 136 Podemos trabalhar com uma taxa de amostragem maior no
+próprio Pd ou ainda somente em alguns subpatches \, por meio do objeto
+[block~] - que é o que está sendo demonstrado neste exemplo.;
+#X text 90 197 Vamos considerar que o Pd está sendo rodando aqui na
+taxa de 44.1 Khz. Queremos \, todavia \, tocar um arquivo na taxa de
+88.2 Khz. No subpatch abaixo temos \, então \, um upsample de 2x \,
+fazendo com que a taxa seja 88.2 Khz (o dobro de 44.1 Khz).;
+#X text 90 274 Se você quiser tocar um arquivo em 96 Khz \, pode alterar
+a taxa do Pd para 48 Khz e usar um mesmo upsampling de 2x (48 x 2 =
+96). Já pra tocar um arquivo de 192 Khz \, seria a mesma coisa \, só
+que um upsample de 4x (48 x 4 = 192).;
+#X obj 333 613 output~;
+#N canvas 132 23 452 458 upsample-88.2Khz 0;
+#X obj 104 249 readsf~;
+#X obj 96 124 block~ 64 1 2;
+#X obj 104 284 outlet~;
+#X obj 104 180 loadbang;
+#X text 190 122 <= upsample de 2x;
+#X msg 104 207 open ../../samples/sax.wav \, 1;
+#X connect 0 0 2 0;
+#X connect 0 1 5 0;
+#X connect 3 0 5 0;
+#X connect 5 0 0 0;
+#X restore 333 562 pd upsample-88.2Khz;
+#X obj 111 587 readsf~;
+#X obj 111 518 loadbang;
+#X obj 111 624 output~;
+#X text 85 35 Deve estar claro que o Pd precisa estar na mesma taxa
+de amostragem do arquivo que está sendo tocado. Pois \, se o Pd rodar
+em uma taxa diferente \, o arquivo será tocado mais rápido ou mais
+devagar. Aliás \, os arquivos de áudio deste material didático estão
+\, na sua grande maioria \, na taxa de 44.1 Khz \, considerando que
+\, de costume \, rodamos o Pd nessa taxa.;
+#X text 92 353 Pois bem \, considerando que o Pd está mesmo rodando
+em 44.1 Khz \, vejamos os exemplos abaixo. À esquerda temos o [readsf~]
+tocando um arquivo de 88.2 Khz numa taxa de 44.1 Khz. Como ele tem
+o dobro de amostras \, a velocidade de leitura cai pela metade \, implicando
+que o arquivo demora o dobro do tempo pra tocar e soa uma oitava abaixo.
+Já à direita temos o [readsf~] rodando em um subpatch com upsample
+de 2x \, e assim escutamos o arquivo da forma que deveria ser.;
+#X msg 111 545 open ../../samples/sax.wav \, 1;
+#X connect 4 0 3 0;
+#X connect 4 0 3 1;
+#X connect 5 0 7 0;
+#X connect 5 0 7 1;
+#X connect 5 1 10 0;
+#X connect 6 0 10 0;
+#X connect 10 0 5 0;

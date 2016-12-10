@@ -1,0 +1,69 @@
+#N canvas 226 51 824 612 10;
+#X obj 204 141 bng 30 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 190 217 *~;
+#X obj 180 251 dac~;
+#X obj 520 128 loadbang;
+#X obj 520 159 samplerate~;
+#X obj 520 181 v sr;
+#X text 60 491 0;
+#X text 62 294 1;
+#X obj 76 302 cnv 15 298 198 empty empty empty 20 12 0 14 -195955 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array gauss 8820 float 0;
+#X coords 0 1 8819 0 300 200 1;
+#X restore 75 301 graph;
+#X obj 484 271 / 1000;
+#X obj 484 295 expr 1 / $f1 \; $f1 * sr;
+#X text 459 247 ms;
+#X obj 484 248 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-236980 -1 -1 200 256;
+#X text 243 148 Envelope;
+#X obj 613 153 hsl 128 15 0.1 0.25 1 1 empty empty empty -2 -8 0 10
+-183853 -1 -1 12700 1;
+#X msg 522 391 0;
+#X obj 460 394 phasor~;
+#X obj 460 425 triangle~ 1;
+#X obj 428 170 bng 30 250 50 0 empty empty empty 17 7 0 10 -154662
+-1 -1;
+#X obj 205 185 tabplay~ gauss;
+#X obj 565 500 tabwrite~ gauss;
+#X msg 588 339 \; gauss resize \$1;
+#X obj 610 204 trigger bang float;
+#X obj 460 343 trigger float bang;
+#X obj 460 462 expr~ exp(pow($v1 \, 2) / (2 * -pow($v2 \, 2)));
+#X msg 484 178 200;
+#X obj 610 178 nbx 6 14 0.1 0.4 0 0 empty empty empty 0 -8 0 10 -163049
+-1 -1 0.35 256;
+#X obj 126 146 osc~ 400;
+#X text 239 18 Neste exemplo usamos uma função gaussiana como envelope.
+A largura da curva gaussiana é definida por um parâmetro controlado
+pelo slider.;
+#X text 630 130 Largura da Curva;
+#X text 738 462 função;
+#X connect 0 0 20 0;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X connect 3 0 4 0;
+#X connect 3 0 26 0;
+#X connect 4 0 5 0;
+#X connect 10 0 11 0;
+#X connect 11 0 24 0;
+#X connect 11 1 22 0;
+#X connect 13 0 10 0;
+#X connect 15 0 27 0;
+#X connect 16 0 17 1;
+#X connect 17 0 18 0;
+#X connect 18 0 25 0;
+#X connect 19 0 13 0;
+#X connect 20 0 1 1;
+#X connect 23 0 13 0;
+#X connect 23 1 25 1;
+#X connect 24 0 17 0;
+#X connect 24 1 16 0;
+#X connect 24 1 21 0;
+#X connect 25 0 21 0;
+#X connect 26 0 13 0;
+#X connect 27 0 23 0;
+#X connect 28 0 1 0;

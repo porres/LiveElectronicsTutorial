@@ -1,0 +1,49 @@
+#N canvas 290 78 809 493 10;
+#X obj 487 237 samphold~;
+#X obj 538 204 phasor~;
+#X obj 538 180 nbx 7 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 44099 256;
+#X obj 487 87 readsf~;
+#X obj 487 37 loadbang;
+#X obj 541 157 hsl 128 15 400 44099 1 0 empty sr empty -2 -8 0 10 -261682
+-1 -1 12700 1;
+#X obj 487 276 output~;
+#X text 501 179 Hertz;
+#X text 545 88 <= toca arquivo de áudio;
+#X text 234 400 já o [decimate~] é um objeto externo que altera tanto
+a taxa de amostragem quanto a resolução em bits;
+#X text 192 371 ============================================================
+;
+#X obj 603 238 loadbang;
+#X msg 603 266 \; sr 44099;
+#X text 19 33 O "decimator" é um processamento que consiste em reduzir
+o número de amostras de um sinal \, ou seja \, reduz a taxa de amostragem
+(downsampling).;
+#X text 22 81 A única forma "correta" de implementar isso no Pd seria
+mudar de fato a taxa de amostragem em que o Pd está rodando nas configurações.
+Fora isso \, o que é possível é apenas uma "gambiarra" \, porque \,
+por mais que desconsideremos algumas amostras no sinal de áudio \,
+elas continuam lá. Ou seja \, podemos até fazer um "downsampling" em
+um primeiro momento \, mas precisamos depois fazer um "upsampling"
+para a taxa em que o Pd está rodando.;
+#X text 22 273 No patch ao lado \, podemos então mudar a frequência
+da taxa de amostragem com esse procedimento. Clique no slider vertical
+e arraste para mudar os valores da taxa de amostragem \, ou mexa na
+caixa de números.;
+#X text 22 196 No processo de upsampling \, não temos muitas opções.
+Uma delas é o procedimento de "sample and hold" \, onde mantemos o
+mesmo valor de amplitude nas amostras "desconsideradas". Para isso
+usamos o [samphold~] \, que coleta e mantém valores em uma frequência
+determinada pelo objeto [phasor~];
+#X obj 354 449 decimate~;
+#X msg 487 62 open ../../../../samples/bubul.wav \, start;
+#X connect 0 0 6 0;
+#X connect 0 0 6 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 0 0;
+#X connect 3 1 18 0;
+#X connect 4 0 18 0;
+#X connect 5 0 2 0;
+#X connect 11 0 12 0;
+#X connect 18 0 3 0;

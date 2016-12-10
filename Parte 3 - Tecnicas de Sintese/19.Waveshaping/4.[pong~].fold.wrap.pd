@@ -1,0 +1,124 @@
+#N canvas 303 57 829 650 10;
+#X obj 166 356 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 232 59 524 385 ganho 0;
+#X obj 355 196 *~;
+#X obj 343 228 dac~;
+#X obj 384 166 line~;
+#X msg 384 140 \$1 10;
+#X obj 384 114 pow 4;
+#X obj 384 87 inlet;
+#X obj 324 48 inlet~;
+#X obj 135 135 metro 441;
+#X obj 135 84 loadbang;
+#X obj 135 111 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X msg 58 166 \; pd dsp 1;
+#X obj 205 190 tabwrite~ pong;
+#X obj 268 156 r~ pong;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 11 0;
+#X connect 7 0 11 0;
+#X connect 8 0 9 0;
+#X connect 8 0 10 0;
+#X connect 9 0 7 0;
+#X connect 12 0 11 0;
+#X restore 118 380 pd ganho;
+#X obj 113 471 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array pong 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 112 470 graph;
+#X text 98 465 1;
+#X text 92 598 -1;
+#X text 98 532 0;
+#X floatatom 118 148 5 0 0 0 - - -;
+#X obj 118 220 *~;
+#X obj 190 229 line~;
+#X obj 193 161 hsl 128 15 0 4 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 190 183 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 0 256;
+#X msg 190 204 \$1 50;
+#X obj 118 182 osc~ 200;
+#X text 67 23 O objeto [pong~] gera um "wavefolding" no sinal e pode
+ser considerado um tipo de waveshaping. Vimos que o objeto [sin~] e
+[cos~] também promovem wavefolding \, aliás.;
+#X text 70 79 Abaixo \, temos uma senóide que \, quando passa da amplitude
+de -1 a 1 \, sofre um wavefolding. Confira.;
+#X obj 554 458 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 4900 0;
+#N canvas 232 59 524 385 ganho 0;
+#X obj 355 196 *~;
+#X obj 343 228 dac~;
+#X obj 384 166 line~;
+#X msg 384 140 \$1 10;
+#X obj 384 114 pow 4;
+#X obj 384 87 inlet;
+#X obj 324 48 inlet~;
+#X obj 205 190 s~ pong;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 7 0;
+#X restore 506 482 pd ganho;
+#X floatatom 506 250 5 0 0 0 - - -;
+#X obj 506 322 *~;
+#X obj 578 331 line~;
+#X obj 581 263 hsl 128 15 0 4 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 578 285 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 0 256;
+#X msg 578 306 \$1 50;
+#X obj 506 284 osc~ 200;
+#X obj 506 387 pong~ 1 -1 1;
+#X text 454 144 Se o primeiro argumeto for igual a 1 \, em vez de zero
+\, o [pong~] fazer um "wrapping" no sinal. Os dois argumentos seguintes
+são os limites inferiores e superiores tanto do "folding" quanto do
+"wrapping".;
+#X obj 118 285 pong~ 0 -1 1;
+#X text 203 285 folding (rebate);
+#X text 592 387 wrapping (loop);
+#X connect 0 0 1 1;
+#X connect 7 0 13 0;
+#X connect 8 0 27 0;
+#X connect 9 0 8 1;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 9 0;
+#X connect 13 0 8 0;
+#X connect 16 0 17 1;
+#X connect 18 0 24 0;
+#X connect 19 0 25 0;
+#X connect 20 0 19 1;
+#X connect 21 0 22 0;
+#X connect 22 0 23 0;
+#X connect 23 0 20 0;
+#X connect 24 0 19 0;
+#X connect 25 0 17 0;
+#X connect 27 0 1 0;

@@ -1,0 +1,75 @@
+#N canvas 253 22 492 680 10;
+#X declare -lib tof;
+#X obj 215 153 import tof;
+#X obj 134 366 crossfade~ 1;
+#X obj 81 471 cnv 15 100 60 empty empty empty 20 12 0 14 -224825 -66577
+0;
+#X obj 191 471 cnv 15 100 60 empty empty empty 20 12 0 14 -224822 -66577
+0;
+#X obj 208 480 noise~;
+#X obj 222 506 osc~ 200;
+#X obj 315 478 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228596
+-1 -1 0 1;
+#X obj 312 530 line~;
+#X obj 91 477 osc~ 400;
+#X obj 124 507 osc~ 600;
+#X obj 158 597 output~;
+#X text 85 447 Fonte 1;
+#X text 197 446 Fonte 2;
+#X text 189 258 fonte 1;
+#X floatatom 243 280 5 0 0 0 - - -;
+#X obj 246 259 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228596
+-1 -1 0 1;
+#X obj 243 329 line~;
+#X text 381 258 fonte 2;
+#X obj 88 323 osc~ 300;
+#X obj 157 322 osc~ 500;
+#X obj 238 377 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 60 84 350 289 output 0;
+#X obj 116 171 *~;
+#X obj 100 210 dac~;
+#X obj 131 62 inlet;
+#X obj 82 62 inlet~;
+#X obj 131 118 line~;
+#X msg 131 92 \$1 10;
+#X obj 131 146 expr~ pow($v1 \, 4);
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 1;
+#X restore 184 403 pd output;
+#X text 86 303 fonte 1;
+#X text 160 303 fonte 2;
+#X text 66 214 Veja abaixo o [crossfade~] operando em sinais mono e
+estéreo.;
+#X msg 243 302 \$1 10;
+#X msg 312 503 \$1 10;
+#X obj 148 562 crossfade~;
+#X text 59 23 O objeto [crossfade~] faz um crossfading linear. Ele
+trabalha com fontes em diversos canais (mono \, estéreo \, quadrifônicas
+e etc). O seu argumento é que define a quantidade de canais em questão.
+Sem nenhum argumento \, o padrão é de fontes em estéreo.;
+#X text 60 98 Ele é um external que faz parte da biblioteca "tof" \,
+que precisa ser carregada com o objeto [import] no Pd Extended 0.42-5.
+;
+#X connect 1 0 21 0;
+#X connect 4 0 27 2;
+#X connect 5 0 27 3;
+#X connect 6 0 26 0;
+#X connect 7 0 27 4;
+#X connect 8 0 27 0;
+#X connect 9 0 27 1;
+#X connect 14 0 25 0;
+#X connect 15 0 14 0;
+#X connect 16 0 1 2;
+#X connect 18 0 1 0;
+#X connect 19 0 1 1;
+#X connect 20 0 21 1;
+#X connect 25 0 16 0;
+#X connect 26 0 7 0;
+#X connect 27 0 10 0;
+#X connect 27 1 10 1;

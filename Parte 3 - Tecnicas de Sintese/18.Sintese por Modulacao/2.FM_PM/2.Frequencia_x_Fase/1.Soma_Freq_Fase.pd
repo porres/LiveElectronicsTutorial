@@ -1,0 +1,131 @@
+#N canvas 82 32 1187 600 10;
+#X obj 448 76 cnv 15 320 40 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 455 81 - Tanto faz somar os sinais de frequência ou seus respectivos
+sinais de Fase!;
+#X obj 953 445 +~;
+#X obj 925 392 phasor~;
+#X obj 953 499 cos~;
+#X obj 991 392 phasor~;
+#X obj 562 357 +~;
+#X obj 504 257 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 400 256;
+#X obj 570 212 cnv 15 140 110 empty empty empty 20 12 0 14 -166433
+-66577 0;
+#X obj 577 273 osc~;
+#X obj 577 295 *~;
+#X obj 577 250 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 652 250 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 652 269 \$1 10;
+#X obj 652 289 line~;
+#X text 437 255 Portadora;
+#X text 575 231 Moduladora;
+#X obj 562 438 cos~;
+#X obj 562 408 phasor~;
+#X text 438 241 Frequência;
+#X obj 504 282 sig~;
+#X text 427 326 sinal portador =>;
+#X text 588 333 <= sinal modulador;
+#X text 574 216 Frequência;
+#X text 647 217 Índice de;
+#X text 648 230 Modulação;
+#X obj 925 314 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 400 256;
+#X obj 984 269 cnv 15 140 110 empty empty empty 20 12 0 14 -166433
+-66577 0;
+#X obj 991 330 osc~;
+#X obj 991 352 *~;
+#X obj 991 307 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 1 256;
+#X obj 1066 307 nbx 4 14 0 1e+37 0 1 empty indice empty 0 -8 0 10 -204786
+-1 -1 10 256;
+#X msg 1066 326 \$1 10;
+#X obj 1066 346 line~;
+#X text 858 312 Portadora;
+#X text 989 288 Moduladora;
+#X text 859 298 Frequência;
+#X obj 925 339 sig~;
+#X text 824 421 sinal portador =>;
+#X text 994 423 <= sinal modulador;
+#X text 988 273 Frequência;
+#X text 1061 274 Índice de;
+#X text 1062 287 Modulação;
+#X obj 536 479 output~;
+#X obj 923 537 output~;
+#X text 819 31 Nos valendo então do princípio em que tanto faz somar
+as frequências ou os sinais de fase correspondentes \, temos abaixo
+uma implementação da modulação feita a partir do sinal de fase.;
+#X text 576 382 <= sinal de frequência modulada;
+#X text 470 422 oscilador =>;
+#X text 977 468 <= sinal de fase modulada;
+#X text 820 101 Veja que a frequência portadora passa agora por um
+[phasor~] que nos dá nosso sinal portador. Perceba também que o oscilador
+que antes enviava um sinal de modulação de frequência é agora um sinal
+de frequência que passa por um [phasor~] e vira também um sinal de
+fase \, ou seja \, nosso sinal modulador.;
+#X text 820 197 O sinal de fase modulada alimenta então uma função
+cosseno \, e o resultado equivale a um oscilador que recebe o sinal
+correspondente de frequência modulada.;
+#X msg 660 455 \; portadora 400 \; moduladora 1 \; indice 10;
+#X obj 660 428 loadbang;
+#X obj 123 392 phasor~;
+#X text 44 31 A relação entre frequência e Fase é a mesma relação entre
+Velocidade e Posição. Sendo que Frequência é a velocidade (velocidade
+angular) e fase é a posição (do ângulo).;
+#X obj 123 340 sig~ 50;
+#X text 136 365 <= Velocidade Angular (Frequência);
+#X text 136 416 <= Posição do Ângulo (Fase Corrente);
+#X obj 123 440 cos~;
+#X text 45 477 Por existir essa relação entre os dois sinais \, há
+uma equivalência entre o que se chama "Modulação de Frequência" e "Modulação
+de Fase" \, pois \, em teoria \, é possível obter um mesmo resultado
+modulando tanto o sinal de frequência como o de fase!;
+#X text 45 79 O objeto [phasor~] recebe um sinal de Frequência e produz
+um sinal que chamamos de "Fase Corrente" \, que se refere à posição
+da fase a cada momento no tempo (amostra). Por se tratarem de dois
+lados de uma mesma moeda \, o sinal de Fase diz respeito a um sinal
+específico de frequência e vice-versa. Ou seja \, em teoria somos capazes
+de converter um sinal em outro!;
+#X text 45 179 A conversão desses sinais e possível via a integral
+e derivada de uma função. Não que precisemos saber de fato calcular
+isso ou mesmo ter noção do que isso se trata matematicamente \, é apenas
+um detalhe técnico.;
+#X text 44 241 No caso \, a forma do sinal de Fase Corrente é a Integral
+do sinal de Frequência. Já a forma do sinal de Frequência pode ser
+obtido pela Derivada do sinal de Fase Corrente. A forma de onda do
+sinal não é o único parâmetro a ser levado em consideração \, a amplitude
+também deve ser redimensionada (como veremos depois).;
+#X text 433 32 Uma propriedade que desponta da relação entre frequência
+e fase é que:;
+#X text 436 137 Vejamos isso na prática com a mesma estrutura de modulação
+do exemplo anterior.;
+#X connect 2 0 4 0;
+#X connect 3 0 2 0;
+#X connect 4 0 44 0;
+#X connect 4 0 44 1;
+#X connect 5 0 2 1;
+#X connect 6 0 18 0;
+#X connect 7 0 20 0;
+#X connect 9 0 10 0;
+#X connect 10 0 6 1;
+#X connect 11 0 9 0;
+#X connect 12 0 13 0;
+#X connect 13 0 14 0;
+#X connect 14 0 10 1;
+#X connect 17 0 43 0;
+#X connect 17 0 43 1;
+#X connect 18 0 17 0;
+#X connect 20 0 6 0;
+#X connect 26 0 37 0;
+#X connect 28 0 29 0;
+#X connect 29 0 5 0;
+#X connect 30 0 28 0;
+#X connect 31 0 32 0;
+#X connect 32 0 33 0;
+#X connect 33 0 29 1;
+#X connect 37 0 3 0;
+#X connect 52 0 51 0;
+#X connect 53 0 58 0;
+#X connect 55 0 53 0;

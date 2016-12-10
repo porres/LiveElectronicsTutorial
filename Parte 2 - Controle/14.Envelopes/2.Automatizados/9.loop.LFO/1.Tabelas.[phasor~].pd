@@ -1,0 +1,103 @@
+#N canvas 88 71 1340 653 10;
+#X obj 149 499 unsig~ 1;
+#X obj 149 526 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 4244 1;
+#X obj 69 428 osc~ 440;
+#X obj 69 507 *~;
+#X obj 149 289 phasor~;
+#X obj 149 225 expr 1000 / $f1;
+#X floatatom 149 202 5 0 0 0 - tempo -;
+#X floatatom 149 259 5 0 0 0 - - -;
+#X obj 267 519 loadbang;
+#X obj 225 269 loadbang;
+#X text 27 289 loop com [phasor~];
+#X text 301 270 soma de índices = 1;
+#X msg 225 295 0 0.1 1 0.4 0.5 0.1 0.5 0.3 1 0.1 0;
+#X text 78 202 tempo (ms);
+#X text 124 258 Hz;
+#X obj 151 341 tof/breakpoints~;
+#X obj 56 555 output~;
+#X msg 267 543 \; pd dsp 1 \; tempo 2000;
+#X obj 917 422 *~;
+#X obj 876 354 osc~ 440;
+#X obj 606 224 loadbang;
+#X obj 524 319 cnv 15 298 198 empty empty empty 20 12 0 14 -195955
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array env1 1027 float 0;
+#X coords 0 1 1026 0 300 200 1;
+#X restore 523 318 graph;
+#X obj 952 379 tabread4~ env1;
+#X text 508 508 0;
+#X text 510 311 1;
+#X obj 952 286 phasor~;
+#X obj 952 353 +~ 1;
+#X msg 606 255 \; env1 cosinesum 1024 0.5 -0.5;
+#X obj 952 325 *~ 1024;
+#X obj 952 226 expr 1000 / $f1;
+#X floatatom 952 203 5 0 0 0 - tempo -;
+#X floatatom 952 260 5 0 0 0 - - -;
+#X text 881 203 tempo (ms);
+#X text 927 259 Hz;
+#X obj 907 456 output~;
+#X obj 1000 434 unsig~ 1;
+#X obj 1000 461 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 6790 1;
+#X obj 1188 398 tabosc4~ env1;
+#X obj 1188 338 expr 1000 / $f1;
+#X floatatom 1188 315 5 0 0 0 - tempo -;
+#X floatatom 1188 372 5 0 0 0 - - -;
+#X text 1237 315 tempo (ms);
+#X text 1236 374 Hz;
+#X obj 1188 433 unsig~ 1;
+#X obj 1188 460 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 6790 1;
+#X text 56 30 Nesta seção vamos trabalhar com a ideia de envelopes
+operando em loop. Esse tipo de conceito é útil para processos de granulação
+e podem ser encarados também como "LFOs".;
+#X text 57 104 Neste primeiro exemplo \, temos envelopes em tabelas
+\, que são lidos em loops pelo objeto [phasor~]. No caso do objeto
+[tof/breakpoints~] \, basta ligar o [phasor~] diretamente.;
+#X obj 1074 325 wave~ env1;
+#X obj 1074 437 unsig~ 1;
+#X obj 1074 464 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 6807 1;
+#X text 711 66 Temos outro exemplo com tabelas geradas para interpolação.
+Neste caso \, podemos usar o [phasor~] com os devidos ajustes de índice
+para o tamanho da tabela e interpolação ou direto num objeto [wave~].
+Outra possibilidade \, nesse caso \, seria usarmos o osilador de tabela
+[tabosc4~] como LFO que daria no mesmo!;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 16 1;
+#X connect 3 0 16 0;
+#X connect 4 0 15 0;
+#X connect 5 0 7 0;
+#X connect 6 0 5 0;
+#X connect 7 0 4 0;
+#X connect 8 0 17 0;
+#X connect 9 0 12 0;
+#X connect 12 0 15 0;
+#X connect 15 0 0 0;
+#X connect 15 0 3 1;
+#X connect 18 0 35 0;
+#X connect 18 0 35 1;
+#X connect 19 0 18 0;
+#X connect 20 0 28 0;
+#X connect 23 0 18 1;
+#X connect 23 0 36 0;
+#X connect 26 0 29 0;
+#X connect 26 0 48 0;
+#X connect 27 0 23 0;
+#X connect 29 0 27 0;
+#X connect 30 0 32 0;
+#X connect 31 0 30 0;
+#X connect 32 0 26 0;
+#X connect 36 0 37 0;
+#X connect 38 0 44 0;
+#X connect 39 0 41 0;
+#X connect 40 0 39 0;
+#X connect 41 0 38 0;
+#X connect 44 0 45 0;
+#X connect 48 0 49 0;
+#X connect 49 0 50 0;

@@ -1,0 +1,50 @@
+#N canvas 106 23 1071 775 12;
+#X obj 233 641 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 236 555 hsl 128 15 -3 3 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X floatatom 233 580 5 0 0 0 - - -;
+#X obj 172 600 sah~;
+#X text 63 37 [samphold~] x [sah~] e Frequências negativas:;
+#X text 66 74 A forma como o [samphold~] foi desenhado para ser trigado
+a partir de um [phador~] (o trigger ocorre quando um valor é menor
+que o anterior) não permite que haja um trigger quando o [phasor~]
+está em uma frequência negativa (pois o sinal inverte e sempre temos
+um valor menor que o anterior \, a não ser no final do período).;
+#X obj 190 194 phasor~ -1;
+#X obj 190 229 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 63 398 Em algum momento veremos a necessidade de trigar um
+sample and hold a partir de frequências negativas. A forma possível
+é com o [sah~] e um trigger de impulso. Porém \, o objeto [impulse~]
+não funciona com frequências negativas. A saída então é usar a técnica
+já apresentada de transformar o [phasor~] em um oscilador de impulso
+\, ligado a um [sah~].;
+#X obj 139 554 noise~;
+#X obj 172 683 snaps~;
+#X obj 233 609 phasor~ -1;
+#X obj 737 357 hsl 128 15 -3 3 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X floatatom 734 382 5 0 0 0 - - -;
+#X obj 633 356 noise~;
+#X obj 633 485 snaps~;
+#X obj 734 411 phasor~ -1;
+#X obj 633 402 samphold~;
+#X obj 734 443 fexpr~ abs($x1[0] - $x1[-1]) < 0.5;
+#X text 585 227 Porém \, se a intenção é buscar uma solução 100% Pd
+Vanilla \, podemos apenas inverter a lógica do gerador de impulso (<
+0.5 em vez de > 0.5) e assim conseguimos trigar o [samphold~] a partir
+de um sinal de impulso invertido \, gerado a partir de frequências
+negativas de um [phasor~];
+#X connect 0 0 3 1;
+#X connect 1 0 2 0;
+#X connect 2 0 11 0;
+#X connect 3 0 10 0;
+#X connect 6 0 7 0;
+#X connect 9 0 3 0;
+#X connect 11 0 0 0;
+#X connect 12 0 13 0;
+#X connect 13 0 16 0;
+#X connect 14 0 17 0;
+#X connect 16 0 18 0;
+#X connect 17 0 15 0;
+#X connect 18 0 17 1;

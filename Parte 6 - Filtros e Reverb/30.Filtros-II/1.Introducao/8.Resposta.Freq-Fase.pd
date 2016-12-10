@@ -1,0 +1,552 @@
+#N canvas 41 35 1276 708 10;
+#X text 484 419 |H(z)| = sqrt(pow(Re \, 2) + pow(Im \, 2);
+#X text 538 69 Re = 1 - a*cos(w);
+#X text 538 85 Im = 0 - a*sin(w);
+#X text 446 542 Onde |H(z)| é a amplitude da função de transferência
+H(z) \, "a" o coeficiente do Polo \, "w" é a frequência angular (radianos
+por amostra) e "cos" e "sin" são as funções cosseno e seno \, respectivamente.
+;
+#X text 32 171 Assim sendo \, se de uma FFT podemos extrair a informação
+de Amplitude e Fase \, podemos fazer exatamente o mesmo com a Função
+de Transferência! E essa informação de amplitude e fase é tão somente
+a resposta de frequência e fase de um filtro.;
+#X text 427 112 Como o "1" que subtrai o coeficiente vezes a frequência
+complexa "z" é um número real \, sua parte imaginária é "0". Por isso
+temos o 0 na parte imaginária. Mas podemos desconsidera-lo e assim
+teremos:;
+#X text 536 179 Re = 1 - a*cos(w);
+#X text 537 195 Im = -a*sin(w);
+#X text 590 262 1;
+#X text 564 285 1 - a*cos(w);
+#X text 556 269 _______________;
+#X text 591 309 1;
+#X text 557 316 _______________;
+#X text 574 332 -a*sin(w);
+#X text 426 221 Agora sim podemos separar a Função de Transferência
+em uma parte real e outra imaginária como abaixo:;
+#X text 492 272 Re[H(z)] =;
+#X text 493 319 Im[H(z)] =;
+#X text 437 366 Tendo a função separada nas duas partes \, podemos
+\, por exemplo \, calcular a amplitude. Lembrando que a fórmula \,
+de acordo com a sintaxe do [expr] \, é:;
+#X text 442 450 Juntando tudo em uma única fórmula \, fica assim:;
+#X obj 836 338 cnv 15 400 120 empty empty empty 20 12 0 14 -216246
+-66577 0;
+#X text 1111 397 _____________;
+#X text 1144 390 1;
+#X text 1068 400 H(z) =;
+#X text 1115 414 1 - a * z^-1;
+#X obj 866 390 cartopol;
+#X floatatom 866 316 0 0 0 0 - - -;
+#X obj 869 291 hsl 128 15 0 3.14 0 0 empty empty empty -2 -8 0 10 -262130
+-1 -1 0 1;
+#X obj 1019 287 v a;
+#X obj 992 264 t b f;
+#X floatatom 992 240 0 0 0 0 - - -;
+#X obj 995 217 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 1047 287 coeficiente;
+#X floatatom 866 487 0 0 0 0 - - -;
+#X text 1034 358 Função de Transferência:;
+#X text 867 511 Amplitude / Resposta de Frequência:;
+#X text 926 316 Frequência em Radianos por amostra: w;
+#X floatatom 941 464 0 0 0 0 - - -;
+#X text 940 486 Resposta de Fase:;
+#X obj 866 421 expr 1 / $f1 \; 0 - $f2;
+#X obj 866 349 expr 1 - a * cos($f1) \; 0 - a * sin($f1);
+#X text 886 241 "a" coeficiente:;
+#X text 856 555 Por fim \, temos no subatch abaixo o cálculo da resposta
+de frequência e de fase desse filtro que é de um polo \, ou seja \,
+um [lop~].;
+#X text 856 603 Os gráficos são em função do coeficiente "a". Para
+cada valor de "a" \, fazemos uma varredura em loop com valores de "w"
+que foram armazenados em uma tabela. Abra e confira.;
+#N canvas 152 39 944 668 Resposta_Freq-Fase 0;
+#X obj 267 107 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 213 130 pd output;
+#N canvas 172 85 1026 565 (subpatch) 0;
+#X obj 101 101 cnv 15 808 388 empty empty empty 20 12 0 14 -1 -262144
+0;
+#X obj 108 128 hsl 795 28 0 127 0 0 \$0-freq-slider \$0-freq-slider-set
+empty -2 -8 0 10 -228856 -228856 -1 0 0;
+#X obj 106 157 cnv 15 798 35 empty empty empty 20 12 0 14 -257983 -66577
+0;
+#X obj 106 193 cnv 15 798 34 empty empty empty 20 12 0 14 -241340 -66577
+0;
+#X obj 106 228 cnv 15 798 35 empty empty empty 20 12 0 14 -257983 -66577
+0;
+#X obj 106 263 cnv 15 798 34 empty empty empty 20 12 0 14 -241340 -66577
+0;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 100 170 1;
+#X restore 123 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 77 170 1;
+#X restore 223 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 80 170 1;
+#X restore 300 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 102 170 1;
+#X restore 380 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 482 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 560 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 103 170 1;
+#X restore 638 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 741 128 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 819 128 graph;
+#X text 811 130 10;
+#X text 888 131 20;
+#X text 736 130 5;
+#X text 633 130 2;
+#X text 555 131 1;
+#X text 469 131 0.5;
+#X text 367 131 0.2;
+#X text 287 131 0.1;
+#X text 210 131 0.05;
+#X text 110 131 0.02;
+#X obj 430 107 cnv 15 15 15 empty empty Kilohertz 18 9 1 16 -1 -262144
+0;
+#N canvas 391 118 975 563 (subpatch) 0;
+#X array \$0-Freq 400 float 1;
+#A 0 0 -0.000197771 -0.000342219 -0.000471137 -0.000596433 -0.000710858
+-0.000821142 -0.000930392 -0.0010733 -0.00111472 -0.00115045 -0.00119343
+-0.00123537 -0.00128197 -0.00132909 -0.00137517 -0.00142799 -0.0014777
+-0.00153362 -0.00158851 -0.00164495 -0.00170295 -0.00176612 -0.00183033
+-0.00189506 -0.00196445 -0.00203436 -0.002111 -0.00218868 -0.00226635
+-0.00234869 -0.00243414 -0.0025227 -0.00261332 -0.00270602 -0.00280597
+-0.00290748 -0.0030121 -0.00312086 -0.00323531 -0.00335288 -0.00347097
+-0.0035989 -0.00372786 -0.00386408 -0.00400289 -0.00414999 -0.00429865
+-0.00445508 -0.00461462 -0.00478297 -0.00495651 -0.00513729 -0.0053243
+-0.00551339 -0.00571491 -0.00592162 -0.00613455 -0.00635785 -0.00658685
+-0.00682933 -0.00707493 -0.00733245 -0.00759412 -0.00787238 -0.0081548
+-0.0084507 -0.00875439 -0.00907363 -0.00940169 -0.00974065 -0.0100941
+-0.0104622 -0.0108385 -0.0112314 -0.0116363 -0.0120562 -0.0124948 -0.0129469
+-0.0134146 -0.0138995 -0.014403 -0.0149257 -0.0154646 -0.0160227 -0.0166036
+-0.0172017 -0.0178263 -0.0184701 -0.0191394 -0.0198274 -0.0205482 -0.0212909
+-0.022059 -0.0228547 -0.0236812 -0.0245341 -0.0254251 -0.02634 -0.027294
+-0.0282788 -0.0293021 -0.0303582 -0.0314524 -0.0325909 -0.0337629 -0.0349848
+-0.0362455 -0.0375531 -0.0389077 -0.0403119 -0.0417632 -0.0432704 -0.0448294
+-0.0464448 -0.0481189 -0.0498527 -0.0516482 -0.0535061 -0.0554337 -0.0574274
+-0.0594972 -0.0616368 -0.0638536 -0.0661486 -0.0685257 -0.070987 -0.0735377
+-0.076179 -0.0789156 -0.0817462 -0.0846806 -0.0877181 -0.0908622 -0.0941195
+-0.0974885 -0.100979 -0.104595 -0.108337 -0.112214 -0.116223 -0.120378
+-0.124674 -0.129126 -0.133733 -0.1385 -0.143437 -0.148546 -0.15383
+-0.159305 -0.164967 -0.17083 -0.176893 -0.183169 -0.189659 -0.196377
+-0.203326 -0.210519 -0.217955 -0.225651 -0.233609 -0.241838 -0.250352
+-0.259156 -0.268259 -0.277671 -0.287404 -0.297465 -0.307869 -0.318622
+-0.329734 -0.341223 -0.35309 -0.365357 -0.378032 -0.391125 -0.40465
+-0.418622 -0.433054 -0.447955 -0.463343 -0.479235 -0.495639 -0.512566
+-0.530042 -0.548076 -0.566684 -0.585879 -0.605687 -0.62611 -0.647176
+-0.668892 -0.691284 -0.714365 -0.738152 -0.762664 -0.787916 -0.81393
+-0.840721 -0.868309 -0.896711 -0.925944 -0.956031 -0.986988 -1.01883
+-1.05158 -1.08526 -1.11989 -1.15547 -1.19204 -1.22961 -1.2682 -1.30782
+-1.3485 -1.39025 -1.43309 -1.47704 -1.52211 -1.56832 -1.6157 -1.66424
+-1.71397 -1.7649 -1.81705 -1.87043 -1.92505 -1.98094 -2.03809 -2.09652
+-2.15624 -2.21726 -2.27959 -2.34324 -2.40822 -2.47454 -2.54219 -2.61118
+-2.68153 -2.75323 -2.82628 -2.90069 -2.97647 -3.0536 -3.13209 -3.21193
+-3.29313 -3.37568 -3.45957 -3.54481 -3.63138 -3.71928 -3.80849 -3.89902
+-3.99086 -4.08398 -4.17838 -4.27406 -4.37099 -4.46916 -4.56857 -4.66919
+-4.77101 -4.87402 -4.9782 -5.08352 -5.18999 -5.29757 -5.40626 -5.51602
+-5.62685 -5.73872 -5.85162 -5.96552 -6.0804 -6.19625 -6.31304 -6.43076
+-6.54938 -6.66888 -6.78924 -6.91045 -7.03247 -7.15528 -7.27888 -7.40323
+-7.52831 -7.65411 -7.7806 -7.90776 -8.03556 -8.164 -8.29304 -8.42268
+-8.55287 -8.68361 -8.81488 -8.94665 -9.07891 -9.21163 -9.34479 -9.47838
+-9.61238 -9.74675 -9.8815 -10.0166 -10.152 -10.2877 -10.4237 -10.56
+-10.6965 -10.8333 -10.9702 -11.1074 -11.2447 -11.3822 -11.5198 -11.6576
+-11.7954 -11.9333 -12.0713 -12.2093 -12.3473 -12.4853 -12.6233 -12.7613
+-12.8992 -13.037 -13.1748 -13.3124 -13.4499 -13.5872 -13.7243 -13.8612
+-13.9979 -14.1343 -14.2705 -14.4064 -14.5419 -14.6771 -14.812 -14.9464
+-15.0804 -15.214 -15.3471 -15.4797 -15.6117 -15.7432 -15.8741 -16.0044
+-16.134 -16.2629 -16.3911 -16.5185 -16.6452 -16.771 -16.8959 -17.0199
+-17.1429 -17.2649 -17.3859 -17.5057 -17.6244 -17.742 -17.8582 -17.9732
+-18.0868 -18.1989 -18.3096 -18.4187 -18.5262 -18.632 -18.736 -18.8382
+-18.9384 -19.0367 -19.1328 -19.2268 -19.3185 -19.4077 -19.4945 -19.5787
+-19.6602 -19.7388 -19.8145 -19.887 -19.9563 -20.0222 -20.0845 -20.1432
+-20.1979 -20.2485 -20.2948 -20.3367 -20.3738 -20.4059 -20.4329 -20.4544
+-20.4701 -20.4798 -20.4831;
+#X coords 0 4.8 399 -24 800 170 1;
+#X restore 105 128 graph;
+#X obj 106 396 cnv 15 798 83 empty empty empty 20 12 0 14 -257983 -66577
+0;
+#X obj 106 310 cnv 15 798 85 empty empty empty 20 12 0 14 -241340 -66577
+0;
+#N canvas 391 118 975 563 (subpatch) 0;
+#X array \$0-Fase 400 float 1;
+#A 0 0 0.00611467 0.00806826 0.00948881 0.0106459 0.0116397 0.0125202
+0.0133164 0.014299 0.0145557 0.014817 0.0150829 0.0153537 0.0156293
+0.0159099 0.0161954 0.0164861 0.0167821 0.0170833 0.0173899 0.0177021
+0.0180198 0.0183433 0.0186725 0.0190077 0.0193488 0.0196961 0.0200496
+0.0204094 0.0207757 0.0211486 0.0215282 0.0219145 0.0223078 0.0227082
+0.0231157 0.0235305 0.0239528 0.0243826 0.0248201 0.0252655 0.0257189
+0.0261804 0.0266501 0.0271283 0.0276151 0.0281105 0.0286149 0.0291282
+0.0296508 0.0301828 0.0307242 0.0312754 0.0318364 0.0324075 0.0329888
+0.0335805 0.0341828 0.0347959 0.0354199 0.0360551 0.0367017 0.0373598
+0.0380298 0.0387117 0.0394058 0.0401123 0.0408314 0.0415634 0.0423084
+0.0430668 0.0438388 0.0446245 0.0454242 0.0462382 0.0470668 0.0479102
+0.0487686 0.0496423 0.0505316 0.0514367 0.052358 0.0532957 0.0542501
+0.0552215 0.0562102 0.0572165 0.0582407 0.0592832 0.0603441 0.061424
+0.062523 0.0636415 0.06478 0.0659386 0.0671178 0.0683179 0.0695392
+0.0707823 0.0720473 0.0733347 0.0746449 0.0759783 0.0773353 0.0787162
+0.0801216 0.0815516 0.083007 0.0844879 0.085995 0.0875285 0.0890891
+0.090677 0.0922928 0.093937 0.09561 0.0973123 0.0990444 0.100807 0.1026
+0.104424 0.10628 0.108169 0.11009 0.112045 0.114034 0.116057 0.118115
+0.120209 0.122339 0.124505 0.126709 0.128951 0.131231 0.13355 0.135909
+0.138308 0.140748 0.143229 0.145753 0.148319 0.150928 0.153582 0.15628
+0.159024 0.161813 0.164649 0.167532 0.170463 0.173443 0.176472 0.17955
+0.182679 0.18586 0.189092 0.192376 0.195714 0.199106 0.202552 0.206053
+0.20961 0.213223 0.216893 0.220621 0.224407 0.228252 0.232156 0.236121
+0.240146 0.244232 0.24838 0.25259 0.256863 0.261199 0.265599 0.270063
+0.274592 0.279186 0.283845 0.288571 0.293362 0.298219 0.303144 0.308135
+0.313194 0.318319 0.323513 0.328773 0.334102 0.339498 0.344961 0.350492
+0.35609 0.361755 0.367487 0.373285 0.379149 0.38508 0.391075 0.397135
+0.403259 0.409446 0.415696 0.422008 0.42838 0.434812 0.441304 0.447852
+0.454458 0.461118 0.467832 0.474599 0.481416 0.488283 0.495197 0.502157
+0.509161 0.516206 0.523292 0.530416 0.537575 0.544768 0.551992 0.559244
+0.566523 0.573825 0.581149 0.58849 0.595847 0.603218 0.610597 0.617984
+0.625375 0.632766 0.640156 0.64754 0.654915 0.662279 0.669627 0.676958
+0.684267 0.691551 0.698807 0.706031 0.713221 0.720372 0.727482 0.734547
+0.741563 0.748528 0.755439 0.762291 0.769082 0.775808 0.782467 0.789055
+0.795569 0.802005 0.808362 0.814636 0.820824 0.826923 0.832931 0.838844
+0.84466 0.850376 0.855991 0.8615 0.866902 0.872195 0.877375 0.882442
+0.887392 0.892223 0.896933 0.901521 0.905984 0.91032 0.914528 0.918606
+0.922551 0.926363 0.930039 0.933579 0.936979 0.94024 0.943359 0.946335
+0.949167 0.951853 0.954392 0.956782 0.959023 0.961114 0.963052 0.964837
+0.966467 0.967943 0.969261 0.970422 0.971424 0.972266 0.972948 0.973467
+0.973823 0.974015 0.974041 0.973901 0.973594 0.973118 0.972473 0.971657
+0.970669 0.969508 0.968172 0.966662 0.964975 0.96311 0.961066 0.958842
+0.956437 0.953848 0.951076 0.948117 0.944972 0.941638 0.938114 0.934399
+0.930491 0.926388 0.922088 0.917591 0.912894 0.907995 0.902893 0.897586
+0.892072 0.886348 0.880414 0.874266 0.867903 0.861323 0.854522 0.8475
+0.840253 0.83278 0.825077 0.817142 0.808973 0.800568 0.791922 0.783034
+0.773901 0.764519 0.754886 0.744999 0.734855 0.72445 0.713781 0.702846
+0.69164 0.680159 0.668402 0.656364 0.644041 0.63143 0.618526 0.605327
+0.591827 0.578024 0.563912 0.549488 0.534748 0.519687 0.5043 0.488584
+0.472534 0.456145 0.439412 0.422332 0.404899 0.387107 0.368954 0.350433
+0.331539 0.312268 0.292614 0.272573 0.252139 0.231307 0.210072 0.188428
+0.166372 0.143898 0.121001 0.0976752 0.0739171 0.0497214 0.0250838
+-2.55443e-07;
+#X coords 0 3.14 399 -3.14 800 170 1;
+#X restore 105 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 100 170 1;
+#X restore 123 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 77 170 1;
+#X restore 223 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 80 170 1;
+#X restore 300 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 102 170 1;
+#X restore 380 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 482 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 560 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 103 170 1;
+#X restore 638 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 741 309 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 819 309 graph;
+#X coords 0 -1 1 1 810 390 2 100 100;
+#X restore 70 232 pd;
+#X obj 213 100 lop~;
+#X obj 180 58 noise~;
+#X obj 237 47 hsl 128 15 20 7000 1 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X obj 234 74 nbx 8 14 -1e+37 1e+37 0 0 \$0-Hz empty empty 0 -8 0 10
+-261234 -1 -1 0 256;
+#X obj 528 80 trigger float float;
+#X obj 528 156 tabwrite \$0-Freq;
+#X obj 485 51 kalashnikov 400;
+#X text 451 49 Loop;
+#N canvas 425 128 438 206 dB 0;
+#X obj 164 30 inlet;
+#X obj 164 148 outlet;
+#X text 59 56 Amplitude Linear;
+#X text 69 99 Amplitude dBFS;
+#X obj 164 80 v2db;
+#X obj 164 122 clip -24 0;
+#X text 245 121 limitar entre -24 e 0dB;
+#X connect 0 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 1 0;
+#X restore 528 131 pd dB;
+#N canvas 204 70 482 300 coeficientes 0;
+#X obj -41 124 clip 0 1;
+#X obj -41 176 expr 1 - $f1;
+#X obj -41 202 v a;
+#X obj -26 151 v ganho;
+#X text -255 73 radiano / amostra;
+#X obj -146 95 trigger bang float;
+#X obj -146 21 r \$0-Hz;
+#X text 29 150 coeficiente de ganho;
+#X text -13 201 coeficiente do Polo;
+#X obj -146 49 expr $f1 * 2*pi / sr;
+#X obj -146 243 outlet;
+#X connect 0 0 1 0;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 5 0 10 0;
+#X connect 5 1 0 0;
+#X connect 6 0 9 0;
+#X connect 9 0 5 0;
+#X restore 485 20 pd coeficientes;
+#N canvas 271 28 862 333 H(z) 0;
+#X obj 43 79 cnv 15 400 120 empty empty empty 20 12 0 14 -216246 -66577
+0;
+#X text 318 138 _____________;
+#X text 351 131 1;
+#X text 275 141 H(z) =;
+#X text 322 155 1 - a * z^-1;
+#X obj 53 131 cartopol;
+#X obj 53 90 expr 1 - a * cosW_\$0[$f1] \; -a * sinW_\$0[$f1];
+#X obj 53 220 expr $f1 * ganho;
+#X text 166 219 Ajuste com coeficiente de ganho;
+#X obj 53 44 inlet;
+#X obj 53 261 outlet;
+#X text 241 99 Função de Transferência;
+#X obj 188 261 outlet;
+#X text 64 284 Amp;
+#X text 196 282 Fase;
+#X text 98 44 índice;
+#X obj 53 162 expr 1 / $f1 \; -$f2;
+#X text 475 113 O patch faz uma varredura das frequências complexas
+em tabelas que foram inicializadas (cosW_\$0 e sinW_\$0).;
+#X connect 5 0 16 0;
+#X connect 5 1 16 1;
+#X connect 6 0 5 0;
+#X connect 6 1 5 1;
+#X connect 7 0 10 0;
+#X connect 9 0 6 0;
+#X connect 16 0 7 0;
+#X connect 16 1 12 0;
+#X restore 528 107 pd H(z);
+#X obj 567 178 tabwrite \$0-Fase;
+#N canvas 219 118 470 222 init 0;
+#X obj 97 27 loadbang;
+#X obj 207 60 samplerate~;
+#X obj 179 110 expr atan(1) * 4;
+#X msg 97 124 \; pd dsp 1;
+#X obj 207 83 v sr;
+#X obj 179 137 v pi;
+#N canvas 726 90 606 229 get-freq 0;
+#X obj 88 29 inlet;
+#N canvas 192 80 563 633 loop 0;
+#X obj 54 192 until;
+#X obj 92 241 + 1;
+#X msg 72 216 0;
+#X obj 54 95 t f f;
+#X obj 361 216 until;
+#X obj 407 265 + 1;
+#X msg 379 241 0;
+#X obj 54 270 t f f;
+#X obj 159 355 +;
+#X obj 54 370 mtof;
+#X obj 54 144 t f b f;
+#X obj 361 191 t f b f;
+#X obj 361 326 /;
+#X obj 54 31 inlet;
+#X obj 54 574 outlet;
+#X obj 207 583 outlet;
+#X obj 361 265 f;
+#X obj 361 379 expr pow($f1 \, 0.4);
+#X obj 54 241 f;
+#X obj 361 296 trigger f f;
+#X obj 361 407 * 20.6017;
+#X text 434 407 MIDI 16;
+#X obj 54 298 expr (($f1 + 1) * (midi_range_\$0 / $f2)) + 16;
+#X obj 54 63 expr rint(400 * 0.98);
+#X obj 361 144 expr 400 - $f1;
+#X obj 201 197 v midi_range_\$0;
+#X obj 201 171 ftom;
+#X msg 201 145 8750.55;
+#X obj 54 465 expr $f1 * 2*pi / sr;
+#X obj 361 498 expr $f1 * 2*pi / sr;
+#X connect 0 0 18 0;
+#X connect 1 0 18 1;
+#X connect 2 0 18 1;
+#X connect 3 0 10 0;
+#X connect 3 1 24 0;
+#X connect 4 0 16 0;
+#X connect 5 0 16 1;
+#X connect 6 0 16 1;
+#X connect 7 0 22 0;
+#X connect 7 1 8 0;
+#X connect 8 0 15 0;
+#X connect 9 0 28 0;
+#X connect 10 0 0 0;
+#X connect 10 1 2 0;
+#X connect 10 1 27 0;
+#X connect 10 2 22 1;
+#X connect 11 0 4 0;
+#X connect 11 1 6 0;
+#X connect 11 2 12 1;
+#X connect 12 0 17 0;
+#X connect 13 0 23 0;
+#X connect 16 0 5 0;
+#X connect 16 0 19 0;
+#X connect 17 0 20 0;
+#X connect 18 0 1 0;
+#X connect 18 0 7 0;
+#X connect 19 0 12 0;
+#X connect 19 1 15 0;
+#X connect 20 0 29 0;
+#X connect 22 0 9 0;
+#X connect 23 0 3 0;
+#X connect 24 0 8 1;
+#X connect 24 0 11 0;
+#X connect 26 0 25 0;
+#X connect 27 0 26 0;
+#X connect 28 0 14 0;
+#X connect 29 0 14 0;
+#X restore 88 69 pd loop;
+#X obj 61 195 tabwrite sinW_\$0;
+#X obj 35 159 tabwrite cosW_\$0;
+#X obj 35 105 expr cos($f1) \; sin($f1);
+#X obj 176 128 table sinW_\$0 400;
+#X obj 176 103 table cosW_\$0 400;
+#X text 146 68 <= gera frequências na escala logarítmica;
+#X text 303 116 tabelas de frequências complexas inicializadas;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 1 1 3 1;
+#X connect 1 1 2 1;
+#X connect 4 0 3 0;
+#X connect 4 1 2 0;
+#X restore 65 167 pd get-freq;
+#X text 141 168 inicialização de tabelas de frequências complexas;
+#X connect 0 0 3 0;
+#X connect 0 0 2 0;
+#X connect 0 0 1 0;
+#X connect 0 0 6 0;
+#X connect 1 0 4 0;
+#X connect 2 0 5 0;
+#X restore 610 29 pd init \; tables;
+#X text 323 73 Hz;
+#X text 883 386 -18;
+#X text 882 417 -24;
+#X text 888 281 0;
+#X text 884 314 -6;
+#X text 882 349 -12;
+#X text 886 437 pi;
+#X text 881 598 -pi;
+#X text 886 519 0;
+#X text 36 350 AMP;
+#X text 34 518 FASE;
+#X connect 0 0 1 1;
+#X connect 3 0 1 0;
+#X connect 4 0 3 0;
+#X connect 5 0 6 0;
+#X connect 6 0 3 1;
+#X connect 7 0 13 0;
+#X connect 7 1 8 1;
+#X connect 7 1 14 1;
+#X connect 9 1 7 0;
+#X connect 11 0 8 0;
+#X connect 12 0 9 0;
+#X connect 13 0 11 0;
+#X connect 13 1 14 0;
+#X restore 1001 671 pd Resposta_Freq-Fase;
+#X text 32 18 A resposta de frequência é o valor de amplitude em função
+de uma frequência \, e pode ser calculada a partir da Função de Transferência
+do filtro. Outro dado importante também obtido pela Função de Transferência
+é a Resposta de Fase.;
+#X text 31 82 Vamos lembrar que a Função de Transferência diz respeito
+ao domínio da frequência \, como na FFT \, já que a Função de Transferência
+é uma representação da Transformada Z \, e a Transformada Z é um caso
+mais geral da FFT. Aliás \, ela é em função de "z" \, que é uma variável
+complexa (com uma parte real e imaginária) como os dados da FFT!;
+#X obj 129 597 cnv 15 135 45 empty empty empty 20 12 0 14 -216246 -66577
+0;
+#X text 174 607 _____________;
+#X text 209 601 1;
+#X text 133 610 H(z) =;
+#X text 180 621 1 - a*z^-1;
+#X text 33 247 A nomenclatura é um pouco confusa \, a resposta de frequência
+deveria ser chamada de resposta de amplitude \, e de fato pode eventualmente
+assim ser chamado \, mas é muito raro. Apesar de tudo \, tente entender
+sempre que resposta de frequência \, nesse contexto \, diz respeito
+à amplitude.;
+#X text 34 429 A frequência complexa "z" tem então uma parte real \,
+que é tão somente um cosseno de "w" (frisando que se trata de um ângulo
+em radianos) \, e uma parte imaginária \, que é apenas um seno de "w"!
+;
+#X text 34 490 Separando a Função de Transferência em uma parte real
+e outra imaginária \, podemos então achar a amplitude e fase da mesma
+forma que numa FFT \, com o objeto [cartopol]!;
+#X text 33 542 Vejamos então como separar a função de transferência
+de um filtro de um polo em uma parte real e outra imaginária \, e como
+extrair a amplitude! Eis a Função de Transferência:;
+#X text 39 651 Sendo "a" o coeficiente e z^-1 a frequência complexa.
+Adaptemos então em função da frequência angular "w".;
+#X text 33 327 Pois bem \, a Função de Transferência é em função da
+variável "z" \, que é uma variável de frequência complexa. Por sua
+vez \, "z" está em função da frequência angular \, dada pela variável
+"w" (omega) \, que é nada mais nada menos que a frequência em radianos
+por amostra. No caso \, z^-1 se relciona com w \, z^-2 se relaciona
+com 2w (duas vezes ômega) e assim por diante.;
+#X text 425 20 As partes real e imaginária da frequência complexa "z"
+são \, respectivamente \, cos(w) e sin(w). Vamos assim separar as partes
+real e imaginária do denominador.;
+#X text 445 626 O [cartopol] nos dá a amplitude e também a resposta
+de fase (cujo cálculo é a arcotangente de Im/Re). A resposta de Fase
+não traz muito resultado perceptível \, pois indica apenas que certas
+frequências terão uma mudança de fase.;
+#X text 441 603 ============================================================
+;
+#X text 861 20 A fase \, em função da frequência \, é dada entre -pi
+e pi \, fechando um ciclo completo \, e indica que a Fase naquela frequência
+será adicionada ou subtraida pelo valor dado na Resposta de Fase.;
+#X text 860 81 Sobre o cálculo da fase \, de acordo com a Função de
+Transferência deste filtro de um Polo \, precisamos partir de uma subtração
+\, porque há uma divisão do numerador com o denominador \, e uma divisão
+de números complexos implica numa subtração das fases \, como já vimos
+na seção de números complexos.;
+#X text 861 168 Veja abaixo como fica a implementação em um patch da
+Resposta de Frequência (Amplitude) e Resposta de Fase.;
+#X obj 611 502 image ../files/amp.gif;
+#X connect 24 0 38 0;
+#X connect 24 1 38 1;
+#X connect 25 0 39 0;
+#X connect 26 0 25 0;
+#X connect 28 0 26 0;
+#X connect 28 1 27 0;
+#X connect 29 0 28 0;
+#X connect 30 0 29 0;
+#X connect 38 0 32 0;
+#X connect 38 1 36 0;
+#X connect 39 0 24 0;
+#X connect 39 1 24 1;

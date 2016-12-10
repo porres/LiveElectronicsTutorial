@@ -1,0 +1,224 @@
+#N canvas 448 23 446 694 10;
+#X obj 48 440 readsf~;
+#X obj 48 384 loadbang;
+#X obj 48 519 output~;
+#X text 45 12 Agora vamos partir da ideia do exemplo passado \, em
+que usavamos um delay \, só que de uma forma mais elaborada. Vimos
+como o atraso de apenas algumas amostras embaralha toda a informação
+da FFT \, provocando mudanças das faixas de frequências. Pois bem \,
+uma forma de evitar isso ao fazermos um delay é com um cuidado em gerar
+atrasos apenas do tamanho da janela de análise ou seus múltiplos.;
+#X text 47 112 Mas até aí não tem graça nenhuma \, porque podemos fazer
+esse tipo de delay normalmente em qualquer sinal sonoro \, sem ainda
+a restrição do tamanho do delay!;
+#X text 49 160 Pois bem \, para ter graça e explorar bem a FFT \, o
+que podemos ter são valores de atraso diferentes para cada ponto da
+FFT!;
+#N canvas 151 23 743 505 Delay-Espectral 0;
+#X obj 248 108 block~ 512 4;
+#X obj 90 104 *~;
+#X obj 90 29 inlet~;
+#X obj 90 128 rfft~;
+#X obj 105 80 tabreceive~ \$0-hann;
+#X obj 78 368 *~;
+#X obj 111 369 tabreceive~ \$0-hann;
+#X obj 78 315 rifft~;
+#X obj 78 418 outlet~;
+#X obj 44 286 vd~ \$0-re;
+#X obj 111 285 vd~ \$0-im;
+#X obj 78 345 /~ 768;
+#X obj 117 157 delwrite~ \$0-im 2322;
+#X obj 90 186 delwrite~ \$0-re 2322;
+#X obj 105 233 cnv 15 120 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 268 213 A título de simplificação \, este exemplo se restringe
+a uma janela de FFT de 512 pontos. Veja como a implementação é simples.
+Temos somente duas linhas de delay nas partes real e imaginária \,
+que são acessados por objetos de delay variável [vd~].;
+#N canvas 103 42 823 402 del-time-table 0;
+#X obj 487 328 outlet~;
+#X obj 424 60 samplerate~;
+#X obj 424 31 loadbang;
+#X obj 424 84 / 1000;
+#X obj 424 111 expr 512 / $f1;
+#X text 470 83 sample rate em khz;
+#X obj 424 137 v window_ms;
+#X text 502 138 tamanho da janela em ms;
+#X text 43 44 Primeiramente \, ao lado \, calculamos o tamanho da janela
+de análise da FFT em ms. A continha é simples \, basta pegar o tamanho
+da janela \, que é de 512 pontos \, e dividir pela taxa de amostragem
+em Khz.;
+#X text 44 107 Este valor é importante \, porque o atraso deve ser
+sempre igual a esse valor ou seus múltiplos \, para que não ocorra
+nenhum embaralhamento das faixas de frequência!;
+#X text 521 109 tamanho da janela de FFT / sample rate em Khz;
+#X text 37 168 ============================================================
+;
+#X obj 487 267 *~;
+#X obj 502 245 r \$0-del-depth;
+#X obj 519 268 hsl 128 15 0 200 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 487 292 expr~ rint($v1) * window_ms;
+#X text 407 167 ============================================================
+;
+#X obj 487 213 tabreceive~ \$0-env;
+#X text 92 212 Agora é simples \, basta receber os valores da tabela
+obtida com o gerador de envelope e mulitplicar pelo "delay-depth" \,
+que varia de 0 a 200 \, portanto o sinal é multiplicado por um valor
+que vai de 0 a 200!;
+#X text 92 273 Queremos números inteiros \, que são múltiplos da janela
+de FFT em ms. Então \, no último passo \, arredondamos o valor de amplitude
+em números inteiros (0 a 200 \, porranto) \, para depois multiplica-los
+pelo tamanho da janela de FFT em ms!;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 6 0;
+#X connect 12 0 15 0;
+#X connect 13 0 14 0;
+#X connect 13 0 12 1;
+#X connect 15 0 0 0;
+#X connect 17 0 12 0;
+#X restore 111 245 pd del-time-table;
+#X text 268 291 O ponto central do patch é mesmo o controle de leitura
+dos delays \, que é conduzido no subatch [pd del-time-table]. Abra
+e confira.;
+#N canvas 0 22 454 245 hann 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 512 float 1;
+#A 0 0 3.76403e-05 0.000150561 0.000338763 0.000602216 0.000940859
+0.00135466 0.00184357 0.00240749 0.00304636 0.00376007 0.00454852 0.00541157
+0.00634909 0.00736094 0.00844702 0.00960711 0.010841 0.0121486 0.0135297
+0.014984 0.0165114 0.0181116 0.0197844 0.0215294 0.0233465 0.0252355
+0.0271959 0.0292275 0.03133 0.0335031 0.0357464 0.0380597 0.0404425
+0.0428946 0.0454154 0.0480047 0.0506621 0.0533872 0.0561795 0.0590386
+0.0619642 0.0649558 0.0680128 0.071135 0.0743217 0.0775724 0.0808868
+0.0842644 0.0877045 0.0912068 0.0947705 0.0983953 0.102081 0.105826
+0.10963 0.113494 0.117415 0.121395 0.125431 0.129523 0.133672 0.137875
+0.142133 0.146445 0.150811 0.155229 0.159698 0.164219 0.168791 0.173412
+0.178083 0.182802 0.187569 0.192383 0.197243 0.202149 0.2071 0.212095
+0.217133 0.222213 0.227336 0.2325 0.237704 0.242947 0.248229 0.253549
+0.258907 0.2643 0.269729 0.275193 0.28069 0.286221 0.291784 0.297378
+0.303002 0.308657 0.31434 0.320051 0.325789 0.331554 0.337343 0.343157
+0.348995 0.354856 0.360738 0.366642 0.372565 0.378508 0.384469 0.390448
+0.396443 0.402453 0.408478 0.414517 0.420569 0.426633 0.432708 0.438793
+0.444887 0.45099 0.4571 0.463216 0.469338 0.475464 0.481594 0.487727
+0.493862 0.499998 0.506134 0.512269 0.518402 0.524532 0.530659 0.53678
+0.542897 0.549007 0.555109 0.561203 0.567288 0.573363 0.579427 0.585479
+0.591518 0.597543 0.603554 0.609549 0.615527 0.621488 0.627431 0.633354
+0.639258 0.64514 0.651001 0.656839 0.662653 0.668443 0.674207 0.679946
+0.685657 0.69134 0.696994 0.702619 0.708213 0.713776 0.719306 0.724804
+0.730267 0.735696 0.74109 0.746447 0.751767 0.75705 0.762293 0.767497
+0.772661 0.777783 0.782864 0.787902 0.792897 0.797848 0.802754 0.807614
+0.812428 0.817195 0.821914 0.826585 0.831206 0.835778 0.840299 0.844769
+0.849187 0.853552 0.857864 0.862122 0.866326 0.870474 0.874567 0.878603
+0.882582 0.886504 0.890367 0.894172 0.897917 0.901602 0.905227 0.908791
+0.912293 0.915733 0.919111 0.922426 0.925676 0.928863 0.931985 0.935042
+0.938034 0.94096 0.943819 0.946611 0.949336 0.951994 0.954583 0.957104
+0.959556 0.961939 0.964252 0.966496 0.968669 0.970771 0.972803 0.974763
+0.976652 0.978469 0.980215 0.981887 0.983488 0.985015 0.986469 0.987851
+0.989158 0.990392 0.991552 0.992638 0.99365 0.994588 0.995451 0.996239
+0.996953 0.997592 0.998156 0.998645 0.999059 0.999398 0.999661 0.999849
+0.999962 1 0.999962 0.999849 0.999661 0.999398 0.999059 0.998645 0.998157
+0.997593 0.996954 0.99624 0.995452 0.994589 0.993651 0.992639 0.991553
+0.990393 0.989159 0.987852 0.986471 0.985016 0.983489 0.981889 0.980216
+0.978471 0.976654 0.974765 0.972805 0.970773 0.96867 0.966497 0.964254
+0.961941 0.959558 0.957106 0.954585 0.951996 0.949338 0.946613 0.943821
+0.940962 0.938036 0.935045 0.931988 0.928866 0.925679 0.922428 0.919114
+0.915736 0.912296 0.908794 0.90523 0.901605 0.89792 0.894175 0.89037
+0.886507 0.882585 0.878606 0.87457 0.870478 0.866329 0.862126 0.857867
+0.853555 0.84919 0.844772 0.840303 0.835782 0.83121 0.826589 0.821918
+0.817199 0.812432 0.807618 0.802758 0.797852 0.792901 0.787906 0.782868
+0.777788 0.772665 0.767501 0.762297 0.757054 0.751772 0.746452 0.741094
+0.735701 0.730272 0.724808 0.719311 0.71378 0.708218 0.702623 0.696999
+0.691344 0.685661 0.67995 0.674212 0.668448 0.662658 0.656844 0.651006
+0.645145 0.639263 0.633359 0.627436 0.621493 0.615532 0.609554 0.603559
+0.597548 0.591523 0.585484 0.579432 0.573368 0.567293 0.561208 0.555114
+0.549012 0.542902 0.536785 0.530664 0.524537 0.518407 0.512274 0.506139
+0.500003 0.493867 0.487733 0.4816 0.475469 0.469343 0.463221 0.457105
+0.450995 0.444892 0.438798 0.432713 0.426638 0.420574 0.414522 0.408483
+0.402458 0.396448 0.390453 0.384474 0.378513 0.37257 0.366647 0.360743
+0.354861 0.349 0.343162 0.337348 0.331558 0.325794 0.320055 0.314344
+0.308662 0.303007 0.297383 0.291788 0.286226 0.280695 0.275197 0.269734
+0.264305 0.258911 0.253554 0.248234 0.242952 0.237708 0.232504 0.22734
+0.222218 0.217137 0.212099 0.207104 0.202153 0.197247 0.192387 0.187573
+0.182806 0.178087 0.173416 0.168795 0.164223 0.159702 0.155232 0.150814
+0.146449 0.142137 0.137879 0.133675 0.129527 0.125434 0.121398 0.117419
+0.113497 0.109633 0.105829 0.102084 0.0983985 0.0947736 0.0912097 0.0877074
+0.0842672 0.0808896 0.0775752 0.0743243 0.0711375 0.0680154 0.0649583
+0.0619667 0.0590411 0.0561818 0.0533894 0.0506643 0.0480068 0.0454175
+0.0428965 0.0404444 0.0380615 0.0357484 0.033505 0.0313318 0.0292293
+0.0271976 0.0252371 0.0233481 0.0215309 0.0197858 0.018113 0.0165127
+0.0149853 0.0135309 0.0121497 0.0108421 0.00960806 0.00844792 0.0073618
+0.00634986 0.00541225 0.00454915 0.00376073 0.00304696 0.00240803 0.00184402
+0.00135505 0.000941187 0.000602454 0.000338942 0.000150681 3.76999e-05
+;
+#X coords 0 1 511 0 200 100 1;
+#X restore 82 35 graph;
+#X msg 313 80 \; pd dsp 1;
+#X obj 313 52 loadbang;
+#X connect 2 0 1 0;
+#X restore 262 72 pd hann;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 13 0;
+#X connect 3 1 12 0;
+#X connect 4 0 1 1;
+#X connect 5 0 8 0;
+#X connect 6 0 5 1;
+#X connect 7 0 11 0;
+#X connect 9 0 7 0;
+#X connect 10 0 7 1;
+#X connect 11 0 5 0;
+#X connect 16 0 10 0;
+#X connect 16 0 9 0;
+#X coords 0 0 1 1 230 100 0;
+#X restore 48 471 pd Delay-Espectral;
+#N canvas 144 23 805 464 control 0;
+#X obj 101 151 cnv 15 211 182 empty empty empty 20 12 0 14 -204800
+-66577 0;
+#X obj 60 95 phasor~;
+#X msg 167 101 0 0.5 1 0.5 0;
+#X obj 167 78 loadbang;
+#X obj 106 159 tof/breakpoints~;
+#X obj 60 15 loadbang;
+#X obj 60 42 samplerate~;
+#X obj 106 307 hsl 202 23 0 200 0 0 \$0-del-depth \$0-del-depth-set
+Delay-Depth 40 11 0 19 -66577 -204800 -262144 0 0;
+#X obj 11 348 tabsend~ \$0-env;
+#X obj 266 102 block~ 256 1 1;
+#X obj 60 65 expr~ $v1 / 256;
+#X obj 4 380 table \$0-env 256;
+#X text 365 177 Como no exemplo de Filtro Espectral \, usamos um envelope
+para controlar \, agora \, o delay de cada banda do espectro.;
+#X text 364 221 O tamanho da tabela que ele gera é de 256 pontos \,
+a metade da janela de análise (512 neste exemplo) \, que vai até o
+Nyquist que é o que nos interessa.;
+#X connect 1 0 4 0;
+#X connect 2 0 4 0;
+#X connect 3 0 2 0;
+#X connect 4 0 8 0;
+#X connect 5 0 6 0;
+#X connect 6 0 10 0;
+#X connect 10 0 1 0;
+#X coords 0 -1 1 1 213 184 2 100 150;
+#X restore 184 482 pd control;
+#X text 51 210 Para tal \, precisamos de algo como uma tabela \, do
+tamanho da FFT \, com valores diferentes para cada ponto dela. Fazemos
+isso com um gerador de envelope \, o [tof/breakpoints~]! Além do formato
+do envelope \, temos um controle da amplitude do envelope \, que é
+o "delay-depth".;
+#X text 51 280 Deve ficar claro que o eixo horizontal do envelope corresponde
+às faixas de frequência da FFT \, enquanto o eixo vertical é o tempo
+de delay para cada banda \, que depende do controle de "delay-depth".
+Abra o subpatch [pd Delay-Espectral] para entender a implementação.
+;
+#X text 198 453 Abra também o subpatch abaixo;
+#X msg 48 409 open ../../../samples/guitar.wav \, 1;
+#X connect 0 0 6 0;
+#X connect 0 1 11 0;
+#X connect 1 0 11 0;
+#X connect 6 0 2 0;
+#X connect 6 0 2 1;
+#X connect 11 0 0 0;
+#X coords 0 0 1 1 560 350 0;

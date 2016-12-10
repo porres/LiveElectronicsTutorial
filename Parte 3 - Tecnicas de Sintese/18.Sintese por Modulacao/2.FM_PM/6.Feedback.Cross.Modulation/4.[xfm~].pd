@@ -1,0 +1,39 @@
+#N canvas 233 101 546 470 10;
+#X obj 355 296 loadbang;
+#X obj 108 246 nbx 5 14 -1e+37 1e+37 0 0 empty freq1 empty 0 -8 0 10
+-204786 -1 -1 175.394 256;
+#X obj 173 245 nbx 5 14 -1e+37 1e+37 0 0 empty freq2 empty 0 -8 0 10
+-204800 -1 -1 96.6253 256;
+#X text 115 226 freq1;
+#X text 181 226 freq2;
+#X obj 91 124 hsl 300 15 1 20000 1 1 freq1 empty empty -2 -6 0 8 -204786
+-1 -1 15600 1;
+#X obj 91 146 hsl 300 15 1 20000 1 1 freq2 empty empty -2 -6 0 8 -204800
+-1 -1 13800 1;
+#X obj 92 171 hsl 300 15 1 20000 1 1 fb1 empty empty -2 -6 0 8 -262130
+-1 -1 19538 1;
+#X obj 92 196 hsl 300 15 1 20000 1 1 fb2 empty empty -2 -6 0 8 -203904
+-1 -1 16500 1;
+#X obj 260 244 nbx 5 14 -1e+37 1e+37 0 0 empty fb1 empty 0 -8 0 10
+-262130 -1 -1 646.377 256;
+#X obj 325 243 nbx 5 14 -1e+37 1e+37 0 0 empty fb2 empty 0 -8 0 10
+-203904 -1 -1 236.308 256;
+#X text 273 225 fb1;
+#X text 340 225 fb2;
+#X obj 225 303 xfm~;
+#X text 51 123 freq1;
+#X text 51 144 freq2;
+#X text 60 168 fb1;
+#X text 60 196 fb2;
+#X obj 217 342 output~;
+#X msg 355 320 \; freq1 150 \; freq2 250 \; fb1 100 \; fb2 100;
+#X text 67 42 O objeto [xfm~] faz uma modulação cruzada de frequência.
+No help você encontra mais detalhes. Brinque com os sliders abaixo.
+;
+#X connect 0 0 19 0;
+#X connect 1 0 13 0;
+#X connect 2 0 13 1;
+#X connect 9 0 13 2;
+#X connect 10 0 13 3;
+#X connect 13 0 18 0;
+#X connect 13 1 18 1;

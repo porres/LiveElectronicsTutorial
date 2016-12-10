@@ -1,0 +1,112 @@
+#N canvas 287 44 1082 746 10;
+#X obj 112 41 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856 -1
+-1;
+#X obj 97 166 *~;
+#X obj 37 78 osc~ 440;
+#X obj 85 200 dac~;
+#X obj 112 102 vline~;
+#X msg 112 74 1 200 \, 0 200 600;
+#X msg 429 228 0.5;
+#X obj 149 172 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X obj 429 201 loadbang;
+#X msg 461 229 2;
+#X obj 498 232 nbx 5 14 0.01 1e+37 0 0 empty empty empty 0 -8 0 10
+-203904 -1 -1 0.01 256;
+#X msg 233 499 1 50 \, \$1 50 50 \, 0 200 600;
+#X obj 233 524 vline~;
+#X obj 218 614 *~;
+#X obj 206 648 dac~;
+#X obj 256 579 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X obj 160 543 osc~ 440;
+#X obj 315 203 loadbang;
+#X obj 473 258 v pow;
+#X obj 112 129 expr~ pow($v1 \, pow);
+#X obj 233 475 expr pow($f1 \, 1 / pow);
+#X obj 233 550 expr~ pow($v1 \, pow);
+#X obj 233 416 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 233 448 f;
+#X floatatom 268 442 0 0 0 0 - decay -;
+#X text 265 419 decay;
+#X msg 315 230 \; decay 0.7 \; pd dsp 1;
+#X obj 774 316 *~;
+#X floatatom 857 203 5 0 0 0 - - -;
+#X floatatom 858 226 5 0 0 0 - - -;
+#X obj 761 362 dac~;
+#X obj 769 180 tgl 15 0 empty empty empty 0 -6 0 8 -228856 -1 -1 0
+1;
+#X obj 816 282 Scope~ 130 130 256 3 128 0 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 769 207 metro 1000;
+#X obj 789 248 ead~ 100 900;
+#X obj 726 281 osc~ 440;
+#X floatatom 826 172 5 0 0 0 - - -;
+#X text 654 104 Diferentemente dos outros exemplos apresentados aqui
+\, ele gera uma curva distinta para o ataque e o release. Os argumentos
+e respectivos inlets são o tempo de ataque e release.;
+#X text 651 56 O [ead~] é um objeto gerador de envelope exponencial
+- "ead" é de "exponential attack/decay". Mas \, na prática \, é um
+envelope do tipo AR.;
+#X text 253 67 Como costumamos pensar em controle de amplitude de forma
+logarítmica \, é bom que façamos o mesmo com envelopes. Na forma "AR"
+ou "ASR" é trivial \, basta elevar a uma potência \, veja abaixo o
+que ocorre com uma potência de 2 e com 0.5 (o inverso/recíproco de
+2). Tente outros valores.;
+#X text 88 324 Já para um envelope ADSR é mais complicado por causa
+do ponto de dacay. Por exemplo \, se você quer que o ponto de decay
+seja para 0.7 mas você está com um envelope logarítmico ao quadrado
+\, você terá 0.49 em vez de 0.7 \, a não ser que você calcule a raiz
+quadrada de 0.7 (que é 0.83666). Abaixo temos essa compensação matemática.
+Veja como funciona.;
+#X obj 709 612 *~;
+#X obj 696 658 dac~;
+#X obj 743 571 Scope~ 130 130 256 3 128 0 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 661 577 osc~ 440;
+#X obj 724 544 curve~;
+#X msg 724 515 1 100 0.5 0.7 100 -0.5 0.7 200 0 0 500 0.8;
+#X text 624 440 Por fim temos o [curve~] \, já apresentado anteriormente
+\, que é parecido com o [vline~] e pode gerar envelopes com curvas
+logarítmicas diferentes para cada segmento.;
+#X connect 0 0 5 0;
+#X connect 1 0 3 0;
+#X connect 1 0 3 1;
+#X connect 2 0 1 0;
+#X connect 4 0 19 0;
+#X connect 5 0 4 0;
+#X connect 6 0 18 0;
+#X connect 8 0 6 0;
+#X connect 9 0 18 0;
+#X connect 10 0 18 0;
+#X connect 11 0 12 0;
+#X connect 12 0 21 0;
+#X connect 13 0 14 0;
+#X connect 13 0 14 1;
+#X connect 16 0 13 0;
+#X connect 17 0 26 0;
+#X connect 19 0 1 1;
+#X connect 19 0 7 0;
+#X connect 20 0 11 0;
+#X connect 21 0 13 1;
+#X connect 21 0 15 0;
+#X connect 22 0 23 0;
+#X connect 23 0 20 0;
+#X connect 24 0 23 1;
+#X connect 27 0 30 0;
+#X connect 27 0 30 1;
+#X connect 28 0 34 1;
+#X connect 29 0 34 2;
+#X connect 31 0 33 0;
+#X connect 33 0 34 0;
+#X connect 34 0 27 1;
+#X connect 34 0 32 0;
+#X connect 35 0 27 0;
+#X connect 36 0 33 1;
+#X connect 41 0 42 0;
+#X connect 41 0 42 1;
+#X connect 44 0 41 0;
+#X connect 45 0 41 1;
+#X connect 45 0 43 0;
+#X connect 46 0 45 0;

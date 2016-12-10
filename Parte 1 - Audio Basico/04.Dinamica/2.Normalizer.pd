@@ -1,0 +1,147 @@
+#N canvas 189 25 864 660 10;
+#X floatatom 331 191 5 0 0 0 - - -;
+#X floatatom 212 241 5 0 0 0 - - -;
+#X floatatom 212 191 5 0 0 0 - - -;
+#X obj 197 320 /~;
+#X obj 212 216 /;
+#X obj 212 141 dbtorms;
+#X obj 331 141 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 -20 256;
+#X obj 197 76 readsf~;
+#X obj 197 26 loadbang;
+#X obj 198 463 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 39 447 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 -13.4254 256;
+#X obj 29 419 prvu~;
+#X obj 30 475 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 144 298 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -204786
+-1 -1 0 1;
+#X obj 315 267 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -204786
+-1 -1 0 1;
+#X text 464 109 Fazemos isso com um ajuste de ganho de acordo com a
+proporção da amplitude do sinal com o valor dado no patch.;
+#X text 248 240 proporção;
+#X text 465 147 O ajuste é feito com o objeto de divisão [/~] que \,
+na prática \, é o mesmo que multiplicar pelo inverso.;
+#X obj 549 292 /;
+#X floatatom 568 268 5 0 0 0 - - -;
+#X floatatom 523 268 5 0 0 0 - - -;
+#X obj 534 324 /;
+#X floatatom 534 350 5 0 0 0 - - -;
+#X obj 681 308 /;
+#X floatatom 700 259 5 0 0 0 - - -;
+#X floatatom 666 361 5 0 0 0 - - -;
+#X obj 666 335 *;
+#X floatatom 635 251 5 0 0 0 - - -;
+#X obj 636 272 t f b f;
+#X text 607 317 =;
+#X obj 331 93 loadbang;
+#X obj 27 189 loadbang;
+#X msg 27 218 \; pd dsp 1;
+#X msg 212 264 \$1 20;
+#X obj 212 116 env~ 1024 1024;
+#X obj 68 114 delay~ 1024 1024;
+#X obj 263 448 expr rint($f1);
+#X obj 263 477 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 -20 256;
+#X obj 197 407 prvu~ 50;
+#X text 360 478 dBFS;
+#X text 133 438 dBFS;
+#X text 359 116 dBFS;
+#X msg 331 115 -20;
+#X obj 331 166 db2v;
+#X text 467 503 ============================================================
+;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 264 408 pd output;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 71 398 pd output;
+#X text 471 527 Esse patch pode ainda ser usado em conjunto com um
+noise gate \, para evitar que um ruído de chão receba um ganho ao teto
+máximo. Para tal \, o estágio do noise gate deve vir primeiro.;
+#X text 472 398 O atraso neste exemplo é de 1024 amostras \, pois o
+[env~] retorna uma análise a cada 1024 amostras (o que dá em torno
+de 23.2 ms em uma taxa de 44.1Khz).;
+#X text 465 185 Fazemos desse modo para evitar o uso de um objeto [trigger]
+como abaixo. Veja abaixo como o resultado da conta é sempre igual ao
+número da direita.;
+#X text 472 447 Compare a amplitude RMS do original e o processado
+no VU \, e veja como fica mesmo constante em torno do valor de dBFS
+dado.;
+#X obj 212 290 line~;
+#X text 464 36 Bem diferente de um noise gate \, esse patch eleva o
+ganho até um teto máximo em dBFS - de modo que o sinal sempre permanece
+com o valor de ampitude RMS em torno desse valor. Trata-se de um tipo
+de normalizer em tempo real \, onde cada pequena janela de análise
+é normalizada em um valor dado.;
+#X msg 197 51 open ../../samples/kantele.wav \, start;
+#X connect 0 0 4 1;
+#X connect 1 0 33 0;
+#X connect 2 0 4 0;
+#X connect 3 0 45 0;
+#X connect 3 0 38 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X connect 6 0 43 0;
+#X connect 7 0 11 0;
+#X connect 7 0 46 0;
+#X connect 7 0 34 0;
+#X connect 7 0 35 0;
+#X connect 7 1 53 0;
+#X connect 8 0 53 0;
+#X connect 11 0 10 0;
+#X connect 11 0 12 0;
+#X connect 13 0 46 1;
+#X connect 14 0 45 1;
+#X connect 18 0 21 1;
+#X connect 19 0 18 1;
+#X connect 20 0 18 0;
+#X connect 20 0 21 0;
+#X connect 21 0 22 0;
+#X connect 23 0 26 1;
+#X connect 24 0 23 0;
+#X connect 26 0 25 0;
+#X connect 27 0 28 0;
+#X connect 28 0 26 0;
+#X connect 28 1 24 0;
+#X connect 28 2 23 1;
+#X connect 30 0 42 0;
+#X connect 31 0 32 0;
+#X connect 33 0 51 0;
+#X connect 34 0 5 0;
+#X connect 35 0 3 0;
+#X connect 36 0 37 0;
+#X connect 38 0 9 0;
+#X connect 38 0 36 0;
+#X connect 42 0 6 0;
+#X connect 43 0 0 0;
+#X connect 51 0 3 1;
+#X connect 53 0 7 0;

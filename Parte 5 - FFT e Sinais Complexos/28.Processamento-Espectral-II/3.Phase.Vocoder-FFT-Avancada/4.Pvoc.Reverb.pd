@@ -1,0 +1,348 @@
+#N canvas 431 46 554 664 12;
+#X obj 204 627 dac~;
+#N canvas 73 125 1129 561 pvoc-reverb 0;
+#X obj 80 498 outlet~;
+#X obj 80 24 inlet~;
+#X msg 367 421 set \$1 4;
+#X obj 367 455 block~;
+#X obj 529 74 inlet;
+#N canvas 355 51 666 355 switch 0;
+#X obj 62 152 expr~ $v1 > $v2 && $v1 > $v3 && $v1 > $v4;
+#X obj 62 279 outlet~;
+#X obj 62 38 inlet~;
+#X obj 346 113 tabreceive~ \$0-last-fft-amp;
+#X obj 251 105 lrshift~ 1;
+#X obj 156 105 lrshift~ -1;
+#X text 160 196 Fazemos uma comparação entre a amplitude das bandas
+de FFT e suas vizinhas. Também comparamos amplitude da FFT com a amplitude
+da última saída de FFT. Se a amplitude é maior que as das bandas vizinhas
+e também da última saída de FFT \, temos uo valor de 1 \, e 0 caso
+contrário.;
+#X text 364 85 amplitude da última saída de FFT;
+#X text 205 128 bandas vizinhas;
+#X text 160 283 Chamamos essa saída de "switch" \, pois será usada
+para um "gate" nos próximos subpatches.;
+#X text 68 309 switch;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 2 0 4 0;
+#X connect 2 0 5 0;
+#X connect 3 0 0 3;
+#X connect 4 0 0 2;
+#X connect 5 0 0 1;
+#X restore 210 182 pd switch;
+#N canvas 778 103 458 316 FFT 0;
+#X obj 44 27 inlet~;
+#X obj 44 92 *~;
+#X obj 44 123 rfft~;
+#X obj 62 63 tabreceive~ \$0-hann;
+#X obj 97 219 outlet~;
+#X obj 37 219 outlet~;
+#X obj 37 179 cartopol~;
+#X text 156 138 Análise de FFT \, saída é amplitude e fase;
+#X text 46 244 Amp;
+#X text 109 246 Fase;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 1 1;
+#X connect 6 0 5 0;
+#X connect 6 1 4 0;
+#X restore 80 129 pd FFT;
+#N canvas 547 110 507 316 phase-dif 0;
+#X obj 65 248 outlet~;
+#X obj 65 45 inlet~;
+#X obj 65 130 expr~ $v1 - $v2 \; $v1;
+#X text 99 216 Subtraímos a fase da última análise da análise atual
+;
+#X obj 174 97 tabreceive~ \$0-phase-dif;
+#X obj 174 181 tabsend~ \$0-phase-dif;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 2 1 5 0;
+#X connect 4 0 2 1;
+#X restore 305 182 pd phase-dif;
+#X text 55 161 Amp;
+#X text 123 167 Fase;
+#X obj 529 287 line~;
+#X msg 529 258 \$1 10;
+#X floatatom 529 176 0 0 0 0 - - -;
+#X obj 236 275 tabsend~ \$0-last-phase-dif;
+#X obj 298 218 tabreceive~ \$0-last-phase-dif;
+#X text 459 176 feedback;
+#N canvas 181 22 767 371 Gate-FFT 0;
+#X obj 260 316 outlet~;
+#X obj 53 314 outlet~;
+#X obj 53 92 inlet~;
+#X obj 104 92 inlet~;
+#X obj 480 86 inlet~;
+#X obj 53 194 expr~ if ($v5 == 1 \, $v1 \, $v3) \; if ($v5 == 1 \,
+$v2 \, $v4);
+#X obj 166 120 tabreceive~ \$0-last-fft-phase;
+#X obj 156 91 tabreceive~ \$0-last-fft-amp;
+#X text 338 194 De acordo com o inlet direito este subpatch passa a
+informação de FFT atual ou anterior.;
+#X text 56 56 FFT atual;
+#X text 208 58 FFT anterior;
+#X text 344 248 Se switch = 1 \, passa a FFT Atual;
+#X text 342 271 Se switch = 0 \, passa a FFT Anterior;
+#X text 481 59 Switch;
+#X connect 2 0 5 0;
+#X connect 3 0 5 1;
+#X connect 4 0 5 4;
+#X connect 5 0 1 0;
+#X connect 5 1 0 0;
+#X connect 6 0 5 3;
+#X connect 7 0 5 2;
+#X restore 80 208 pd Gate-FFT;
+#N canvas 0 107 505 338 Gate-Phase 0;
+#X obj 49 261 outlet~;
+#X obj 49 94 inlet~;
+#X obj 149 92 inlet~;
+#X obj 49 166 expr~ if ($v1 == 1 \, $v2 \, $v3);
+#X obj 249 119 inlet~;
+#X text 124 204 Se switch = 1 \, passa a Phase de "phase-dif";
+#X text 51 62 Switch;
+#X text 228 91 "last-Phase-Dif";
+#X text 140 65 "phase-dif";
+#X text 122 227 Se switch = 0 \, passa a Phase de "last-phase-dif"
+;
+#X connect 1 0 3 0;
+#X connect 2 0 3 1;
+#X connect 3 0 0 0;
+#X connect 4 0 3 2;
+#X restore 210 244 pd Gate-Phase;
+#N canvas 0 22 417 366 iFFT 0;
+#X obj 65 283 outlet~;
+#X obj 65 208 *~;
+#X obj 65 122 rifft~;
+#X obj 83 174 tabreceive~ \$0-hann;
+#X obj 65 57 inlet~;
+#X obj 125 58 inlet~;
+#X obj 65 246 /~;
+#X obj 119 240 expr $f1 * 3/2;
+#X obj 65 90 poltocar~;
+#X obj 119 214 r window-size;
+#X text 191 120 FFT inversa;
+#X connect 1 0 6 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 1;
+#X connect 4 0 8 0;
+#X connect 5 0 8 1;
+#X connect 6 0 0 0;
+#X connect 7 0 6 1;
+#X connect 8 0 2 0;
+#X connect 8 1 2 1;
+#X connect 9 0 7 0;
+#X restore 80 362 pd iFFT;
+#X text 649 96 2) [pd switch]: Fazemos uma comparação entre a amplitude
+das bandas de FFT e suas vizinhas. Também comparamos amplitude da FFT
+com a amplitude da última saída de FFT. Se a amplitude é maior que
+as das bandas vizinhas e também da última saída de FFT \, temos uo
+valor de 1 \, e 0 caso contrário. Chamamos essa saída de "switch" \,
+pois será usada para um "gate" nos próximos subpatches.;
+#X text 649 52 1) [pd FFT]: Fazemos uma análise normal de FFT \, cuja
+saída é amplitude e fase.;
+#X text 55 129 1);
+#X text 189 182 2);
+#X text 55 208 3);
+#X text 649 218 3) [pd Gate-FFT]: Se o valor do switch é um \, o gate
+deixa passar a FFT atual \, caso contrária passa a anterior.;
+#X text 286 182 4);
+#X text 648 264 4) [pd phase-dif]: Paralelamente \, em relação à fase
+\, subtraímos a fase da última análise do valor de fase da análise
+atual. Chamamos essa saída de "Phase-dif".;
+#X text 649 327 5) [pd Gate-Phase]: No próximo estágio da fase \, um
+outro gate deixa passar a "phase-dif" se o switch é igual a 1 \, ou
+"last-phase-dif" se igual a 0 \, que é a "phase-dif" da análise anterior.
+;
+#X text 185 241 5);
+#X text 650 401 6) [pd last-FFT]: A saída de FFT é usada para feedback
+(como "última FFT". A amplitude é multiplicada pelo valor de feedback
+e a Fase é somada com a saída do gate da fase.;
+#N canvas 182 33 492 342 last-FFT 0;
+#X obj 132 177 +~;
+#X obj 90 153 *~;
+#X obj 132 204 tabsend~ \$0-last-fft-phase;
+#X obj 90 235 tabsend~ \$0-last-fft-amp;
+#X text 331 222 <= Última FFT;
+#X obj 216 82 inlet~;
+#X obj 150 81 inlet~;
+#X obj 84 80 inlet~;
+#X obj 29 80 inlet~;
+#X text 225 52 feedback;
+#X text 143 50 gate-Phase;
+#X text 47 52 Gate-FFT;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 5 0 1 1;
+#X connect 6 0 0 1;
+#X connect 7 0 0 0;
+#X connect 8 0 1 0;
+#X restore 161 331 pd last-FFT;
+#X text 140 330 6);
+#X text 56 361 7);
+#X text 650 466 7) [pd iFFT]: Por fim \, a iFFT;
+#N canvas 919 432 329 238 init 0;
+#X obj 118 60 loadbang;
+#N canvas 0 22 450 300 resize 0;
+#X obj 110 27 inlet;
+#X msg 69 106 resize \$1;
+#X obj 69 73 / 2;
+#N canvas 25 256 357 339 hann 0;
+#X obj 219 186 osc~;
+#X obj 219 211 *~ -0.5;
+#X obj 219 235 +~ 0.5;
+#X obj 66 148 samplerate~;
+#X obj 74 231 /;
+#X msg 96 90 resize \$1;
+#X obj 96 114 s \$0-hann;
+#X msg 223 151 0;
+#X obj 171 152 t f b;
+#X obj 48 53 t b f;
+#X obj 48 22 inlet;
+#X obj 172 268 tabwrite~ \$0-hann;
+#X obj 76 263 * 4;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 11 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 6 0;
+#X connect 7 0 0 1;
+#X connect 8 0 0 0;
+#X connect 8 1 7 0;
+#X connect 8 1 11 0;
+#X connect 9 0 3 0;
+#X connect 9 1 5 0;
+#X connect 9 1 4 1;
+#X connect 10 0 9 0;
+#X connect 12 0 8 0;
+#X restore 108 74 pd hann;
+#X obj 190 79 s window-size;
+#X msg 188 26 set \$1;
+#X obj 189 51 s window-size-nbx;
+#X obj 84 219 s \$0-last-fft-phase;
+#X obj 92 194 s \$0-last-fft-amp;
+#X obj 96 163 s \$0-last-phase-dif;
+#X obj 105 135 s \$0-phase-dif;
+#X connect 0 0 2 0;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 0 0 5 0;
+#X connect 1 0 7 0;
+#X connect 1 0 8 0;
+#X connect 1 0 9 0;
+#X connect 1 0 10 0;
+#X connect 2 0 1 0;
+#X connect 5 0 6 0;
+#X restore 29 122 pd resize;
+#N canvas 0 22 233 187 tables 0;
+#X obj 16 21 table \$0-hann;
+#X obj 14 128 table \$0-last-fft-phase;
+#X obj 14 105 table \$0-last-fft-amp;
+#X obj 14 76 table \$0-last-phase-dif;
+#X obj 14 51 table \$0-phase-dif;
+#X restore 93 171 pd tables;
+#X obj 29 88 inlet;
+#X msg 118 86 \; window-size-nbx 4096 \; pd dsp 1;
+#X connect 0 0 4 0;
+#X connect 3 0 1 0;
+#X restore 295 427 pd init \; tables;
+#X obj 340 387 nbx 5 18 -1e+37 1e+37 0 0 window-size-nbx-snd window-size-nbx
+empty 0 -8 0 15 -262130 -1 -1 4096 256;
+#X text 330 361 janela de FFT;
+#X text 336 342 tamanho da;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 12 0;
+#X connect 5 0 16 2;
+#X connect 5 0 17 0;
+#X connect 6 0 16 0;
+#X connect 6 0 5 0;
+#X connect 6 1 16 1;
+#X connect 6 1 7 0;
+#X connect 7 0 17 1;
+#X connect 10 0 30 3;
+#X connect 11 0 10 0;
+#X connect 12 0 11 0;
+#X connect 14 0 17 2;
+#X connect 16 0 18 0;
+#X connect 16 0 30 0;
+#X connect 16 1 18 1;
+#X connect 16 1 30 1;
+#X connect 17 0 13 0;
+#X connect 17 0 30 2;
+#X connect 18 0 0 0;
+#X connect 35 0 34 0;
+#X connect 35 0 2 0;
+#X restore 219 582 pd pvoc-reverb;
+#X obj 310 531 cnv 15 39 42 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 314 535 knob 32 32 0.1 0.99 0 0 empty fdgdfg empty 0 -8 64 8
+-228856 -262137 -1 0 1;
+#X obj 219 501 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X text 302 509 Feedback;
+#X text 61 148 Podemos dizer que esse patch é um "Phase Vocoder" na
+medida em que é um algoritmo baseado em FFT e cálculo da Fase \, apenas
+por isso.;
+#X text 63 203 O patch age como um reverberador \, e soa menos "susurrado"
+que uma implementação baseada em uma estrutura comum de delays com
+feedback.;
+#X text 63 261 Além do feedback da FFT \, a técnica "força" a entrada
+da FFT em bandas que 1) Há um pico e 2) A entrada tem mais energia
+do que já está ali. Caso o que já está em um canal possui mais energia
+que a entrada sonora \, a entrada sonora é ignorada.;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 219 544 pd teste;
+#X text 62 25 Temos aqui um tipo de reverb implementado com FFT que
+se baseia em um feedback da FFT. Este exemplo é uma implementçnao equivalente
+ao exemplo I08.pvoc.reverb do Miller Puckette. A estrutura de implementação
+é bem diferente \, e foi uma tentativa de torna-la mais simples. Ela
+foi implementada com a matemática na forma polar em vez da cartesiana
+(que é mis complicada).;
+#X text 61 350 A amplitude é repassada em feedback multiplicada por
+um coeficiente e o incremento de fase mantém uma coerência da informação
+de fase. Abra o subpatch e confira o algoritmo.;
+#X obj 108 434 loadbang;
+#X obj 108 484 readsf~;
+#X obj 108 537 *~;
+#X obj 153 518 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X msg 108 459 open ../../../samples/didge.aif \, 1;
+#X connect 1 0 0 0;
+#X connect 1 0 0 1;
+#X connect 3 0 1 1;
+#X connect 4 0 9 0;
+#X connect 9 0 1 0;
+#X connect 12 0 16 0;
+#X connect 13 0 14 0;
+#X connect 13 1 16 0;
+#X connect 14 0 1 0;
+#X connect 15 0 14 1;
+#X connect 16 0 13 0;

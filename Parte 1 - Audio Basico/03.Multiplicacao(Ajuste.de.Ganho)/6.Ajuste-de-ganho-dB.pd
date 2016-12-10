@@ -1,0 +1,68 @@
+#N canvas 443 49 676 599 10;
+#X floatatom 150 212 0 0 0 0 - - -;
+#X obj 135 302 *~;
+#X msg 150 240 \$1 4;
+#X obj 150 131 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#X text 157 110 dB;
+#X obj 46 80 readsf~;
+#X obj 46 30 loadbang;
+#X obj 47 403 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 46 373 prvu~;
+#X obj 136 403 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 135 373 prvu~;
+#X text 34 533 original;
+#X text 121 534 ajustado;
+#X text 290 212 Como entrada de som temos o objeto [readsf~] (de "read
+sound file") tocando um arquivo sonoro do HD.;
+#X text 219 440 Compare o VU do sinal original com o sinal de ganho
+ajustado.;
+#X text 158 191 Razão;
+#X obj 150 165 db2v;
+#X obj 261 341 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 60 84 350 289 output 0;
+#X obj 116 171 *~;
+#X obj 100 210 dac~;
+#X obj 131 62 inlet;
+#X obj 82 62 inlet~;
+#X obj 131 118 line~;
+#X msg 131 92 \$1 10;
+#X obj 131 146 expr~ pow($v1 \, 4);
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 1;
+#X restore 207 367 pd output;
+#X text 274 366 Usamos ainda um ajuste de ganho geral do exemplo anterior.
+;
+#X obj 150 268 vline~;
+#X text 289 87 Se não usamos muito nesse tutorial um controle de amplitude
+em dB \, podemos usar ainda a escala em dB para ajustes de ganho. Por
+exemplo \, neste patch \, fazemos um ajuste de ganho nos valendo da
+conversão de dB para razão (ou proporção).;
+#X text 289 147 Desse modo \, com uma entrada de valor em decibéis
+\, podemos nivelar uma entrada de sinal dando um ganho (ou boost) em
+dB (valores positivos) \, ou ainda diminuir a intensidade (valores
+negativos).;
+#X text 167 302 ajuste de ganho;
+#X msg 46 55 open ../../samples/bubul.wav \, 1;
+#X connect 0 0 2 0;
+#X connect 1 0 10 0;
+#X connect 1 0 18 0;
+#X connect 2 0 20 0;
+#X connect 3 0 16 0;
+#X connect 5 0 1 0;
+#X connect 5 0 8 0;
+#X connect 5 1 24 0;
+#X connect 6 0 24 0;
+#X connect 6 0 3 0;
+#X connect 8 0 7 0;
+#X connect 10 0 9 0;
+#X connect 16 0 0 0;
+#X connect 17 0 18 1;
+#X connect 20 0 1 1;
+#X connect 24 0 5 0;

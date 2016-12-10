@@ -1,0 +1,166 @@
+#N canvas 320 40 883 648 10;
+#X obj 96 389 cnv 15 100 50 empty empty empty 20 12 0 14 -203175 -66577
+0;
+#X obj 149 479 hsl 128 15 0 1 0 0 nothing nothin-as-well ganho 50 6
+0 12 -128992 -228856 -199988 0 0;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 107 505 pd gain;
+#X floatatom 107 293 5 0 0 0 - - -;
+#X text 203 405 <= clique e abra;
+#N canvas 262 22 587 679 FFT-iFFT 0;
+#X obj 259 84 cnv 15 270 70 empty empty empty 20 12 0 14 -203822 -66577
+0;
+#X obj 30 177 cnv 15 500 60 empty empty empty 20 12 0 14 -162285 -66577
+0;
+#X obj 30 238 cnv 15 500 60 empty empty empty 20 12 0 14 -203175 -66577
+0;
+#X obj 30 298 cnv 15 500 60 empty empty empty 20 12 0 14 -162285 -66577
+0;
+#X obj 55 199 rfft~;
+#X obj 57 15 inlet~;
+#X obj 54 633 outlet~;
+#X text 276 94 Tamanho da Janela = 2048 / 4 Overlaps;
+#X text 115 324 TRANSFORMADA INVERSA;
+#X text 139 243 SINAL COMPLEXO NO DOMÍNIO DO TEMPO;
+#X text 189 266 Forma Cartesiana (parte real & imaginária);
+#X text 110 14 <= Input: Domínio do Tempo;
+#X text 111 632 <= Output: Domínio do Tempo;
+#X text 279 305 Recria o Bloco no Domínio do Tempo;
+#X obj 30 74 cnv 15 210 70 empty empty empty 20 12 0 14 -223969 -66577
+0;
+#X obj 72 88 tabreceive~ \$0-hann;
+#X obj 53 323 rifft~;
+#X obj 29 378 cnv 15 210 70 empty empty empty 20 12 0 14 -223969 -66577
+0;
+#X obj 69 391 tabreceive~ \$0-hann;
+#X obj 25 479 cnv 15 350 100 empty empty empty 20 12 0 14 -203822 -66577
+0;
+#X obj 57 117 *~;
+#X obj 54 418 *~;
+#X text 107 111 janela hann;
+#X text 89 418 janela hann;
+#X obj 54 510 /~ 3072;
+#X text 323 325 ou "Ressintetiza";
+#X obj 348 120 block~ 2048 4;
+#X text 256 410 Suavização na saída;
+#X text 121 493 Fator de Normalização para Hann;
+#X text 147 514 em 4 overlaps: dividir;
+#X text 153 535 por (bloco * 3/2);
+#X text 105 586 Mais sobre normalização no próximo exemplo;
+#X text 71 51 Suavização na entrada com envelope hann;
+#X text 112 196 FFT para sinal real: Decompõe em Componentes de Tons
+Puros;
+#X connect 4 0 16 0;
+#X connect 4 1 16 1;
+#X connect 5 0 20 0;
+#X connect 15 0 20 1;
+#X connect 16 0 21 0;
+#X connect 18 0 21 1;
+#X connect 20 0 4 0;
+#X connect 21 0 24 0;
+#X connect 24 0 6 0;
+#X restore 107 407 pd FFT-iFFT;
+#X obj 231 321 loadbang;
+#X text 120 448 Ressíntese;
+#X obj 473 38 cnv 15 360 60 empty empty empty 20 12 0 14 -235552 -66577
+0;
+#X text 475 119 A informação dos reais componentes de frequência de
+um som analisado não está no eixo horizontal das análises de FFT (ou
+seja \, nos pontos de frequência)! A FFT só dá pontos de uma série
+harmônica que \, na prática \, nunca fazem parte do sinal analisado.
+;
+#X text 475 191 Sendo assim \, os pontos da FFT devem ser encarados
+como limites de "Bandas de frequência" \, tal como um equalizador!
+;
+#X text 476 234 Desse modo \, a tabela de amplitudes \, que mais costumamos
+visualizar \, indica energia não de uma frequência exata \, mas de
+picos relacionados a bandas/faixas de frequência.;
+#X text 476 285 Todavia \, o som original \, com seus reais componentes
+espectrais \, é reconstruído na ressíntese \, mesmo que eles não apareçam
+direito na análise.;
+#X text 478 506 Esse é o motivo pelo qual a tabela de fases tá sempre
+mudando de um modo meio caótico. E isso implica que a informação de
+Fase Inicial é o que codifica a qualidade tonal do som analisado. Isso
+ficará mais evidente com alguns dos exemplos de processamento espectral
+que veremos \, assim como a relação da FFT com um equalizador de bandas.
+;
+#X obj 32 547 cnv 15 360 50 empty empty empty 20 12 0 14 -232887 -66577
+0;
+#X text 79 259 Subpatch que gera a janela Hann:;
+#N canvas 397 22 489 273 Hann 0;
+#X obj 46 140 osc~;
+#X obj 46 87 samplerate~;
+#X msg 148 106 0.5;
+#X obj 241 81 cnv 15 198 118 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 240 81 graph;
+#X obj 46 169 expr~ $v1 * 0.5 + 0.5;
+#X obj 38 194 tabwrite~ \$0-hann;
+#X obj 38 36 loadbang;
+#X obj 38 62 trigger bang bang bang;
+#X obj 46 114 / 2048;
+#X connect 0 0 5 0;
+#X connect 1 0 9 0;
+#X connect 2 0 0 1;
+#X connect 5 0 6 0;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;
+#X connect 8 1 1 0;
+#X connect 8 2 2 0;
+#X connect 9 0 0 0;
+#X restore 282 260 pd Hann;
+#X text 35 556 LATÊNCIA: A análise é dada com uma latência que é igual
+ao número de amostras entre as sobreposições (ou "Hop")!;
+#X text 477 41 IMPORTANTE: ENTENDA QUE OS PONTOS DE FREQUÊNCIA DA FFT
+SÃO SEMPRE APROXIMAÇÕES DAS FREQUÊNCIAS DOS COMPONENTES ESPECTRAIS
+DE FATO - PORTANTO \, NÃO SIGNIFICA QUE CORRESPONDAM EXATAMENTE A ESSES
+VALORES!!!;
+#X text 478 336 Para entender então como isso se dá - e desconsiderando
+o papel do janelamento e overlapping - é bom frisar que \, enquanto
+a tabela de amplitudes permanece relativamente estática \, é a tabela
+de Fase Inicial que codifica a diferença de frequência!;
+#X text 478 421 E funciona assim \, imagine que um componente espectral
+não casa exatamente com um dos pontos da FFT \, caindo em uma faixa
+de frequência qualquer. Pois bem \, a cada janela de análise \, a fase
+inicial vai mudar \, uma vez que o ciclo de frequência do componente
+não fecha dentro do período da janela.;
+#X text 47 29 Com os objetos [ifft~] ou [rifft~] \, fazemos a transformada
+inversa \, do domínio da Frequência para o domínio do Tempo. Podemos
+interpretar que primeiro decompomos em componentes espectrais com a
+FFT \, e a iFFT faz uma ressíntese a partir da informação de análise!
+;
+#X text 46 102 Para recriar um sinal com boa qualidade \, precisamos
+cuidar de alguns parâmetros de análise \, como o tamanho da janela
+e número de overlaps. Mas depois que a análise for feita \, não há
+diferença matemática ou perda entre as conversões dos objetos de [fft~]
+e [ifft~]. Podemos repeti-las infinitamente que o resultado será sempre
+o mesmo \, assim como 4/2 = 2*2 = 4/2 e assim por diante!;
+#X msg 231 351 \; pd dsp 1;
+#X obj 107 354 blosc~ saw;
+#X obj 107 320 sig~ 100;
+#X text 44 205 Veja como é feita a análise e ressíntese neste exemplo
+\, com uma janela de 2048 amostras e overlap de 4 \, como de costume.
+;
+#X connect 1 0 2 1;
+#X connect 3 0 25 0;
+#X connect 5 0 2 0;
+#X connect 6 0 23 0;
+#X connect 24 0 5 0;
+#X connect 25 0 24 0;

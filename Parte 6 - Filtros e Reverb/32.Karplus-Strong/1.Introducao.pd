@@ -1,0 +1,145 @@
+#N canvas 86 23 1271 701 10;
+#X obj 160 213 tabwrite~ \$0-noise;
+#X obj 180 188 loadbang;
+#X obj 83 581 tabread4~ \$0-noise;
+#X obj 83 508 phasor~ 1;
+#X floatatom 156 540 0 0 0 0 - - -;
+#X obj 83 542 *~;
+#X obj 156 513 expr sr / $f1;
+#X obj 59 617 output~;
+#X obj 160 163 noise~;
+#X obj 63 244 cnv 15 298 98 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-noise 44100 float 0;
+#X coords 0 1 44099 -1 300 100 1;
+#X restore 62 244 graph;
+#X obj 280 615 v sr;
+#X obj 280 594 samplerate~;
+#X obj 280 507 loadbang;
+#X text 48 40 A técnica de Karplus Strong \, como definida e praticada
+no geral \, se baseia em um delay em loop que força uma periodicidade
+de um sinal.;
+#X text 49 85 Vejamos ess princípio antes de implementa-lo com linhas
+de delay. Abaixo temos um sinal de ruído branco que preenche um buffer
+por 1 segundo.;
+#X text 156 561 Período em samples;
+#X text 86 460 Frequência;
+#X floatatom 527 376 5 0 0 0 - - -;
+#X msg 527 442 0 \$1;
+#X obj 547 594 output~;
+#X obj 527 471 tabplay~ \$0-noise;
+#X obj 648 468 vd~ \$0-kp;
+#X obj 527 404 expr sr / $f1 \; 1000 / $f1;
+#X text 495 377 Freq;
+#X floatatom 648 445 5 0 0 0 - - -;
+#X text 624 446 ms;
+#X obj 527 326 expr random(30 \, 51);
+#X obj 527 349 mtof;
+#X obj 527 278 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 527 301 metro 2000;
+#X obj 527 256 loadbang;
+#X text 45 371 Agora podemos ler trechos desse buffer em loop. Fazemos
+isso com um [phasor~] lendo a tabela com uma certa frequência. A frequência
+determina um período em amostras \, que é o número de amostras de um
+pedaço/grão lido do buffer.;
+#X text 733 453 feedback;
+#X text 453 116 Vejamos como implementar o loop com uma linha de delay
+em feedback. Com o [tabplay~] \, tocamos um grão com o período de acordo
+com uma frequência. Esse período também é dado em ms para um delay.
+Como o delay tem o mesmo periódo do grão \, geramos um sinal periódico
+com anteriormente. Porém \, um parâmetro de feedback diminui a amplitude
+do sinal a cada período \, funcionando com o decay de um envelope.
+;
+#X text 889 601 A partir dessa base \, veremos mais detalhes do algoritmo
+original da técnica de Karplus Strong no exemplo seguinte.;
+#X obj 906 394 noise~;
+#X obj 968 418 vline~;
+#X msg 968 395 1 \, 0 0 \$1;
+#X obj 953 450 *~;
+#X text 982 304 Freq;
+#X obj 1015 251 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1
+1 1;
+#X obj 1015 274 metro 2000;
+#X obj 1015 229 loadbang;
+#X obj 1015 331 expr 1000 / $f1;
+#X floatatom 1015 358 5 0 0 0 - - -;
+#X text 996 356 ms;
+#X obj 927 515 output~;
+#X obj 1057 423 *~ 0.98;
+#X text 1107 422 feedback;
+#X obj 1057 509 delwrite~ \$0-kp2 1000;
+#X obj 1057 397 vd~ \$0-kp2;
+#X msg 1015 303 110;
+#X text 858 36 Mas em vez de trabalharmos com um buffer fixo \, podemos
+ter uma entrada de ruído branco dinâmico \, como abaixo. Desse modo
+\, a cada vez que criamos um trecho em loop \, mesmo no caso de uma
+frequência repetida \, temos um grão diferente sendo repetido periodicamente.
+As diferenças são sutis \, apenas o suficiente para que não seja uma
+repetição mecânica da mesma sonoridade.;
+#X text 860 145 Abaixo \, temos um objeto [noise~] como entrada de
+ruído e com o [vline~] conseguimos picotar um grão de acordo com o
+período referente à frequência de entrada.;
+#X msg 297 538 \; freq 60 \; pd dsp 1;
+#X obj 156 463 nbx 5 16 -1e+37 1e+37 0 0 empty freq empty 0 -8 0 11
+-261234 -1 -1 58.92 256;
+#X text 452 38 O que se percebe é que \, mesmo se tratando de um ruído
+branco \, ao repetirmos periodicamente um trecho \, percebemos um som
+com uma qualidade tonal \, com uma frequência fundamental que corresponde
+ao período.;
+#X obj 648 514 *~ 0.98;
+#X msg 759 473 0.995;
+#X obj 648 560 delwrite~ \$0-kp 1000;
+#X msg 723 515 0.98;
+#X msg 722 472 0.8;
+#X connect 1 0 0 0;
+#X connect 2 0 7 0;
+#X connect 2 0 7 1;
+#X connect 3 0 5 0;
+#X connect 4 0 5 1;
+#X connect 5 0 2 0;
+#X connect 6 0 4 0;
+#X connect 8 0 0 0;
+#X connect 12 0 11 0;
+#X connect 13 0 12 0;
+#X connect 13 0 55 0;
+#X connect 18 0 23 0;
+#X connect 19 0 21 0;
+#X connect 21 0 20 0;
+#X connect 21 0 20 1;
+#X connect 21 0 60 0;
+#X connect 22 0 58 0;
+#X connect 23 0 19 0;
+#X connect 23 1 25 0;
+#X connect 25 0 22 0;
+#X connect 27 0 28 0;
+#X connect 28 0 18 0;
+#X connect 29 0 30 0;
+#X connect 30 0 27 0;
+#X connect 31 0 29 0;
+#X connect 36 0 39 0;
+#X connect 37 0 39 1;
+#X connect 38 0 37 0;
+#X connect 39 0 47 0;
+#X connect 39 0 47 1;
+#X connect 39 0 50 0;
+#X connect 41 0 42 0;
+#X connect 42 0 52 0;
+#X connect 43 0 41 0;
+#X connect 44 0 45 0;
+#X connect 45 0 38 0;
+#X connect 45 0 51 0;
+#X connect 48 0 47 1;
+#X connect 48 0 47 0;
+#X connect 48 0 50 0;
+#X connect 51 0 48 0;
+#X connect 52 0 44 0;
+#X connect 56 0 6 0;
+#X connect 56 0 3 0;
+#X connect 58 0 20 1;
+#X connect 58 0 20 0;
+#X connect 58 0 60 0;
+#X connect 59 0 58 1;
+#X connect 61 0 58 1;
+#X connect 62 0 58 1;

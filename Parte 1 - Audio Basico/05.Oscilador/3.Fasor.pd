@@ -1,0 +1,121 @@
+#N canvas 83 33 1234 667 10;
+#X obj 46 39 cnv 15 300 290 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 79 204 cnv 15 248 110 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array seno 441 float 0;
+#X coords 0 1 440 -1 250 112 1;
+#X restore 79 203 graph;
+#X text 66 196 1;
+#X text 60 304 -1;
+#X obj 82 61 cnv 15 248 110 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase 441 float 0;
+#X coords 0 1 440 0 250 112 1;
+#X restore 81 60 graph;
+#X text 66 157 0;
+#X text 64 55 1;
+#X text 173 179 tempo ===>;
+#X text 64 91 F;
+#X text 64 101 A;
+#X text 64 112 S;
+#X text 64 122 E;
+#X text 64 239 A;
+#X text 64 249 M;
+#X text 64 260 P;
+#X text 51 107 |;
+#X text 53 107 |;
+#X text 52 100 ^;
+#X text 51 250 |;
+#X text 53 250 |;
+#X text 52 243 ^;
+#N canvas 606 174 321 300 plot 0;
+#X obj 127 84 t b f;
+#X msg 127 61 0;
+#X obj 127 39 loadbang;
+#X obj 143 168 sin~;
+#X obj 142 113 phasor~ 100;
+#X obj 127 213 tabwrite~ seno;
+#X obj 106 236 tabwrite~ fase;
+#X msg 46 81 \; pd dsp 1 \; tgl 1;
+#X connect 0 0 5 0;
+#X connect 0 0 6 0;
+#X connect 0 1 4 1;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 2 0 7 0;
+#X connect 3 0 5 0;
+#X connect 4 0 3 0;
+#X connect 4 0 6 0;
+#X restore 285 183 pd plot;
+#X text 32 468 Já no gráfico verde \, temos a Fase (eixo vertical)
+e o tempo (eixo horizontal). Como a fase muda em uma velociade constante
+\, temos uma rampa linear \, uma reta constante. Os ângulos de fase
+são representados entre 0 e 1 \, ou seja \, de forma linear em vez
+de graus ou radianos.;
+#X obj 456 353 cnv 15 698 110 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array senoide 441 float 0;
+#X coords 0 1 440 -1 700 112 1;
+#X restore 456 352 graph;
+#X text 443 345 1;
+#X text 437 453 -1;
+#X obj 459 220 cnv 15 698 110 empty empty empty 20 12 0 14 -204786
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fasor 441 float 0;
+#X coords 0 1 440 0 700 112 1;
+#X restore 458 219 graph;
+#X text 443 316 0;
+#X text 441 214 1;
+#X obj 1028 66 tgl 15 0 empty tgl empty 17 7 0 10 -228856 -1 -1 1 1
+;
+#X obj 1028 119 tabwrite~ fasor;
+#X obj 947 142 tabwrite~ senoide;
+#X obj 947 101 sin~;
+#X text 34 555 O objeto [phasor~] - "fasor" \, ou "vetor de fase" em
+português - é um gerador de fase. Isso significa que ele gera um sinal
+de áudio que indica o ângulo de fase e pode ser usado com um objeto
+[sin~] para gerar uma senóide.;
+#X text 32 366 Acima \, no gráfico amarelo \, temos uma relação de
+amplitude (eixo vertial) e tempo (eixo horizontal) de uma senóide com
+uma frequência (velocidade angular) constante. Vimos um mesmo desenho
+no primeiro exemplo desta série \, mas que representava uma ideia um
+pouco diferente: a relação de amplitude (eixo vertial) e fase (eixo
+horizontal).;
+#X text 904 100 função;
+#X text 910 56 fasor;
+#X text 441 73 O [phasor~] recebe uma frequência em ciclos por segundo
+(cps) / hertz (hz) e gera um sinal de áudio que indica a posição da
+fase (ângulo) em cada momento do tempo. Confira o patch ao lado e gráficos
+abaixo.;
+#X floatatom 1100 59 5 0 0 0 - - -;
+#X obj 1028 90 metro 100.5;
+#X obj 947 57 phasor~;
+#X obj 947 15 sig~ 200;
+#X text 841 77 posição/ângulo =>;
+#X text 845 121 Forma de onda =>;
+#X text 835 34 frequência (hz) =>;
+#X text 443 518 Por estarmos falando de "ciclos" \, a medida de ângulo
+é circular/em "loop" \, isso quer dizer que \, quando se chega em 360
+graus \, voltamos ao mesmo ponto de 0 graus. No caso do [phasor~] \,
+os ângulos variam de 0 a 1 \, sendo que os dois indicam o mesmo ponto
+de início/final do ciclo!;
+#X obj 820 512 cnv 15 370 80 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 827 517 O sinal gerado pelo [phasor~] é um reflexo da frequência
+(velocidade ângular) dada. Ele é a mudança de fase no tempo de acordo
+com a frequência e indica \, portanto \, a velocidade em que a fase
+"corre". Por isso \, esse sinal será aqui chamado de "Fase Corrente"
+(Running Phase).;
+#X connect 33 0 43 0;
+#X connect 36 0 35 0;
+#X connect 42 0 43 1;
+#X connect 43 0 34 0;
+#X connect 43 0 35 0;
+#X connect 44 0 34 0;
+#X connect 44 0 36 0;
+#X connect 45 0 44 0;

@@ -1,0 +1,423 @@
+#N canvas 240 22 925 709 10;
+#X obj 283 69 readsf~;
+#X obj 206 675 rifft~;
+#X obj 164 556 rfft~;
+#X obj 262 556 rfft~;
+#X obj 151 586 cartopol~;
+#X obj 248 586 cartopol~;
+#X obj 197 639 poltocar~;
+#X text 162 539 A;
+#X text 260 539 B;
+#X obj 30 70 readsf~;
+#X obj 615 342 hsl 100 12 0 1 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204865 -220534 -1 0 1;
+#X text 720 339 Vol;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 573 362 pd gain;
+#X text 59 458 ============================================================
+;
+#X obj 575 115 hsl 100 12 0 1 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204865 -220534 -1 0 1;
+#X text 682 111 Vol;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 533 137 pd gain;
+#X obj 768 116 hsl 100 12 0 1 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204865 -220534 -1 0 1;
+#X text 874 115 Vol;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 726 137 pd gain;
+#X text 484 391 ============================================================
+;
+#X obj 104 137 hradio 15 1 0 10 empty empty empty 0 -8 0 10 -262130
+-1 -1 0;
+#X obj 104 185 nbx 5 14 64 1e+37 0 0 \$0-w_size \$0-w_size-set empty
+0 -8 0 10 -262130 -1 -1 2048 256;
+#X text 162 182 tamanho da janela;
+#N canvas 150 61 586 461 Window 0;
+#X obj 90 363 osc~;
+#X obj 71 408 tabwrite~ \$0-hann;
+#X msg 111 339 0.5;
+#X obj 30 67 cnv 15 198 118 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 29 67 graph;
+#X obj 90 306 expr sr_\$0 / w_size_\$0;
+#X obj 71 280 t b b b;
+#X obj 90 385 expr~ ($v1 * 0.5) + 0.5;
+#X obj 259 335 s \$0-set-block;
+#X obj 259 175 t b f;
+#X msg 296 198 resize \$1;
+#X obj 296 224 s \$0-hann;
+#X obj 259 281 v w_size_\$0;
+#X obj 396 157 samplerate~;
+#X obj 396 182 v sr_\$0;
+#X obj 396 63 loadbang;
+#X obj 396 84 \$0;
+#X obj 259 21 inlet;
+#X msg 259 308 set \$1 4;
+#X msg 396 105 bang \; pd dsp 1 \; \$1-w_size-set 2048;
+#X connect 0 0 7 0;
+#X connect 2 0 0 1;
+#X connect 5 0 0 0;
+#X connect 6 0 1 0;
+#X connect 6 1 5 0;
+#X connect 6 2 2 0;
+#X connect 7 0 1 0;
+#X connect 9 0 12 0;
+#X connect 9 0 6 0;
+#X connect 9 1 10 0;
+#X connect 9 1 12 0;
+#X connect 10 0 11 0;
+#X connect 12 0 18 0;
+#X connect 13 0 14 0;
+#X connect 15 0 16 0;
+#X connect 16 0 19 0;
+#X connect 17 0 9 0;
+#X connect 18 0 8 0;
+#X connect 19 0 13 0;
+#X coords 0 0 1 1 120 60 0;
+#X restore 104 207 pd Window;
+#X text 68 392 Neste exemplo \, temos uma fonte sonora harmônica como
+entrada de Fase. Já a fonte de Amplitude é um conversa ruidosa por
+telefone. No resultado sonoro \, percebemos a conversa de telefone
+com uma qualidade tonal harmônica.;
+#X text 298 118 (ou "filtro");
+#X obj 533 79 r~ Fonte-de-Fase;
+#X obj 30 95 s~ Fonte-de-Fase;
+#X obj 283 95 s~ Fonte-de-Amplitude;
+#X obj 726 80 r~ Fonte-de-Amplitude;
+#X obj 573 287 r~ Fonte-de-Fase;
+#X obj 521 588 r~ Fonte-de-Fase;
+#X obj 698 589 r~ Fonte-de-Amplitude;
+#X text 71 481 A Forma Polar permite uma implementação simples \, basta
+apenas combinar as saídas de [cartopol~] \, converter de volta para
+a Forma Cartesiana e voilá!;
+#X text 108 622 Amplitude de B;
+#X text 252 621 Fase de A;
+#N canvas 156 22 1061 667 Síntese-Cruzada(expr) 0;
+#X obj 43 239 cnv 15 370 130 empty empty SÃ­ntese-Cruzada 125 80 0
+14 -261234 -66577 0;
+#X obj 204 496 *~;
+#X obj 204 397 rifft~;
+#X obj 204 584 outlet~;
+#X obj 69 182 *~;
+#X obj 69 52 inlet~;
+#X obj 69 208 rfft~;
+#X obj 346 182 *~;
+#X obj 361 51 inlet~;
+#X obj 346 205 rfft~;
+#X obj 201 126 tabreceive~ \$0-hann;
+#X obj 219 430 tabreceive~ \$0-hann;
+#X obj 916 445 rifft~;
+#X obj 874 326 rfft~;
+#X obj 972 326 rfft~;
+#X obj 861 356 cartopol~;
+#X obj 958 356 cartopol~;
+#X obj 907 409 poltocar~;
+#X text 872 309 A;
+#X text 970 309 B;
+#X obj 613 511 rifft~;
+#X obj 564 289 rfft~;
+#X obj 675 289 rfft~;
+#X text 621 375 Polar;
+#X text 551 272 A;
+#X text 662 273 B;
+#X obj 549 337 expr~ sqrt($v3*$v3+$v4*$v4) \; atan2($v2 \, $v1);
+#X obj 570 417 expr~ cos($v2) * $v1 \; sin($v2) * $v1;
+#X obj 69 264 expr~ cos(atan2($v2 \, $v1)) * sqrt($v3*$v3+$v4*$v4)
+\; sin(atan2($v2 \, $v1)) * sqrt($v3*$v3+$v4*$v4);
+#X obj 303 464 r \$0-set-block;
+#X obj 303 489 block~;
+#X obj 204 526 expr~ $v1 / (w_size_\$0 * 1.5);
+#X text 474 403 Amplitude de B;
+#X text 819 397 Amplitude de B;
+#X text 965 395 Fase de A;
+#X text 709 397 Fase de A;
+#X text 604 460 Cartesiana;
+#X text 52 23 Fonte-de-Fase;
+#X text 332 23 Fonte-de-Amplitude;
+#X text 55 199 A;
+#X text 335 201 B;
+#X text 478 182 À esquerda temos uma simples contração em apenas um
+objeto [expr~] da implementação abaixo \, onde pegamos o objeto [expr~]
+de baixo e substituímos as variáveis $v1 e $v2 pelas fórmulas do objeto
+[expr~] de cima. Assim já saímos com a parte real e imaginária do sinal.
+;
+#X text 476 115 Abaixo \, no meio \, temos uma versão com dois objetos
+[expr~] \, que fazem a conversão para a forma Polar e Cartesiana. A
+implementação equivale à da direita \, que vimos anteriormente.;
+#X connect 1 0 31 0;
+#X connect 2 0 1 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 28 0;
+#X connect 6 1 28 1;
+#X connect 7 0 9 0;
+#X connect 8 0 7 1;
+#X connect 9 0 28 2;
+#X connect 9 1 28 3;
+#X connect 10 0 4 1;
+#X connect 10 0 7 0;
+#X connect 11 0 1 1;
+#X connect 13 0 15 0;
+#X connect 13 1 15 1;
+#X connect 14 0 16 0;
+#X connect 14 1 16 1;
+#X connect 15 1 17 1;
+#X connect 16 0 17 0;
+#X connect 17 0 12 0;
+#X connect 17 1 12 1;
+#X connect 21 0 26 0;
+#X connect 21 1 26 1;
+#X connect 22 0 26 2;
+#X connect 22 1 26 3;
+#X connect 26 0 27 0;
+#X connect 26 1 27 1;
+#X connect 27 0 20 0;
+#X connect 27 1 20 1;
+#X connect 28 0 2 0;
+#X connect 28 1 2 1;
+#X connect 29 0 30 0;
+#X connect 31 0 3 0;
+#X restore 573 313 pd Síntese-Cruzada(expr);
+#N canvas 190 22 1024 697 Síntese-Cruzada(Cartesiana) 0;
+#X obj 14 285 cnv 15 600 180 empty empty empty 20 12 0 14 -261234 -66577
+0;
+#X obj 64 29 inlet~;
+#X obj 14 194 cnv 15 300 90 empty empty empty 20 12 0 14 -179769 -66577
+0;
+#X obj 64 114 *~;
+#X obj 64 147 rfft~;
+#X obj 403 30 inlet~;
+#X obj 404 105 *~;
+#X obj 142 664 outlet~;
+#X obj 142 581 *~;
+#X obj 142 522 rifft~;
+#X obj 142 364 *~;
+#X obj 175 364 *~;
+#X obj 404 145 rfft~;
+#X obj 79 88 tabreceive~ \$0-hann;
+#X obj 419 79 tabreceive~ \$0-hann;
+#X obj 157 555 tabreceive~ \$0-hann;
+#X obj 333 308 expr~ sqrt($v1*$v1 + $v2*$v2);
+#X text 78 9 A;
+#X text 417 3 B;
+#X obj 142 618 expr~ $v1 / (w_size_\$0 * 1.5);
+#X obj 205 493 r \$0-set-block;
+#X obj 205 518 block~;
+#X text 209 204 Normaliza;
+#X text 195 221 Amplitudes em 1;
+#X text 178 300 "Filtro";
+#X text 230 371 Multiplica as Amplitudes de A (iguais a 1);
+#X text 280 387 pelas Amplitudes de B.;
+#X text 189 259 de A permanece);
+#X text 178 242 (informação de Fase;
+#X text 241 423 O resultado possui a informação de;
+#X text 251 440 Fase de A e as Amplitudes de B;
+#N canvas 367 101 642 221 Normalizar 0;
+#X obj 288 170 outlet~;
+#X obj 21 177 outlet~;
+#X obj 263 21 inlet~;
+#X obj 32 19 inlet~;
+#X obj 21 117 expr~ $v1 / sqrt(pow ($v1 \, 2) + pow($v2 \, 2)) \; $v2
+/ sqrt(pow ($v1 \, 2) + pow($v2 \, 2)) \;;
+#X obj 32 61 expr~ if($v1 == 0 && $v2 == 0 \, 1 \, $v1) \; $v2;
+#X text 296 64 No caso de ambas as partes = 0: Parte Real = 1;
+#X text 314 115 Dividir parte real e imaginária pela amplitude \; Amplitudes
+são normalizadas em um.;
+#X connect 2 0 5 1;
+#X connect 3 0 5 0;
+#X connect 4 0 1 0;
+#X connect 4 1 0 0;
+#X connect 5 0 4 0;
+#X connect 5 1 4 1;
+#X restore 64 230 pd Normalizar;
+#X text 455 28 Fonte-de-Amplitude (Filtro);
+#X text 637 301 Depois multiplicamos as amplitudes de A pelas amplitudes
+de B. Como as Amplitudes de A estão normalizadas em 1 \, o resultado
+possui as amplitudes de B. Já a informação de Fase ainda é de A.;
+#X obj 358 535 cnv 15 500 90 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 399 505 rfft~;
+#X obj 457 637 rifft~;
+#X obj 457 602 *~;
+#X obj 490 602 *~;
+#X obj 505 505 rfft~;
+#X obj 399 567 /~;
+#X obj 426 568 /~;
+#X obj 441 543 cartopol~;
+#X obj 505 543 cartopol~;
+#X text 362 589 normalizado;
+#X text 112 30 Fonte-de-Fase-Inicial;
+#X text 526 201 Primeiro normalizamos as Amplitudes de A. Isso gera
+um espectro onde todas as Amplitudes são iguais a 1 \, porém os valores
+de Fase Inicial permanecem os mesmos.;
+#X text 639 375 Veja que essa a seção equivale ao primeiro exemplo
+que vimos de filtragem espectral \, onde multiplicamos as partes real
+e imaginária do sinal por valores de amplitudes. Porém \, neste caso
+\, temos as amplitudes de uma fonte sonora.;
+#X text 518 568 Já aqui temos uma forma simplificada que adota o objeto
+[cartopol~] \, mas apenas para extrair as amplitudes (ignorando a saída
+de Fases).;
+#X connect 1 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 31 0;
+#X connect 4 1 31 1;
+#X connect 5 0 6 0;
+#X connect 6 0 12 0;
+#X connect 8 0 19 0;
+#X connect 9 0 8 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 1;
+#X connect 12 0 16 0;
+#X connect 12 1 16 1;
+#X connect 13 0 3 1;
+#X connect 14 0 6 1;
+#X connect 15 0 8 1;
+#X connect 16 0 10 1;
+#X connect 16 0 11 1;
+#X connect 19 0 7 0;
+#X connect 20 0 21 0;
+#X connect 31 0 10 0;
+#X connect 31 1 11 0;
+#X connect 35 0 40 0;
+#X connect 35 0 42 0;
+#X connect 35 1 41 0;
+#X connect 35 1 42 1;
+#X connect 37 0 36 0;
+#X connect 38 0 36 1;
+#X connect 39 0 43 0;
+#X connect 39 1 43 1;
+#X connect 40 0 37 0;
+#X connect 41 0 38 0;
+#X connect 42 0 40 1;
+#X connect 42 0 41 1;
+#X connect 43 0 37 1;
+#X connect 43 0 38 1;
+#X restore 521 614 pd Síntese-Cruzada(Cartesiana);
+#X obj 30 20 loadbang;
+#X obj 283 19 loadbang;
+#X text 49 236 ============================================================
+;
+#X text 479 180 ============================================================
+;
+#X text 530 23 Escute ambas as fontes sonoras separadamente antes de
+ouvir o resultado do cruzamento:;
+#X obj 563 646 hsl 100 12 0 1 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204865 -220534 -1 0 1;
+#X text 668 643 Vol;
+#N canvas 0 22 237 305 gain 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 521 666 pd gain;
+#X text 493 199 Implementação direto no Expr:;
+#X text 491 222 Em vez de usarmos os objetos de conversão [cartopol~]
+e [poltocar~] \, podemos apenas usar um objeto [expr~] \, já que conhecemos
+toda a matemática por detrás. Veja o subpacth abaixo.;
+#X obj 104 160 expr pow(2 \, $f1 + 7);
+#X text 495 428 Lembrando que cálculos na forma Cartesiana são mais
+acurados \, podemos evitar a conversão para a forma Polar e \, assim
+\, abrir mão de cálculos com as funções trigonométricas (seno \, cosseno
+e \, especialemente \, a arcotangente).;
+#X text 497 495 A implementação acaba sendo menos intuitiva \, porém
+é relativamente simples e já sabemos de todo o necessário \, que consiste
+em um estágio de normalização das amplitudes e outro de filtragem pela
+fonte de Amplitudes. Veja o subpatch abaixo.;
+#X text 68 256 A Síntese Cruzada é uma técnica que combina (ou "cruza")
+elementos de duas fontes sonoras. Criamos assim um som híbrido que
+contém a informação de Fase de um som com as Amplitudes de outro. Dessa
+forma \, é como se as amplitudes fossem "filtradas" por outro sinal
+e se assemelha ao exemplo que vimos de Vocoder implementado com filtros
+de Passa Banda. Trata-se \, de fato \, de uma implementação do mesmo
+a partir de FFT e demonstra como a FFT pode ser compreendida como um
+filtro de diversas bandas!;
+#X obj 714 287 r~ Fonte-de-Amplitude;
+#X msg 30 45 open ../../../samples/kantele.wav \, 1;
+#X msg 283 44 open ../../../samples/numbers.wav \, 1;
+#X connect 0 0 29 0;
+#X connect 0 1 55 0;
+#X connect 2 0 4 0;
+#X connect 2 1 4 1;
+#X connect 3 0 5 0;
+#X connect 3 1 5 1;
+#X connect 4 1 6 1;
+#X connect 5 0 6 0;
+#X connect 6 0 1 0;
+#X connect 6 1 1 1;
+#X connect 9 0 28 0;
+#X connect 9 1 54 0;
+#X connect 10 0 12 1;
+#X connect 14 0 16 1;
+#X connect 17 0 19 1;
+#X connect 21 0 49 0;
+#X connect 22 0 24 0;
+#X connect 27 0 16 0;
+#X connect 30 0 19 0;
+#X connect 31 0 37 0;
+#X connect 32 0 38 0;
+#X connect 33 0 38 1;
+#X connect 37 0 12 0;
+#X connect 38 0 46 0;
+#X connect 39 0 54 0;
+#X connect 40 0 55 0;
+#X connect 44 0 46 1;
+#X connect 49 0 22 0;
+#X connect 53 0 37 1;
+#X connect 54 0 9 0;
+#X connect 55 0 0 0;

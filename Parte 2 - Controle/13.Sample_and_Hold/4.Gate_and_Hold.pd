@@ -1,0 +1,74 @@
+#N canvas 124 40 1107 808 12;
+#X obj 93 517 output~;
+#X obj 112 416 noise~;
+#X obj 557 694 output~;
+#X obj 585 634 blosc~;
+#X obj 584 219 noisi~ 20.7;
+#X obj 585 557 *~ 100;
+#X obj 585 589 +~ 150;
+#X obj 739 590 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 584 434 slide~ 1000 1000;
+#X obj 741 434 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 838 286 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 304 716 output~;
+#X obj 328 664 noish~ 500;
+#X obj 305 428 impulse~ 500;
+#X text 47 26 Temos aqui uma implementação de um "Gate and Hold" (objeto
+"Gate" do Supercollider) \, que é muito similar a um "Sample and Hold".
+;
+#X obj 584 303 fexpr~ if($x2 > 0 \, $x1 \, $y1);
+#X obj 778 219 train~ 1900 0.7;
+#X text 49 88 A diferença com o objeto [sah~] é que \, quando temos
+um valor positivo \, em vez de apenas coletar uma amostra \, abrimos
+o "gate" (portão) e deixamos o sinal passar \, já valores iguais a
+zero ou negativos fecham o portão e seguram o último valor do sinal.
+;
+#X obj 112 465 fexpr~ if($x2 > 0 \, $x1 \, $y1);
+#X text 50 183 Para implementar essa lógica \, usamos o objeto [fexpr~]
+\, que é uma versão do [expr~] que permite trabalhar com valores específicos
+do bloco de áudio.;
+#X text 50 244 A lógica é simples \, se o valor do inlet direito é
+maior que 0 ($x2 > 0) temos o valor da entrada esquerda passando ($x1)
+\, caso contrário temos o último valor que saiu do objeto ($y1).;
+#X text 320 464 Gate and Hold;
+#X obj 100 735 output~;
+#X obj 119 640 noise~;
+#X obj 170 683 impulse~ 500;
+#X obj 119 683 sah~;
+#X text 50 321 Se usamos um oscilador de impulso para trigar o Gate
+and Hold \, temos um valor maior que zero por apenas uma amostra. Desse
+modo \, o objeto vai funcionar igual ao [sah~]. Veja a implementação
+abaixo de um ruído de banda limitada.;
+#X text 52 579 O resultado prático é o mesmo que abaixo \, usando o
+[sah~] ou o [noish~].;
+#X text 574 32 A grande diferença aparece quando usamos um objeto como
+o [train~] \, que abre e fecha o "portão". Abaixo \, temos um sinal
+que é um ruído de baixa frequência interpolado que hora passa e hora
+é "segurado".;
+#X text 575 106 Em um segundo estágio \, temos o [slide~] para suavizar
+um pouco o sinal e evitar descontinuidade quando o portão é reaberto.
+;
+#X connect 1 0 18 0;
+#X connect 3 0 2 0;
+#X connect 3 0 2 1;
+#X connect 4 0 15 0;
+#X connect 5 0 6 0;
+#X connect 6 0 3 0;
+#X connect 8 0 7 0;
+#X connect 8 0 5 0;
+#X connect 12 0 11 0;
+#X connect 12 0 11 1;
+#X connect 13 0 18 1;
+#X connect 15 0 8 0;
+#X connect 15 0 9 0;
+#X connect 16 0 10 0;
+#X connect 16 0 15 1;
+#X connect 18 0 0 0;
+#X connect 18 0 0 1;
+#X connect 23 0 25 0;
+#X connect 24 0 25 1;
+#X connect 25 0 22 0;
+#X connect 25 0 22 1;

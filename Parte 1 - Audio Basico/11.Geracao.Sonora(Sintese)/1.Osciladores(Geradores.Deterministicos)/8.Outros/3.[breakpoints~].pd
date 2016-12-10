@@ -1,0 +1,59 @@
+#N canvas 207 22 478 707 10;
+#X msg 125 431 0 0.15 1 0.15 0.6 0.05 -1 0.25 0.9 0.15 -0.6 0.25 0
+;
+#X obj 125 404 loadbang;
+#X obj 205 625 prepend set;
+#X msg 205 650;
+#X msg 56 422 dump;
+#X obj 80 634 output~;
+#X floatatom 106 347 5 0 0 0 - - -;
+#X text 64 29 O [tof/breakpoints~] pertence \, a princípio \, a uma
+família de objetos geradores de envelopes \, e será deviddamente apresentado
+na seção dedicada a envelopes.;
+#X text 65 79 Todavia \, podemos usa-lo como um oscilador de tabela
+\, que nos permite desenhar a forma de onda a partir de retas com "pontos
+de quebra" (breakpoints).;
+#X text 67 128 Ele também recebe mensagens que codificam a forma de
+onda. A sintaxe da mensagem é que cada par de números identifica uma
+reta \, onde o primeiro valor é o ponto de amplitude de partida e segundo
+é o tempo para chegar no próximo ponto. Para o fim de uso como oscilador
+com o [phasor~] \, a soma dos tempos deve ser igual a 1!;
+#X text 68 217 Para desenhar \, basta achar uma aresta e arrastar pela
+interface. você pode criar novos pontos ao clicar em qualquer lugar
+de uma reta e também deleta-los com backspace. Depois de desenhar uma
+forma de onda desejada \, você pode pedir que o objeto te jogue uma
+lista formatada na sintaxe para gerar aquela forma de onda. Basta enviar
+a mensagem "dump" que a lista sai pelo outlet do meio.;
+#X obj 108 464 tof/breakpoints~;
+#N canvas 786 159 450 300 sequencer 0;
+#X obj 188 195 mtof;
+#X obj 84 136 metro 200;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array sequencer 16 float 3;
+#A 0 -6 -8 -8 -3 -8 1 4 4 -3 -5 -5 -1 2 6 7 7;
+#X coords 0 12 16 -12 100 70 1;
+#X restore 221 108 graph;
+#X obj 84 197 v i;
+#X obj 188 223 outlet;
+#X obj 84 111 inlet;
+#X obj 83 159 expr (i + 1) % 16 \; sequencer[i] + 34;
+#X connect 0 0 4 0;
+#X connect 1 0 6 0;
+#X connect 5 0 1 0;
+#X connect 6 0 3 0;
+#X connect 6 1 0 0;
+#X restore 210 356 pd sequencer;
+#X obj 210 333 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 1
+1;
+#X obj 106 371 phasor~ 50;
+#X connect 0 0 11 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 4 0 11 0;
+#X connect 6 0 14 0;
+#X connect 11 0 5 0;
+#X connect 11 0 5 1;
+#X connect 11 1 2 0;
+#X connect 12 0 6 0;
+#X connect 13 0 12 0;
+#X connect 14 0 11 0;

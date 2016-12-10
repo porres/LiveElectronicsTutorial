@@ -1,0 +1,113 @@
+#N canvas 168 27 950 663 10;
+#X msg 322 172 0;
+#X obj 68 376 samphold~;
+#X obj 38 186 hsl 128 15 0 1000 0 0 empty grao grain-ms -2 -8 0 10
+-261234 -1 -1 9000 1;
+#X text 351 171 reset;
+#X obj 251 300 phasor~;
+#X obj 200 214 phasor~;
+#X obj 588 532 readsf~;
+#X msg 588 510 open \$1 \, 1;
+#X obj 523 446 openpanel;
+#X obj 523 427 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 35 254 expr~ 1000 / $v1;
+#X obj 68 402 vd~ \$0-ring_buffer;
+#X obj 190 394 /~ 2;
+#X obj 190 417 sin~;
+#X obj 176 456 *~;
+#X obj 309 530 output~;
+#X obj 335 497 +~;
+#X obj 200 191 *~;
+#X obj 200 144 expr 1000 / $f1 \; $f1;
+#X text 240 115 buffer size (ms);
+#X obj 87 106 /~ 100;
+#X obj 87 131 expr~ 1 - $v1;
+#X obj 200 305 *~;
+#X obj 588 412 loadbang;
+#X obj 200 92 loadbang;
+#X obj 245 394 samphold~;
+#X obj 245 421 vd~ \$0-ring_buffer;
+#X obj 365 412 /~ 2;
+#X obj 365 435 sin~;
+#X obj 296 343 +~ 0.5;
+#X obj 296 365 wrap~;
+#X obj 350 462 *~;
+#X obj 35 210 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 708.661 256;
+#X obj 35 232 sig~;
+#X obj 87 82 sig~;
+#X obj 87 61 nbx 5 14 -1e+37 1e+37 0 0 empty velocidade empty 0 -8
+0 10 -203904 -1 -1 -72 256;
+#X msg 602 436 \; velocidade 100 \; grao 100;
+#X text 31 287 frequância do grão;
+#X text 75 39 velocidade (%);
+#X text 306 141 <= frequência do buffer;
+#X text 497 343 Com a possibilidade de resetar o [phasor~] \, podemos
+pular para qualquer ponto do buffer.;
+#X text 495 44 Neste exemplo temos um Time Stretch/Compress a partir
+de uma granulação em um buffer circular. Com o período de um grão em
+ms \, calculamos a frequência que alimenta um [phasor~] que controla
+os envelopes e também dispara um [samphold~].;
+#X floatatom 323 195 5 0 0 0 - - -;
+#X text 497 124 No [samphold~] \, temos o sinal de outro [phasor~]
+\, que dá o ponto de leitura do buffer de acordo com um parâmetro de
+velocidade. Com esse ajuste \, podemos fazer com que o passo de leitura
+entre um grão e outro seja mais curto ou espaçado \, gerando um time
+stretch/compress.;
+#X text 496 208 O buffer circular sempre roda em uma velocidade normal
+\, portanto os ajustes devem contabilizar isso como no exemplo passado.
+Por isso o ajuste de velocidade é calculado no expr \, como [expr~
+1 - $v1].;
+#X text 497 268 Quando esse [phasor~] que controla o ponto de leitura
+está com a frequência de acordo com o período do buffer \, ele anula
+a velocidade de leitura normal do delay \, fazendo com que o mesmo
+grão se repita. O ajuste de velocidade (em %) é em relação a essa frequência.
+;
+#X obj 588 488 symbol ../../../samples/bubul.wav;
+#X msg 200 116 6000;
+#X obj 588 562 delwrite~ \$0-ring_buffer 6000;
+#X connect 0 0 5 1;
+#X connect 1 0 11 0;
+#X connect 2 0 32 0;
+#X connect 4 0 1 1;
+#X connect 4 0 29 0;
+#X connect 4 0 12 0;
+#X connect 5 0 22 0;
+#X connect 6 0 48 0;
+#X connect 6 1 46 0;
+#X connect 7 0 6 0;
+#X connect 8 0 46 0;
+#X connect 9 0 8 0;
+#X connect 10 0 4 0;
+#X connect 11 0 14 0;
+#X connect 12 0 13 0;
+#X connect 13 0 14 1;
+#X connect 14 0 16 0;
+#X connect 16 0 15 0;
+#X connect 16 0 15 1;
+#X connect 17 0 5 0;
+#X connect 18 0 17 0;
+#X connect 18 1 22 1;
+#X connect 20 0 21 0;
+#X connect 21 0 17 1;
+#X connect 22 0 1 0;
+#X connect 22 0 25 0;
+#X connect 23 0 36 0;
+#X connect 23 0 46 0;
+#X connect 24 0 47 0;
+#X connect 25 0 26 0;
+#X connect 26 0 31 0;
+#X connect 27 0 28 0;
+#X connect 28 0 31 1;
+#X connect 29 0 30 0;
+#X connect 30 0 25 1;
+#X connect 30 0 27 0;
+#X connect 31 0 16 1;
+#X connect 32 0 33 0;
+#X connect 33 0 10 0;
+#X connect 34 0 20 0;
+#X connect 35 0 34 0;
+#X connect 42 0 5 1;
+#X connect 46 0 7 0;
+#X connect 47 0 18 0;

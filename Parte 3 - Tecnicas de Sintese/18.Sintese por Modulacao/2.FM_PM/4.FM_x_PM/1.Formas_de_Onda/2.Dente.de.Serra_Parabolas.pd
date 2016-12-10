@@ -1,0 +1,196 @@
+#N canvas 78 56 1288 641 10;
+#X text 285 565 0;
+#X obj 71 437 cnv 15 198 138 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 301 438 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq2 882 float 0;
+#X coords 0 0 881 -100 200 140 1;
+#X restore 70 436 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase2 882 float 0;
+#X coords 0 1 881 0 200 140 1;
+#X restore 300 437 graph;
+#X text 286 430 1;
+#X obj 564 523 phasor~;
+#N canvas 120 36 450 300 plot 0;
+#X obj 298 106 inlet~;
+#X obj 361 104 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 275 223 tabwrite~ fase2;
+#X obj 176 218 tabwrite~ freq2;
+#X obj 206 104 inlet;
+#X connect 0 0 5 0;
+#X connect 1 0 4 0;
+#X connect 2 0 3 0;
+#X connect 6 0 4 0;
+#X connect 6 0 5 0;
+#X restore 525 562 pd plot;
+#X text 146 582 20 ms;
+#X text 380 585 20 ms;
+#X obj 544 495 vline~;
+#X msg 544 468 -100 \, 0 20;
+#X text 32 427 0 hz;
+#X text 23 496 -50 Hz;
+#X text 17 563 -100 Hz;
+#X obj 525 429 loadbang;
+#X text 285 400 0;
+#X obj 71 272 cnv 15 198 138 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 301 273 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq1 882 float 0;
+#X coords 0 100 881 0 200 140 1;
+#X restore 70 271 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase1 882 float 0;
+#X coords 0 1 881 0 200 140 1;
+#X restore 300 272 graph;
+#X text 286 265 1;
+#X obj 564 355 phasor~;
+#N canvas 120 36 450 300 plot 0;
+#X obj 298 106 inlet~;
+#X obj 361 104 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 206 104 inlet;
+#X obj 176 218 tabwrite~ freq1;
+#X obj 275 223 tabwrite~ fase1;
+#X connect 0 0 5 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X restore 525 394 pd plot;
+#X msg 544 300 0 \, 100 20;
+#X obj 544 327 vline~;
+#X text 35 401 0 Hz;
+#X text 23 265 100 hz;
+#X text 29 334 50 Hz;
+#X text 111 107 Veja no gráfico abaixo a asceleração da frequência
+de 0 Hz a 100 Hz em um período de 20 ms \, e como isso gera uma curva
+geométrica no gráfico de posição (fase) até se completar um ciclo.
+;
+#X text 109 21 Agora temos um sinal com ascelerção constante \, e o
+sinal de Fase Corrente demonstra a variação da posição com essa asceleração
+\, gerando uma curva geométrica. Mais especificamente \, se trata de
+uma parábola \, que pode ser obtida com uma continha simples de potência
+(elevar ao quadrado).;
+#X text 111 168 Temos também um sinal que vai de -100 Hz a 0 Hz. Trata-se
+então de uma desaceleração \, e não uma asceleração como no exemplo
+anterior. Vemos no sinal da fase também uma parábola \, mas espelhada
+em relação ao exemplo passado.;
+#X obj 525 269 loadbang;
+#X obj 1211 529 phasor~;
+#N canvas 120 36 450 300 plot 0;
+#X obj 298 106 inlet~;
+#X obj 361 104 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 206 104 inlet;
+#X obj 176 218 tabwrite~ freq4;
+#X obj 288 223 tabwrite~ fase4;
+#X connect 0 0 5 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X restore 1172 568 pd plot;
+#X obj 1191 501 vline~;
+#X obj 1204 328 phasor~;
+#N canvas 120 36 450 300 plot 0;
+#X obj 298 106 inlet~;
+#X obj 361 104 inlet~;
+#X obj 36 109 loadbang;
+#X msg 36 136 \; pd dsp 1;
+#X obj 206 104 inlet;
+#X obj 176 218 tabwrite~ freq3;
+#X obj 294 223 tabwrite~ fase3;
+#X connect 0 0 5 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X restore 1165 367 pd plot;
+#X obj 1184 300 vline~;
+#X obj 1165 244 loadbang;
+#X obj 1172 442 loadbang;
+#X msg 1184 273 100 \, -100 40;
+#X msg 1191 474 -100 \, 100 40;
+#X obj 636 206 cnv 15 505 400 empty empty empty 20 12 0 14 -224891
+-66577 0;
+#X obj 701 442 cnv 15 198 138 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 928 442 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq4 1764 float 0;
+#X coords 0 100 1763 -100 200 140 1;
+#X restore 700 441 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase4 1764 float 0;
+#X coords 0 1 1763 0 200 140 1;
+#X restore 927 441 graph;
+#X text 1007 589 40 ms;
+#X text 912 387 0;
+#X obj 701 260 cnv 15 198 138 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 928 260 cnv 15 198 138 empty empty empty 20 12 0 14 -232822
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array freq3 1764 float 0;
+#X coords 0 100 1763 -100 200 140 1;
+#X restore 700 259 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase3 1764 float 0;
+#X coords 0 1 1763 0 200 140 1;
+#X restore 927 259 graph;
+#X text 913 252 1;
+#X text 647 388 -100 Hz;
+#X text 665 320 0 Hz;
+#X text 652 254 100 Hz;
+#X text 754 223 Dente de Serra;
+#X text 737 418 Dente de Serra Invertida;
+#X text 987 224 Parábola;
+#X text 645 567 -100 Hz;
+#X text 663 499 0 Hz;
+#X text 650 433 100 Hz;
+#X text 912 570 0;
+#X text 913 435 1;
+#X text 710 120 Temos então uma Dente de Serra e uma Dente de Serra
+com polaridade Invertida. Se temos dois sinais com polaridade invertida
+no lado da Frequência \, temos \, igualmente \, um sinal de Fase Corrente
+onde é a inversão da polaridade do outro.;
+#X text 709 43 Criando um único sinal que vai do positivo ao negativo
+ou vice-versa \, temos uma forma de Dente de Serra no sinal de Frequência
+\, e parábolas completas na Fase Corrente. Logo \, a integral de uma
+onda dente-de-serra gera uma Parábola e a derivada de uma parábola
+dá uma dente-de-serra.;
+#X text 778 588 40 ms;
+#X connect 6 0 7 2;
+#X connect 10 0 6 0;
+#X connect 10 0 7 1;
+#X connect 11 0 10 0;
+#X connect 15 0 7 0;
+#X connect 15 0 11 0;
+#X connect 22 0 23 2;
+#X connect 24 0 25 0;
+#X connect 25 0 22 0;
+#X connect 25 0 23 1;
+#X connect 32 0 24 0;
+#X connect 32 0 23 0;
+#X connect 33 0 34 2;
+#X connect 35 0 33 0;
+#X connect 35 0 34 1;
+#X connect 36 0 37 2;
+#X connect 38 0 36 0;
+#X connect 38 0 37 1;
+#X connect 39 0 37 0;
+#X connect 39 0 41 0;
+#X connect 40 0 34 0;
+#X connect 40 0 42 0;
+#X connect 41 0 38 0;
+#X connect 42 0 35 0;

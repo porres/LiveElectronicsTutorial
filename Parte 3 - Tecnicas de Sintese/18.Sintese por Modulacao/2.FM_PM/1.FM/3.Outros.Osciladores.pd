@@ -1,0 +1,97 @@
+#N canvas 269 23 595 502 10;
+#X obj 170 428 output~;
+#N canvas 179 95 706 412 oscillator 0;
+#X obj 108 101 cnv 15 106 64 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 101 101 cnv 15 80 62 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X msg 106 197 choice \$1;
+#X obj 252 269 polygate~ 4 100 linear;
+#X obj 339 138 phasor~;
+#X obj 295 183 triangle~ 0.5;
+#X obj 252 325 outlet~;
+#X obj 108 108 nbx 5 20 -1e+37 1e+37 0 0 \$0-hz \$0-hz-set Hz 82 9
+0 15 -236465 -1 -1 0.1 256;
+#X obj 252 195 sin~;
+#X obj 106 133 tof/menubutton 100 27 \$0s \$0-menu-set 1 black red
+orange purple 0 \, nenhum \, sine \, tri \, square \, saw;
+#X obj 381 237 triangle~ 0;
+#X obj 338 210 expr~ if($v1 < 0.5 \, 1 \, -1);
+#X obj 524 187 \$0;
+#X obj 524 165 loadbang;
+#X msg 524 209 \; \$1-portadora 200 \; \$1-hz-set 50.5 \; \$1-index
+90 \; \$1-menu-set 1;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 5 0;
+#X connect 4 0 8 0;
+#X connect 4 0 10 0;
+#X connect 4 0 11 0;
+#X connect 5 0 3 1;
+#X connect 7 0 4 0;
+#X connect 8 0 3 0;
+#X connect 9 0 2 0;
+#X connect 10 0 3 3;
+#X connect 11 0 3 2;
+#X connect 12 0 14 0;
+#X connect 13 0 12 0;
+#X coords 0 -1 1 1 115 66 2 100 100;
+#X restore 235 205 pd oscillator;
+#X obj 235 296 *~;
+#X obj 368 288 line~;
+#X msg 368 264 \$1 10;
+#X obj 368 227 nbx 4 20 -1e+37 1e+37 0 0 empty \$0-index empty 0 -8
+0 16 -261682 -1 -1 100 256;
+#X obj 183 292 +~;
+#X obj 126 230 nbx 5 20 -1e+37 1e+37 0 0 empty \$0-portadora empty
+82 9 0 15 -228856 -1 -1 200 256;
+#N canvas 179 95 706 412 oscillator 0;
+#X obj 106 101 cnv 15 108 44 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 101 102 cnv 15 113 42 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X msg 106 197 choice \$1;
+#X obj 252 269 polygate~ 4 100 linear;
+#X obj 295 149 phasor~;
+#X obj 295 183 triangle~ 0.5;
+#X obj 252 325 outlet~;
+#X obj 252 195 sin~;
+#X obj 295 114 inlet~;
+#X obj 106 110 tof/menubutton 100 27 \$0s \$0-menu-set 1 black red
+orange purple 0 \, nenhum \, sine \, tri \, square \, saw;
+#X obj 338 210 expr~ if($v1 < 0.5 \, 1 \, -1);
+#X obj 381 237 triangle~ 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 5 0;
+#X connect 4 0 7 0;
+#X connect 4 0 10 0;
+#X connect 4 0 11 0;
+#X connect 5 0 3 1;
+#X connect 7 0 3 0;
+#X connect 8 0 4 0;
+#X connect 9 0 2 0;
+#X connect 10 0 3 2;
+#X connect 11 0 3 3;
+#X coords 0 -1 1 1 115 46 2 100 100;
+#X restore 183 339 pd oscillator;
+#X text 374 207 índice;
+#X text 132 207 Portadora;
+#X text 259 182 Moduladora;
+#X text 119 30 Neste exemplo podemos testar a sonoridade de diferentes
+combinações de osciladores em uma modulação de Frequência. As formas
+de onda estão ordenadas por conteúdo espectral \, cada vez com mais
+amplitude nos harmônicos ou número de harmônicos (lembrando que a onda
+dente de serra é a única que contém parciais pares e ímpares.) Podemos
+perceber assim como à medida em que há mais componentes espectrais
+(tanto na modularoa quanto na portadora) o resultado sonoro toran-se
+também mais encorpado.;
+#X connect 1 0 2 0;
+#X connect 2 0 6 1;
+#X connect 3 0 2 1;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 8 0;
+#X connect 7 0 6 0;
+#X connect 8 0 0 0;
+#X connect 8 0 0 1;

@@ -1,0 +1,136 @@
+#N canvas 72 43 995 764 10;
+#X obj 107 267 +~;
+#X obj 107 302 snaps~;
+#X obj 257 259 loadbang;
+#X obj 150 269 +~ 1;
+#X obj 107 225 sig~ 0;
+#X obj 88 570 +~;
+#X obj 140 573 +~ 1;
+#X obj 88 539 sig~ 0;
+#X obj 101 606 send~ signal;
+#X obj 140 546 receive~ signal;
+#X obj 88 639 snaps~;
+#X obj 484 150 bng 15 250 50 1 empty gui empty 17 7 0 10 -228856 -1
+-1;
+#X obj 543 260 metro 500;
+#X obj 543 237 tgl 15 0 empty gui empty 17 7 0 10 -204786 -1 -1 1 1
+;
+#X obj 543 286 t b b;
+#X obj 570 333 vsnapshot~;
+#X floatatom 570 360 0 0 0 0 - - -;
+#X obj 484 332 vsnapshot~;
+#X floatatom 484 359 0 0 0 0 - - -;
+#X obj 555 395 -;
+#X floatatom 555 425 0 0 0 0 - - -;
+#X obj 732 177 count~;
+#X obj 732 152 bng 15 250 50 1 empty gui empty 17 7 0 10 -228856 -1
+-1;
+#X obj 834 215 metro 500;
+#X obj 834 192 tgl 15 0 empty gui empty 17 7 0 10 -204786 -1 -1 1 1
+;
+#X obj 834 241 t b b;
+#X obj 861 284 vsnapshot~;
+#X floatatom 861 311 0 0 0 0 - - -;
+#X obj 732 283 vsnapshot~;
+#X floatatom 732 310 0 0 0 0 - - -;
+#X obj 846 346 -;
+#X floatatom 846 376 0 0 0 0 - - -;
+#X text 66 196 loop ininito \, objetos desligados.;
+#X text 48 28 Os processos de uma cadeia de áudio ocorrem todos "de
+uma vez" a cada bloco de áudio. Desse modo \, se o sinal de uma saída
+de um objeto é reconectado em alguma entrada anterior \, o sinal entra
+em "loop infinito" \, em um cilco que nunca acaba.;
+#X text 48 109 Por isso o Pd gera um erro e desliga o áudio de todos
+os objetos da cadeia que possui um loop \, como abaixo. No terminal
+ele também aponta um erro que diz: "DSP loop detected (some tilde objects
+not scheduled)".;
+#N canvas 113 38 300 263 send 0;
+#X obj 80 63 inlet~;
+#X obj 80 174 outlet~;
+#X obj 80 96 send~ count1;
+#X text 134 175 <== dummy outlet;
+#X connect 0 0 2 0;
+#X restore 749 209 pd send;
+#N canvas 113 38 331 216 receive 0;
+#X obj 90 48 inlet~;
+#X obj 109 137 outlet~;
+#X text 145 45 <== dummy inlet;
+#X obj 109 106 receive~ count1;
+#X connect 3 0 1 0;
+#X restore 749 237 pd receive;
+#X text 591 425 <= atraso de um bloco;
+#X text 750 375 sem atraso ==>;
+#X msg 257 291 \; pd dsp 1 \; gui bang;
+#X text 533 473 Veja que dentro dos subpatches temos um [inlet~] e
+[outlet~] que não estão ligados em nada \, chamados de "dummy". Eles
+servem apenas para conectar os subpatches e manter uma ordem de envio
+do sinal.;
+#X text 534 531 Perceba que esse mecanismo impede de realizar um feedback
+porque o pd vai entender como um "loop infinito" e desligar os objetos.
+;
+#X obj 484 175 count~;
+#X obj 496 204 send~ count;
+#X obj 594 298 receive~ count;
+#X text 262 565 de um bloco de áudio;
+#X text 242 544 <= loop/feedback com atraso;
+#X obj 891 676 catch~;
+#X text 56 687 ============================================================
+;
+#X text 524 592 ============================================================
+;
+#X text 518 633 O [send~]/[receive~] permite que o sinal enviado pelo
+[send~] chegue a um ou mais objetos [receive~] com mesmo nome. Já o
+par [throw~]/[catch~] é o contrário \, apenas um [catch~] recebe sinais
+de mais de um [trhow~] com mesmo nome.;
+#X text 46 464 Abaixo temos um exemplo com [send~] e [receive~] \,
+onde o sinal conectado ao [send~] chega ao objeto [receive~] com mesmo
+nome/argumento \, mas com atraso de um bloco de áudio.;
+#X text 517 21 Mesmo sem feedback \, o objeto [receive~] pode possuir
+um atraso de um bloco \, o que gera um pouco mais de latência. Isso
+tudo \, na realidade \, depende da ordem de conexão e criação dos objetos
+\, mas não é garantindo nem fica explícito no patch \, portanto não
+é recomendado. Uma forma garantida de prevenir a latência é com o uso
+de subpatches (confira [pd send] e [pd receive] abaixo).;
+#X obj 890 645 throw~;
+#X text 44 371 Para evitar o loop infinito \, essa retroalimentação
+(ou "feedback") deve ser feita com o atraso de um bloco de áudio. Isso
+pode ser possível com alguns objetos como [send~]/[receive~] \, [tabsend~]/[tabreceive~]
+\, [throw~]/[catch~] e também objetos de delay como [delwrite~]/[delread~]
+e [vd~].;
+#X connect 0 0 1 0;
+#X connect 0 0 3 0;
+#X connect 2 0 39 0;
+#X connect 3 0 0 1;
+#X connect 4 0 0 0;
+#X connect 5 0 8 0;
+#X connect 5 0 10 0;
+#X connect 6 0 5 1;
+#X connect 7 0 5 0;
+#X connect 9 0 6 0;
+#X connect 11 0 42 0;
+#X connect 12 0 14 0;
+#X connect 13 0 12 0;
+#X connect 14 0 17 0;
+#X connect 14 1 15 0;
+#X connect 15 0 16 0;
+#X connect 16 0 19 1;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 21 0 35 0;
+#X connect 21 0 28 0;
+#X connect 22 0 21 0;
+#X connect 23 0 25 0;
+#X connect 24 0 23 0;
+#X connect 25 0 28 0;
+#X connect 25 1 26 0;
+#X connect 26 0 27 0;
+#X connect 27 0 30 1;
+#X connect 28 0 29 0;
+#X connect 29 0 30 0;
+#X connect 30 0 31 0;
+#X connect 35 0 36 0;
+#X connect 36 0 26 0;
+#X connect 42 0 17 0;
+#X connect 42 0 43 0;
+#X connect 44 0 15 0;

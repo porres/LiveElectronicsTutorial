@@ -1,0 +1,45 @@
+#N canvas 139 47 1031 722 12;
+#X obj 223 129 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 223 160 click~;
+#X obj 197 214 output~;
+#X text 282 161 Impulso;
+#X obj 194 361 impulse~ 1;
+#X obj 168 413 output~;
+#X text 59 287 Se um impulso é um bang \, um objeto [impulse~] como
+LFO pode ser interpretado como um [metro].;
+#X obj 652 464 expr~ $v1 > 0;
+#X obj 652 512 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 652 424 noisi~ 15;
+#X obj 173 577 train~ 1000 0.5;
+#X obj 173 613 snaps~;
+#X obj 173 647 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X text 57 39 LFOs de Geradores de pulso ("impulso" ou "trem de pulso")
+costumam ser usados como controle. No caso \, um único impulso pode
+ser comparado com um "bang".;
+#X text 62 506 Já um trem de pulso pode ser pensado como um "toggle"
+que liga e desliga um processamento.;
+#X obj 657 206 zerox~;
+#X obj 664 252 output~;
+#X obj 657 174 noisi~ 10;
+#X text 539 37 Vejamos agora formas aleatóreas de disparar pulsos.
+Um gerador de impulso com tempo aleatóreo pode ser obtido com um [noisi~]
+passando por um [zerox~] \, que dispara um pulso quando o sinal cruza
+o valor de zero. Isso equivale ao objeto "Dust" do Supercollider.;
+#X text 533 338 Já um com um comparativo de maior que zero (> 0) podemos
+transformar o sinal de um [noisi~] em um gerador de trem de pulsos
+aleatóreos.;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X connect 4 0 5 0;
+#X connect 4 0 5 1;
+#X connect 7 0 8 0;
+#X connect 9 0 7 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 15 1 16 0;
+#X connect 15 1 16 1;
+#X connect 17 0 15 0;

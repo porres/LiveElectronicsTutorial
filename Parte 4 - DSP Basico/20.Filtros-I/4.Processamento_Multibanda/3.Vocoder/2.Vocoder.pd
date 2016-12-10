@@ -1,0 +1,2341 @@
+#N canvas 110 209 1259 536 10;
+#X obj 797 123 mtof;
+#X obj 797 102 nbx 5 14 -1e+37 1e+37 0 0 \$0-ramp_note \$0-ramp_note-set
+empty 0 -8 0 10 -228856 -1 -1 30 256;
+#X obj 797 145 nbx 5 14 -1e+37 1e+37 0 0 \$0-ramp_freq \$0-ramp_freq-set
+empty 0 -8 0 10 -217086 -1 -1 46.2493 256;
+#N canvas 333 269 392 370 Load-sample 0;
+#X obj 105 267 outlet~;
+#X obj 101 101 cnv 15 102 49 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 105 225 readsf~;
+#X msg 105 203 open \$1 \, 1;
+#X obj 105 159 openpanel;
+#X obj 105 104 bng 18 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X text 126 104 Load Sample;
+#X obj 144 246 spigot;
+#X obj 105 128 tgl 18 0 empty empty empty 17 7 0 10 -262130 -1 -1 1
+1;
+#X text 124 128 Loop;
+#X obj 155 128 bng 18 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X text 174 128 Play;
+#X obj 65 54 loadbang;
+#X msg 65 82 1;
+#X obj 107 147 cnv 5 96 5 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 105 182 symbol ../../../../samples/numbers.wav;
+#X connect 2 0 0 0;
+#X connect 2 1 7 0;
+#X connect 3 0 2 0;
+#X connect 4 0 15 0;
+#X connect 5 0 4 0;
+#X connect 7 0 15 0;
+#X connect 8 0 7 1;
+#X connect 10 0 15 0;
+#X connect 12 0 13 0;
+#X connect 12 0 15 0;
+#X connect 13 0 8 0;
+#X connect 15 0 3 0;
+#X coords 0 -1 1 1 104 53 2 100 100;
+#X restore 1099 123 pd Load-sample;
+#X obj 1034 148 adc~ 1;
+#X text 408 148 Nas caixas de mensagens abaixo temos alguns presets.
+clique nos bangs.;
+#X text 857 102 Frequência em MIDI;
+#X text 857 143 Hz;
+#X text 816 251 (synth);
+#X text 27 334 Pois bem \, sobre o patch:;
+#X text 31 364 - A frequência central de cada um dos 28 filtros passa
+banda é dada em MIDI nas caixas de número \, que você pode mudar manualmente.
+;
+#X text 28 408 - O ajuste da largura de banda é dado pelo parâmetro
+"Q".;
+#X obj 458 259 \$0;
+#X obj 458 236 bng 15 250 50 0 empty empty empty 17 7 0 10 -204800
+-1 -1;
+#X obj 424 322 \$0;
+#X obj 424 302 bng 15 250 50 0 empty empty empty 17 7 0 10 -204800
+-1 -1;
+#X obj 425 416 \$0;
+#X obj 425 396 bng 15 250 50 0 empty empty empty 17 7 0 10 -204800
+-1 -1;
+#X msg 458 280 \; \$1-ramp_note-set 30 \; \$1-Q-set 50 \; \$1-Gain-set
+200;
+#X msg 461 383 \; \$1-ramp_note-set 45 \; \$1-Q-set 25 \; \$1-Gain-set
+100;
+#X msg 432 449 \; \$1-ramp_note-set 25 \; \$1-Q-set 100 \; \$1-Gain-set
+200;
+#X obj 622 342 \$0;
+#X obj 622 322 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 619 244 \$0;
+#X obj 619 224 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 624 443 \$0;
+#X obj 624 423 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X msg 622 364 \; bottom-note 27 \; steps 3;
+#X msg 619 266 \; bottom-note 20 \; steps 4;
+#X msg 624 465 \; bottom-note 30 \; steps 2;
+#X obj 438 214 loadbang;
+#X text 30 476 - Um ajuste de volume é dado pelo knob "gain";
+#X text 29 429 - Uma rotina gera uma série de frequências a partir
+de uma frequência de base (bottom-freq) em passos iguais em semitons
+(step).;
+#X obj 818 211 noise~;
+#X text 799 26 Experimente também filtrar um ruído branco ([noise~])
+e tambem a entrada do microfone ([adc~]) para filtrar o som com a sua
+voz.;
+#X text 413 24 Deve ficar evidente a relação com o exemplo anterior
+de análise. O sinal do inlet à direita é o que é analisado \, e a informação
+da análise é usada para controlar e filtrar a entrada de "synth".;
+#X obj 775 468 output~;
+#X obj 797 170 blosc~;
+#X text 1120 211 para controlar;
+#X text 1121 230 o filtro;
+#X text 1118 190 Sinal analisado;
+#X text 24 101 Normalmente \, temos uma fonte "tonal" como um instrumento
+ou synth \, que receberá o processamento \, e outra fonte "ruidosa"
+como a fala humana \, que será analisada e usada para controlar a amplitude
+de cada banda. O termo "Cross Synthesis" (de Síntese Cruzada) também
+é empregado para denotar a formação de um resultado híbrido e cruzado.
+;
+#X text 24 27 O Vocoder é um processamento multibanda não muito diferente
+de um equalizador \, porém o ajuste de amplitude de cada banda é dado
+pela análise de um segundo sinal. Desse modo \, o Vocoder "combina"
+duas fontes sonoras.;
+#X text 26 191 Temos aqui um banco com 28 fitros \, onde podemos ajustar
+os parâmetros de cada filtro de modo independente \, como sua largura
+e frequência central \, sendo que a amplitude é dada pela análise de
+um sinal.;
+#X text 27 253 A entrada da esquerda é o que dá a qualidade tonal (nosso
+synth). Ele é o sinal que será filtrado pelo banco de Passa Bandas
+\, sendo que os ajustes do equalizador dependem do sinal analisado
+na entrada da direita.;
+#X text 415 91 Para entender detalhadamente a implementação do Vocoder
+\, abra o subpatch "Vocoder".;
+#N canvas 231 43 968 633 Vocoder 0;
+#X obj 390 378 *~;
+#X msg 405 311 \$1 10;
+#X obj 405 266 r \$0-Gain;
+#X obj 390 595 outlet~;
+#X obj 505 95 r \$0-band-freq1;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 363 143 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 122 pd vocoder-band;
+#X obj 21 36 cnv 15 308 149 empty empty empty 20 12 0 14 -183532 -66577
+0;
+#X obj 24 45 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq1 \$0-band-freq1-set
+empty 0 -8 0 10 -204786 -1 -1 27 256;
+#X obj 265 45 nbx 3 18 3 500 0 0 \$0-Q \$0-Q-set Q 47 9 0 12 -261682
+-1 -1 50 256;
+#X obj 82 45 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq2 \$0-band-freq2-set
+empty 0 -8 0 10 -204786 -1 -1 30 256;
+#X obj 140 45 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq3 \$0-band-freq3-set
+empty 0 -8 0 10 -204786 -1 -1 33 256;
+#X obj 198 45 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq4 \$0-band-freq4-set
+empty 0 -8 0 10 -204786 -1 -1 36 256;
+#X obj 24 65 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq5 \$0-band-freq5-set
+empty 0 -8 0 10 -204786 -1 -1 39 256;
+#X obj 82 65 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq6 \$0-band-freq6-set
+empty 0 -8 0 10 -204786 -1 -1 42 256;
+#X obj 140 65 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq7 \$0-band-freq7-set
+empty 0 -8 0 10 -204786 -1 -1 45 256;
+#X obj 198 65 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq8 \$0-band-freq8-set
+empty 0 -8 0 10 -204786 -1 -1 48 256;
+#X obj 24 85 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq9 \$0-band-freq9-set
+empty 0 -8 0 10 -204786 -1 -1 51 256;
+#X obj 82 85 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq10 \$0-band-freq10-set
+empty 0 -8 0 10 -204786 -1 -1 54 256;
+#X obj 140 85 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq11 \$0-band-freq11-set
+empty 0 -8 0 10 -204786 -1 -1 57 256;
+#X obj 198 85 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq12 \$0-band-freq12-set
+empty 0 -8 0 10 -204786 -1 -1 60 256;
+#X obj 24 105 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq13 \$0-band-freq13-set
+empty 0 -8 0 10 -204786 -1 -1 63 256;
+#X obj 82 105 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq14 \$0-band-freq14-set
+empty 0 -8 0 10 -204786 -1 -1 66 256;
+#X obj 140 105 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq15 \$0-band-freq15-set
+empty 0 -8 0 10 -204786 -1 -1 69 256;
+#X obj 198 105 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq16 \$0-band-freq16-set
+empty 0 -8 0 10 -204786 -1 -1 72 256;
+#X obj 24 125 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq17 \$0-band-freq17-set
+empty 0 -8 0 10 -204786 -1 -1 75 256;
+#X obj 82 125 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq18 \$0-band-freq18-set
+empty 0 -8 0 10 -204786 -1 -1 78 256;
+#X obj 140 125 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq19 \$0-band-freq19-set
+empty 0 -8 0 10 -204786 -1 -1 81 256;
+#X obj 198 125 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq20 \$0-band-freq20-set
+empty 0 -8 0 10 -204786 -1 -1 84 256;
+#X obj 24 145 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq21 \$0-band-freq21-set
+empty 0 -8 0 10 -204786 -1 -1 87 256;
+#X obj 82 145 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq22 \$0-band-freq22-set
+empty 0 -8 0 10 -204786 -1 -1 90 256;
+#X obj 140 145 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq23 \$0-band-freq23-set
+empty 0 -8 0 10 -204786 -1 -1 93 256;
+#X obj 198 145 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq24 \$0-band-freq24-set
+empty 0 -8 0 10 -204786 -1 -1 96 256;
+#X obj 24 165 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq25 \$0-band-freq25-set
+empty 0 -8 0 10 -204786 -1 -1 99 256;
+#X obj 82 165 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq26 \$0-band-freq26-set
+empty 0 -8 0 10 -204786 -1 -1 102 256;
+#X obj 140 165 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq27 \$0-band-freq27-set
+empty 0 -8 0 10 -204786 -1 -1 105 256;
+#X obj 198 165 nbx 5 14 -1e+37 1e+37 0 0 \$0-band-freq28 \$0-band-freq28-set
+empty 0 -8 0 10 -204786 -1 -1 108 256;
+#X obj 390 230 catch~ \$0-sum;
+#X obj 265 82 nbx 5 14 -1e+37 1e+37 0 0 empty bottom-note empty 0 -8
+0 10 -125407 -262144 -1 27 256;
+#X obj 274 112 nbx 3 14 0.1 5 0 0 empty steps empty 0 -8 0 10 -100312
+-262144 -1 3 256;
+#X text 276 95 step;
+#X text 256 65 bottom-freq;
+#X obj 276 133 knob 32 32 1 201 1 0 \$0-Gain \$0-Gain-set empty 0 -8
+192 8 -262144 -1 -1 3097 1;
+#X text 279 165 Gain;
+#N canvas 145 95 658 359 Band-Freq 0;
+#X obj 92 25 inlet;
+#X obj 172 25 inlet;
+#X obj 92 146 until;
+#X obj 92 172 f;
+#X obj 169 251 + 1;
+#X msg 114 297 \; \$3-band-freq\$2-set \$1;
+#X obj 114 275 pack float float \$0;
+#X msg 92 100 28;
+#X msg 155 143 0;
+#X obj 92 220 t f b;
+#X obj 92 199 + 27;
+#X obj 129 181 + 3;
+#X obj 128 242 float;
+#X obj 99 71 loadbang;
+#X obj 92 123 trigger f b;
+#X obj 92 51 trigger b f;
+#X obj 172 70 trigger b f;
+#X text 214 24 step;
+#X text 18 24 bottom-freq;
+#X text 162 179 step;
+#X text 18 198 bottom-freq;
+#X text 254 113 Temos aqui um contador que roda 28 vezes. O "bottom-freq"
+é o número de partida \, e "step" o tamanho do incremento. Esses números
+serão usados como frequência em MIDI e são enviados para as caixas
+de números.;
+#X text 255 175 Um segundo contador gera números de 1 a 28 que são
+inseridos dentro do símbolo que indica o endereço de envio do dado.
+É assim que é possível endereçar cada número para uma caixa de números
+diferente.;
+#X connect 0 0 15 0;
+#X connect 1 0 16 0;
+#X connect 2 0 3 0;
+#X connect 3 0 10 0;
+#X connect 3 0 11 0;
+#X connect 4 0 6 1;
+#X connect 4 0 12 1;
+#X connect 6 0 5 0;
+#X connect 7 0 14 0;
+#X connect 8 0 3 1;
+#X connect 8 0 12 1;
+#X connect 9 0 6 0;
+#X connect 9 1 12 0;
+#X connect 10 0 9 0;
+#X connect 11 0 3 1;
+#X connect 12 0 4 0;
+#X connect 13 0 7 0;
+#X connect 14 0 2 0;
+#X connect 14 1 8 0;
+#X connect 15 0 7 0;
+#X connect 15 1 10 1;
+#X connect 16 0 7 0;
+#X connect 16 1 11 1;
+#X restore 363 152 pd Band-Freq;
+#X msg 343 60 \; pd dsp 1 \; bottom-note set 27 \; steps set 3;
+#X obj 343 36 loadbang;
+#X obj 405 287 - 1;
+#X obj 532 10 inlet~;
+#X obj 813 8 inlet~;
+#X obj 813 34 s~ \$0-filter;
+#X obj 532 36 s~ \$0-synth;
+#X obj 405 336 line~;
+#X text 27 393 A entrada do subpatch é uma frequência em MIDI.;
+#X text 26 337 À direita \, temos 28 subpatches (vocoder-band) \, todos
+idênticos. Cada um representa um canal \, ou banda de um filtro Passa-Banda.
+;
+#X text 26 419 Abra um dos subpatches para entender como funciona o
+processo de filtragem.;
+#X text 27 464 Abra também o subpatch [Band-Freq] para entender como
+funciona a rotina que gera a frequência dos filtros \, de acordo com
+a entrada de "step" e "bottom-freq".;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 373 153 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 122 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 383 163 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 122 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 363 145 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 122 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 360 159 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 190 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 365 149 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 190 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 375 159 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 190 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 385 169 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 190 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 371 168 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 256 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 357 151 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 256 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 363 159 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 256 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 353 147 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 256 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 357 150 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 325 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 359 152 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 325 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 369 162 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 325 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 379 170 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 325 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 367 170 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 392 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 372 164 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 392 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 373 163 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 392 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 368 162 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 392 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 368 175 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 457 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 360 160 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 457 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 363 162 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 457 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 365 154 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 457 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 368 166 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 505 524 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 371 150 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 610 524 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 361 169 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 714 524 pd vocoder-band;
+#N canvas 207 117 782 594 vocoder-band 0;
+#X obj 167 36 inlet;
+#X obj 235 437 line~;
+#X obj 99 142 r \$0-Q;
+#X obj 52 121 mtof;
+#X obj 129 493 *~;
+#X obj 129 525 throw~ \$0-sum;
+#X obj 30 71 r~ \$0-synth;
+#X obj 52 179 line~;
+#X obj 245 121 mtof;
+#X obj 245 179 line~;
+#X obj 160 143 r~ \$0-filter;
+#X text 210 37 Frequência central do Filtro em MIDI;
+#X obj 235 361 dbtorms;
+#X msg 235 413 \$1 11;
+#X obj 235 339 env~ 1024 512;
+#X text 340 426 Pegamos esse valor e usamos um [line~] para converter
+de volta em sinal de áudio gerando linhas de 11 ms.;
+#X text 338 326 O processo de análise da amplitude do canal é feito
+pelo objeto [env~] \, que nos dá um valor da amplitude RMS em decibéis
+por janela de análise (1024 amostras) a cada 512 amostras - o que dá
+em torno de 11 ms de um resultado a outro \, em uma taxa de amostragem
+de 44.1KHz. Esse valor então é convertido de dB para amplitude linear
+com o objeto [dbtorms].;
+#X msg 52 156 \$1 10;
+#X obj 99 189 line~;
+#X msg 99 166 \$1 10;
+#X obj 296 142 r \$0-Q;
+#X obj 296 189 line~;
+#X msg 296 166 \$1 10;
+#X msg 245 156 \$1 10;
+#X obj 30 223 reson~ 1;
+#X obj 198 234 reson~ 1;
+#X obj 90 255 reson~ 1;
+#X obj 235 283 reson~ 1;
+#X text 152 328 Análise de \; Amplitude:;
+#X text 374 161 À esquerda temos os dois sinais de entrada sendo filtrados
+por um filtro Passa-Banda duas vezes em cascata. O sinal da direita
+vai ser usado apenas para controlar a amplitude do sinal da esquerda.
+Por isso ele é tido como um filtro (seria o ganho de um equalizador).
+;
+#X connect 0 0 3 0;
+#X connect 0 0 8 0;
+#X connect 1 0 4 1;
+#X connect 2 0 19 0;
+#X connect 3 0 17 0;
+#X connect 4 0 5 0;
+#X connect 6 0 24 0;
+#X connect 7 0 24 2;
+#X connect 7 0 26 2;
+#X connect 8 0 23 0;
+#X connect 9 0 25 2;
+#X connect 9 0 27 2;
+#X connect 10 0 25 0;
+#X connect 12 0 13 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 17 0 7 0;
+#X connect 18 0 24 3;
+#X connect 18 0 26 3;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 25 3;
+#X connect 21 0 27 3;
+#X connect 22 0 21 0;
+#X connect 23 0 9 0;
+#X connect 24 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 4 0;
+#X connect 27 0 14 0;
+#X restore 819 524 pd vocoder-band;
+#X obj 610 95 r \$0-band-freq2;
+#X obj 714 95 r \$0-band-freq3;
+#X obj 819 95 r \$0-band-freq4;
+#X obj 505 163 r \$0-band-freq5;
+#X obj 610 163 r \$0-band-freq6;
+#X obj 714 163 r \$0-band-freq7;
+#X obj 819 163 r \$0-band-freq8;
+#X obj 505 229 r \$0-band-freq9;
+#X obj 610 229 r \$0-band-freq10;
+#X obj 714 229 r \$0-band-freq11;
+#X obj 819 229 r \$0-band-freq12;
+#X obj 505 298 r \$0-band-freq13;
+#X obj 610 298 r \$0-band-freq14;
+#X obj 714 298 r \$0-band-freq15;
+#X obj 819 298 r \$0-band-freq16;
+#X obj 505 365 r \$0-band-freq17;
+#X obj 610 365 r \$0-band-freq18;
+#X obj 714 365 r \$0-band-freq19;
+#X obj 819 365 r \$0-band-freq20;
+#X obj 505 430 r \$0-band-freq21;
+#X obj 610 430 r \$0-band-freq22;
+#X obj 714 430 r \$0-band-freq23;
+#X obj 819 430 r \$0-band-freq24;
+#X obj 505 497 r \$0-band-freq25;
+#X obj 610 497 r \$0-band-freq26;
+#X obj 714 497 r \$0-band-freq27;
+#X obj 819 497 r \$0-band-freq28;
+#X connect 0 0 3 0;
+#X connect 1 0 51 0;
+#X connect 2 0 46 0;
+#X connect 4 0 5 0;
+#X connect 36 0 0 0;
+#X connect 37 0 43 0;
+#X connect 38 0 43 1;
+#X connect 45 0 44 0;
+#X connect 46 0 1 0;
+#X connect 47 0 50 0;
+#X connect 48 0 49 0;
+#X connect 51 0 0 1;
+#X connect 83 0 56 0;
+#X connect 84 0 57 0;
+#X connect 85 0 58 0;
+#X connect 86 0 59 0;
+#X connect 87 0 60 0;
+#X connect 88 0 61 0;
+#X connect 89 0 62 0;
+#X connect 90 0 63 0;
+#X connect 91 0 64 0;
+#X connect 92 0 65 0;
+#X connect 93 0 66 0;
+#X connect 94 0 67 0;
+#X connect 95 0 68 0;
+#X connect 96 0 69 0;
+#X connect 97 0 70 0;
+#X connect 98 0 71 0;
+#X connect 99 0 72 0;
+#X connect 100 0 73 0;
+#X connect 101 0 74 0;
+#X connect 102 0 75 0;
+#X connect 103 0 76 0;
+#X connect 104 0 77 0;
+#X connect 105 0 78 0;
+#X connect 106 0 79 0;
+#X connect 107 0 80 0;
+#X connect 108 0 81 0;
+#X connect 109 0 82 0;
+#X coords 0 -1 1 1 310 169 1 20 20;
+#X restore 797 275 pd Vocoder;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 37 0;
+#X connect 3 0 46 1;
+#X connect 12 0 18 0;
+#X connect 13 0 12 0;
+#X connect 14 0 19 0;
+#X connect 15 0 14 0;
+#X connect 16 0 20 0;
+#X connect 17 0 16 0;
+#X connect 21 0 27 0;
+#X connect 22 0 21 0;
+#X connect 23 0 28 0;
+#X connect 24 0 23 0;
+#X connect 25 0 29 0;
+#X connect 26 0 25 0;
+#X connect 30 0 12 0;
+#X connect 37 0 46 0;
+#X connect 46 0 36 0;
+#X connect 46 0 36 1;

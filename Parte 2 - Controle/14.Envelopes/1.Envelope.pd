@@ -1,0 +1,55 @@
+#N canvas 162 75 1134 602 10;
+#X obj 184 279 osc~ 440;
+#X obj 184 396 *~;
+#X obj 300 400 tabwrite~ env;
+#X obj 537 261 cnv 15 498 298 empty empty empty 20 12 0 14 -245564
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array env 2205 float 0;
+#X array output 2205 float 0;
+#X coords 0 1 2204 -1 500 300 1;
+#X restore 536 260 graph;
+#X text 544 274 Envelope superior ==>;
+#X obj 184 463 loadbang;
+#X obj 199 312 phasor~ 20;
+#X obj 199 356 sin~;
+#X obj 199 334 /~ 2;
+#X msg 256 287 0;
+#X obj 287 256 loadbang;
+#X text 139 278 Sinal;
+#X text 78 41 Chamamos de envelope de um sinal uma função que delineia
+\, de modo suavizado \, os picos de amplitude. Um sinal de áudio possui
+um envelope superior (para a parte positiva) e outro inferior (parte
+negativa). Porém ambos podem corresponder a uma mesma função \, como
+neste exemplo.;
+#X text 231 332 Envelope;
+#X obj 287 428 tabwrite~ output;
+#X msg 183 484 \; pd dsp 1;
+#X text 592 60 O nome do objeto [env~] \, aliás \, é de "envelope"
+por se relacionar a esse conceito. Ele analisa a amplitude RMS de um
+sinal \, mas podemos também dizer que ele analisa o "envelope" de amplitude.
+;
+#X obj 795 155 env~;
+#X obj 795 180 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-208630 -1 -1 95.4029 256;
+#X obj 795 130 noise~;
+#X text 79 193 Note que \, aqui \, o envelope é dado como metade do
+período da função seno.;
+#X text 78 121 No contexto de síntese \, o envelope de amplitude (ou
+apenas envelope) é uma função que controla a amplitude para gerar uma
+nota com começo e fim. Para tal \, basta multiplicar o sinal pela função
+do envelope \, como abaixo. Ou seja \, trata-se de um processamento
+de modulação de amplitude.;
+#X connect 0 0 1 0;
+#X connect 1 0 15 0;
+#X connect 6 0 16 0;
+#X connect 7 0 9 0;
+#X connect 8 0 2 0;
+#X connect 8 0 1 1;
+#X connect 9 0 8 0;
+#X connect 10 0 7 1;
+#X connect 11 0 10 0;
+#X connect 11 0 2 0;
+#X connect 11 0 15 0;
+#X connect 18 0 19 0;
+#X connect 20 0 18 0;

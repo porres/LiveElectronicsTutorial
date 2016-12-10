@@ -1,0 +1,254 @@
+#N canvas 164 120 1200 543 10;
+#X obj 926 265 *~;
+#X obj 865 212 osc~ 440;
+#X obj 144 394 loadbang;
+#X obj 443 68 cnv 15 298 198 empty empty empty 20 12 0 14 -195955 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array env1 67 float 0;
+#X coords 0 1 66 0 300 200 1;
+#X restore 442 67 graph;
+#X obj 941 214 vline~;
+#X obj 916 299 dac~;
+#X obj 941 164 nbx 5 17 50 2000 0 0 empty empty empty 0 -8 0 12 -245039
+-1 -1 500 256;
+#X obj 941 125 bng 25 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X text 1020 76 tempo (ms);
+#X msg 941 190 1 \, 65 \$1;
+#X obj 941 100 metro;
+#X msg 983 130 set \$1;
+#X floatatom 983 77 5 0 0 0 - ms -;
+#X obj 941 68 tgl 20 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X text 907 67 Loop;
+#X text 140 460 cria tabela para interpolação:;
+#X text 426 396 Usamos um [vline~] para ler a tabela \, e agora basta
+ter como entrada a duração do line em ms. Diferente do [tabplay~] \,
+temos a vantagem de colocar qualquer tempo de duração.;
+#X text 825 347 A seguir \, um exemplo de como gerar uma tabela a partir
+de sinal de áudio \, e outro que gera uma tabela própria para interpolação
+como fazem os comandos "sinesum" e "cosinesum".;
+#X obj 941 237 tabread4~ env1;
+#N canvas 110 195 1189 462 tabelas_com_sinal_de_áudio 0;
+#X obj 200 317 osc~;
+#X obj 200 343 *~ 0.5;
+#X obj 200 366 +~ 0.5;
+#X msg 221 293 0.5;
+#X msg 133 394 1 0 \, 98 0;
+#X obj 946 344 *~;
+#X obj 885 261 osc~ 440;
+#X obj 961 278 vline~;
+#X obj 936 378 dac~;
+#X obj 998 193 nbx 5 17 50 2000 0 0 empty ms empty 0 -8 0 12 -245039
+-1 -1 500 256;
+#X obj 961 176 bng 25 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X text 1000 173 tempo (ms);
+#X msg 961 252 1 \, 98 \$1;
+#X obj 443 212 cnv 15 298 198 empty empty empty 20 12 0 14 -195955
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 100 float 0;
+#X coords 0 1 99 0 300 200 1;
+#X restore 442 211 graph;
+#X text 425 400 0;
+#X text 426 207 1;
+#X obj 133 266 trigger bang float bang;
+#X obj 133 352 delay 3;
+#X obj 133 193 samplerate~;
+#X floatatom 133 241 5 0 0 0 - - -;
+#X obj 133 217 / 100;
+#X text 175 217 tamanho da tabela;
+#X text 172 242 Hz;
+#X obj 133 168 loadbang;
+#X text 812 62 Isso se dá porque \, para o fim de um envelope \, os
+índices 1 e n-2 devem ser iguais a 0 e \, quando geramos essa tabela
+desse modo \, esses valores não estão zerados.;
+#X obj 268 401 tabwrite~ \$0-hann;
+#X obj 961 311 tabread4~ \$0-hann;
+#X text 428 46 Criamos então uma tabela a partir de um sinal de áudio.
+O tamanho da tabela é de 100 pontos. Para achar a frequência equivalente
+ao período da tabela \, dividimos a taxa de amostragem pelo tamanho
+da mesma. Em 44.1 Khz \, essa frequência é de 441 Hz. Logo após \,
+com um atraso suficiente (de 3 ms) \, zeramos os índices 1 e n-2 (98).
+;
+#X obj 133 418 s \$0-hann;
+#X text 43 56 Por detalhes ainda a serem melhor exlpicados \, o [tabread4~]
+não consegue ler o primeiro e o último índice da tabela. É bom ter
+isso em nota ao criar tabelas para serem usadas como envelopes \, para
+que apenas os índices 1 a n-2 (onde "n" é o número de pontos da tabela)
+sejam lidos.;
+#X obj 961 223 float;
+#X text 42 384 zerar valores;
+#X text 47 399 de 1 e n-2;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 26 0;
+#X connect 3 0 0 1;
+#X connect 4 0 29 0;
+#X connect 5 0 8 0;
+#X connect 5 0 8 1;
+#X connect 6 0 5 0;
+#X connect 7 0 27 0;
+#X connect 9 0 31 1;
+#X connect 10 0 31 0;
+#X connect 12 0 7 0;
+#X connect 17 0 18 0;
+#X connect 17 1 0 0;
+#X connect 17 2 3 0;
+#X connect 17 2 26 0;
+#X connect 18 0 4 0;
+#X connect 19 0 21 0;
+#X connect 20 0 17 0;
+#X connect 21 0 20 0;
+#X connect 24 0 19 0;
+#X connect 27 0 5 1;
+#X connect 31 0 12 0;
+#X restore 915 414 pd tabelas_com_sinal_de_áudio;
+#N canvas 132 170 1172 519 tabelas_de_interpolação 0;
+#X obj 940 384 *~;
+#X obj 879 301 osc~ 440;
+#X obj 955 318 vline~;
+#X obj 930 418 dac~;
+#X obj 475 257 cnv 15 298 198 empty empty empty 20 12 0 14 -195955
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array env2 100 float 0;
+#X coords 0 1 99 0 300 200 1;
+#X restore 474 256 graph;
+#X text 457 445 0;
+#X text 458 252 1;
+#X obj 131 174 until;
+#X obj 131 201 f;
+#X obj 162 208 + 1;
+#X msg 172 176 0;
+#X obj 131 41 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856 -1
+-1;
+#X obj 131 18 loadbang;
+#X obj 206 188 v pi;
+#X obj 206 164 pi;
+#X obj 203 476 tabwrite env2;
+#X obj 955 351 tabread4~ env2;
+#X text 287 142 tamanho da tabela;
+#X obj 964 218 expr 1 \; n - 2 \; $f1;
+#X obj 246 95 expr size("env2");
+#X floatatom 246 118 5 0 0 0 - - -;
+#X obj 131 62 trigger bang bang;
+#X obj 246 170 - 3;
+#X text 273 171 subtração de pontos extras;
+#X obj 131 150 v n;
+#X obj 246 191 v i;
+#X obj 259 143 v n;
+#X obj 131 234 expr ($f1 + (i - 1)) % i \; $f1;
+#X obj 131 311 expr $f1 / (n - 2);
+#X obj 148 278 print índices;
+#X text 274 192 número de índices;
+#X text 22 310 valores de 0 a 1;
+#X text 461 57 Por extremo rigor \, podemos criar uma tabela do mesmo
+modo que um "sinesum" ou "cosinesum" (fazendo com que o índice 0 seja
+uma cópia de n-3 \, e n-2 e n-1 cópias dos índices 1 e 2).;
+#X text 461 116 Apesar de não trazer diferença perceptiva no caso de
+simples envelopes \, por motivos didáticos \, encontra-se aqui uma
+solução que segue à risca esse princípio.;
+#X text 461 162 O exemplo é \, novamente \, um envelope do tipo "hann"
+\, mas pode ser adaptado para as mais diversas funções.;
+#X obj 49 344 cnv 15 225 110 empty empty hann 5 10 0 14 -233017 -66577
+0;
+#X obj 131 426 expr ($f1 * 0.5) + 0.5;
+#X obj 131 372 + 0.5;
+#X text 56 369 fase incial;
+#X text 74 397 Cosseno;
+#X text 64 424 DC Offset;
+#X obj 955 269 pack f f f;
+#X msg 955 292 \$1 \, \$2 \$3;
+#X obj 131 399 expr cos($f1 * 2*pi);
+#X obj 1001 159 nbx 5 17 50 2000 0 0 empty ms empty 0 -8 0 12 -245039
+-1 -1 500 256;
+#X obj 964 142 bng 25 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X text 1003 139 tempo (ms);
+#X obj 964 189 float;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 1 0 0 0;
+#X connect 2 0 17 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 9 0 28 0;
+#X connect 10 0 9 1;
+#X connect 11 0 9 1;
+#X connect 12 0 22 0;
+#X connect 13 0 12 0;
+#X connect 15 0 14 0;
+#X connect 17 0 0 1;
+#X connect 19 0 42 0;
+#X connect 19 1 42 1;
+#X connect 19 2 42 2;
+#X connect 20 0 21 0;
+#X connect 21 0 23 0;
+#X connect 21 0 27 0;
+#X connect 22 0 25 0;
+#X connect 22 1 11 0;
+#X connect 22 1 15 0;
+#X connect 22 1 20 0;
+#X connect 23 0 26 0;
+#X connect 25 0 8 0;
+#X connect 28 0 29 0;
+#X connect 28 0 30 0;
+#X connect 28 1 16 1;
+#X connect 29 0 38 0;
+#X connect 37 0 16 0;
+#X connect 38 0 44 0;
+#X connect 42 0 43 0;
+#X connect 43 0 2 0;
+#X connect 44 0 37 0;
+#X connect 45 0 48 1;
+#X connect 46 0 48 0;
+#X connect 48 0 19 0;
+#X restore 926 450 pd tabelas_de_interpolação;
+#X text 22 32 Usaremos agora o [tabread4~] para uma leitura interpolada
+de uma tabela. No exemplo anterior \, precisávamos criar uma tabela
+com tamanho específico de acordo com a duração do envelope. Agora podemos
+setar qualquer duração de envelope a partir de uma tabela dada.;
+#X text 22 107 É bom que a tabela usada seja própria para interpolação.
+já vimos como o comando "sinesum" gera uma tabela própria para isso.
+Usaremos agora o comando "cosinesum" (que também torna a tabela própria
+para interpolação) para gerar uma tabela que usaremos como um envelope
+"hann".;
+#X text 23 180 O comando "cosinesum" é como o "sinesum" \, só que gera
+- a partir de uma lista de amplitudes - uma somatória de funções com
+fase de cosseno em vez de seno. A lista de amplitudes é considerada
+uma série harmônica \, mas o primeiro valor é o tamanho da tabela (que
+precisa ser uma potência de 2). Geramos aqui uma tabela pequena \,
+com 64 pontos \, mais os 3 pontos de interpolação.;
+#X text 427 257 0;
+#X text 429 60 1;
+#X text 26 277 O resto são valores de amplitudes dos componentes \,
+sendo que o primeiro é um componente DC (ou seja \, 0 Hz \, um valor
+constante). Usamos isso então para fazer um DC offset \, e o próximo
+valor é o do primeiro parcial de fato. O ajuste final seria inverter
+a fase de cosseno. Para isso \, basta apenas considerar uma amplitude
+negativa para o primeiro parcial.;
+#X msg 144 425 \; env1 cosinesum 64 0.5 -0.5;
+#X text 424 311 Agora alguns cuidados relacionados à interpolação.
+O número de pontos é 67 (índices de 0 a 66 \, sendo os "reais" de 1
+a 64). Começamos a leitura no índice 1 e terminamos no 65 \, que é
+uma cópia do primeiro (por questões de interpolação que ainda veremos
+em mais detalhes depois ao falar de "sampler").;
+#X msg 53 435 \; ms 500 \; pd dsp 1;
+#X connect 0 0 6 0;
+#X connect 0 0 6 1;
+#X connect 1 0 0 0;
+#X connect 2 0 28 0;
+#X connect 2 0 30 0;
+#X connect 5 0 19 0;
+#X connect 7 0 10 0;
+#X connect 8 0 7 0;
+#X connect 10 0 5 0;
+#X connect 11 0 8 0;
+#X connect 12 0 7 0;
+#X connect 13 0 11 1;
+#X connect 13 0 12 0;
+#X connect 14 0 11 0;
+#X connect 19 0 0 1;

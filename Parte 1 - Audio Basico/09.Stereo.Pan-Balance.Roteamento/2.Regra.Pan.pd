@@ -1,0 +1,102 @@
+#N canvas 48 23 1270 688 10;
+#X text 62 270 Como a potência é o quadrado da amplitude (tida como
+voltagem). Pode se dizer que esse tipo de pan é de "Voltagem Constante"
+em vez de Potência constante.;
+#X obj 95 379 cnv 15 306 100 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 247 436 fade~ _hann;
+#X obj 88 100 cnv 15 280 100 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 237 172 fade~ _sin;
+#X obj 174 436 fade~ _lin;
+#X obj 232 146 fade~ _sqrt;
+#X text 54 28 Vimos no exemplo passado a lei de pan de 3 dB \, que
+implica em uma potência constante. As duas funções mais usadas para
+isso são a Seno/Cosseno e a raiz quadrada. Lembrando que ambas funções
+também se encontram no objeto [fade~].;
+#X text 61 210 Vimos anteriormente também \, no exemplo de crossfade
+linear \, como a função linear dá uma perda em torno de 6 dB na posição
+central. Entretanto \, a soma das amplitudes é constante.;
+#X obj 463 154 cnv 15 280 100 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X text 105 114 Regra de 3 dB (Potência Constante) \; - sqrt \; - sin/cos
+;
+#X text 482 173 Regra de 4.5 dB \; - sinhann \; linsqrt;
+#X obj 604 196 fade~ _linsqrt;
+#X obj 606 224 fade~ _sinhann;
+#X text 459 296 Diferentes regras e funções de pan podem ser compensadas
+no fade de volume ou ainda em mexer o pan mais à direita ou à esquerda.
+Apesar de tantas regras \, não há uma regra de fato a se seguir. Em
+outras palavras \, quando se trata de som \, você deve sempre seguir
+o seu ouvido.;
+#X text 460 378 Manter uma regra de pan é importante e útil para testes
+de alto falante e coisas do tipo. Mas não há nenhuma regra mágica ou
+fator objetivo que determinará qual dessas opções soa "melhor". Mais
+importante de como "soa" \, o que importa também é quão natural o controle
+do pan e do fade lhe parece.;
+#X obj 243 544 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X msg 240 586 \$1 20;
+#X obj 240 609 line 0 1;
+#X floatatom 240 565 5 0 0 0 - - -;
+#X obj 122 562 noise~;
+#X obj 122 588 linear_pan~;
+#X obj 124 617 output~;
+#X text 106 394 Regra de 6 dB (Voltagem Constante) \; - linear \; -
+hann \; - line3;
+#X text 63 508 Como opção de pan linear no Pd-Extended \, temos a abstração
+[linear_pan~].;
+#X obj 327 436 curve_fade;
+#X text 62 321 Além da função linear \, outras funções que possuem
+Voltagem Constante e seguem a regra de 6 dB já vistas. São elas: a
+função hann (embutida no objeto [fade~]) \, e o [curve_fade].;
+#X text 457 62 Há ainda um meio termo entre a regra de 3 dB e 6 dB:
+a regra de 4.5 dB. Ela \, por sua vez \, não possui nem voltagem nem
+potência constante. Das funções que já vimos no objeto [fade~] \, as
+que seguem essa regra são a "linsqrt" e "sinhann".;
+#X text 460 466 Ainda mais quando se trata de eletrônica ao vivo \,
+o que deve estar em questão é quão intuitivo é o o manuseio dos seus
+controladores. Trata-se de uma questão de costume \, além de uma questão
+particular e pessoal.;
+#X text 456 266 ============================================================
+;
+#X text 460 532 O que pode ser reforçado é que \, diferentemente da
+regra de 3 dB (Potência Constante) \, a regra de 6 dB (Voltagem Constante)
+costumar deixar a posição central com menos intensidade que os extremos.
+Mas mesmo isso pode ser um fator de interesse no gesto que você busca.
+Em suma \, pode ser conveniente. E como tudo depende da acústica do
+local se trata \, novamente \, de algo que só o ouvido poderá julgar.
+;
+#X obj 983 261 output~;
+#X obj 1005 213 osc~ 440;
+#X obj 1003 502 pansig~;
+#X obj 997 553 output~;
+#X obj 1003 436 osc~ 440;
+#X obj 1042 475 sig~ 0;
+#X text 860 79 Por causa dessa questão da regra de Pan \, sempre haverá
+uma atenuação do sinal original ao ser jogado nos dois canais estéreo
+\, portanto há uma certa diferença entre o uso de um "pan" e simplesmente
+jogar o mesmo sinal em dois canais.;
+#X text 867 149 Por exepmplo \, abaixo estamos de fto duplicando o
+mesmo sinal \, sem nenhuma atenuação \, para uma saída estéreo.;
+#X text 976 310 Mono Duplicado;
+#X text 881 372 Já o uso do [pansig~] abaixo \, por ser um pan de potência
+constante \, joga o mesmo sinal com uma atenuação de 3dB para a saída.
+;
+#X obj 1091 262 env~;
+#X floatatom 1091 291 5 0 0 0 - - -;
+#X connect 16 0 19 0;
+#X connect 17 0 18 0;
+#X connect 18 0 21 1;
+#X connect 19 0 17 0;
+#X connect 20 0 21 0;
+#X connect 21 0 22 0;
+#X connect 21 1 22 1;
+#X connect 32 0 31 1;
+#X connect 32 0 31 0;
+#X connect 32 0 41 0;
+#X connect 33 0 34 0;
+#X connect 33 1 34 1;
+#X connect 35 0 33 0;
+#X connect 36 0 33 1;
+#X connect 41 0 42 0;

@@ -1,0 +1,96 @@
+#N canvas 538 58 884 577 10;
+#X obj 496 349 * 1000;
+#X obj 496 424 osc~;
+#X floatatom 552 380 6 0 0 0 - - -;
+#N canvas 116 22 461 348 Aliasing 0;
+#X obj 65 282 outlet;
+#X obj 65 33 inlet;
+#X obj 65 80 * 1000;
+#X obj 65 180 / 1000;
+#X obj 65 240 expr if ($f1 > Nyquist \, Nyquist - ($f1 - Nyquist) \,
+$f1);
+#X obj 139 59 samplerate~;
+#X text 75 147 Módulo do Sample Rate;
+#X obj 65 126 mod;
+#X obj 139 88 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 44100 256;
+#X text 36 55 Khz;
+#X text 44 103 Hz;
+#X obj 139 33 loadbang;
+#X text 198 87 Hz;
+#X text 43 204 Khz;
+#X text 27 260 Alias;
+#X connect 1 0 2 0;
+#X connect 2 0 7 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X connect 5 0 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 1;
+#X connect 11 0 5 0;
+#X restore 552 348 pd Aliasing;
+#X text 603 378 <- Alias;
+#X text 629 391 KHz;
+#X obj 705 335 samplerate~;
+#X obj 705 255 loadbang;
+#X text 489 113 Frequência = Nyquist - (Frequência - Nyquist);
+#X msg 723 279 \; pd dsp 1 \; osc 40;
+#X obj 197 230 image ./files/foldover.gif;
+#X text 29 32 O teorema de Nyquist diz que a maior frequência que conseguimos
+representar depende da Taxa de Amostragem. Mais especificamente \,
+conseguimos representar até a metade da Frequência da Taxa de Amostragem
+\, que também é chamada "Frequência de Nyquist". Acima disso \, temos
+o "Aliasing" \, ou "Foldover".;
+#X obj 496 468 output~;
+#X text 451 146 Esse cálculo é feito no subpatch abaixo. Veja que estamos
+enviando uma frequência de 40Khz para o [osc~] \, mas o que se escuta
+mesmo é uma frequência de 4.1Khz. Mude os valores para experimentar.
+Quando a frequência de Aliasing volta e "passa" do zero \, ela rebate
+novamente (começa a subir de novo com fase invertida).;
+#X text 36 337 É fácil entender o princípio disso \, imaginemos um
+exemplo exagerado \, onde um arquivo de som digital possui uma taxa
+de amostragem extremamente pequena de 20 vezes por segundo (20Hz).
+Pois bem \, um Lá central (com seus 440 ciclos por segundo) nunca poderá
+ser representado nessa taxa tão pequena.;
+#X text 37 423 Acima temos uma ilustração onde a frequência original
+que se pretendia representar está delineada em vermelho. Mas \, devido
+à Taxa de amostragem (que corresponde aos pontos azuis) \, a forma
+de onda representada é outra \, desenhada também em azul \, em um processo
+de interpolação.;
+#X text 449 31 Basicamente \, se a frequência passa da Frequência de
+Nyquist \, ela rebate e começa a voltar na mesma ordem da diferença.
+De modo que \, numa taxa de 44.1Khz \, 23Khz vira 21.1Khz. Enfim \,
+a expressão é: se a frequência for maior que a frequência de Nyquist
+\, então:;
+#X obj 705 453 / 2;
+#X obj 705 514 value Nyquist;
+#X obj 705 426 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 44.1 256;
+#X obj 705 486 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 22.05 256;
+#X obj 705 393 / 1000;
+#X text 766 484 Khz;
+#X text 764 424 Khz;
+#X obj 705 364 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 44100 256;
+#X text 763 363 Hz;
+#X text 537 422 <= oscilador;
+#X text 551 303 <= KiloHertz;
+#X text 433 270 Na caixa de número \, clique e arraste \; ou ainda
+clique \, dê um valor e depois \; "enter":;
+#X obj 496 305 nbx 3 19 -1e+37 1e+37 0 0 empty osc empty 0 -8 0 14
+-203904 -1 -1 40 256;
+#X connect 0 0 1 0;
+#X connect 1 0 12 0;
+#X connect 1 0 12 1;
+#X connect 3 0 2 0;
+#X connect 6 0 24 0;
+#X connect 7 0 6 0;
+#X connect 7 0 9 0;
+#X connect 17 0 20 0;
+#X connect 19 0 17 0;
+#X connect 20 0 18 0;
+#X connect 21 0 19 0;
+#X connect 24 0 21 0;
+#X connect 29 0 3 0;
+#X connect 29 0 0 0;

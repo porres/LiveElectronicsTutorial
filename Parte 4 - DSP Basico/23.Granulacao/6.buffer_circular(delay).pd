@@ -1,0 +1,188 @@
+#N canvas 163 22 1036 579 10;
+#N canvas 148 27 361 174 delwrite 0;
+#X obj 69 44 inlet~;
+#X obj 70 121 outlet~;
+#X obj 69 78 delwrite~ \$0-buffer 5000;
+#X connect 0 0 2 0;
+#X restore 536 413 pd delwrite;
+#X text 658 180 grão (ms);
+#X text 548 179 posição (ms);
+#X obj 535 206 s~ \$0-pos;
+#X obj 646 205 s~ \$0-grain;
+#X obj 780 212 s~ \$0-fase;
+#X obj 780 45 nbx 5 14 -1e+37 1e+37 0 0 empty lfnoise-freq empty 0
+-8 0 10 -204800 -1 -1 2 256;
+#X obj 780 156 +~;
+#X obj 780 126 *~;
+#X obj 780 184 phasor~;
+#X obj 535 92 *~;
+#X obj 535 122 +~;
+#X obj 646 85 *~;
+#X obj 646 115 +~;
+#X obj 646 48 noise~;
+#X text 832 117 offset;
+#X obj 535 150 +~;
+#X obj 646 151 +~;
+#X text 677 133 offset;
+#X obj 535 55 noise~;
+#X obj 823 134 nbx 5 14 -1e+37 1e+37 0 0 empty freq-offset empty 0
+-8 0 10 -261682 -1 -1 0 256;
+#X obj 684 88 nbx 5 14 -1e+37 1e+37 0 0 empty grao-amp empty 0 -8 0
+10 -262130 -1 -1 100 256;
+#X obj 681 152 nbx 5 14 -1e+37 1e+37 0 0 empty grao-offset empty 0
+-8 0 10 -261682 -1 -1 100 256;
+#X text 694 68 amp;
+#X text 569 130 offset;
+#X obj 573 88 nbx 5 14 -1e+37 1e+37 0 0 empty pos-amp empty 0 -8 0
+10 -262130 -1 -1 4800 256;
+#X obj 573 149 nbx 5 14 -1e+37 1e+37 0 0 empty pos-offset empty 0 -8
+0 10 -261682 -1 -1 0 256;
+#X text 583 68 amp;
+#X obj 831 77 nbx 5 14 -1e+37 1e+37 0 0 empty freq-amp empty 0 -8 0
+10 -262130 -1 -1 4 256;
+#X text 846 57 amp;
+#X obj 684 108 / 2;
+#X obj 573 108 / 2;
+#X obj 780 71 noish~;
+#X obj 513 489 output~;
+#X obj 536 343 readsf~;
+#X obj 536 288 loadbang;
+#X msg 536 314 open ../../samples/bubul.wav \, 1;
+#X text 84 62 Por fim \, adaptamos a estruura apresentada de um patch
+de granulação para funcionar com buffer circulares (linhas de delay).
+O interessante desse mecanismo é permitir gerar granulação em uma entrada
+de áudio em tempo real (ou seja \, ao vivo \, a partir de um instrumento
+sendo gravado na hora).;
+#X text 548 380 <= entrada de áudio ao vivo;
+#X text 87 148 A adaptação é elementar. Onde antes tínhamos um [tabread4~]
+para ler um buffer \, agora temos um objeto [vd~]. Outro detalhe é
+que \, em vez de uma entrada de leitura em número de amostras \, agora
+temos o tamanho do grão e a posição em ms.;
+#X text 83 234 Claramente \, há diferenças no comportamento do patch.
+O buffer agora não é mais fixo \, então manter a posição fixa não faz
+com que o mesmo grão seja repetido. Outra questão é que a velocidade
+de leitura dos grãos agora precisa levar em consideração a velocidade
+de leitura que já existe pelo fato do buffer não ser fixo (mais detalhes
+sobre essa implicaçnao em particular será retratada em Pitch Shifting
+/ Time Stretching via granulação).;
+#N canvas 133 22 532 285 vd~ 0;
+#X obj 329 168 +~;
+#X obj 329 196 outlet~;
+#X obj 118 103 inlet~;
+#X text 111 81 dummy inlet;
+#N canvas 142 27 496 512 grao_1 0;
+#X obj 204 389 *~;
+#X obj 219 338 /~ 2;
+#X obj 219 362 sin~;
+#X obj 101 202 r~ \$0-grain;
+#X obj 59 238 *~;
+#X obj 101 235 sah~;
+#X obj 90 324 +~;
+#X obj 111 300 sah~;
+#X obj 85 264 r~ \$0-pos;
+#X obj 210 204 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 156 71 inlet~;
+#X text 159 42 Fase;
+#X obj 204 426 outlet~;
+#X text 247 224 transforma em impulso;
+#X obj 90 356 vd~ \$0-buffer;
+#X connect 0 0 12 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 1;
+#X connect 6 0 14 0;
+#X connect 7 0 6 1;
+#X connect 8 0 7 0;
+#X connect 9 0 5 1;
+#X connect 9 0 7 1;
+#X connect 10 0 4 0;
+#X connect 10 0 9 0;
+#X connect 10 0 1 0;
+#X connect 14 0 0 0;
+#X restore 289 104 pd grao_1;
+#N canvas 142 27 531 519 grao_2 0;
+#X obj 205 407 *~;
+#X obj 220 356 /~ 2;
+#X obj 220 380 sin~;
+#X obj 100 217 r~ \$0-grain;
+#X obj 58 253 *~;
+#X obj 100 250 sah~;
+#X obj 89 339 +~;
+#X obj 110 315 sah~;
+#X obj 84 279 r~ \$0-pos;
+#X obj 209 219 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X text 162 10 Fase;
+#X obj 205 444 outlet~;
+#X obj 155 59 +~ 0.5;
+#X obj 155 86 wrap~;
+#X obj 155 33 inlet~;
+#X text 239 242 transforma em impulso;
+#X obj 89 371 vd~ \$0-buffer;
+#X connect 0 0 11 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 1;
+#X connect 6 0 16 0;
+#X connect 7 0 6 1;
+#X connect 8 0 7 0;
+#X connect 9 0 5 1;
+#X connect 9 0 7 1;
+#X connect 12 0 13 0;
+#X connect 13 0 4 0;
+#X connect 13 0 9 0;
+#X connect 13 0 1 0;
+#X connect 14 0 12 0;
+#X connect 16 0 0 0;
+#X restore 364 106 pd grao_2;
+#X obj 308 56 r~ \$0-fase;
+#X connect 0 0 1 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 1;
+#X connect 6 0 4 0;
+#X connect 6 0 5 0;
+#X restore 536 448 pd vd~;
+#X text 80 360 Abra o subpatch [pd vd~] e depois os subpatches dos
+grãos para ver a mudança e adaptação feita no patch. Perceba que há
+o cuidado aqui de manter uma ordem de conexão que garanta a ordem certa
+de execução dos objetos de áudio \, permitindo assim um delay mínimo
+abaixo de um bloco de áudio.;
+#X obj 798 349 loadbang;
+#X text 80 448 Neste exemplo temos uma linha de delay de 5 segundos.
+;
+#X msg 798 372 \; lfnoise-freq 2 \; freq-amp 4 \; freq-offset 0 \;
+grao-amp 100 \; grao-offset 100 \; pos-amp 4800 \; pos-offset 0;
+#X connect 0 0 41 0;
+#X connect 6 0 32 0;
+#X connect 7 0 9 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 11 0;
+#X connect 11 0 16 0;
+#X connect 12 0 13 0;
+#X connect 13 0 17 0;
+#X connect 14 0 12 0;
+#X connect 16 0 3 0;
+#X connect 17 0 4 0;
+#X connect 19 0 10 0;
+#X connect 20 0 7 1;
+#X connect 21 0 30 0;
+#X connect 22 0 17 1;
+#X connect 25 0 31 0;
+#X connect 26 0 16 1;
+#X connect 28 0 8 1;
+#X connect 30 0 13 1;
+#X connect 30 0 12 1;
+#X connect 31 0 11 1;
+#X connect 31 0 10 1;
+#X connect 32 0 8 0;
+#X connect 34 0 0 0;
+#X connect 34 1 36 0;
+#X connect 35 0 36 0;
+#X connect 36 0 34 0;
+#X connect 41 0 33 0;
+#X connect 41 0 33 1;
+#X connect 43 0 45 0;

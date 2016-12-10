@@ -1,0 +1,88 @@
+#N canvas 727 161 897 566 10;
+#X obj 166 356 expr pow(10 \, $f1 / 20);
+#X text 146 327 dB;
+#X obj 166 433 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 18 -6 0
+10 -200501 -1 -1 0 256;
+#X text 130 431 Razão;
+#X obj 166 462 expr log10($f1) * 20;
+#X text 146 487 dB;
+#X msg 198 292 6.0206;
+#X msg 250 292 10;
+#X msg 172 392 1;
+#X msg 207 392 10;
+#X msg 246 392 20;
+#X msg 286 392 100;
+#X msg 131 292 -100;
+#X msg 140 392 0.5;
+#X msg 283 293 100;
+#X obj 166 328 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-257985 -1 -1 0 256;
+#X floatatom 166 487 0 0 0 0 - - -;
+#X obj 599 355 v2db;
+#X msg 95 292 -500;
+#X msg 107 392 0;
+#X msg 166 292 0;
+#X obj 599 327 nbx 12 14 -1e+37 1e+37 0 0 empty empty empty 18 -6 0
+10 -200501 -1 -1 0 256;
+#X obj 599 426 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-257985 -1 -1 -199.9 256;
+#X text 558 327 Razão;
+#X text 574 424 dB;
+#X obj 599 457 db2v;
+#X obj 599 487 nbx 12 14 -1e+37 1e+37 0 0 empty empty empty 18 -6 0
+10 -200501 -1 -1 1.01158e-10 256;
+#X text 558 487 Razão;
+#X msg 599 294 0;
+#X obj 599 269 loadbang;
+#X text 476 104 Isso significa que uma razão de 0 dá -199.9 em vez
+de infinito negativo (o que implica numa amplitude de 1.01158e-10 em
+vez de 0). Em contrapartida \, se entrarmos com um valor menor que
+-199.9 \, como -200 dB \, o objeto [db2v] retorna uma razão de 0!;
+#X msg 546 382 -200;
+#X text 498 381 clique;
+#X text 61 29 É importante enfatizar novamente a relação entre dB e
+proporção. Antes de mais nada \, é esse o ponto mais importante em
+relação à escala em dB \, independente do tipo de amplitude (como Pico
+ou RMS). Veremos também diferentes padrões de dB \, mas essa relação
+é o que sempre prevalece.;
+#X text 63 107 Já vimos \, no primeiro exemplo desta série a conversão
+de amplitude linear para dB \, como em parte do processo havia a conversão
+entre proporção/razão para dB. Então não é nada de novo.;
+#X text 64 169 Vejamos agora a fórmula específica para converter razão
+em dB e vice-versa. Alguns exemplos nos mostram como uma razão de 10
+vezes mais dá 20 dB \, e 100 vezes mais é 40 dB. Já 100 dB é uma razão
+de 100 mil vezes mais. Entenda também como 0 dB é igual a uma razão
+de 1 e \, por sua vez \, uma razão de 0 dá menos infinito.;
+#X text 475 29 O objeto [v2db] (de "value to dB") converte de forma
+parecida de razão para dB \, enquanto [db2v] faz a conversão inversa.
+Ele só não equivale completamente à fórmula apresentada à esquerda
+porque possui um limite mínimo de -199.9 dB.;
+#X text 477 181 Isso é só uma particularidade do objeto que foi pensado
+para que o valor mínimo seja esse. Vimos anteriormente que o objeto
+[rmstodb] também evita retornar um valor de menos infinito \, e o motivo
+é uma questão de comodidade.;
+#X text 311 355 (dB pra Razão);
+#X text 304 463 (Rrazão pra dB);
+#X connect 0 0 2 0;
+#X connect 2 0 4 0;
+#X connect 4 0 16 0;
+#X connect 6 0 15 0;
+#X connect 7 0 15 0;
+#X connect 8 0 2 0;
+#X connect 9 0 2 0;
+#X connect 10 0 2 0;
+#X connect 11 0 2 0;
+#X connect 12 0 15 0;
+#X connect 13 0 2 0;
+#X connect 14 0 15 0;
+#X connect 15 0 0 0;
+#X connect 17 0 22 0;
+#X connect 18 0 15 0;
+#X connect 19 0 2 0;
+#X connect 20 0 15 0;
+#X connect 21 0 17 0;
+#X connect 22 0 25 0;
+#X connect 25 0 26 0;
+#X connect 28 0 21 0;
+#X connect 29 0 28 0;
+#X connect 31 0 22 0;

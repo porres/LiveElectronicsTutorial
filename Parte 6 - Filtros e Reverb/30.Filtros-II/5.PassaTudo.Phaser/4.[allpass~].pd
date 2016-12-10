@@ -1,0 +1,247 @@
+#N canvas 0 23 1263 716 10;
+#X floatatom 562 152 5 0 1000 0 - - -;
+#X floatatom 618 262 5 0 0 0 - - -;
+#X obj 174 553 vline~;
+#X obj 174 467 tgl 15 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X obj 173 612 s~ \$0-input;
+#X obj 458 208 r~ \$0-input;
+#X obj 507 394 output~;
+#X obj 504 623 output~;
+#X obj 130 640 output~;
+#X obj 621 240 hsl 128 15 0 0.999 0 0 empty g ganho -2 -8 0 10 -228856
+-1 -1 12700 1;
+#X obj 565 130 hsl 128 15 1 100 1 0 empty ms empty -2 -8 0 10 -191407
+-1 -1 12500 0;
+#N canvas 68 47 736 468 allpass~ 0;
+#X obj 179 201 vd~ \$0-y;
+#X obj 109 201 vd~ \$0-x;
+#X obj 86 172 * -1;
+#X obj 71 199 *~;
+#X obj 94 235 +~;
+#X obj 94 262 +~;
+#X obj 217 232 *~;
+#X obj 108 294 delwrite~ \$0-y 100;
+#X obj 98 78 delwrite~ \$0-x 100;
+#X obj 94 344 outlet~;
+#X obj 284 256 block~ 1;
+#X obj 71 38 inlet~;
+#X text 151 345 y[n] = -g*x[n] + x[n-d] + g*y[n-d];
+#X text 220 79 feedforward;
+#X text 228 294 feedback;
+#X text 301 122 <= coeficiente de ganho;
+#X obj 232 122 r \$0-ganho;
+#X obj 179 169 r \$0-del;
+#X text 239 168 tempo do delay;
+#X obj 406 202 cnv 15 260 120 empty empty empty 20 12 0 14 -228856
+-66577 0;
+#X text 461 223 |;
+#X text 461 234 |;
+#X text 461 244 |;
+#X text 446 255 |;
+#X text 446 265 | z^-d |;
+#X text 488 256 |;
+#X text 488 275 |;
+#X text 446 275 |;
+#X text 449 246 _______;
+#X text 449 275 _______;
+#X text 494 266 -----;
+#X text 461 247 v;
+#X text 521 249 |;
+#X text 521 260 |;
+#X text 521 230 |;
+#X text 521 239 |;
+#X text 521 225 ^;
+#X text 609 224 |;
+#X text 609 233 |;
+#X text 609 242 |;
+#X text 588 257 |;
+#X text 588 266 | z^-d |;
+#X text 630 256 |;
+#X text 630 276 |;
+#X text 588 276 |;
+#X text 591 247 _______;
+#X text 591 276 _______;
+#X text 609 245 v;
+#X text 551 251 |;
+#X text 551 260 |;
+#X text 551 231 |;
+#X text 551 241 |;
+#X text 551 225 ^;
+#X text 629 215 >;
+#X text 427 302 y[n] = -g*x[n] + x[n-d] + g*y[n-d];
+#X text 413 216 x[n] -----(*-g)--(+)--(+)----------- y[n];
+#X text 554 266 -(*g)-;
+#X connect 0 0 6 0;
+#X connect 1 0 4 1;
+#X connect 2 0 3 1;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 0;
+#X connect 5 0 9 0;
+#X connect 6 0 5 1;
+#X connect 11 0 3 0;
+#X connect 11 0 8 0;
+#X connect 16 0 6 1;
+#X connect 16 0 2 0;
+#X connect 17 0 0 0;
+#X connect 17 0 1 0;
+#X restore 504 590 pd allpass~;
+#X text 632 183 tempo de delay;
+#X text 662 263 ganho de feedforward;
+#X text 717 277 e feedback;
+#X text 600 151 ms;
+#X obj 174 494 metro 1000;
+#X obj 174 443 loadbang;
+#X msg 279 496 \; ms 10 \; g 0.8;
+#X obj 504 562 r~ \$0-input;
+#X text 402 476 No subpatch abaixo temos a implementação do [allpass~]
+com os objetos de delay do vanilla e de acordo com o diagrama dado.
+Abra e confira.;
+#X obj 857 397 blosc~ saw;
+#X obj 1077 466 triangle~ 0.5;
+#X obj 857 562 +~;
+#X obj 993 456 r~ \$0-g;
+#X obj 573 184 s \$0-del;
+#X obj 639 299 s \$0-ganho;
+#X obj 1077 512 s~ \$0-g;
+#X obj 990 498 r~ \$0-g;
+#X obj 1077 488 expr~ ($v1 * 0.3) + 0.5;
+#X text 1096 415 LFO;
+#X obj 858 623 output~;
+#X obj 857 584 tanh~;
+#X text 36 24 O objeto [allpass~] é um external que é um clone de um
+objeto de MAX/MSP e também é um tipo de "Comb Filter" (filtro de pente)
+como veremos. Segue abaixo a equação de diferença e diagrama.;
+#X text 37 237 Perceba que se trata do mesmo diagrama já apresentado
+de filtro Passa Tudo! Ele pode ser implementado com os objetos de delay
+simples do Pd Vanilla de acordo com o diagrama acima. A razão de usarmos
+agora os objetos de delay em vez do [fexpr~] é que o atraso pode ser
+bem mais longo e dado em ms!;
+#X text 834 265 ============================================================
+;
+#X msg 174 523 1 10 \, 0 200 10;
+#X obj 159 584 *~;
+#X obj 96 554 noise~;
+#X obj 62 94 cnv 15 260 120 empty empty empty 20 12 0 14 -228856 -66577
+0;
+#X text 117 115 |;
+#X text 117 126 |;
+#X text 117 136 |;
+#X text 102 147 |;
+#X text 102 157 | z^-d |;
+#X text 144 148 |;
+#X text 144 167 |;
+#X text 102 167 |;
+#X text 105 138 _______;
+#X text 105 167 _______;
+#X text 150 158 -----;
+#X text 117 139 v;
+#X text 177 141 |;
+#X text 177 152 |;
+#X text 177 122 |;
+#X text 177 131 |;
+#X text 177 117 ^;
+#X text 265 116 |;
+#X text 265 125 |;
+#X text 265 134 |;
+#X text 244 149 |;
+#X text 244 158 | z^-d |;
+#X text 286 148 |;
+#X text 286 168 |;
+#X text 244 168 |;
+#X text 247 139 _______;
+#X text 247 168 _______;
+#X text 265 137 v;
+#X text 207 143 |;
+#X text 207 152 |;
+#X text 207 123 |;
+#X text 207 133 |;
+#X text 207 117 ^;
+#X text 285 107 >;
+#X text 83 194 y[n] = -g*x[n] + x[n-d] + g*y[n-d];
+#X text 210 158 -(*g)-;
+#X obj 857 371 sig~ 100;
+#X obj 1077 443 phasor~ 0.15;
+#X obj 872 434 allpass~ 0.1 0.1;
+#X obj 872 459 allpass~ 0.2 0.2;
+#X obj 872 483 allpass~ 0.3 0.3;
+#X obj 872 508 allpass~ 0.4 0.4;
+#X obj 618 323 sig~;
+#X obj 562 322 sig~;
+#X text 69 108 x[n] -----(*-g)--(+)--(+)----------- y[n];
+#X text 843 301 Mas enfim podemos também usar o [allpass~] para implementar
+uma variação do patch de "phaser" do exemplo anterior;
+#X obj 136 494 sel 0;
+#X msg 136 518 1;
+#X text 38 325 No diagrama e na equação de diferença \, esse tempo
+de delay em ms é dado pela letra "d". No exemplo anterior \, a equação
+e diagrama se restringiam a um atraso de apenas uma amostra. Outra
+diferença é que agora usamos a letra "g" como coeficiente \, que é
+o coeficiente de ganho do Polo e do Zero ou \, respectivamente \, do
+feedback e do feedforward - porém com valores opostos (um negativo
+\, outro positivo).;
+#X text 77 464 Ligar Envelope;
+#X text 840 19 Em tese \, esse filtro de Passa Tudo opera da maneira
+clássica \, não interferindo nas amplitudes \, somente na resposta
+de fase. Porém \, os efeitos obtidos aqui pelo [allpass~] estão mais
+para ressonância/reverberação a partir de um delay em feedback. Lembrando
+que \, antes de mais nada \, ele é implementado a partir de um diagrama
+de delays. A questão é que \, diferente dos outros filtros \, aqui
+podemos setar um valor de delay bem maior que poucas amostras.;
+#X text 840 145 Veja \, entretanto \, como que \, para uma entrada
+ruidosa e não envelopada \, mesmo com valores de delay relativamente
+altos \, não há muita mudança perceptiva no processamento. Desligue
+o gerador de envelope da entrada sonora e confira.;
+#X text 840 209 Isso significa que esse tipo de processamento altera
+mais os sons transientes e percussivos do que as qualidades tonais.
+;
+#X text 446 41 Agora vejamos o objeto [allpass~] em ação. O inlet da
+esquerda é a entrada do filtro \, o do meio é o tempo de delay em ms
+e o da direita é o coeficiente de ganho. Os argumentos são tempo máximo
+do delay \, tempo do delay e coeficiente de ganho.;
+#X obj 507 346 allpass~ 100 10 0.8;
+#X connect 0 0 25 0;
+#X connect 0 0 83 0;
+#X connect 1 0 26 0;
+#X connect 1 0 82 0;
+#X connect 2 0 37 1;
+#X connect 3 0 16 0;
+#X connect 3 0 86 0;
+#X connect 5 0 94 0;
+#X connect 9 0 1 0;
+#X connect 10 0 0 0;
+#X connect 11 0 7 0;
+#X connect 11 0 7 1;
+#X connect 16 0 36 0;
+#X connect 17 0 3 0;
+#X connect 17 0 18 0;
+#X connect 19 0 11 0;
+#X connect 21 0 23 0;
+#X connect 21 0 78 0;
+#X connect 22 0 29 0;
+#X connect 23 0 32 0;
+#X connect 24 0 78 2;
+#X connect 24 0 79 2;
+#X connect 28 0 80 2;
+#X connect 28 0 81 2;
+#X connect 29 0 27 0;
+#X connect 32 0 31 0;
+#X connect 32 0 31 1;
+#X connect 36 0 2 0;
+#X connect 37 0 4 0;
+#X connect 37 0 8 0;
+#X connect 37 0 8 1;
+#X connect 38 0 37 0;
+#X connect 76 0 21 0;
+#X connect 77 0 22 0;
+#X connect 78 0 79 0;
+#X connect 79 0 80 0;
+#X connect 80 0 81 0;
+#X connect 81 0 23 1;
+#X connect 82 0 94 2;
+#X connect 83 0 94 1;
+#X connect 86 0 87 0;
+#X connect 87 0 2 0;
+#X connect 94 0 6 0;
+#X connect 94 0 6 1;

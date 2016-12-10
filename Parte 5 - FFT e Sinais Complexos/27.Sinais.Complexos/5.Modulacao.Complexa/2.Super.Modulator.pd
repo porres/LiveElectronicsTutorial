@@ -1,0 +1,172 @@
+#N canvas 389 36 847 712 10;
+#X obj 472 98 cnv 15 180 40 empty empty empty 20 12 0 14 -171382 -66577
+0;
+#X obj 50 299 cnv 15 298 138 empty empty empty 20 12 0 14 -174629 -66577
+0;
+#N canvas 0 22 478 328 (subpatch) 0;
+#X array \$0-Espectro 128 float 0;
+#X coords 0 3248 127 0 300 140 1;
+#X restore 49 298 graph;
+#X text 141 438 500Hz;
+#X text 88 437 250Hz;
+#X text 48 437 50Hz;
+#X text 196 437 750Hz;
+#X text 255 437 1KHz;
+#X text 300 438 1.25KHz;
+#X obj 620 60 nbx 5 16 -2000 2000 0 0 empty mod empty 0 -8 0 13 -204800
+-1 -1 100 256;
+#X obj 498 34 nbx 5 16 -2000 2000 0 0 empty empty empty 0 -8 0 13 -261682
+-1 -1 0 256;
+#X text 625 37 Moduladora;
+#X obj 601 405 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 267 136 529 373 gain 0;
+#X obj 234 176 *~;
+#X obj 222 208 dac~;
+#X obj 263 146 line~;
+#X msg 263 120 \$1 10;
+#X obj 263 94 pow 4;
+#X obj 263 67 inlet;
+#X obj 234 36 inlet~;
+#N canvas 131 60 278 287 plot-spectrum 0;
+#X obj 53 64 inlet~;
+#X obj 53 99 rfft~;
+#X obj 132 98 loadbang;
+#X obj 132 146 metro 250;
+#X obj 132 125 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1
+1;
+#X obj 89 224 block~ 4096;
+#X obj 41 137 cartopol~;
+#X obj 51 188 tabwrite~ \$0-Espectro;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 1 1 6 1;
+#X connect 2 0 4 0;
+#X connect 3 0 7 0;
+#X connect 4 0 3 0;
+#X connect 6 0 7 0;
+#X restore 165 250 pd plot-spectrum;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 7 0;
+#X restore 559 429 pd gain;
+#X obj 621 343 *~;
+#X obj 559 343 *~;
+#X obj 498 343 *~;
+#X obj 636 153 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -158834
+-1 -1 5700 1;
+#X obj 636 318 line~;
+#X msg 636 296 \$1 10;
+#X obj 574 153 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -158834
+-1 -1 12700 1;
+#X obj 574 318 line~;
+#X msg 574 296 \$1 10;
+#X obj 513 153 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -158834
+-1 -1 5000 1;
+#X obj 513 318 line~;
+#X msg 513 296 \$1 10;
+#X text 39 14 Agora podemos voltar atrás no exemplo de modulação de
+amplitude \, onde com um ajuste de DC Offset é possível controlar a
+intensidade das bandas geradas variando entre a modulação em anel e
+a modulação de amplitude clássica. Vimos então que era possível controlar
+com o DC Offdet a energia das bandas laterais e do componente original.
+;
+#X obj 498 70 osc~ 440;
+#X text 41 106 Pois bem \, com a modulação complexa \, podemos ter
+um controle mais simples e refinado da energia de cada uma das bandas
+e de forma independente em um "super modulator".;
+#X text 42 155 A implementação é baseada na modulação complexa com
+duas bandas laterais independentes. Além disso \, mantemos o sinal
+original intacto. Na saída \, temos 3 sliders controlando a amplitude
+de cada banda \, sendo que o slider central é do sinal original e os
+sliders laterais das bandas laterais. Mexa nos sliders \, confira o
+patch ao lado e o espectro abaixo.;
+#N canvas 244 63 520 415 Modulador-Complexo 0;
+#X obj 273 38 inlet~;
+#X obj 320 39 inlet~;
+#X obj 273 333 outlet~;
+#N canvas 77 67 612 360 hilbert~ 0;
+#X obj 308 157 biquad~ 0.83774 -0.06338 0.06338 -0.83774 1;
+#X obj 308 129 biquad~ 1.94632 -0.94657 0.94657 -1.94632 1;
+#X obj 28 132 biquad~ -0.02569 0.260502 -0.260502 0.02569 1;
+#X obj 28 158 biquad~ 1.8685 -0.870686 0.870686 -1.8685 1;
+#X obj 308 26 inlet~;
+#X obj 308 183 outlet~;
+#X obj 28 186 outlet~;
+#X obj 405 271 hilbert~;
+#X text 297 271 clique e abra =>;
+#X text 119 240 Copiado da abstração [hilbert~] que vem no Pd-Vanilla.
+;
+#X connect 0 0 5 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 1 0;
+#X connect 4 0 2 0;
+#X restore 57 159 pd hilbert~;
+#X obj 320 172 cos~;
+#X obj 361 172 cos~;
+#X obj 320 123 phasor~;
+#X obj 361 151 -~ 0.25;
+#X obj 333 333 outlet~;
+#X obj 57 333 outlet~;
+#X obj 57 254 expr~ ($v1 * $v3) + ($v2 * $v4) \; ($v1 * $v3) - ($v2
+* $v4);
+#X connect 0 0 3 0;
+#X connect 0 0 2 0;
+#X connect 1 0 6 0;
+#X connect 3 0 10 0;
+#X connect 3 1 10 1;
+#X connect 4 0 10 2;
+#X connect 5 0 10 3;
+#X connect 6 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 5 0;
+#X connect 10 0 9 0;
+#X connect 10 1 8 0;
+#X restore 498 112 pd Modulador-Complexo;
+#X obj 701 157 loadbang;
+#X msg 701 183 \; pd dsp 1 \; mod 100;
+#X obj 570 588 complex-mod~;
+#X text 255 486 ============================================================
+;
+#X obj 570 559 hilbert~;
+#X obj 639 558 nbx 5 16 -2000 2000 0 0 empty mod empty 0 -8 0 13 -204800
+-1 -1 100 256;
+#X text 644 535 Moduladora;
+#X obj 570 528 osc~ 440;
+#X text 157 561 O Pd Vanilla possui uma abstração de modulação complexa
+que recebe um sinal complexo e um valor de modulação. Ele possui duas
+saídas independentes que são as bandas laterais.;
+#X obj 576 619 output~;
+#X connect 9 0 30 1;
+#X connect 10 0 27 0;
+#X connect 12 0 13 1;
+#X connect 14 0 13 0;
+#X connect 15 0 13 0;
+#X connect 16 0 13 0;
+#X connect 17 0 19 0;
+#X connect 18 0 14 1;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 15 1;
+#X connect 22 0 21 0;
+#X connect 23 0 25 0;
+#X connect 24 0 16 1;
+#X connect 25 0 24 0;
+#X connect 27 0 30 0;
+#X connect 30 0 16 0;
+#X connect 30 1 15 0;
+#X connect 30 2 14 0;
+#X connect 31 0 32 0;
+#X connect 33 0 40 0;
+#X connect 33 1 40 1;
+#X connect 35 0 33 0;
+#X connect 35 1 33 1;
+#X connect 36 0 33 2;
+#X connect 38 0 35 0;

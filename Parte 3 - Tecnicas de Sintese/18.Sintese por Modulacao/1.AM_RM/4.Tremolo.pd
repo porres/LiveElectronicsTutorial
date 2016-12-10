@@ -1,0 +1,309 @@
+#N canvas 22 124 1285 716 10;
+#X obj 875 171 *~;
+#X obj 54 516 cnv 15 298 138 empty empty empty 20 12 0 14 -188078 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-Tremolo 1323 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#A 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 1.1 1322 -1.1 300 140 1;
+#X restore 53 515 graph;
+#X obj 929 260 hsl 128 15 0 1 0 0 empty empty gain -2 -6 0 10 -204786
+-1 -1 0 0;
+#X msg 1001 407 0 0.5 1 0.5 0;
+#X obj 1001 381 loadbang;
+#X obj 958 434 tof/breakpoints~ 100 50;
+#X obj 1078 96 nbx 5 14 0.01 20 1 1 empty \$0-LFO empty 0 -8 0 10 -204786
+-1 -1 1 256;
+#X obj 1078 145 trapezoid~ 0.5 0.5;
+#X obj 1078 119 phasor~;
+#X obj 1019 71 hsl 128 15 1 0 0 0 depth lo empty -2 -8 0 10 -232576
+-1 -1 0 1;
+#X msg 1016 117 lo \$1;
+#X floatatom 1016 93 0 0 0 0 - - -;
+#X obj 1130 121 nbx 4 14 -1e+37 1e+37 0 0 \$0-L empty empty 0 -8 0
+10 -228856 -1 -1 0 256;
+#X obj 1183 121 nbx 4 14 -1e+37 1e+37 0 0 \$0-R empty empty 0 -8 0
+10 -228856 -1 -1 0 256;
+#X obj 711 62 hsl 128 15 0 0.5 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X obj 1130 470 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X text 1160 71 Depth;
+#X obj 69 372 loadbang;
+#X obj 70 422 readsf~;
+#X obj 70 454 s~ \$0-sample;
+#X obj 875 140 r~ \$0-sample;
+#X obj 1078 175 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#N canvas 358 103 509 363 output 0;
+#X obj 100 176 *~;
+#X obj 101 223 dac~;
+#X obj 129 146 line~;
+#X msg 129 120 \$1 10;
+#X obj 129 94 pow 4;
+#X obj 129 67 inlet;
+#X obj 100 36 inlet~;
+#X obj 214 86 loadbang;
+#X obj 143 192 loadbang;
+#X obj 143 219 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1
+1;
+#X obj 62 282 tabwrite~ \$0-Tremolo;
+#X msg 214 112 \; pd dsp 1;
+#X obj 143 240 metro 450;
+#X obj -62 185 catch~ \$0-out;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 10 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 11 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X restore 875 283 pd output;
+#X obj 491 75 *~;
+#X obj 441 34 r~ \$0-sample;
+#X obj 545 264 hsl 128 15 0 1 0 0 empty empty gain -2 -6 0 10 -204786
+-1 -1 0 0;
+#N canvas 73 187 354 373 output 0;
+#X obj 79 176 *~;
+#X obj 80 223 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X obj 193 86 loadbang;
+#X msg 194 181 \; pd dsp 1;
+#X obj 214 133 s \$0-LFO;
+#X msg 213 110 1;
+#X obj 41 282 throw~ \$0-out;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 11 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 8 0;
+#X connect 7 0 10 0;
+#X connect 10 0 9 0;
+#X restore 491 287 pd output;
+#X obj 537 114 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 537 27 nbx 5 14 0.01 20 1 1 empty \$0-LFO empty 0 -8 0 10 -204786
+-1 -1 1 256;
+#X text 522 170 0;
+#X text 523 107 1;
+#X text 517 230 -1;
+#X text 43 70 Enfim \, o Tremolo não passa de uma modulação de amplitude
+sendo modulada por um LFO. E é importante que seja mesmo uma modulação
+de amplitude clássica \, e não uma modulação em Anel \, porque é melhor
+que o sinal modulador seja unipolar. Não seria o fim do mundo modular
+por um sinal bipolar \, mas é que a frequência de modulação seria o
+dobro \, já que multiplicaríamos por um valor positivo e outro negativo
+em um mesmo ciclo - apontanto ainda que a multiplicação por um valor
+negativo implica em uma inversão de fase.;
+#X text 716 42 Depth;
+#X text 596 25 LFO;
+#X obj 537 50 osc~;
+#X obj 1022 520 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 537 85 expr~ ($v1 * $f2) + (1 - $f2);
+#X obj 956 494 expr~ ($v1 * $f2) + (1 - $f2);
+#X obj 933 378 nbx 5 14 0.01 20 1 1 empty \$0-LFO empty 0 -8 0 10 -204786
+-1 -1 1 256;
+#X obj 933 400 phasor~;
+#X obj 552 409 phasor~;
+#X obj 552 388 nbx 5 14 0.01 20 1 1 empty \$0-LFO empty 0 -8 0 10 -204786
+-1 -1 1 256;
+#X obj 502 490 *~;
+#X obj 462 449 r~ \$0-sample;
+#X obj 552 486 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 43 195 Além de mantermos o sinal unipolar \, temos um controle
+da amplitude de modulação chamado "depth". Ele define o quanto o LFO
+aplica um Tremolo no sinal. Quando o slider está à esquerda \, o sinal
+permanece intacto. Ou seja \, a amplitude permanece igual a 1! À medida
+que movemos o slider à direita \, a ampltitude do LFO aumenta \, indo
+de 1 até 0 - confira o [Scope~] para entender isso melhor. O controle
+de Depth não passa de um ajuste de ganho e DC offset \, que fazemos
+num [expr~]. Confira ao lado.;
+#X text 46 323 Abaixo temos a saída de áudio na tabela \$0-Tremolo.
+;
+#X text 312 396 <= tocar sample;
+#X text 883 329 Por fim \, um exemplo com o [tof/breakpoints~] \, que
+nos permite desenhar as mais variadas formas de onda.;
+#X obj 556 642 hsl 128 15 0 1 0 0 empty empty gain -2 -6 0 10 -204786
+-1 -1 0 0;
+#N canvas 73 187 354 373 output 0;
+#X obj 79 176 *~;
+#X obj 80 223 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X obj 193 86 loadbang;
+#X msg 194 181 \; pd dsp 1;
+#X obj 214 133 s \$0-LFO;
+#X msg 213 110 1;
+#X obj 41 282 throw~ \$0-out;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 11 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 8 0;
+#X connect 7 0 10 0;
+#X connect 10 0 9 0;
+#X restore 502 665 pd output;
+#X obj 995 666 hsl 128 15 0 1 0 0 empty empty gain -2 -6 0 10 -204786
+-1 -1 0 0;
+#N canvas 73 187 354 373 output 0;
+#X obj 79 176 *~;
+#X obj 80 223 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X obj 193 86 loadbang;
+#X msg 194 181 \; pd dsp 1;
+#X obj 214 133 s \$0-LFO;
+#X msg 213 110 1;
+#X obj 41 282 throw~ \$0-out;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 11 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 8 0;
+#X connect 7 0 10 0;
+#X connect 10 0 9 0;
+#X restore 941 689 pd output;
+#X text 1138 446 Depth;
+#X text 539 545 0;
+#X text 540 482 1;
+#X text 534 605 -1;
+#X text 1066 233 0;
+#X text 1067 170 1;
+#X text 1061 293 -1;
+#X obj 785 559 loadbang;
+#X msg 785 580 \; pd dsp 1 \; lo 1;
+#X obj 624 382 hsl 128 15 1 0 0 0 depth lo empty -2 -8 0 10 -232576
+-1 -1 0 1;
+#X msg 621 428 lo \$1;
+#X floatatom 621 404 0 0 0 0 - - -;
+#X obj 552 454 triangle~;
+#X text 872 22 Similar ao [triangle~] \, o [trapeoid~] pode gerar onda
+triangulares \, dente de serra e trapzeoidal.;
+#X text 434 316 Vamos agora testar outras formas de onda e objetos
+que serão melhor apresentados posteriormente. O [triangle~] \, que
+gera onda triangular e dente de serra. O controle de depth pode ser
+via mensagem "lo".;
+#X text 39 32 Este exemplo se dedica a uma modulação de amplitude com
+uma frequência de modulação baixa \, gerando um efeito de Trêmolo.
+;
+#X text 525 386 LFO;
+#X text 900 376 LFO;
+#X text 1136 92 LFO;
+#X msg 69 397 open ../../../samples/violin.wav \, start;
+#X obj 941 556 *~;
+#X obj 859 514 r~ \$0-sample;
+#X connect 0 0 23 0;
+#X connect 3 0 23 1;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 39 0;
+#X connect 7 0 9 0;
+#X connect 8 0 0 1;
+#X connect 8 0 22 0;
+#X connect 9 0 8 0;
+#X connect 10 0 12 0;
+#X connect 11 0 8 0;
+#X connect 12 0 11 0;
+#X connect 13 0 8 1;
+#X connect 14 0 8 2;
+#X connect 15 0 38 1;
+#X connect 16 0 39 1;
+#X connect 18 0 74 0;
+#X connect 19 0 20 0;
+#X connect 19 1 74 0;
+#X connect 21 0 0 0;
+#X connect 24 0 27 0;
+#X connect 25 0 24 0;
+#X connect 26 0 27 1;
+#X connect 29 0 36 0;
+#X connect 36 0 38 0;
+#X connect 38 0 24 1;
+#X connect 38 0 28 0;
+#X connect 39 0 37 0;
+#X connect 39 0 75 1;
+#X connect 40 0 41 0;
+#X connect 41 0 6 0;
+#X connect 42 0 67 0;
+#X connect 43 0 42 0;
+#X connect 44 0 52 0;
+#X connect 45 0 44 0;
+#X connect 51 0 52 1;
+#X connect 53 0 54 1;
+#X connect 62 0 63 0;
+#X connect 64 0 66 0;
+#X connect 65 0 67 0;
+#X connect 66 0 65 0;
+#X connect 67 0 44 1;
+#X connect 67 0 46 0;
+#X connect 74 0 19 0;
+#X connect 75 0 54 0;
+#X connect 76 0 75 0;

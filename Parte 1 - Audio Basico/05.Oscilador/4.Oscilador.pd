@@ -1,0 +1,135 @@
+#N canvas 55 67 1310 621 10;
+#X obj 500 206 cos~;
+#X obj 500 151 phasor~ 300;
+#X obj 500 263 *~;
+#X obj 491 312 dac~;
+#X msg 680 201 \; pd dsp 1;
+#X obj 680 177 loadbang;
+#X obj 635 149 hsl 110 15 0 1 0 0 empty empty ganho -2 -8 0 10 -262130
+-1 -1 0 1;
+#X obj 632 171 pow 4;
+#X obj 632 224 line~;
+#X msg 632 197 \$1 10;
+#X obj 588 291 tabwrite~ coseno;
+#X obj 824 351 cnv 15 448 110 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#X obj 588 113 t b f;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array coseno 441 float 0;
+#X coords 0 1 440 -1 450 112 1;
+#X restore 824 350 graph;
+#X obj 601 266 tabwrite~ phasor;
+#X text 811 343 1;
+#X text 805 451 -1;
+#X obj 827 208 cnv 15 448 110 empty empty empty 20 12 0 14 -204786
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array phasor 441 float 0;
+#X coords 0 1 440 0 450 112 1;
+#X restore 826 207 graph;
+#X text 811 304 0;
+#X text 809 202 1;
+#X obj 415 353 cnv 15 370 95 empty empty empty 20 12 0 14 -203559 -66577
+0;
+#X text 451 206 Função;
+#X text 437 251 ajuste de;
+#X text 436 266 Amplitude;
+#X text 441 281 de pico;
+#X text 437 72 Frequência em Hz;
+#X text 426 87 (velocidade;
+#X text 443 100 angular);
+#X obj 500 97 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X obj 500 129 t f b;
+#X msg 557 58 0;
+#X msg 588 58 0.25;
+#X msg 624 58 0.5;
+#X msg 655 58 0.75;
+#X obj 557 36 loadbang;
+#X text 688 58 Fase Inicial;
+#X floatatom 588 92 5 0 0 0 - - -;
+#X text 415 465 ============================================================
+;
+#X text 878 566 A diferença na forma de onda é uma mudança de Fase
+Inicial (menos para fase inicial de 0 ou 0.5).;
+#X text 423 486 Fase invertida: Uma diferença de fase inicial de 180
+graus gera uma fase invertida (ou oposta). Em fase linear \, a diferença
+é de 0.5 (como entre 0 e 0.5 ou 0.25 e 0.75). No caso \, 0.5 é um cosseno
+de fase invertida \, e 0.25 um seno de fase invertida.;
+#X text 880 25 Perceba \, entretanto \, que sempre que enviarmos uma
+mensagem para o inlet direito do [phasor~] \, a forma de onda é ressetada
+para aquela fase inicial. Veremos outra forma de lidar com mudança
+de fase depois.;
+#X obj 1041 167 cos~;
+#X obj 1041 143 phasor~ 440;
+#X obj 958 153 osc~ 440;
+#X text 1022 150 =;
+#X text 866 485 ============================================================
+;
+#X text 25 46 Um oscilador "oscila" entre valores de amplitudes de
+acordo com uma função \, sendo a mais comum e simples a funcão seno.
+;
+#X text 29 343 O [cos~] retorna valores entre 1 e -1 \, isso implica
+que o tom terá amplitude de pico igual a 1 \, mas podemos alterar isso
+com um ajuste de ganho. Veja à direita as tabelas que plotam o [phasor~]
+e o [cos~].;
+#X text 30 490 Valores negativos de fase inicial também são possíveis
+\, onde -0.25 é igual a 0.75 \, valores maiores que 1 também funcionam
+\, mas considera-se apenas a parte decimal \, como 1.25 = 0.25 (-1.25
+também é interpretado como -0.25).;
+#X text 883 89 Um [phasor~] ligado a um [cos~] é o mesmo que um [osc~]
+\, sendo que o [osc~] gasta menos de processamento.;
+#X text 877 502 Frequências negativas também são possíveis. Entre com
+uma frequência negativa e veja no gráfico do phasor como ela inverte
+o sentido de mudança de fase! A velocidade é a mesma \, mas o sentido
+em que a fase corre é o contrário!;
+#X text 424 359 EM SUMA: Um oscilador oscila de acordo com uma função
+que recebe uma entrada de fase. O oscilador possui 3 parâmetros principais
+\; - Frequência da mudança de fase (velocidade angular) \; - Fase inicial
+(posição de início do ciclo) \; - Amplitude de pico;
+#X text 27 82 Vimos que a função Seno e Cosseno são basicamente a mesma
+\, apenas com uma diferença de início do ciclo (fase inicial). Outras
+fases iniciais também podem ser definidas \, mas a fase inicial não
+dá diferenças em nossa percepção sonora. Isso significa que \, no caso
+de um único oscilador \, tanto faz se um oscilador senoidal está na
+fase de Seno ou Cosseno. Entretanto \, veremos depois outras questões
+com diferenças de fase envolvendo mais de um oscilador.;
+#X text 28 198 A frequência do oscilador é definida pela velocidade
+de mudança de fase/ângulo (velocidade angular) e normalmente dada em
+Hz (Hertz) \, que é o mesmo que ciclos por segundo (cps). O [phasor~]
+dá a Fase Corrente de acordo com uma frequência em Hz e pode alimentar
+uma função como a cosseno - objeto [cos~]. Isso faz dele um gerador
+de fase de um oscilador senoidal com fase inicial de Cosseno! Os valores
+gerados pelo [phasor~] vão de 0 a 1 (portanto \, fase linear) e o [cos~]
+entende esses valores como entrada de ângulos sem necessidade de ajustes.
+;
+#X text 29 413 Podemos também mudar a fase inicial no inlet direito
+do [phasor~]. E assim \, com um [phasor~] ligado em [cos~] \, podemos
+ter um ciclo que se inicia em qualquer posição e não apenas na fase
+inicial de cosseno. Por exemplo \, se a fase inicial for 0.75 \, temos
+uma fase inicial de seno.;
+#X text 394 175 Fase Corrente =>;
+#X connect 0 0 2 0;
+#X connect 0 0 10 0;
+#X connect 1 0 0 0;
+#X connect 1 0 14 0;
+#X connect 2 0 3 0;
+#X connect 2 0 3 1;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 9 0;
+#X connect 8 0 2 1;
+#X connect 9 0 8 0;
+#X connect 12 0 10 0;
+#X connect 12 0 14 0;
+#X connect 12 1 1 1;
+#X connect 29 0 30 0;
+#X connect 30 0 1 0;
+#X connect 30 1 37 0;
+#X connect 31 0 37 0;
+#X connect 32 0 37 0;
+#X connect 33 0 37 0;
+#X connect 34 0 37 0;
+#X connect 35 0 31 0;
+#X connect 37 0 12 0;
+#X connect 43 0 42 0;

@@ -1,0 +1,72 @@
+#N canvas 949 107 494 614 10;
+#X obj 149 444 cnv 15 198 138 empty empty empty 20 12 0 14 -203904
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Pulse2 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 148 443 graph;
+#X text 134 438 1;
+#X text 128 570 -1;
+#X text 134 505 0;
+#X obj 213 331 hsl 128 15 0 1 0 0 empty empty empty -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 0 22 465 402 ganho 0;
+#X obj 238 184 *~;
+#X obj 226 216 dac~;
+#X obj 291 138 line~;
+#X msg 291 112 \$1 10;
+#X obj 291 86 pow 4;
+#X obj 291 45 inlet;
+#X obj 238 44 inlet~;
+#X obj 96 147 loadbang;
+#X obj 96 174 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X msg 67 233 \; pd dsp 1;
+#X obj 166 253 tabwrite~ Pulse2;
+#X obj 96 198 metro 100;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 10 0;
+#X connect 7 0 8 0;
+#X connect 7 0 9 0;
+#X connect 8 0 11 0;
+#X connect 11 0 10 0;
+#X restore 165 354 pd ganho;
+#X obj 165 229 phasor~ 300;
+#X obj 165 196 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-203904 -1 -1 0 256;
+#X obj 165 294 change~;
+#X obj 165 256 expr~ if($v1 < 0.5 \, 1 \, -1);
+#X text 117 254 square;
+#X text 72 84 Para construirmos esse tipo de oscilador \, nos baseamos
+no objeto [change~] ligado em uma onda quadrada. O [change~] detecta
+variações no sinal de áudio. Quando o sinal é o mesmo \, ele retorna
+zero. Já quando o sinal muda de -1 para 1 ou de 1 para -1 \, o [change~]
+retorna 1 e -1!;
+#X text 72 28 Uma variação do oscilador de pulso é o oscilador de pulso
+bipolar \, que durante um ciclo possui também um pulso negativo \,
+com valor de -1 por apenas uma amostra.;
+#X connect 5 0 6 1;
+#X connect 7 0 10 0;
+#X connect 8 0 7 0;
+#X connect 9 0 6 0;
+#X connect 10 0 9 0;

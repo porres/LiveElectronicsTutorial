@@ -1,0 +1,267 @@
+#N canvas 121 273 1114 408 10;
+#X obj 520 276 hsl 100 15 0 1 0 0 empty nonjhjhfjghgdhj empty -2 -6
+0 10 -204865 -220534 -1 0 1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-gain1 1024 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;
+#A 1000 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;
+#X coords 0 1.05 1023 -0.05 512 60 1;
+#X restore 30 54 graph;
+#X obj 31 55 cnv 15 510 58 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-gain2 1024 float 1;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#A 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 1.05 1023 -0.05 512 60 1;
+#X restore 570 53 graph;
+#X obj 571 54 cnv 15 510 58 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 660 307 s \$0-gain1;
+#X obj 693 210 Uzi;
+#X msg 660 278 \$1 0;
+#X obj 660 246 - 1;
+#X msg 696 278 const 1;
+#X obj 753 246 - 1;
+#X msg 753 278 \$1 1;
+#X msg 798 276 const 0;
+#X obj 693 186 trigger float bang;
+#X obj 753 308 s \$0-gain2;
+#N canvas 347 47 508 528 Spectral-CrossOver 0;
+#X obj 54 457 outlet~;
+#X obj 321 457 outlet~;
+#X obj 53 31 inlet~;
+#X obj 38 181 cnv 15 360 120 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 53 110 *~;
+#X obj 53 139 rfft~;
+#X obj 68 85 tabreceive~ \$0-hann;
+#X obj 54 394 *~;
+#X obj 69 367 tabreceive~ \$0-hann;
+#X obj 53 321 rifft~;
+#X obj 53 256 *~;
+#X obj 86 256 *~;
+#X obj 194 195 tabreceive~ \$0-gain1;
+#X obj 321 393 *~;
+#X obj 336 366 tabreceive~ \$0-hann;
+#X obj 207 316 rifft~;
+#X obj 207 254 *~;
+#X obj 240 254 *~;
+#X obj 255 229 tabreceive~ \$0-gain2;
+#X obj 236 131 block~;
+#X obj 236 110 r \$0-set-block;
+#X obj 54 415 expr~ $v1 / (w_size_\$0 * overlap_\$0 * 0.375) \; $v2
+/ (w_size_\$0 * overlap_\$0 * 0.375);
+#X connect 2 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 10 0;
+#X connect 5 0 16 0;
+#X connect 5 1 11 0;
+#X connect 5 1 17 0;
+#X connect 6 0 4 1;
+#X connect 7 0 21 0;
+#X connect 8 0 7 1;
+#X connect 9 0 7 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 1;
+#X connect 12 0 11 1;
+#X connect 12 0 10 1;
+#X connect 13 0 21 1;
+#X connect 14 0 13 1;
+#X connect 15 0 13 0;
+#X connect 16 0 15 0;
+#X connect 17 0 15 1;
+#X connect 18 0 17 1;
+#X connect 18 0 16 1;
+#X connect 20 0 19 0;
+#X connect 21 0 0 0;
+#X connect 21 1 1 0;
+#X restore 418 202 pd Spectral-CrossOver;
+#X obj 693 164 nbx 5 14 0 4192 0 0 empty \$0-banda empty 0 -8 0 10
+-204800 -1 -1 0 256;
+#X text 509 116 Nyquist;
+#X text 1049 119 Nyquist;
+#N canvas 0 22 342 321 gain 0;
+#X obj 79 176 *~;
+#X obj 97 146 line~;
+#X msg 97 120 \$1 10;
+#X obj 97 94 pow 4;
+#X obj 197 34 inlet;
+#X obj 79 39 inlet~;
+#X obj 197 132 line~;
+#X msg 197 106 \$1 10;
+#X obj 197 80 pow 4;
+#X obj 146 34 inlet~;
+#X obj 79 208 dac~ 1 2;
+#X obj 146 170 *~;
+#X connect 0 0 10 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 4 0 8 0;
+#X connect 5 0 0 0;
+#X connect 6 0 11 1;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 9 0 11 0;
+#X connect 11 0 10 1;
+#X restore 467 300 pd gain;
+#X text 240 31 Canal Esquerdo;
+#X text 785 30 Canal Direito;
+#X text 756 162 Banda de Corte;
+#X obj 418 171 pink~;
+#X text 459 172 ruído rosa;
+#X obj 888 193 hradio 15 1 0 4 empty empty empty 0 -8 0 10 -262130
+-1 -1 0;
+#X obj 888 216 expr pow(2 \, $f1 + 10);
+#X obj 888 247 nbx 5 14 64 1e+37 0 0 \$0-w_size \$0-w_size-set empty
+0 -8 0 10 -262130 -1 -1 2048 256;
+#X text 946 244 tamanho da janela;
+#N canvas 634 71 539 448 Window 0;
+#X obj 90 363 osc~;
+#X obj 71 408 tabwrite~ \$0-hann;
+#X msg 111 339 0.5;
+#X obj 30 67 cnv 15 198 118 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 29 67 graph;
+#X obj 90 306 expr sr_\$0 / w_size_\$0;
+#X obj 71 280 t b b b;
+#X obj 90 385 expr~ ($v1 * 0.5) + 0.5;
+#X obj 259 363 s \$0-set-block;
+#X obj 259 307 pack float float;
+#X msg 259 336 set \$1 \$2;
+#X obj 259 195 t b f;
+#X msg 289 222 resize \$1;
+#X obj 289 244 s \$0-hann;
+#X obj 259 281 v w_size_\$0;
+#X obj 375 279 v overlap_\$0;
+#X obj 356 250 t b b f;
+#X obj 386 177 samplerate~;
+#X obj 386 202 v sr_\$0;
+#X obj 386 63 loadbang;
+#X obj 386 84 \$0;
+#X obj 259 21 inlet;
+#X obj 356 22 inlet;
+#X msg 386 105 bang \; pd dsp 1 \; \$1-w_size-set 2048 \; \$1-overlap-set
+4;
+#X connect 0 0 7 0;
+#X connect 2 0 0 1;
+#X connect 5 0 0 0;
+#X connect 6 0 1 0;
+#X connect 6 1 5 0;
+#X connect 6 2 2 0;
+#X connect 7 0 1 0;
+#X connect 9 0 10 0;
+#X connect 10 0 8 0;
+#X connect 11 0 14 0;
+#X connect 11 0 6 0;
+#X connect 11 1 12 0;
+#X connect 11 1 14 0;
+#X connect 12 0 13 0;
+#X connect 14 0 9 0;
+#X connect 15 0 9 1;
+#X connect 16 0 14 0;
+#X connect 16 1 15 0;
+#X connect 16 2 15 0;
+#X connect 17 0 18 0;
+#X connect 19 0 20 0;
+#X connect 20 0 23 0;
+#X connect 21 0 11 0;
+#X connect 22 0 16 0;
+#X connect 23 0 17 0;
+#X coords 0 0 1 1 120 60 0;
+#X restore 888 272 pd Window;
+#X obj 959 269 nbx 2 14 1 1e+37 0 1 \$0-overlap \$0-overlap-set empty
+0 -8 0 10 -204786 -1 -1 4 256;
+#X text 990 268 overlaps;
+#X text 563 117 0 Hz;
+#X text 23 114 0 Hz;
+#X text 33 201 Em uma variação do exemplo de Filtro Espectral \, temos
+agora duas tabelas que filtram um mesmo sinal de ruído rosa. Porém
+\, aliando um filtro Passa Baixa e Passa Alta \, podemos dividir o
+espectro em duas saídas separadas. No caso não estamos fazendo nada
+demais além de separar em dois canais de saída. Mas a partir dessa
+ideia é possível pensar em processamentos paralelos para diferentes
+trechos do espectro. Veja o subpatch [pd Spectral-Crossover].;
+#X connect 0 0 19 2;
+#X connect 6 2 8 0;
+#X connect 6 2 10 0;
+#X connect 7 0 5 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 11 0;
+#X connect 11 0 14 0;
+#X connect 12 0 14 0;
+#X connect 13 0 6 0;
+#X connect 13 1 9 0;
+#X connect 13 1 12 0;
+#X connect 15 0 19 0;
+#X connect 15 1 19 1;
+#X connect 16 0 13 0;
+#X connect 23 0 15 0;
+#X connect 25 0 26 0;
+#X connect 26 0 27 0;
+#X connect 27 0 29 0;
+#X connect 30 0 29 1;

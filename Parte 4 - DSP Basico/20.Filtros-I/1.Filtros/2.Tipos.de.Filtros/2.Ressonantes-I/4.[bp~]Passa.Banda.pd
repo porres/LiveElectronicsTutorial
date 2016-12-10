@@ -1,0 +1,563 @@
+#N canvas 27 33 1326 526 10;
+#X obj 1040 151 nbx 5 14 1 1e+37 0 0 \$0-q q-set empty 0 -8 0 10 -261234
+-1 -1 1 256;
+#X obj 1008 125 nbx 5 14 -1e+37 1e+37 0 0 \$0-freq freq-set empty 0
+-8 0 10 -261682 -1 -1 409.981 256;
+#X obj 954 120 noise~;
+#X obj 1011 100 hsl 200 15 100 10000 1 0 empty freq-slider-set empty
+-2 -8 0 10 -261682 -1 -1 6097 1;
+#N canvas 197 83 1057 399 (subpatch) 0;
+#X obj 101 101 cnv 15 878 231 empty empty empty 18 9 1 15 -262144 -1
+0;
+#X obj 106 122 cnv 15 808 184 empty empty empty 20 12 0 14 -1 -262144
+0;
+#X obj 477 311 cnv 15 15 15 empty empty Kilohertz 18 9 1 16 -262144
+-1 0;
+#X obj 111 273 cnv 15 798 27 empty empty empty 20 12 0 14 -257983 -66577
+0;
+#X obj 113 131 hsl 795 29 0 127 0 0 \$0-freq-slider \$0-freq-slider-set
+empty -2 -8 0 10 -228856 -228856 -1 35113 0;
+#X obj 111 161 cnv 15 798 27 empty empty empty 20 12 0 14 -261429 -66577
+0;
+#X obj 111 217 cnv 15 798 27 empty empty empty 20 12 0 14 -257983 -66577
+0;
+#X text 215 134 0.05;
+#X text 115 134 0.02;
+#X obj 111 245 cnv 15 798 27 empty empty empty 20 12 0 14 -241340 -66577
+0;
+#X text 816 133 10;
+#X text 893 134 20;
+#X text 741 133 5;
+#X text 638 133 2;
+#X text 560 134 1;
+#X text 474 134 0.5;
+#X text 372 134 0.2;
+#X text 292 134 0.1;
+#X text 916 264 -18;
+#X text 916 290 -24;
+#X text 922 179 0;
+#X obj 930 222 cnv 15 15 15 empty empty dB 18 9 1 17 -262144 -1 0;
+#X text 916 234 -12;
+#X obj 111 189 cnv 15 798 27 empty empty empty 20 12 0 14 -241340 -66577
+0;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 100 170 1;
+#X restore 128 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 77 170 1;
+#X restore 228 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 80 170 1;
+#X restore 305 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 102 170 1;
+#X restore 385 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 487 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 565 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 103 170 1;
+#X restore 643 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 746 131 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X coords 0 1 100 -1 78 170 1;
+#X restore 824 131 graph;
+#X text 918 207 -6;
+#N canvas 391 118 975 563 (subpatch) 0;
+#X array \$0-bp 400 float 1;
+#A 0 0.250859 0.250857 0.250849 0.250854 0.250851 0.250848 0.25085
+0.25085 0.250849 0.250844 0.250848 0.250844 0.250844 0.250842 0.250844
+0.250841 0.250838 0.250841 0.250836 0.25084 0.250837 0.250836 0.250835
+0.250836 0.250836 0.250835 0.250836 0.250834 0.250827 0.250828 0.250828
+0.250824 0.250829 0.250825 0.250821 0.250821 0.250817 0.250825 0.250814
+0.250819 0.250815 0.25082 0.250813 0.250813 0.250806 0.250809 0.250798
+0.250801 0.250801 0.250796 0.250792 0.250793 0.250787 0.250779 0.250781
+0.25078 0.25078 0.250777 0.250774 0.250768 0.250761 0.250761 0.250755
+0.250751 0.250743 0.250744 0.250731 0.250737 0.250722 0.250713 0.250714
+0.250704 0.2507 0.250692 0.25069 0.250678 0.250676 0.250659 0.250658
+0.250647 0.250635 0.250627 0.250617 0.250603 0.250591 0.250587 0.250571
+0.250559 0.250538 0.250523 0.250511 0.25049 0.250473 0.250459 0.250446
+0.250421 0.2504 0.250375 0.250357 0.250332 0.250301 0.250272 0.250246
+0.250211 0.250179 0.250148 0.250113 0.250068 0.25003 0.24999 0.249946
+0.249895 0.249842 0.24979 0.249727 0.24967 0.249606 0.249537 0.249461
+0.249388 0.249303 0.249211 0.249117 0.249018 0.248916 0.2488 0.248688
+0.248555 0.248423 0.248276 0.248124 0.247964 0.247793 0.247604 0.247411
+0.247211 0.24699 0.246752 0.246497 0.246234 0.245949 0.245644 0.245323
+0.244978 0.244613 0.244219 0.243805 0.243357 0.24289 0.242377 0.241841
+0.241268 0.240659 0.240003 0.239317 0.238576 0.237787 0.236952 0.236062
+0.235113 0.234102 0.233027 0.231883 0.230668 0.229373 0.227998 0.226545
+0.224994 0.223347 0.221602 0.219752 0.217788 0.215708 0.21351 0.211183
+0.208717 0.206116 0.203372 0.200469 0.197414 0.194196 0.190805 0.187243
+0.183501 0.179573 0.175454 0.171137 0.166622 0.161901 0.156975 0.151835
+0.14648 0.140909 0.135118 0.129107 0.122874 0.116419 0.109742 0.102842
+0.0957228 0.0883837 0.0808293 0.07306 0.0650803 0.056894 0.0485045
+0.0399141 0.0311298 0.0221574 0.0130002 0.00366306 -0.00584761 -0.0155249
+-0.025363 -0.0353578 -0.045503 -0.0557915 -0.0662174 -0.0767765 -0.0874605
+-0.0982656 -0.109185 -0.120216 -0.131348 -0.142579 -0.153904 -0.165319
+-0.176818 -0.188396 -0.200049 -0.211772 -0.223563 -0.235417 -0.24733
+-0.259299 -0.271322 -0.283392 -0.295509 -0.30767 -0.319872 -0.332112
+-0.344388 -0.356697 -0.369038 -0.381407 -0.393805 -0.406227 -0.418674
+-0.431143 -0.443632 -0.456141 -0.468667 -0.48121 -0.493767 -0.50634
+-0.518925 -0.531522 -0.54413 -0.556748 -0.569375 -0.582011 -0.594654
+-0.607304 -0.619961 -0.632623 -0.64529 -0.657961 -0.670635 -0.683312
+-0.695993 -0.708675 -0.721359 -0.734044 -0.74673 -0.759415 -0.772101
+-0.784786 -0.797469 -0.810151 -0.822832 -0.83551 -0.848186 -0.860859
+-0.873528 -0.886193 -0.898855 -0.911512 -0.924164 -0.936811 -0.949452
+-0.962088 -0.974717 -0.98734 -0.999955 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+-1 -1 -1 -1;
+#X coords 0 0.5 399 -1 800 170 1;
+#X restore 110 131 graph;
+#X text 922 150 6;
+#N canvas 64 416 476 325 plot 0;
+#N canvas 779 328 537 367 init 0;
+#X obj 77 21 loadbang;
+#X obj 78 272 s \$0-dbrange;
+#X obj 262 96 samplerate~;
+#X obj 262 119 v sr_\$0;
+#X msg 115 208 400;
+#X obj 357 87 table re1_\$0 400;
+#X obj 357 107 table im1_\$0 400;
+#X obj 357 127 table re2_\$0 400;
+#X obj 357 147 table im2_\$0 400;
+#N canvas 699 151 382 450 get-complex-freqs 0;
+#X msg 232 232 resize \$1;
+#X obj 281 276 s re1_\$0;
+#X obj 267 301 s im1_\$0;
+#X obj 256 332 s re2_\$0;
+#X obj 247 362 s im2_\$0;
+#X obj 12 299 tabwrite re1_\$0;
+#X obj 108 394 tabwrite im2_\$0;
+#X obj 232 393 s amp_\$0;
+#X obj 50 80 change;
+#X obj 251 171 v table_size_\$0;
+#X obj 50 113 trigger bang float;
+#X obj 232 206 change 400;
+#X obj 50 43 inlet;
+#X obj 76 363 tabwrite re2_\$0;
+#X obj 43 335 tabwrite im1_\$0;
+#X obj 50 182 expr cos($f1) \; sin($f1) \; cos($f1 * 2) \; sin($f1
+* 2) \; $f2;
+#N canvas 11 46 935 668 loop 0;
+#X obj 106 192 until;
+#X obj 144 241 + 1;
+#X msg 124 216 0;
+#X obj 106 95 t f f;
+#X obj 483 216 until;
+#X obj 529 265 + 1;
+#X msg 501 241 0;
+#X obj 106 270 t f f;
+#X obj 211 355 +;
+#X obj 106 370 mtof;
+#X obj 106 144 t f b f;
+#X obj 483 191 t f b f;
+#X obj 483 326 /;
+#X obj 106 31 inlet;
+#X obj 106 574 outlet;
+#X obj 259 583 outlet;
+#X obj 483 144 expr table_size_\$0 - $f1;
+#X obj 483 265 f;
+#X obj 483 379 expr pow($f1 \, 0.4);
+#X obj 106 241 f;
+#X obj 483 296 trigger f f;
+#X obj 106 63 expr rint(table_size_\$0 * 0.98);
+#X obj 483 407 * 20.6017;
+#X text 556 407 MIDI 16;
+#X obj 483 498 expr $f1 * (2 * -pi_\$0) / 44100;
+#X obj 106 465 expr $f1 * (2 * -pi_\$0) / 44100;
+#X obj 86 33 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 106 298 expr (($f1 + 1) * (midi_range_\$0 / $f2)) + 16;
+#X connect 0 0 19 0;
+#X connect 1 0 19 1;
+#X connect 2 0 19 1;
+#X connect 3 0 10 0;
+#X connect 3 1 16 0;
+#X connect 4 0 17 0;
+#X connect 5 0 17 1;
+#X connect 6 0 17 1;
+#X connect 7 0 27 0;
+#X connect 7 1 8 0;
+#X connect 8 0 15 0;
+#X connect 9 0 25 0;
+#X connect 10 0 0 0;
+#X connect 10 1 2 0;
+#X connect 10 2 27 1;
+#X connect 11 0 4 0;
+#X connect 11 1 6 0;
+#X connect 11 2 12 1;
+#X connect 12 0 18 0;
+#X connect 13 0 21 0;
+#X connect 16 0 8 1;
+#X connect 16 0 11 0;
+#X connect 17 0 5 0;
+#X connect 17 0 20 0;
+#X connect 18 0 22 0;
+#X connect 19 0 1 0;
+#X connect 19 0 7 0;
+#X connect 20 0 12 0;
+#X connect 20 1 15 0;
+#X connect 21 0 3 0;
+#X connect 22 0 24 0;
+#X connect 24 0 14 0;
+#X connect 25 0 14 0;
+#X connect 26 0 21 0;
+#X connect 27 0 9 0;
+#X restore 50 143 pd loop;
+#X connect 0 0 1 0;
+#X connect 0 0 2 0;
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 0 0 7 0;
+#X connect 8 0 10 0;
+#X connect 10 0 16 0;
+#X connect 10 1 9 0;
+#X connect 10 1 11 0;
+#X connect 11 0 0 0;
+#X connect 12 0 8 0;
+#X connect 15 0 5 0;
+#X connect 15 1 14 0;
+#X connect 15 2 13 0;
+#X connect 15 3 6 0;
+#X connect 15 4 5 1;
+#X connect 15 4 14 1;
+#X connect 15 4 13 1;
+#X connect 15 4 6 1;
+#X connect 16 0 15 0;
+#X connect 16 1 15 1;
+#X restore 115 236 pd get-complex-freqs;
+#X text 145 208 array size;
+#X obj 29 304 s \$0-freq-set;
+#X obj 77 57 trigger b b b;
+#X msg 29 273 20;
+#X msg 78 239 24;
+#X obj 253 198 v midi_range_\$0;
+#X obj 253 172 ftom;
+#X msg 253 146 8750.55;
+#X obj 245 229 expr atan(1) * 4;
+#X obj 246 260 v pi_\$0;
+#X floatatom 28 237 5 0 0 0 - - -;
+#X obj 187 22 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X connect 0 0 12 0;
+#X connect 2 0 3 0;
+#X connect 4 0 9 0;
+#X connect 12 0 13 0;
+#X connect 12 1 4 0;
+#X connect 12 1 14 0;
+#X connect 12 2 2 0;
+#X connect 12 2 17 0;
+#X connect 12 2 18 0;
+#X connect 13 0 11 0;
+#X connect 14 0 1 0;
+#X connect 16 0 15 0;
+#X connect 17 0 16 0;
+#X connect 18 0 19 0;
+#X connect 20 0 11 0;
+#X connect 21 0 12 0;
+#X restore 122 116 pd init \; tables;
+#N canvas 67 23 1040 236 Z-Transform 0;
+#X obj 45 19 inlet;
+#X obj 45 200 outlet;
+#X obj 45 164 expr sqrt($f1*$f1 + $f2*$f2) / sqrt($f3*$f3 + $f4*$f4)
+;
+#X text 340 44 (a1) a2 (b1) b2 b3;
+#X obj 45 74 expr $f4 + ($f5 * re1_\$0[$f1]) + ($f6 * re2_\$0[$f1])
+\; ($f5 * im1_\$0[$f1]) + ($f6 * im2_\$0[$f1]) \; 1 - ($f2 * re1_\$0[$f1])
+- ($f3 * re2_\$0[$f1]) \; 0 - ($f2 * im1_\$0[$f1]) - ($f3 * im2_\$0[$f1])
+;
+#X text 428 75 b1 + (b2 * re1) + (b3 * re2) = reI;
+#X text 463 90 (b2 * im1) + (b3 * im2) = imI;
+#X text 435 105 1 - (a1 * re1) + (a2 * re2) = reII;
+#X text 435 119 0 - (a1 * im1) + (a2 * im2) = imII;
+#X text 20 144 reI;
+#X text 143 143 imI;
+#X text 256 143 reII;
+#X text 384 142 imII;
+#X text 439 166 ampI / ampII;
+#X obj 211 45 unpack f f f f f;
+#X obj 211 18 inlet;
+#X text 92 20 index;
+#X text 260 18 coeficientes;
+#X obj 698 68 cnv 15 320 90 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 728 97 H(z) = b1 + (b2 * z^-1) + (b3 * z^-2);
+#X text 768 103 _________________________________;
+#X text 785 119 1 + (a1 * z^-1) + (a2 * z^-2);
+#X text 711 75 Z-Transform:;
+#X connect 0 0 4 0;
+#X connect 2 0 1 0;
+#X connect 4 0 2 0;
+#X connect 4 1 2 1;
+#X connect 4 2 2 2;
+#X connect 4 3 2 3;
+#X connect 14 0 4 1;
+#X connect 14 1 4 2;
+#X connect 14 2 4 3;
+#X connect 14 3 4 4;
+#X connect 14 4 4 5;
+#X connect 15 0 14 0;
+#X restore 24 205 pd Z-Transform;
+#X obj 24 178 trigger float float;
+#X obj 24 106 t bang list;
+#N canvas 0 22 181 220 loop 0;
+#X obj 28 100 until;
+#X obj 68 138 + 1;
+#X msg 72 100 0;
+#X obj 28 137 f;
+#X obj 28 13 inlet;
+#X obj 28 173 outlet;
+#X obj 28 42 trigger b b;
+#X obj 28 71 v table_size_\$0;
+#X connect 0 0 3 0;
+#X connect 1 0 3 1;
+#X connect 2 0 3 1;
+#X connect 3 0 1 0;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 6 0 7 0;
+#X connect 6 1 2 0;
+#X connect 7 0 0 0;
+#X restore 24 140 pd loop;
+#N canvas 121 22 226 277 db-range 0;
+#X obj 42 31 inlet;
+#X obj 42 61 rmstodb;
+#X obj 42 90 - 100;
+#X obj 98 61 r \$0-dbrange;
+#X obj 108 109 * -1;
+#X obj 41 147 clip;
+#X obj 80 183 /;
+#X obj 80 216 outlet;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 3 0 5 2;
+#X connect 3 0 6 1;
+#X connect 4 0 5 1;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X restore 24 235 pd db-range;
+#N canvas 608 222 665 489 coeficientes 0;
+#X obj 216 355 v coef1;
+#X obj 164 280 v gain;
+#X obj 215 329 expr 2 * $f1 * r;
+#N canvas 0 22 548 260 sigbp_qcos 0;
+#X obj 62 -65 inlet;
+#X obj 59 15 outlet;
+#X obj 365 17 v g;
+#X obj 59 -25 expr (((g*g*g * (-1/720) + g*g*(1/24)) - g*0.5) + 1)
+\; $f1 * $f1;
+#X connect 0 0 3 0;
+#X connect 3 0 1 0;
+#X connect 3 1 2 0;
+#X restore 220 304 pd sigbp_qcos;
+#X obj 576 208 v pi;
+#X obj 576 188 pi;
+#X obj 481 217 v sr;
+#X obj 483 195 samplerate~;
+#X obj 484 172 loadbang;
+#X obj 278 258 v coef2;
+#X obj 362 267 v r;
+#X obj 482 266 v omega;
+#X obj 401 265 v oneminusr;
+#X obj 248 82 t b f;
+#X obj 140 114 f;
+#X floatatom 268 279 0 0 0 0 - - -;
+#X obj 165 169 expr 2 * oneminusr * (oneminusr + r * omega) \; omega
+\; - r * r \; 1 - oneminusr \; omega / $f2 \; $f1 * (2 * pi) / sr;
+#X obj 119 139 t b f;
+#X obj 128 393 pack f f f 0 0;
+#X obj 126 328 expr coef1 \; coef2 \; gain;
+#X obj 140 56 r \$0-freq;
+#X obj 248 55 r \$0-q;
+#X obj 129 427 outlet;
+#N canvas 184 24 750 512 freq/GUI 0;
+#X obj 48 60 r \$0-freq;
+#X obj 87 309 s \$0-freq-slider-set;
+#X msg 87 281 set \$1;
+#X obj 87 130 ftom;
+#X obj 87 187 / 16;
+#X obj 87 216 * 3;
+#X obj 140 207 expr (($f1 - 16) / midi_range_\$0) * 124 + 3;
+#X obj 87 159 moses 16;
+#X obj 48 98 sel 0;
+#X msg 51 216 0;
+#X obj 279 256 r \$0-freq-slider;
+#X obj 279 290 / 127;
+#X obj 279 320 * 800;
+#X obj 279 396 s \$0-label;
+#X msg 279 352 label_pos \$1 9;
+#X obj 461 236 pack f f;
+#X msg 433 303 label \$1.\$2Khz;
+#X obj 461 185 expr int($f1 / 1000) \; $f1 % 1000;
+#X obj 433 345 spigot;
+#X obj 605 284 > 100;
+#X obj 566 347 spigot;
+#X msg 461 269 label \$1.0\$2Khz;
+#X obj 605 319 expr 1 - $f1;
+#X obj 461 115 route set;
+#X obj 461 83 r \$0-freq-set;
+#X obj 513 155 s \$0-Hz;
+#X obj 350 84 r \$0-freq;
+#X obj 87 248 max 0;
+#X obj 350 115 expr rint($f1);
+#X connect 0 0 8 0;
+#X connect 2 0 1 0;
+#X connect 3 0 7 0;
+#X connect 4 0 5 0;
+#X connect 5 0 27 0;
+#X connect 6 0 2 0;
+#X connect 6 0 11 0;
+#X connect 7 0 4 0;
+#X connect 7 1 6 0;
+#X connect 8 0 9 0;
+#X connect 8 1 3 0;
+#X connect 9 0 2 0;
+#X connect 9 0 11 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 14 0;
+#X connect 14 0 13 0;
+#X connect 15 0 16 0;
+#X connect 15 0 21 0;
+#X connect 16 0 18 0;
+#X connect 17 0 15 0;
+#X connect 17 1 15 1;
+#X connect 17 1 19 0;
+#X connect 18 0 13 0;
+#X connect 19 0 18 1;
+#X connect 19 0 22 0;
+#X connect 20 0 13 0;
+#X connect 21 0 20 0;
+#X connect 22 0 20 1;
+#X connect 23 0 17 0;
+#X connect 23 0 25 0;
+#X connect 23 1 17 0;
+#X connect 24 0 23 0;
+#X connect 26 0 28 0;
+#X connect 27 0 2 0;
+#X connect 27 0 11 0;
+#X connect 28 0 17 0;
+#X restore 376 373 pd freq/GUI;
+#X connect 2 0 0 0;
+#X connect 3 0 2 0;
+#X connect 5 0 4 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 13 0 14 0;
+#X connect 13 1 16 1;
+#X connect 14 0 17 0;
+#X connect 16 0 1 0;
+#X connect 16 1 3 0;
+#X connect 16 2 9 0;
+#X connect 16 2 15 0;
+#X connect 16 3 10 0;
+#X connect 16 4 12 0;
+#X connect 16 5 11 0;
+#X connect 17 0 19 0;
+#X connect 17 1 16 0;
+#X connect 18 0 22 0;
+#X connect 19 0 18 0;
+#X connect 19 1 18 1;
+#X connect 19 2 18 2;
+#X connect 20 0 14 0;
+#X connect 21 0 13 0;
+#X restore 24 72 pd coeficientes;
+#X obj 222 127 loadbang;
+#X msg 222 156 \; q-set 10 \; freq-set 3000 \; freq-slider-set set
+3000 \; pd dsp 1;
+#X obj 24 265 tabwrite \$0-bp;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 2 1 9 1;
+#X connect 3 0 4 0;
+#X connect 3 1 1 1;
+#X connect 4 0 2 0;
+#X connect 5 0 9 0;
+#X connect 6 0 3 0;
+#X connect 7 0 8 0;
+#X restore 211 67 pd plot;
+#X obj 101 107 cnv 15 815 20 empty \$0-label 0.410Khz 353 9 1 15 -262144
+-1 0;
+#X coords 0 -1 1 1 880 233 2 100 100;
+#X restore 431 272 pd;
+#X obj 1031 203 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 output 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 977 226 pd output;
+#X text 1099 150 Q;
+#X text 1065 122 Hz;
+#X obj 977 172 bp~ 3000 10;
+#X text 38 13 O [bp~] (de "bandpass") é um objeto interno de Passa
+Banda que \, naturalmente \, recebe um valor de frequência ressonante
+e outro de "Q". O filtro tem a vantagem de ser muito simples e \, por
+isso \, gasta pouco CPU. Porém \, sua resposta de frequência não é
+simétrica \, pois atenua o dobro à direita da frequência central do
+que à esquerda.;
+#X text 40 101 O parâmetro de ressonância não amplifica a frequência
+ressonante \, e nem há um parâmetro de ganho também para isso. Portanto
+\, a ampltiude máxima da frequência ressonante é sempre 0 dB.;
+#X text 37 204 Agora \, podemos perceber como a resposta de frequência
+do [bp~] se assemelha com a de um Passa Baixa Ressonante \, porém com
+um ajuste de ganho para que nenhuma frequência seja amplificada. Ou
+seja \, dar um ganho no [bp~] pode faze-lo se comportar como um passa
+baixa ressonante como o [lores~]! Em todo caso \, podemos ainda considera-lo
+como um "Passa Banda" \, pois filtros Passa Baixa Ressonantes por excelência
+possuem o comportamento apresentado no [lores~].;
+#X text 40 368 Notar essas características no [bp~] não o desconsidera
+como filtro Passa Banda. Apenas se coloca em discussão alguns elementos
+de definição de filtros. E o fator determinante para chama-lo de Passa
+Banda é que a frequência ressonante está em torno de 0 dB!;
+#X text 41 449 Olhando por esse ângulo \, podemos dizer que é um Passa
+Banda \, mas que não possui uma resposta simétrica como a do [reson~].
+;
+#X text 459 13 PASSA BANDA \, CONSTANT GAIN:;
+#X text 473 38 Podemos realçar então como a característica de Passa
+Banda se relaciona com o fato da frequência ressonante se encontrar
+em torno de 0 dB! Podemos ainda dizer que um Passa Banda ideal possui
+uma resposta simétrica \, mas nem sempre será o caso \, como no [bp~].
+;
+#X text 463 118 PASSA BANDA x RESSONANTE:;
+#X text 25 176 PASSA BANDA RESSONANTE?:;
+#X text 479 143 Apesar de todos os Passa Banda serem filtros ressonantes
+por definição \, nem sempre um Passa Banda será identificado explicitamente
+como um filtro "ressonante". Isso porque \, no contexto musical \,
+a ideia de ressonância está ligada com o ganho dado à frequência ressonante.
+Portanto é mais comum encontrar a definição explícita de "ressonante"
+em filtros cujo ganho da frequência ressonante não está fixo em torno
+de 0 dB!;
+#X text 1040 98 Frequência Ressonante;
+#X text 907 33 Veja enfim abaixo nosso querido [bp~]. Ele só aceita
+dado de controle nos inlets de Frequência Ressonante e Q.;
+#X text 39 318 Veja ainda que \, com um "Q" = 1 \, a resposta do filtro
+se assemelha bastante ao passa baixa do [lop~]. Outro indício de que
+o [bp~] possui característica de Passa Baixa.;
+#X connect 0 0 9 2;
+#X connect 1 0 9 1;
+#X connect 2 0 9 0;
+#X connect 3 0 1 0;
+#X connect 5 0 6 1;
+#X connect 9 0 6 0;

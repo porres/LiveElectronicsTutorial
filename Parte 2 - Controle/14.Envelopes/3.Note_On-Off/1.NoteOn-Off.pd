@@ -1,0 +1,98 @@
+#N canvas 68 58 1239 600 10;
+#X obj 149 390 *~;
+#X obj 89 312 osc~ 440;
+#X obj 137 424 dac~;
+#X obj 164 352 vline~;
+#X msg 164 304 1 50 \, 0.5 100 50;
+#X obj 185 218 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X obj 185 260 select 1 0;
+#X msg 285 304 0 50;
+#X text 225 223 ON / OFF;
+#X obj 568 392 *~;
+#X obj 508 314 osc~ 440;
+#X obj 556 426 dac~;
+#X obj 583 354 vline~;
+#X msg 583 306 1 50 \, 0.5 100 50;
+#X obj 604 220 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X obj 604 262 select 1 0;
+#X msg 704 306 0 50;
+#X text 644 225 ON / OFF;
+#X obj 604 119 bng 30 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 646 172 delay 650;
+#X obj 197 388 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X obj 391 437 loadbang;
+#X obj 627 382 Scope~ 130 130 256 3 128 -0.01 1 0 0 0 0 102 255 51
+135 135 135 0;
+#X msg 391 461 \; pd dsp 1;
+#X text 55 30 Um controlador MIDI envia uma "Note on" quando uma tecla
+é pressionada e "Note Off" quando solta. Podemos relacionar o Note
+On com o Attack de um envelope \, e o Note Off com o Release. Antes
+de apresentarmos outros aparatos para Note On e Note Off \, usaremos
+um toggle.;
+#X text 54 102 Neste exemplo \, quano o toggle é ligado \, enviamos
+uma mensagem de Note On que consiste em um attack de 50 ms seguido
+de um decay de 100 ms. O note off faz um release de 50 ms. Logo \,
+na prática \, é como se fosse um envelope ADSR \, mas o tempo de sustain
+depende do quanto você deixar a nota ligada.;
+#X text 468 42 Já abaixo \, com uma mensagem de delay \, agendamos
+o note off para 650 ms depois de acionar o note on - o que nos dá um
+attack de 50 ms \, um decay de 100 ms \, um sustain de 500 ms e um
+release de 50 ms.;
+#X obj 891 447 *~;
+#X obj 878 493 dac~;
+#X obj 925 406 Scope~ 130 130 256 3 128 0 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 843 412 osc~ 440;
+#X obj 906 379 curve~;
+#X obj 1034 263 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1
+0 1;
+#X obj 1034 305 select 1 0;
+#X text 1074 268 ON / OFF;
+#X obj 1034 162 bng 30 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 1076 215 delay 650;
+#X msg 1062 351 0 500 0.8;
+#X msg 906 345 1 100 0.5 0.7 100 -0.5;
+#X text 827 127 Por fim \, a mesma ideia \, porém com um objeto [curve~]:
+;
+#X connect 0 0 2 0;
+#X connect 0 0 2 1;
+#X connect 1 0 0 0;
+#X connect 3 0 0 1;
+#X connect 3 0 20 0;
+#X connect 4 0 3 0;
+#X connect 5 0 6 0;
+#X connect 6 0 4 0;
+#X connect 6 1 7 0;
+#X connect 7 0 3 0;
+#X connect 9 0 11 0;
+#X connect 9 0 11 1;
+#X connect 10 0 9 0;
+#X connect 12 0 9 1;
+#X connect 12 0 22 0;
+#X connect 13 0 12 0;
+#X connect 14 0 15 0;
+#X connect 15 0 13 0;
+#X connect 15 1 16 0;
+#X connect 16 0 12 0;
+#X connect 18 0 14 0;
+#X connect 18 0 19 0;
+#X connect 19 0 14 0;
+#X connect 21 0 23 0;
+#X connect 27 0 28 0;
+#X connect 27 0 28 1;
+#X connect 30 0 27 0;
+#X connect 31 0 27 1;
+#X connect 31 0 29 0;
+#X connect 32 0 33 0;
+#X connect 33 0 38 0;
+#X connect 33 1 37 0;
+#X connect 35 0 32 0;
+#X connect 35 0 36 0;
+#X connect 36 0 32 0;
+#X connect 37 0 31 0;
+#X connect 38 0 31 0;

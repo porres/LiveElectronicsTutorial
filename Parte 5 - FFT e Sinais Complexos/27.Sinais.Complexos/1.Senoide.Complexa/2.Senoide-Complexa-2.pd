@@ -1,0 +1,119 @@
+#N canvas 66 23 1331 763 10;
+#X obj 936 82 cos~;
+#X obj 969 82 cos~;
+#X obj 175 433 image sc1.gif;
+#X obj 969 56 -~ 0.25;
+#X obj 339 56 cnv 15 248 163 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 387 304 cnv 15 448 256 empty empty empty 20 12 0 14 -253822
+-66577 0;
+#N canvas 0 22 454 304 (subpatch) 0;
+#X array Cosseno 88200 float 0;
+#X coords 0 1.02 88199 -1.02 250 165 1;
+#X restore 338 55 graph;
+#X obj 596 56 cnv 15 248 163 empty empty empty 20 12 0 14 -204800 -66577
+0;
+#X text 337 222 Real;
+#X text 595 222 Imaginária;
+#N canvas 707 447 445 260 plotar 0;
+#X obj 105 48 inlet~;
+#X obj 195 47 inlet~;
+#X obj 101 175 tabwrite~ Re;
+#X obj 79 211 tabwrite~ Cosseno;
+#X obj 195 203 tabwrite~ Seno;
+#X obj 203 174 tabwrite~ Im;
+#X obj 226 122 loadbang;
+#X msg 298 166 \; amp 1 \; pd dsp 1;
+#X connect 0 0 2 0;
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
+#X connect 1 0 5 0;
+#X connect 6 0 2 0;
+#X connect 6 0 3 0;
+#X connect 6 0 5 0;
+#X connect 6 0 4 0;
+#X connect 6 0 7 0;
+#X restore 871 173 pd plotar;
+#X text -35 70 Para criar um sinal de uma senóide complexa no Pd \,
+precisamos de dois osciladores com diferença de fase de 90 graus. Neste
+exemplo usamos um mesmo [phasor~] ligados a dois objetos de Cosseno
+[cos~] \, mas um deles está atrasado em 1/4 (90 graus) para se configurar
+como a parte imaginária.;
+#X text -33 161 As duas partes são plotadas à direita. Abaixo temos
+uma justaposição das duas para comparar com uma figura ao lado.;
+#X text 1008 91 (Seno);
+#X text 876 93 (Cosseno);
+#X text 892 79 Real;
+#X text 1004 76 Imaginária;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Seno 88200 float 0;
+#X coords 0 1 88199 -1 250 165 1;
+#X restore 595 55 graph;
+#X obj 936 139 *~;
+#X obj 969 139 *~;
+#X obj 987 115 hsl 128 15 0 1 0 0 empty amp Amplitude 35 8 0 10 -262130
+-1 -1 12700 1;
+#X floatatom 936 247 0 0 0 0 - - -;
+#X obj 1014 249 hsl 128 15 -3.14 3.14 0 0 empty empty empty -2 -8 0
+10 -203904 -1 -1 26 1;
+#X text 871 247 Amplitude;
+#X text 1067 248 Fase;
+#X obj 936 220 unsig~ 1;
+#X obj 1011 209 unsig~ 1;
+#X obj 1130 116 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -203904
+-1 -1 6321 1;
+#X obj 1127 66 unsig~ 1;
+#X text 1181 115 Fase;
+#X text 1073 264 0;
+#X text 1135 263 pi;
+#X text 1004 262 -pi;
+#X text 1125 132 0;
+#X text 1253 133 1;
+#X text 1183 132 0.5;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Im 88200 float 0;
+#X array Re 88200 float 0;
+#X coords 0 1 88199 -1 448 258 1;
+#X restore 386 303 graph;
+#X text 883 323 Ao convertermos a senóide para a forma polar \, vemos
+que o valor de ampliude é praticamente constante e corresponde à Amplitude
+Máxima de pico. A saída de Fase nos dá a mudança de Fase em uma velocidade
+constante (ou fase corrente) \, que está de acordo com a saída do [phasor~]*.
+;
+#X text 886 495 * Ao compararmos bem a saída de fase \, vemos que corresponde
+exatamente à "Fase Corrente" do [phasor~] \, ou sua frequência. A fase
+do [phasor~] - de 0 a 1 - corresponde a valores em pi radianos: de
+0 a 0.5 corresponde de 0 a pi (ou 0 a 180 graus) \, enquanto de 0.5
+a 1 corresponde de -pi até 0 (ou -180 graus a 0).;
+#X obj 969 23 phasor~ 0.5;
+#X text 886 399 Desse modo \, um sinal complexo nos dá acesso direto
+à Amplitude e Fase (que é \, na prática \, a frequência \, como a saída
+de um [phasor~]). Outra vantagem é que \, por meio das propriedades
+de matemática complexa \, é possível uma manipulação direta desses
+parâmetros \, o que seria muito mais complicado de outra maneira.;
+#X obj 936 177 cartopol~;
+#X text 440 605 ============================================================
+;
+#X text 443 635 Para que este exemplo funcione corretamente \, você
+precisa da última versão da biblioteca cyclone \, pois o objeto [cartopol~]
+só foi corrigido a partir da versão alpha 57 \, não disponível nas
+versões do Pd Extended 0.42-5 ou 0.43-0. Portanto \, baixe a nova versão
+da biblioteca diretamente em <https://puredata.info/downloads/cyclone/releases>
+ou via o plugin deken <https://github.com/pure-data/deken>.;
+#X connect 0 0 18 0;
+#X connect 1 0 19 0;
+#X connect 3 0 1 0;
+#X connect 18 0 10 0;
+#X connect 18 0 41 0;
+#X connect 19 0 10 1;
+#X connect 19 0 41 1;
+#X connect 20 0 19 1;
+#X connect 20 0 18 1;
+#X connect 25 0 21 0;
+#X connect 26 0 22 0;
+#X connect 28 0 27 0;
+#X connect 39 0 0 0;
+#X connect 39 0 3 0;
+#X connect 39 0 28 0;
+#X connect 41 0 25 0;
+#X connect 41 1 26 0;

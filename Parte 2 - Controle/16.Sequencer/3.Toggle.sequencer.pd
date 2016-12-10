@@ -1,0 +1,300 @@
+#N canvas 192 22 895 610 10;
+#X obj 97 48 tgl 30 0 empty metro empty 17 7 0 10 -167031 -1 -1 0 1
+;
+#X text 157 35 TEMPO;
+#X obj 148 54 nbx 5 18 200 1000 0 0 empty empty empty 0 -8 0 15 -203904
+-1 -1 200 256;
+#X obj 97 87 metro 250;
+#X obj 36 87 moses 1;
+#X obj 113 250 table tgl_\$0 16;
+#X obj 113 267 table seq_\$0 16;
+#X obj 258 73 v transp_\$0;
+#X obj 294 202 mtof;
+#X obj 294 251 osc~;
+#X obj 294 283 *~;
+#X obj 286 315 dac~;
+#X obj 357 251 ead~ 50 150;
+#X obj 294 228 trigger f b;
+#X obj 258 54 nbx 5 14 -1e+37 1e+37 0 0 empty transp empty 0 -8 0 10
+-261682 -1 -1 60 256;
+#N canvas 86 22 879 707 drum 0;
+#X obj 54 56 hradio 25 1 0 16 NADA h_radio empty 0 -6 0 15 -116513
+-183280 -1 0;
+#X obj 61 88 tgl 15 1 \$0-tgl0 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 87 88 tgl 15 1 \$0-tgl1 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 112 88 tgl 15 1 \$0-tgl2 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 135 88 tgl 15 1 \$0-tgl3 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 186 88 tgl 15 1 \$0-tgl5 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 211 88 tgl 15 1 \$0-tgl6 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 236 88 tgl 15 0 \$0-tgl7 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 287 88 tgl 15 1 \$0-tgl9 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 312 88 tgl 15 1 \$0-tgl10 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 335 88 tgl 15 1 \$0-tgl11 NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 384 88 tgl 15 1 \$0-tgl13 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 409 88 tgl 15 1 \$0-tgl14 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 435 88 tgl 15 1 \$0-tgl15 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 261 88 tgl 15 1 \$0-tgl8 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 161 88 tgl 15 1 \$0-tgl4 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 359 88 tgl 15 1 \$0-tgl12 NIENTE empty 0 -6 0 10 -104946 -1
+-1 1 1;
+#X obj 61 110 vsl 15 128 -12 12 0 0 \$0-sl_0 sl1 empty 0 -9 0 10 -125171
+-1 -1 3175 1;
+#X obj 87 110 vsl 15 128 -12 12 0 0 \$0-sl_1 sl2 empty 0 -9 0 10 -204800
+-1 -1 2117 1;
+#X obj 113 110 vsl 15 128 -12 12 0 0 \$0-sl_2 sl3 empty 0 -9 0 10 -204800
+-1 -1 2117 1;
+#X obj 135 110 vsl 15 128 -12 12 0 0 \$0-sl_3 sl4 empty 0 -9 0 10 -204800
+-1 -1 4762 1;
+#X obj 161 110 vsl 15 128 -12 12 0 0 \$0-sl_4 sl5 empty 0 -9 0 10 -125171
+-1 -1 2117 1;
+#X obj 187 110 vsl 15 128 -12 12 0 0 \$0-sl_5 sl6 empty 0 -9 0 10 -204800
+-1 -1 6879 1;
+#X obj 211 110 vsl 15 128 -12 12 0 0 \$0-sl_6 sl7 empty 0 -9 0 10 -204800
+-1 -1 8467 1;
+#X obj 236 110 vsl 15 128 -12 12 0 0 \$0-sl_7 sl8 empty 0 -9 0 10 -204800
+-1 -1 8467 1;
+#X obj 261 110 vsl 15 128 -12 12 0 0 \$0-sl_8 sl9 empty 0 -9 0 10 -125171
+-1 -1 4762 1;
+#X obj 287 110 vsl 15 128 -12 12 0 0 \$0-sl_9 sl10 empty 0 -9 0 10
+-204800 -1 -1 3704 1;
+#X obj 312 110 vsl 15 128 -12 12 0 0 \$0-sl_10 sl11 empty 0 -9 0 10
+-204800 -1 -1 3704 1;
+#X obj 335 110 vsl 15 128 -12 12 0 0 \$0-sl_11 sl12 empty 0 -9 0 10
+-204800 -1 -1 5821 1;
+#X obj 359 110 vsl 15 128 -12 12 0 0 \$0-sl_12 sl13 empty 0 -9 0 10
+-125171 -1 -1 7408 1;
+#X obj 384 110 vsl 15 128 -12 12 0 0 \$0-sl_13 sl14 empty 0 -9 0 10
+-204800 -1 -1 9525 1;
+#X obj 409 110 vsl 15 128 -12 12 0 0 \$0-sl_14 sl15 empty 0 -9 0 10
+-204800 -1 -1 10054 1;
+#X obj 435 110 vsl 15 128 -12 12 0 0 \$0-sl_15 sl16 empty 0 -9 0 10
+-204800 -1 -1 10054 1;
+#X obj 487 385 r \$0-tgl0;
+#X msg 487 407 0 \$1;
+#X obj 487 429 s tgl_\$0;
+#X obj 551 429 s tgl_\$0;
+#X obj 614 430 s tgl_\$0;
+#X obj 678 430 s tgl_\$0;
+#X obj 485 499 s tgl_\$0;
+#X obj 549 499 s tgl_\$0;
+#X obj 612 500 s tgl_\$0;
+#X obj 676 500 s tgl_\$0;
+#X obj 613 578 s tgl_\$0;
+#X obj 681 578 s tgl_\$0;
+#X obj 484 647 s tgl_\$0;
+#X obj 552 647 s tgl_\$0;
+#X obj 620 648 s tgl_\$0;
+#X obj 688 648 s tgl_\$0;
+#X obj 551 385 r \$0-tgl1;
+#X msg 551 407 1 \$1;
+#X obj 614 385 r \$0-tgl2;
+#X msg 614 408 2 \$1;
+#X msg 678 408 3 \$1;
+#X obj 485 455 r \$0-tgl4;
+#X msg 485 477 4 \$1;
+#X obj 549 455 r \$0-tgl5;
+#X msg 549 477 5 \$1;
+#X obj 612 456 r \$0-tgl6;
+#X msg 612 478 6 \$1;
+#X obj 676 456 r \$0-tgl7;
+#X msg 676 479 7 \$1;
+#X obj 486 533 r \$0-tgl8;
+#X obj 550 532 r \$0-tgl9;
+#X obj 613 534 r \$0-tgl10;
+#X msg 613 556 10 \$1;
+#X obj 681 534 r \$0-tgl11;
+#X msg 681 556 11 \$1;
+#X obj 484 603 r \$0-tgl12;
+#X obj 552 603 r \$0-tgl13;
+#X obj 620 603 r \$0-tgl14;
+#X obj 688 604 r \$0-tgl15;
+#X msg 484 625 12 \$1;
+#X msg 552 625 13 \$1;
+#X msg 620 626 14 \$1;
+#X msg 688 626 15 \$1;
+#X obj 678 386 r \$0-tgl3;
+#X obj 486 577 s tgl_\$0;
+#X msg 486 555 8 \$1;
+#X obj 550 577 s tgl_\$0;
+#X msg 550 555 9 \$1;
+#X msg 46 424 \; sl1 \$1 \; sl2 \$2 \; sl3 \$3 \; sl4 \$4 \; sl5 \$5
+\; sl6 \$6 \; sl7 \$7 \; sl8 \$8 \; sl9 \$9 \; sl10 \$10 \; sl11 \$11
+\; sl12 \$12 \; sl13 \$13 \; sl14 \$14 \; sl15 \$15 \; sl16 \$16 \;
+;
+#X obj 56 377 prepend 0;
+#X obj 56 400 s seq_\$0;
+#X obj 46 354 receive seq;
+#X msg 177 406 0 \$1;
+#X msg 241 406 1 \$1;
+#X msg 304 407 2 \$1;
+#X msg 368 407 3 \$1;
+#X msg 175 476 4 \$1;
+#X msg 239 476 5 \$1;
+#X msg 302 477 6 \$1;
+#X msg 366 478 7 \$1;
+#X msg 303 555 10 \$1;
+#X msg 371 555 11 \$1;
+#X msg 174 624 12 \$1;
+#X msg 242 624 13 \$1;
+#X msg 310 625 14 \$1;
+#X msg 378 625 15 \$1;
+#X msg 176 554 8 \$1;
+#X msg 240 554 9 \$1;
+#X obj 177 384 r \$0-sl_0;
+#X obj 177 428 s seq_\$0;
+#X obj 241 428 s seq_\$0;
+#X obj 304 429 s seq_\$0;
+#X obj 368 429 s seq_\$0;
+#X obj 175 498 s seq_\$0;
+#X obj 239 498 s seq_\$0;
+#X obj 302 499 s seq_\$0;
+#X obj 366 499 s seq_\$0;
+#X obj 176 576 s seq_\$0;
+#X obj 240 576 s seq_\$0;
+#X obj 303 577 s seq_\$0;
+#X obj 371 577 s seq_\$0;
+#X obj 174 646 s seq_\$0;
+#X obj 242 646 s seq_\$0;
+#X obj 310 647 s seq_\$0;
+#X obj 378 647 s seq_\$0;
+#X obj 241 384 r \$0-sl_1;
+#X obj 304 384 r \$0-sl_2;
+#X obj 368 385 r \$0-sl_3;
+#X obj 175 454 r \$0-sl_4;
+#X obj 239 454 r \$0-sl_5;
+#X obj 302 455 r \$0-sl_6;
+#X obj 366 455 r \$0-sl_7;
+#X obj 176 532 r \$0-sl_8;
+#X obj 240 531 r \$0-sl_9;
+#X obj 303 533 r \$0-sl_10;
+#X obj 371 533 r \$0-sl_11;
+#X obj 174 602 r \$0-sl_12;
+#X obj 242 602 r \$0-sl_13;
+#X obj 310 602 r \$0-sl_14;
+#X obj 378 603 r \$0-sl_15;
+#X text 20 295 recebe valores da sequência;
+#X text 25 314 e envia para os sliders;
+#X text 184 342 recebe dos sliders e manda pra tabela;
+#X text 493 342 recebe dos toggles e manda pra tabela;
+#X connect 33 0 34 0;
+#X connect 34 0 35 0;
+#X connect 49 0 50 0;
+#X connect 50 0 36 0;
+#X connect 51 0 52 0;
+#X connect 52 0 37 0;
+#X connect 53 0 38 0;
+#X connect 54 0 55 0;
+#X connect 55 0 39 0;
+#X connect 56 0 57 0;
+#X connect 57 0 40 0;
+#X connect 58 0 59 0;
+#X connect 59 0 41 0;
+#X connect 60 0 61 0;
+#X connect 61 0 42 0;
+#X connect 62 0 78 0;
+#X connect 63 0 80 0;
+#X connect 64 0 65 0;
+#X connect 65 0 43 0;
+#X connect 66 0 67 0;
+#X connect 67 0 44 0;
+#X connect 68 0 72 0;
+#X connect 69 0 73 0;
+#X connect 70 0 74 0;
+#X connect 71 0 75 0;
+#X connect 72 0 45 0;
+#X connect 73 0 46 0;
+#X connect 74 0 47 0;
+#X connect 75 0 48 0;
+#X connect 76 0 53 0;
+#X connect 78 0 77 0;
+#X connect 80 0 79 0;
+#X connect 82 0 83 0;
+#X connect 84 0 81 0;
+#X connect 84 0 82 0;
+#X connect 85 0 102 0;
+#X connect 86 0 103 0;
+#X connect 87 0 104 0;
+#X connect 88 0 105 0;
+#X connect 89 0 106 0;
+#X connect 90 0 107 0;
+#X connect 91 0 108 0;
+#X connect 92 0 109 0;
+#X connect 93 0 112 0;
+#X connect 94 0 113 0;
+#X connect 95 0 114 0;
+#X connect 96 0 115 0;
+#X connect 97 0 116 0;
+#X connect 98 0 117 0;
+#X connect 99 0 110 0;
+#X connect 100 0 111 0;
+#X connect 101 0 85 0;
+#X connect 118 0 86 0;
+#X connect 119 0 87 0;
+#X connect 120 0 88 0;
+#X connect 121 0 89 0;
+#X connect 122 0 90 0;
+#X connect 123 0 91 0;
+#X connect 124 0 92 0;
+#X connect 125 0 99 0;
+#X connect 126 0 100 0;
+#X connect 127 0 93 0;
+#X connect 128 0 94 0;
+#X connect 129 0 95 0;
+#X connect 130 0 96 0;
+#X connect 131 0 97 0;
+#X connect 132 0 98 0;
+#X coords 0 -1 1 1 410 198 2 50 50;
+#X restore 235 369 pd drum;
+#X text 135 231 tabelas;
+#X obj 489 217 loadbang;
+#X text 549 214 inicialização de parâmetros e valores do sequencer
+;
+#X text 83 30 Play/Stop;
+#X text 482 37 Unimos agora a ideia dos dois exemplos anteriores. Quando
+um toggle estiver acionado \, o sequencer toca a nota.;
+#X text 482 74 Os valores das notas são agora representados em sliders
+\, que também mudam os valores da tabela.;
+#X text 481 116 A lógica é: se o toggle correspondente ao índice for
+igual a um \, lemos o valor da tabela \, caso contrário \, enviamos
+um valor fora do registro de leitura para ser filtrado com um [moses].
+;
+#X obj 255 178 moses 0;
+#X obj 109 156 s h_radio;
+#X obj 97 179 v i;
+#X msg 489 242 \; pd dsp 1 \; transp 60 \; seq -6 -8 -8 -3 -8 1 4 4
+-3 -5 -5 -1 2 6 7 7;
+#X obj 97 120 expr (i + 1) % 16 \; if(tgl_\$0[i] == 1 \, int(seq_\$0[i])
++ transp_\$0 \, -50);
+#X connect 0 0 3 0;
+#X connect 0 0 4 0;
+#X connect 2 0 3 1;
+#X connect 3 0 27 0;
+#X connect 4 0 25 0;
+#X connect 8 0 13 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 10 0 11 1;
+#X connect 12 0 10 1;
+#X connect 13 0 9 0;
+#X connect 13 1 12 0;
+#X connect 14 0 7 0;
+#X connect 17 0 26 0;
+#X connect 23 1 8 0;
+#X connect 27 0 25 0;
+#X connect 27 0 24 0;
+#X connect 27 1 23 0;

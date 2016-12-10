@@ -1,0 +1,56 @@
+#N canvas 215 41 941 606 10;
+#X obj 113 334 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X obj 195 424 *~;
+#X text 171 333 Hz;
+#X obj 113 358 osc~ 440;
+#X obj 226 305 tgl 25 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 251 432 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 226 342 sig~;
+#X obj 163 480 output~;
+#X obj 590 80 loadbang;
+#X msg 590 115 \; pd dsp 1;
+#X obj 226 374 rampsmooth~ 10000 10000;
+#X text 43 52 O [rampsmooth~] "suaviza" sinais de áudio \, gerando
+uma rampa linear para mudanças bruscas no sinal.;
+#X text 43 180 Abaixo transofrmamos uma mudança abrupta no sinal de
+áudio convertido de um toggle para um fade in/out linear. Os argumentos
+do [rampsmooth~] são o tempo da rampa em número de amostras para a
+subida e descida do sinal.;
+#X obj 507 307 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X obj 589 397 *~;
+#X text 565 306 Hz;
+#X obj 507 331 osc~ 440;
+#X obj 620 278 tgl 25 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 650 398 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 620 315 sig~;
+#X obj 557 453 output~;
+#X obj 620 345 slide~ 5000 10000;
+#X text 460 220 O objeto [slide~] é similar ao [rampsmooth~] \, porém
+suaviza sinais de áudio de um modo não linear.;
+#X text 42 93 O objeto pertence à biblioteca "cyclone" e só foi corrigido
+a partir da versão alpha 57 \, não disponível nas versões do Pd Extended
+0.42-5 ou 0.43-0 \, baixe portanto a nova versão em https://puredata.info/downloads/cyclone/releases
+ou via o plugin deken https://github.com/pure-data/deken.;
+#X connect 0 0 3 0;
+#X connect 1 0 7 0;
+#X connect 1 0 7 1;
+#X connect 3 0 1 0;
+#X connect 4 0 6 0;
+#X connect 6 0 10 0;
+#X connect 8 0 9 0;
+#X connect 10 0 1 1;
+#X connect 10 0 5 0;
+#X connect 13 0 16 0;
+#X connect 14 0 20 0;
+#X connect 14 0 20 1;
+#X connect 16 0 14 0;
+#X connect 17 0 19 0;
+#X connect 19 0 21 0;
+#X connect 21 0 14 1;
+#X connect 21 0 18 0;

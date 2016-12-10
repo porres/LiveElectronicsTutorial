@@ -1,0 +1,155 @@
+#N canvas 73 49 1198 683 10;
+#X obj 538 463 loadbang;
+#X obj 86 555 output~;
+#X obj 110 138 readsf~;
+#X obj 110 81 loadbang;
+#X obj 100 434 *~ 0.5;
+#X obj 100 455 +~ 0.5;
+#X obj 100 406 osc~ 0.1;
+#X floatatom 100 382 0 0.01 3 0 - - -;
+#X floatatom 200 413 5 0 200 0 - depth -;
+#X obj 100 490 *~;
+#X obj 200 456 line~;
+#X obj 54 254 delwrite~ \$0-feedforward 3000;
+#X obj 125 177 output~;
+#X text 201 393 Depth;
+#X obj 103 360 hsl 128 15 0.01 3 1 0 empty LFO empty -2 -8 0 10 -228856
+-1 -1 5127 1;
+#X msg 200 435 \$1 100;
+#X text 154 358 Rate;
+#X text 357 111 Neste exemplo usamos um LFO para controlar o tempo
+do delay. Mudando o ponto de leitura dessa maneira \, acabamos ascelerando
+e desascelerendo o playback do buffer de áudio \, resultando então
+em um vibrato.;
+#X text 358 169 A frequência do oscilador ("rate") controla a velocidade
+do vibrato \, já a amplitude de tempo ("depth") controla a amplitude
+do vibrato. Veja abaixo.;
+#X text 357 215 Experimente mixar com o sinal original e perceba que
+ocorre um efeito com característica de Chorus (efeito que segue a ideia
+de um coral com várias vozes um pouco desafinadas entre si). Porém
+veremos mais adiante uma variação mais sofisticada de Chorus.;
+#X obj 352 499 output~;
+#X obj 110 230 s~ \$0-in;
+#X obj 375 402 r~ \$0-in;
+#X obj 444 365 nbx 5 14 -1e+37 1e+37 0 0 empty LFO empty 0 -8 0 10
+-261682 -1 -1 0.1 256;
+#X obj 444 393 osc~;
+#X text 414 362 Rate;
+#X obj 375 459 comb~ 200 0 1 1 0;
+#X obj 444 421 expr~ ($v1 * 0.5 + 0.5) * $v2;
+#X obj 638 422 line~;
+#X msg 638 401 \$1 100;
+#X obj 638 383 nbx 5 14 0 200 0 0 empty depth empty 0 -8 0 10 -204786
+-1 -1 100 256;
+#X text 645 364 Depth;
+#X text 358 290 Já abaixo temos uma implementação do chorus deste exemplo
+com o objeto [comb~].;
+#X obj 100 518 vd~ \$0-feedforward;
+#X text 356 24 Nesta pasta temos uma série de processamentos que podem
+ser colocados em uma caegoria chamada de: "Time Variable Delay Effects"
+- ou seja \, efeitos de delay de tempo variável. Variar o tempo de
+delay gera pitch shifting (ou um vibrato como aqui) e efeitos de chorus
+e flanger como veremos depois.;
+#X msg 110 106 open ../../../samples/guitar.wav \, 1;
+#X obj 894 528 output~;
+#X obj 961 349 hsl 128 15 1 100 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X floatatom 958 372 5 0 0 0 - - -;
+#X obj 1015 449 line~;
+#X msg 1015 425 \$1 10;
+#X obj 917 451 blosc~ saw;
+#X obj 917 424 sig~ 100;
+#X obj 836 169 blosc~ saw;
+#X obj 836 277 +~;
+#X obj 820 318 output~;
+#X obj 934 121 hsl 128 15 1 100 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X floatatom 931 144 5 0 0 0 - - -;
+#X obj 931 221 line~;
+#X msg 931 197 \$1 10;
+#X obj 836 142 sig~ 100;
+#X obj 538 593 / 1000;
+#X obj 538 617 v sr_Khz;
+#X obj 538 570 samplerate~;
+#X text 971 144 amostras;
+#X text 1000 372 amostras;
+#X text 809 593 Note uma mudança de coloração no timbre de acordo com
+o atraso \, dado pelo cancelamento de fase de alguns componentes do
+espectro.;
+#X text 777 26 A soma de um sinal com outro levemente atrasado também
+é um princípio relacionado ao flanger \, que veremos melhor em um exemplo
+a seguir. Mas agora \, vejamos a mesma estrutura com um atraso pequeno
+\, de até 100 amostras;
+#N canvas 245 27 450 300 delwrite 0;
+#X obj 82 67 inlet~;
+#X obj 119 164 outlet~;
+#X obj 82 113 delwrite~ \$0-flanger 3;
+#X connect 0 0 2 0;
+#X restore 851 208 pd delwrite;
+#N canvas 245 27 450 300 delread 0;
+#X obj 61 60 inlet~;
+#X obj 171 176 outlet~;
+#X obj 171 144 vd~ \$0-flanger;
+#X obj 184 62 inlet~;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X restore 851 240 pd delread;
+#X obj 931 169 expr $f1 / sr_Khz;
+#X text 1045 168 ms;
+#X obj 958 397 sampstoms~;
+#X text 943 302 O mesmo exemplo com os objetos \; [samptoms~] e [comb~]
+;
+#X obj 917 489 comb~ 3 0 1 1 0;
+#X msg 552 490 \; pd dsp 1 \; LFO 0.1 \; depth 100;
+#X connect 0 0 65 0;
+#X connect 0 0 53 0;
+#X connect 2 0 11 0;
+#X connect 2 0 12 0;
+#X connect 2 0 12 1;
+#X connect 2 0 21 0;
+#X connect 2 1 35 0;
+#X connect 3 0 35 0;
+#X connect 4 0 5 0;
+#X connect 5 0 9 0;
+#X connect 6 0 4 0;
+#X connect 7 0 6 0;
+#X connect 8 0 15 0;
+#X connect 9 0 33 0;
+#X connect 10 0 9 1;
+#X connect 14 0 7 0;
+#X connect 15 0 10 0;
+#X connect 22 0 26 0;
+#X connect 23 0 24 0;
+#X connect 24 0 27 0;
+#X connect 26 0 20 0;
+#X connect 26 0 20 1;
+#X connect 27 0 26 1;
+#X connect 28 0 27 1;
+#X connect 29 0 28 0;
+#X connect 30 0 29 0;
+#X connect 33 0 1 0;
+#X connect 33 0 1 1;
+#X connect 35 0 2 0;
+#X connect 37 0 38 0;
+#X connect 38 0 62 0;
+#X connect 39 0 64 1;
+#X connect 40 0 39 0;
+#X connect 41 0 64 0;
+#X connect 42 0 41 0;
+#X connect 43 0 44 0;
+#X connect 43 0 58 0;
+#X connect 44 0 45 0;
+#X connect 44 0 45 1;
+#X connect 46 0 47 0;
+#X connect 47 0 60 0;
+#X connect 48 0 59 1;
+#X connect 49 0 48 0;
+#X connect 50 0 43 0;
+#X connect 51 0 52 0;
+#X connect 53 0 51 0;
+#X connect 58 0 59 0;
+#X connect 59 0 44 1;
+#X connect 60 0 49 0;
+#X connect 62 1 40 0;
+#X connect 64 0 36 0;
+#X connect 64 0 36 1;

@@ -1,0 +1,157 @@
+#N canvas 67 23 1219 713 10;
+#X obj 43 125 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X obj 125 215 *~;
+#X obj 156 164 line~;
+#X text 101 124 Hz;
+#X obj 43 149 osc~ 440;
+#X obj 117 243 dac~;
+#X obj 243 117 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 0 256;
+#X text 300 116 ms;
+#X obj 156 189 expr~ pow($v1 \, 4);
+#X obj 53 465 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X obj 135 555 *~;
+#X text 115 463 Hz;
+#X obj 53 489 osc~ 440;
+#X obj 126 584 dac~;
+#X obj 253 457 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 311 454 ms;
+#X obj 166 424 tgl 25 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+100;
+#X obj 166 529 dbtorms~;
+#X obj 156 82 tgl 25 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X floatatom 156 116 1 0 0 0 - - -;
+#X floatatom 166 456 3 0 0 0 - - -;
+#X obj 490 370 line~;
+#X obj 540 541 *~;
+#X obj 425 478 osc~ 440;
+#X obj 532 570 dac~;
+#X obj 577 290 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 425 456 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X text 487 454 Hz;
+#X text 435 92 Os valores de entrada e saída estão igualmente entre
+0 e 1 e recebem um sinal de úadio \, que pode ser do [line~] ou [vline~].
+;
+#X text 636 287 ms;
+#X floatatom 490 297 1 0 0 0 - - -;
+#X text 464 242 Fade In / Out;
+#X obj 490 266 tgl 25 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 490 320 pack float 2000;
+#X obj 156 138 pack float 2000;
+#X obj 166 478 pack float 2000;
+#X msg 603 481 set \$1;
+#X symbolatom 603 457 10 0 0 0 - - -;
+#X msg 709 384 _hann;
+#X msg 706 362 _sinhann;
+#X msg 703 341 _sin;
+#X msg 699 320 _linsqrt;
+#X msg 696 298 _sqrt;
+#X msg 692 276 _lin;
+#X obj 603 432 symbol;
+#X obj 555 509 fade~;
+#X text 25 375 Outro exemplo similar \, agora com controle de amplitude
+em dB \, com o toggle enviando o valor de 100 quando ligado.;
+#X obj 166 503 line~;
+#X text 434 34 Além dessas duas funções \, o objeto [fade~] traz algumas
+funções de fade in/out \, as quais veremos em detalhes depois na seção
+sobre crossfading. Mas você pode se adiantar consultando o "help".
+;
+#X text 435 141 Você pode chamar seis funções diferentes no [fade~]
+\, via argumento ou por uma mensagem "set". O exemplo traz a função
+linear ("_line") que não altera em nada os valores recebidos do [line~]
+\, diferente das outras cinco funções. Veja se consegue notar diferenças
+de ouvido.;
+#X obj 940 403 curve~;
+#X obj 977 447 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 183 561 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 603 553 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 181 223 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 692 249 loadbang;
+#X text 832 113 Por fim \, podemos usar também o [curve~] para gerar
+fade in/out não lineares.;
+#X msg 1026 210 \; ms 2000 \; curve 0.5;
+#X obj 1026 179 loadbang;
+#X obj 843 375 nbx 5 14 -1e+37 1e+37 0 0 bkjhgk hfjhgd empty 0 -8 0
+10 -204786 -1 -1 0 256;
+#X obj 925 465 *~;
+#X text 905 373 Hz;
+#X obj 843 399 osc~ 440;
+#X obj 916 494 dac~;
+#X obj 968 318 nbx 5 14 -1e+37 1e+37 0 0 empty ms empty 0 -8 0 10 -261234
+-1 -1 2000 256;
+#X obj 940 269 tgl 25 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 1046 343 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+10 -61402 -1 -1 0.5 256;
+#X obj 1049 305 hsl 128 15 -1 1 0 0 empty curve empty -2 -8 0 10 -228856
+-1 -1 9525 1;
+#X obj 940 370 pack f f f;
+#X text 28 24 Há algumas opções para geração de fades não lineares.
+Abaixo temos um fade logrítmico (elevar à quarta potência) e um valor
+de fade in/out em ms (cujo valor inicial é de 2.000).;
+#X connect 0 0 4 0;
+#X connect 1 0 5 0;
+#X connect 1 0 5 1;
+#X connect 2 0 8 0;
+#X connect 4 0 1 0;
+#X connect 6 0 34 1;
+#X connect 8 0 1 1;
+#X connect 8 0 54 0;
+#X connect 9 0 12 0;
+#X connect 10 0 13 0;
+#X connect 10 0 13 1;
+#X connect 12 0 10 0;
+#X connect 14 0 35 1;
+#X connect 16 0 20 0;
+#X connect 17 0 10 1;
+#X connect 17 0 52 0;
+#X connect 18 0 19 0;
+#X connect 19 0 34 0;
+#X connect 20 0 35 0;
+#X connect 21 0 45 0;
+#X connect 22 0 24 0;
+#X connect 22 0 24 1;
+#X connect 23 0 22 0;
+#X connect 25 0 33 1;
+#X connect 26 0 23 0;
+#X connect 30 0 33 0;
+#X connect 32 0 30 0;
+#X connect 33 0 21 0;
+#X connect 34 0 2 0;
+#X connect 35 0 47 0;
+#X connect 36 0 45 0;
+#X connect 37 0 36 0;
+#X connect 38 0 44 0;
+#X connect 39 0 44 0;
+#X connect 40 0 44 0;
+#X connect 41 0 44 0;
+#X connect 42 0 44 0;
+#X connect 43 0 44 0;
+#X connect 44 0 37 0;
+#X connect 45 0 22 1;
+#X connect 45 0 53 0;
+#X connect 47 0 17 0;
+#X connect 50 0 51 0;
+#X connect 50 0 60 1;
+#X connect 55 0 43 0;
+#X connect 58 0 57 0;
+#X connect 59 0 62 0;
+#X connect 60 0 63 0;
+#X connect 60 0 63 1;
+#X connect 62 0 60 0;
+#X connect 64 0 68 1;
+#X connect 65 0 68 0;
+#X connect 66 0 68 2;
+#X connect 67 0 66 0;
+#X connect 68 0 50 0;

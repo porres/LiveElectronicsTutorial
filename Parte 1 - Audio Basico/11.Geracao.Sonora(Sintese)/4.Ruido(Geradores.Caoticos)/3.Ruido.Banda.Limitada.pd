@@ -1,0 +1,65 @@
+#N canvas 264 26 940 647 12;
+#X obj 192 198 rand~;
+#X obj 163 239 output~;
+#X obj 581 158 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -262130
+-1 -1 2209 1;
+#X obj 717 158 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -262130
+-1 -1 1352 1;
+#X obj 581 100 noisi~ 1;
+#X obj 717 99 noish~ 1;
+#X text 703 149 1;
+#X text 696 276 -1;
+#X text 566 149 1;
+#X text 559 276 -1;
+#X text 486 23 No [rand~] e [noisi~] \, há uma interpolação linear
+entre os valores gerados aleatoreamente. Já o [noish~] também gera
+em banda limitada \, mas sem interpolação.;
+#X obj 281 238 output~;
+#X text 43 60 O [rand~] e [noisi~] geram um ruído de banda limitada
+\, ou seja \, é formado por frequências limitadas em uma banda ou faixa
+de frequência. Neste exemplo abaixo temos frequências de 0 a 800 Hz.
+;
+#X obj 420 440 hsl 128 15 20 44099 1 0 empty empty empty -2 -8 0 10
+-204786 -1 -1 0 0;
+#X obj 417 465 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X obj 407 579 output~;
+#X text 218 350 ============================================================
+;
+#X obj 313 523 noish~;
+#X obj 297 556 output~;
+#X text 231 378 O [noish~] pode ser emulado com um gerador de ruído
+branco e um [samphold~]. Ele soa bem diferente que o [rand~] / [noisi~].
+;
+#X obj 417 536 samphold~;
+#X obj 477 505 phasor~;
+#X obj 411 508 noise~;
+#X text 381 522 =;
+#X obj 281 197 noisi~;
+#X obj 243 155 nbx 5 14 -1e+37 1e+37 0 0 empty hz empty 0 -8 0 10 -204786
+-1 -1 800 256;
+#X obj 745 449 loadbang;
+#X text 248 197 =;
+#X msg 745 484 \; hz 800 \; pd dsp 1;
+#X obj 581 127 snaps~ 1;
+#X obj 717 127 snaps~ 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 4 0 29 0;
+#X connect 5 0 30 0;
+#X connect 13 0 14 0;
+#X connect 14 0 17 0;
+#X connect 14 0 21 0;
+#X connect 17 0 18 0;
+#X connect 17 0 18 1;
+#X connect 20 0 15 0;
+#X connect 20 0 15 1;
+#X connect 21 0 20 1;
+#X connect 22 0 20 0;
+#X connect 24 0 11 0;
+#X connect 24 0 11 1;
+#X connect 25 0 0 0;
+#X connect 25 0 24 0;
+#X connect 26 0 28 0;
+#X connect 29 0 2 0;
+#X connect 30 0 3 0;

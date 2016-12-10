@@ -1,0 +1,107 @@
+#N canvas 119 23 1235 711 10;
+#X obj 501 314 output~;
+#X obj 602 311 output~;
+#X obj 660 285 *~ -1;
+#X text 489 363 Mono duplicado;
+#X text 598 363 fake stereo;
+#X obj 935 413 pansig~;
+#X floatatom 1004 335 5 0 0 0 - - -;
+#X obj 1007 313 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 1004 385 line~;
+#X msg 1004 360 \$1 5;
+#X obj 926 529 output~;
+#X obj 528 575 delay~ 64 64;
+#X obj 545 102 loadbang;
+#X obj 545 159 readsf~;
+#X obj 545 185 s~ \$0-sample;
+#X obj 560 243 r~ \$0-sample;
+#X obj 470 539 r~ \$0-sample;
+#X obj 889 338 r~ \$0-sample;
+#X text 24 20 Por enquanto vimos apenas como jogar um sinal mono em
+dois canais. Seja por apenas duplicar o mesmo sinal em uma saída estéreo
+ou usando um "pan". Vejamos agora como criar uma falsa imagem de estéreo.
+;
+#X text 25 85 Primeiramente \, a ideia de um estéreo implica no fato
+de que os dois sinais de uma saída estéreo sejam diferentes. Afinal
+\, se forem completamente idênticos \, perde-se completamente a sensção
+de uma imagem de estéreo.;
+#X text 27 152 E o que seria uma "imagem de estéreo". Pois bem \, nós
+somos seres que escutam em estéreo \, já que temos dois pontos de escuta:
+duas orelhas voltadas em direções opostas. Quando um som se propaa
+pelo espaço \, ele chega em momentos distintos em cada ponto de escuta
+e \, com essa pequena diferença de tempo \, conseguimos montar uma
+"imagem" de localização da fonte sonora. Isso significa que somos seres
+capazes de lidar com a escuta de uma forma espacial e uma boa gravação
+em estéreo se vale desse fenômeno para distribuir e organizar objetos
+sonoros em diferentes posições.;
+#X text 29 306 E o fato é que simplesmente jogar mais um sinal para
+um lado do que outro não é o único fator de uma criação de imagem de
+estéreo. Pensemos em uma onda sonora \, numa simples senóide. Pois
+ela chegar em tempos diferentes em cada ouvido significa que haverá
+uma diferença de fase \, seja um pouquinho antes ou depois.;
+#X text 32 394 Sim \, voltamos a falar de fase. Mas nesse caso \, a
+fonte sonora é única e tem apenas uma mesma fase em seu ponto de emissão
+sonora. A questão agora é a diferença de fase instantânea que essa
+mesma fonta chega em dois pontos distintos. Esses pontos não precisam
+ser apenas nossos ouvidos \, mas também dois microfones que captam
+um mesmo sinal de dois pontos diferentes \, para criar uma gravação
+em estéreo com uma imagem "real".;
+#X text 34 519 Pois bem \, na hora de jogar as duas pistas de um canal
+estéreo em apenas um canal mono \, é possível que haja problemas de
+cancelamento de fase. Para tal \, uma saída seria inverter a polaridade
+de um desses canais \, que seria apenas multiplicar opr -1 \, e assim
+minimizaria os efeitos de cancelamento.;
+#X text 38 616 Já para criar uma imagem em estéreo a partir de um sinal
+mono \, temos algumas opções. Não entraremos aqui na arte de criar
+imagens em estéreo a fundo \, veremos apenas alguns truques baratos
+e exemplos de caráter didático.;
+#X text 449 22 Abaixo \, temos um sinal mono sendo duplicado. Como
+técnica de criar uma iagem estéreo a partir dele \, ou "fake stereo"
+\, apenas invertemos a polaridade de um dos canais.;
+#X obj 470 604 output~;
+#X obj 984 468 delay~ 64 64;
+#X obj 688 566 delay~ 64 64;
+#X obj 630 530 r~ \$0-sample;
+#X obj 630 618 output~;
+#X obj 688 593 *~ -1;
+#X text 441 428 Já abaixo temos um pequeno atraso para emular a captação
+sonora em dois pontos com fase diferente. sinal mono sendo duplicado.
+Como técnica de criar uma iagem estéreo a partir dele \, ou "fake stereo"
+\, apenas invertemos a polaridade de um dos canais. Nada impede que
+\, além disso \, você também inverta a polaridade de um dos canais.
+;
+#X obj 926 469 *~ -1;
+#X text 821 173 Por fim \, podemos agora unir o que aprendemos aqui
+com o que já vimos sobre imagem panorâmica e \, além de um objeto de
+pan \, podemos também brincar de atrasar um pouco o sinal ou inverter
+a polaridade de um dos canais.;
+#X text 823 242 Teste na base da tentativa e erro até encontrar algo
+que te qgrade \, pois tudo varia muito de acordo com a fonte sonora.
+;
+#X msg 545 127 open ../../samples/bubul.wav \, start;
+#X connect 2 0 1 1;
+#X connect 5 0 33 0;
+#X connect 5 1 27 0;
+#X connect 6 0 9 0;
+#X connect 7 0 6 0;
+#X connect 8 0 5 1;
+#X connect 9 0 8 0;
+#X connect 11 0 26 1;
+#X connect 12 0 36 0;
+#X connect 13 0 14 0;
+#X connect 13 1 36 0;
+#X connect 15 0 0 0;
+#X connect 15 0 0 1;
+#X connect 15 0 1 0;
+#X connect 15 0 2 0;
+#X connect 16 0 11 0;
+#X connect 16 0 26 0;
+#X connect 17 0 5 0;
+#X connect 27 0 10 1;
+#X connect 28 0 31 0;
+#X connect 29 0 28 0;
+#X connect 29 0 30 0;
+#X connect 31 0 30 1;
+#X connect 33 0 10 0;
+#X connect 36 0 13 0;

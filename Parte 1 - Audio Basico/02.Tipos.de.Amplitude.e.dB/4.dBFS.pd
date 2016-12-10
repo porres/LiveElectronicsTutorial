@@ -1,0 +1,118 @@
+#N canvas 65 121 1250 542 10;
+#X obj 465 336 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X floatatom 462 410 0 0 0 0 - - -;
+#X obj 462 435 - 100;
+#X obj 462 382 rmstodb;
+#X obj 462 360 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 462 478 nbx 8 22 -1e+37 1e+37 0 0 \$0-dBFS empty dBFS 7 -8 0
+15 -204800 -1 -1 0 256;
+#X obj 652 370 nbx 8 22 -1e+37 1e+37 0 0 empty \$0-dBFS dBFS 7 -8 0
+15 -204800 -1 -1 0 256;
+#X text 522 358 Amp Linear;
+#X obj 652 404 + 100;
+#X obj 652 430 dbtorms;
+#X obj 652 459 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 712 457 Amp Linear;
+#X obj 655 479 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 442 410 dB;
+#X text 33 278 Se não podemos definir valores de referência em áudio
+digital \, o que nos resta é definir apenas um registro dinâmico \,
+que é a diferença em dB entre o menor e o maior valor de amplitude.
+Para ser mais preciso \, estamos falando da menor amplitude acima de
+um nível de ruído de "chão" \, que é um ruído presente no sinal pelo
+erro de quantização.;
+#X text 34 371 O erro de quantização e \, consequentemente \, o registro
+dinâmico dependem da resolução em bits \, já que é ela que define a
+quantidade de valores disponíveis para representarmos as amplitudes.
+;
+#X text 425 224 Esse tipo de dB para áudio digital \, sem um valor
+de referência claramente definido \, mas que tem 0 dB como amplitude
+máxima \, é chamado de "dB Full Scale" - abreviado como "dBFS".;
+#X obj 959 190 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X obj 956 214 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X floatatom 956 276 0 0 0 0 - - -;
+#X obj 956 240 expr log10($f1) * 20;
+#X obj 956 313 expr pow(10 \, $f1 / 20);
+#X floatatom 956 343 0 0 0 0 - - -;
+#X text 924 276 dBFS;
+#X obj 862 244 v2db;
+#X floatatom 862 276 0 0 0 0 - - -;
+#X obj 862 313 db2v;
+#X floatatom 862 343 0 0 0 0 - - -;
+#X text 1016 212 Razão ou Amp Linear;
+#X text 31 28 Há diferentes escalas de dB \, cada uma com um valor
+de referência distinto. Há ainda até mesmo grandezas distintas \, já
+que o dB é largamente usado em diversas áreas. Apesar de confusões
+\, enfatiza-se de novo como um valor em dB sempre expressa uma razão
+\, independente de que essa proporção seja de valores de Potência \,
+Voltagem \, Pressão Sonora ou qualquer outra coisa.;
+#X text 32 127 Em áudio analógico \, é comum o uso de valores de referência
+em Watts e Volts para o 0 dB \, mas em áudio digital temos uma escala
+em dB que não possui nenhum valor de referência \, pois o que define
+a amplitude em dB que você escuta é o equipamento ligado ao seu computador.
+;
+#X text 33 204 Contudo \, mesmo sem um valor de referência \, o padrão
+de dB ainda nos dá a ideia de proporção \, pois sempre indica uma razão.
+Logo \, sabemos que uma diferença de em torno de -6 dB equivale à metade
+\, seja qual for o valor de referência e o equipamento em que o seu
+computador está ligado.;
+#X text 425 163 Por isso vários editores de áudio costumam representar
+amplitude em dB infinito negativo (para o silência absoluto) até 0
+dB (valor máximo \, igual a uma amplitude linear de 1).;
+#X text 831 39 Veremos agora como a conversão de razão para dB (como
+no objeto [v2db]) pode ser encarada como uma conversão de amplitude
+linear para dBFS.;
+#X text 831 85 Isso implica que amplitude linear pode ser encarada
+como uma razão. Por exemplo \, o número 2 é uma razão de [2/1] \, e
+uma proporção de metade é 0.5 (ou [1/2]). Bom \, a metade da amplitude
+em dB \, como já demonstrado e mencionado \, é uma queda em torno de
+6 dB \, e -6 dB é nada mais nada menos que a amplitude linear de 0.5
+expressa em dBFS! Confira abaixo;
+#X msg 913 190 0.5;
+#X text 1087 241 (razão para dBFS);
+#X text 1099 313 (dBFS para razão);
+#X text 421 23 Pela importância do padrão de 16 bits no áudio (é \,
+afinal \, o padrão de resolução de um CD) \, o Pd adotou um padrão
+de registro dinâmico de 100 dB \, como no objeto [rmstodb].;
+#X text 423 72 Vimos como esse objeto tem 1e-05 como referência de
+valor mínimo para 0 dB \, porém é muito comum em softwares de áudio
+ter um valor de referência de amplitude linear igual 1 para 0 dB. Desse
+modo \, esse mesmo registro dinâmico seria expresso entre -100 e 0
+dB \, sem nenhuma diferença na prática.;
+#X text 845 397 Então vemos que valores de 0 a 1 nos dá \, teoricamente
+\, um registro que vai de infinito negativo em dB (razão de 0) até
+0 dB (razão de 1). Esse é o resultado dado pela fórmula acima no [expr].
+Porém \, à esquerda \, o limite mínimo é de -199.9 dB \, pois o objeto
+[v2db] tem esse limite mínimo como já foi mencionado anteriormente.
+;
+#X text 426 286 A conversão para dBFS de objetos como [rmstodb] e [dbtorms]
+é trivial \, basta somar ou subtrair por 100 \, veja abaixo.;
+#X text 35 435 Tendo como padrão a resolução de 16 bits \, é possível
+um registro dinâmico próximo a 100 dB (em torno de 96.33 dB \, na verdade).
+Ou seja \, a proporção entre a maior e a menor amplitude \, na escala
+de decibéis \, dá próximo de 100 dB.;
+#X connect 0 0 4 0;
+#X connect 1 0 2 0;
+#X connect 2 0 5 0;
+#X connect 3 0 1 0;
+#X connect 4 0 3 0;
+#X connect 6 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 12 0;
+#X connect 17 0 18 0;
+#X connect 18 0 20 0;
+#X connect 18 0 24 0;
+#X connect 19 0 21 0;
+#X connect 20 0 19 0;
+#X connect 21 0 22 0;
+#X connect 24 0 25 0;
+#X connect 25 0 26 0;
+#X connect 26 0 27 0;
+#X connect 35 0 18 0;

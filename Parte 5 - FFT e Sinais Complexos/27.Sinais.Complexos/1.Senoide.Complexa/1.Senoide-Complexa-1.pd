@@ -1,0 +1,107 @@
+#N canvas 52 22 1195 554 10;
+#X obj 493 242 grid grid2 200 -1 1 200 -1 1 0 0.0001 0.0001 10 10 596.513
+441.938;
+#X obj 576 453 nbx 5 14 -1e+37 1e+37 0 0 non y empty 0 -8 0 10 -262130
+-1 -1 -0.999383 256;
+#X obj 430 338 nbx 5 14 -1e+37 1e+37 0 0 none x empty 0 -8 0 10 -261658
+-1 -1 0.0351319 256;
+#X obj 644 118 hsl 128 15 0.05 1 1 1 empty amp empty -2 -8 0 10 -260064
+-1 -1 12700 1;
+#X text 676 101 Amplitude;
+#X text 523 263 .;
+#X obj 593 244 vsl 8 195 -1 1 0 0 seno y empty 0 -9 0 10 -262130 -50
+-1 6 1;
+#X obj 496 340 hsl 195 8 -1 1 0 0 coseno x empty -2 -8 0 10 -260876
+-39 -1 10041 1;
+#X text 664 261 .;
+#X text 658 408 .;
+#X text 526 408 .;
+#X obj 575 194 nbx 5 14 -1e+37 1e+37 0 0 nadicadenada ang empty 0 -8
+0 10 -159808 -262144 -262144 272.151 256;
+#X obj 533 88 hsl 128 15 0.05 2.5 1 0 empty hz empty -2 -8 0 10 -204800
+-1 -1 0 1;
+#X floatatom 544 110 5 0 0 0 - - -;
+#X text 560 67 Hertz;
+#X floatatom 656 141 5 0 0 0 - - -;
+#X text 435 355 Real;
+#X obj 922 332 image sc2.gif;
+#X text 35 87 Um sinal complexo \, assim como um número complexo \,
+possui duas partes: uma real e outra imaginária.;
+#X text 910 291 Seno;
+#X text 891 420 Cosseno;
+#X text 567 472 Imaginária;
+#X text 585 174 Fase;
+#X text 812 493 === Projeção no Tempo ===>;
+#N canvas 49 104 368 240 Senóide-Complexa 0;
+#X obj 193 33 inlet;
+#N canvas 74 32 266 255 phasor 0;
+#X obj 84 49 inlet;
+#X obj 84 180 snapshot~;
+#X obj 91 157 metro 100;
+#X obj 84 214 outlet;
+#X obj 91 130 loadbang;
+#X obj 84 103 phasor~;
+#X connect 0 0 5 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 4 0 2 0;
+#X connect 5 0 1 0;
+#X restore 34 64 pd phasor;
+#X obj 34 33 inlet;
+#X obj 257 67 loadbang;
+#X msg 257 91 \; pd dsp 1 \; hz 0.025 \; amp 1;
+#X obj 34 103 expr cos($f1 * 6.28) * $f2 \; sin($f1 * 6.28) * $f2 \;
+$f1 * 360;
+#X text 72 32 Hz;
+#X text 230 32 Amp;
+#X obj 193 164 s ang;
+#N canvas 68 386 179 237 grid 0;
+#X obj -26 31 inlet;
+#X obj 85 29 inlet;
+#X obj -26 187 s grid2;
+#X obj -12 59 s x;
+#X obj 102 57 s y;
+#X msg -26 163 xvalues \$1 \$2;
+#X obj -26 87 expr ($f1 - 1) / 2 \; ($f2 - 1) / 2;
+#X obj -26 139 pack float float;
+#X connect 0 0 3 0;
+#X connect 0 0 6 0;
+#X connect 1 0 4 0;
+#X connect 1 0 6 1;
+#X connect 5 0 2 0;
+#X connect 6 0 7 0;
+#X connect 6 1 7 1;
+#X connect 7 0 5 0;
+#X restore 57 168 pd grid;
+#X connect 0 0 5 1;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 5 0 9 0;
+#X connect 5 1 9 1;
+#X connect 5 2 8 0;
+#X restore 530 141 pd Senóide-Complexa;
+#X text 471 36 Mude a Frequência e Amplitude da Senóide:;
+#X text 35 194 Um sinal complexo não é tão diferente de um sinal real.
+Para tornar um sinal real em complexo \, basta adicionar uma parte
+imaginária \, que é uma cópia do sinal com uma diferença de fase de
+90 graus (que é a diferença entre um Seno e um Cosseno).;
+#X text 36 268 Para começar \, vejamos o caso de uma senóide complexa.
+Para criarmos uma \, basta termos duas senóides de mesma amplitude
+\, com fase inicial em diferença de 90 graus.;
+#X text 38 316 À direita \, como anteriormente \, o plano representa
+a parte real (Cosseno) no eixo horizontal e a parte imaginária (Seno)
+no eixo vertical. Os eixos são representados por sliders \, cujos valores
+são as amplitudes \, no tempo \, do Seno e Cosseno.;
+#X text 35 121 A saída de uma FFT é um sinal complexo. Porém \, se
+trata de uma representação no domínio da frequência. Porém \, o assunto
+aqui é algo completamente distinto: um sinal complexo no tempo! Uma
+coisa não tem nada a ver com a outra \, não confunda!;
+#X text 37 392 Ao adicionarmos uma terceira dimensão de tempo \, o
+ponto vermelho traça um desenho helicoidal (uma "mola") como na figura
+à direita. Mas se projetarmos apenas um recorte do eixo vertical e
+horizontal \, encontramos o desenho familiar de uma senóide real.;
+#X connect 3 0 24 1;
+#X connect 3 0 15 0;
+#X connect 12 0 13 0;
+#X connect 12 0 24 0;

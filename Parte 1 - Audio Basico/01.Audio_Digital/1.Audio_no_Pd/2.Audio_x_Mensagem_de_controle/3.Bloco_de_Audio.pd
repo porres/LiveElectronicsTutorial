@@ -1,0 +1,71 @@
+#N canvas 179 22 972 556 10;
+#X text 500 145 Usaremos o [block~] para delays \, análise de FFT e
+também para mudanças de sample rate - como veremos logo mais.;
+#N canvas 240 40 683 273 block 0;
+#X obj 132 44 block~ 1;
+#X obj 144 145 osc~ 440;
+#X obj 94 101 bng 15 250 50 0 empty empty empty 17 7 0 10 -261234 -1
+-1;
+#X obj 144 182 print~;
+#X text 118 99 <= Imprimir;
+#X text 263 93 A título de exemplo \, temos aqui um objeto [block~]
+setando o tamanho do bloco para apenas uma amostra. Portanto \, na
+hora de imprimir o bloco de áudio no terminal com o [print~] \, teremos
+apenas um valor de amplitude em vez de um bloco com 64 valores que
+está rodando fora deste subpatch (no subpatch "pai").;
+#X connect 1 0 3 0;
+#X connect 2 0 3 0;
+#X restore 668 221 pd block;
+#X text 500 52 A mudança de bloco para um valor diferente de 64 costuma
+ser conduzida em um subpatch \, principalmente porque objetos como
+o [adc~] e [dac~] precisam de um bloco de 64 amostras para funcionar
+corretamente. Por conseguinte \, somente processamentos especiais requererem
+blocos de áudio diferentes \, e assim são implementados em subpatches.
+;
+#X text 506 261 O [switch~] possui as exatas mesmas funções que o [block~]
+\, com a diferença de que é capaz de desligar o processamento de áudio
+em um patch ou subpatch.;
+#N canvas 618 130 446 343 switch 0;
+#X obj 246 212 osc~ 440;
+#X obj 138 272 switch~;
+#X obj 138 219 tgl 30 0 empty empty empty 17 7 0 10 -228856 -1 -1 0
+1;
+#X text 65 41 Por causa do objeto [switch~] \, o processamento de áudio
+neste subpatch só funcionará se clicarmos no toggle. Portanto a mensagem
+"1" liga o processamento e a mensagem "0" desliga.;
+#X text 68 107 Sem nenhum argumento para definir o tamanho do bloco
+\, o [switch~] rodará em um bloco de 64 amostras \, ou ainda no tamanho
+de bloco setado no patch pai.;
+#X text 118 196 Liga/Desliga;
+#X obj 246 249 snaps~;
+#X connect 0 0 6 0;
+#X connect 2 0 1 0;
+#X restore 672 442 pd switch;
+#X text 506 307 Isso pode ser útil porque \, como vimos \, uma vez
+que o processamento de áudio no Pd está ligado \, todos os objetos
+de áudio estão funcionando e gastando processamento. Desse modo \,
+podemos economizar um pouquinho se um patch ou suboatch for muito pesado.
+Abra o suboatch abaixo:;
+#X obj 198 447 block~ 64;
+#X text 48 127 Isso pode ser constatado com o objeto [print~]. Quando
+ele recebe um bang \, ele cospe um bloco inteiro de áudio (uma lista
+com 64 valores).;
+#X text 52 199 LATÊNCIA:;
+#X text 55 219 A latência é a demora que um objeto ou cadeia de objetos
+leva pra processar o áudio \, e seu valor em ms depende do tamanho
+de bloco e taxa de amostragem. Por exemplo \, em 44100 \, um bloco
+de áudio de 64 amostras dá uma latência em torno de 1.45 ms.;
+#X text 48 65 Para que o processador não tenha que trabalhar uma vez
+a cada amostra (por exemplo \, 44100 vezes por segundo) \, o áudio
+é sempre processado em blocos. O padrão no Pd é que um bloco de 64
+amostras!;
+#X text 56 312 O padrão do bloco de áudio pode ser mudado com o [block~]
+\, que permite que mudemos o tamanho do bloco de um patch ou subpatch.
+Ou seja \, mesmo que não haja um objeto [block~] em seu patch \, é
+como se houvesse um indicando o tamanho de bloco de 64 \, como abaixo.
+Logo \, a presença de um objeto [block~] setado a 64 amostras é completamente
+redundante.;
+#X text 48 40 BLOCO DE ÁUDIO:;
+#X text 555 408 Clique e abra o subpatch abaixo:;
+#X text 546 195 Clique e abra o subpatch abaixo:;
+#X text 151 418 Tamanho de bloco padrão:;

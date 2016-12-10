@@ -1,0 +1,56 @@
+#N canvas 363 23 529 715 10;
+#X obj 218 204 envgen 200 140 1 0  ;
+#X obj 206 162 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 240 132 loadbang;
+#X obj 62 441 +~;
+#X obj 62 398 phasor~;
+#X obj 62 467 cos~;
+#X obj 137 355 osc~;
+#X obj 159 407 *~;
+#X text 135 315 Moduladora;
+#X text 320 363 Índice;
+#X text 57 348 Portadora;
+#X obj 62 376 nbx 4 14 -1e+37 1e+37 0 1 empty portadora empty 0 -8
+0 10 -232576 -1 -1 100 256;
+#X obj 137 333 nbx 4 14 -1e+37 1e+37 0 1 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 149 256;
+#X obj 271 364 nbx 4 14 0 1e+37 0 1 empty empty empty 0 -8 0 10 -204786
+-1 -1 0 256;
+#X obj 208 464 envgen 200 140 1 0  ;
+#X obj 148 646 *~;
+#X obj 227 400 loadbang;
+#X obj 139 679 dac~;
+#X text 239 182 Controle de Índice de Modulação;
+#X text 234 443 Controle de envelope;
+#X obj 66 185 loadbang;
+#X msg 66 208 \; pd dsp 1 \; moduladora 149 \; portadora 100;
+#X msg 227 422 0 1000 1 1500 0.7 1500 0.7 1500 0;
+#X obj 216 364 vline~;
+#X obj 206 622 vline~;
+#X msg 240 158 0 1500 1 500 0.8 500 1 3000 0;
+#X text 74 31 Este é apenas um exemplo que usa um envelope para controlar
+o índice de modulação de fase \, pois esse é um parâmetro interessante
+para modular \, já que define muito a qualidade sonora. Há ainda outro
+envelope que controla a amplitude.;
+#X connect 0 0 13 0;
+#X connect 0 0 23 0;
+#X connect 1 0 0 0;
+#X connect 1 0 14 0;
+#X connect 2 0 25 0;
+#X connect 3 0 5 0;
+#X connect 4 0 3 0;
+#X connect 5 0 15 0;
+#X connect 6 0 7 0;
+#X connect 7 0 3 1;
+#X connect 11 0 4 0;
+#X connect 12 0 6 0;
+#X connect 14 0 24 0;
+#X connect 15 0 17 0;
+#X connect 15 0 17 1;
+#X connect 16 0 22 0;
+#X connect 20 0 21 0;
+#X connect 22 0 14 0;
+#X connect 23 0 7 1;
+#X connect 24 0 15 1;
+#X connect 25 0 0 0;

@@ -1,0 +1,194 @@
+#N canvas 81 23 861 708 10;
+#X floatatom 73 269 7 0 0 0 - - -;
+#X obj 73 216 knob 40 40 100 20000 1 0 empty freq Freq 3 -12 65 15
+-63659 -1 -1 1695 1;
+#X obj 494 328 r \$0-coefficients;
+#X obj 445 366 biquad~;
+#X obj 445 326 click~;
+#X obj 416 434 output~;
+#N canvas 146 23 371 586 analise 0;
+#X floatatom 100 104 0 0 0 0 - - -;
+#X obj 137 260 - 60;
+#X obj 113 162 >;
+#X obj 113 137 t f f f;
+#X obj 137 216 f;
+#X obj 113 183 sel 1;
+#X floatatom 137 237 5 0 0 0 - - -;
+#X obj 99 354 sel 1;
+#X obj 152 346 b;
+#X obj 100 328 change;
+#X obj 152 417 / 1000;
+#X floatatom 152 441 0 0 0 0 - - -;
+#X obj 152 392 realtime;
+#X obj 100 35 inlet~;
+#X obj 152 474 outlet;
+#X obj 100 81 env~ 128;
+#X obj 100 305 < 40;
+#X obj 223 117 bonk~;
+#X obj 207 165 > 90;
+#X obj 209 196 sel 1;
+#X msg 213 231 1;
+#X obj 216 309 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 215 264 change 0;
+#X connect 0 0 3 0;
+#X connect 0 0 16 0;
+#X connect 1 0 8 0;
+#X connect 1 0 16 1;
+#X connect 2 0 5 0;
+#X connect 3 0 2 1;
+#X connect 3 1 2 0;
+#X connect 3 2 4 1;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 1 0;
+#X connect 7 0 12 1;
+#X connect 8 0 12 0;
+#X connect 9 0 7 0;
+#X connect 10 0 11 0;
+#X connect 11 0 14 0;
+#X connect 12 0 10 0;
+#X connect 13 0 15 0;
+#X connect 15 0 0 0;
+#X connect 16 0 9 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 20 0 22 0;
+#X connect 22 0 8 0;
+#X connect 22 0 21 0;
+#X restore 499 412 pd analise;
+#X obj 499 438 nbx 5 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 18
+-261234 -1 -1 0.001488 256;
+#X obj 499 469 bng 30 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 260 494 v b0;
+#X obj 168 494 pack f f f 0 f;
+#X obj 291 494 v alphaQ;
+#X obj 168 391 expr 2*cos(w) / b0 \; (alphaQ - 1) / b0 \; alphaQ *
+Q / b0 \; 0 \; -alphaQ * Q / b0 \; alphaQ + 1 \; sin(w) / (2*Q);
+#X obj 168 517 s \$0-coefficients;
+#X obj 168 332 t b f;
+#N canvas 307 33 213 249 w 0;
+#X obj 53 78 expr $f1 * 2*pi/sr;
+#X obj 53 190 outlet;
+#X obj 53 103 clip 0 1;
+#X obj 53 46 inlet;
+#X obj 80 159 v w;
+#X obj 53 131 t b f;
+#X connect 0 0 2 0;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 5 0 1 0;
+#X connect 5 1 4 0;
+#X restore 73 327 pd w;
+#N canvas 0 23 311 256 init 0;
+#X obj 138 116 pi;
+#X obj 138 144 v pi;
+#X obj 178 108 samplerate~;
+#X obj 178 144 v sr;
+#X obj 111 43 loadbang;
+#X obj 111 77 t b b;
+#X msg 46 125 \; freq 1000 \; Q 500;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 5 1 0 0;
+#X connect 5 1 2 0;
+#X restore 316 414 pd init;
+#X obj 168 153 vsl 15 120 100 10000 1 0 empty empty Q -15 10 0 15 -166441
+-1 -1 0 1;
+#X obj 195 358 v Q;
+#X obj 73 300 t f f;
+#X obj 105 328 v f0;
+#X floatatom 777 435 0 0 0 0 - - -;
+#X obj 777 458 v bw;
+#X obj 636 398 expr ln(1000) / (pi*bw) \; f0 / Q;
+#X obj 636 438 nbx 5 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 18
+-261234 -1 -1 1.09924 256;
+#X obj 445 289 bng 20 250 50 0 empty empty empty 17 7 0 10 -4034 -1
+-1;
+#X obj 331 317 v bw;
+#X floatatom 331 293 0 0 0 0 - - -;
+#X text 282 293 bw (hz);
+#X obj 208 256 expr f0 / bw \; ln(1000) / (pi * $f1);
+#X obj 208 217 nbx 5 22 -1e+37 1e+37 0 0 empty t60 empty 0 -8 0 18
+-261234 -1 -1 1.09924 256;
+#X obj 168 303 nbx 5 22 -1e+37 1e+37 0 0 empty Q Q -18 10 0 18 -262130
+-1 -1 500 256;
+#X msg 636 468 \; t60 set \$1;
+#X obj 73 411 s \$0-b_t60;
+#X obj 636 369 r \$0-b_t60;
+#X text 612 440 T60;
+#X text 308 220 T60;
+#X text 224 193 Ring Time;
+#X text 58 16 Vejamos agora ma prática o tempo de decaimento em T60
+de um filtro ressonante. Abaixo \, temos a implementação em filtro
+resonnante em um biquad \, o "resonant" apresentado no exemplo 4.Cookbook.
+;
+#X text 60 84 Temos os parâmetros de Frequência Ressonante e Q \, mas
+também podemos converter de T60 para Q.;
+#X text 431 50 O T60 indica o tempo de vibração após uma excitação.
+No contexto de computação musical \, podemos usar um impulso como modo
+de excitação - lembrando que o impulso contém todas as frequências!
+;
+#X text 436 119 Implementamos isso abaixo com o objeto [click~]. Veja
+também abaixo a análise de amplitude que é feita no suboatch [pd analise].
+Ali dentro analisamos com o [env~] e contamos quanto tempo demora para
+que ocorra um decaimento de 60 dB. Comparamos então o resultado da
+análise com o valor de T60.;
+#X text 439 209 Como a análise nem o filtro são perfeitos \, temos
+um resultado bem próximo \, o que é suficiente e comprova a relação
+entre largura de banda e "ring time".;
+#X text 61 568 Vimos que esse filtro ressonante não é um Passa Banda
+que possui um valor constante de 0 dB para a frequência de ressonância.
+De modo que \, quanto mior o Q ou T60 \, mais ganho ele dá na frequência
+ressonante.;
+#X text 431 564 O mesmo \, entretanto \, vale para um filtro idêntico
+mas com ganho máximo constante em 0 dB. Pelo menos teoricamente \,
+porque na prática não conseguimos escutar nada \, nem mesmo analisar
+a amplitude decentemente \, porque a amplitude da resposta de freequência
+é muito baixa.;
+#X text 246 642 Ou seja \, para essa aplicação de colocar um filtro
+em ressonância por um período longo de tempo \, não podemos usar um
+Passa Banda de ganho constante!;
+#X text 70 539 ============================================================
+;
+#X text 429 539 ============================================================
+;
+#X connect 0 0 19 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 5 0;
+#X connect 3 0 5 1;
+#X connect 3 0 6 0;
+#X connect 4 0 3 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 10 0 13 0;
+#X connect 12 0 10 0;
+#X connect 12 1 10 1;
+#X connect 12 2 10 2;
+#X connect 12 3 10 3;
+#X connect 12 4 10 4;
+#X connect 12 5 9 0;
+#X connect 12 6 11 0;
+#X connect 14 0 12 0;
+#X connect 14 0 33 0;
+#X connect 14 1 18 0;
+#X connect 15 0 12 0;
+#X connect 15 0 33 0;
+#X connect 17 0 31 0;
+#X connect 19 0 15 0;
+#X connect 19 1 20 0;
+#X connect 21 0 22 0;
+#X connect 23 0 24 0;
+#X connect 23 1 21 0;
+#X connect 24 0 32 0;
+#X connect 25 0 4 0;
+#X connect 27 0 26 0;
+#X connect 29 0 31 0;
+#X connect 29 1 27 0;
+#X connect 30 0 29 0;
+#X connect 31 0 14 0;
+#X connect 34 0 23 0;

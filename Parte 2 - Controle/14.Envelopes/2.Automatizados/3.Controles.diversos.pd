@@ -1,0 +1,46 @@
+#N canvas 430 23 586 698 10;
+#X obj 312 246 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 348 242 loadbang;
+#X obj 121 553 *~;
+#X obj 52 211 loadbang;
+#X obj 205 640 dac~;
+#X text 59 254 Controle de envelope;
+#X msg 52 233 0 1000 1 1500 0.7 1500 0.7 1500 0;
+#X text 103 28 O uso de envelopes não precisa ser restrito ao controle
+de amplitudes e pode ser aplicado ao controle de qualquer coisa. Neste
+exemplo \, usamos um envelope para controlar a amplitude e outro pra
+controlar um panorâmico. É bom lembrar que usar [line] permite o uso
+de envelopes para qualquer coisa que opera via dados de controle em
+vez de sinal de áudio.;
+#X obj 62 509 blosc~ saw;
+#X obj 193 600 pansig~;
+#X obj 312 500 vline~;
+#X obj 314 343 tof/breakpoints;
+#X text 337 314 Controle de Pan;
+#X msg 348 267 0 1500 1 1000 -1 1500 1 1500 0;
+#X obj 62 484 sig~ 40;
+#X obj 54 296 tof/breakpoints;
+#X obj 136 482 vline~;
+#X text 36 430 0;
+#X text 37 286 1;
+#X text 291 477 -1;
+#X text 294 336 1;
+#X text 294 405 0;
+#X text 104 131 Usamos aqui o [tof/breakpoints] porque ele permite
+um desenho de funções além do registro de 0 a 1!;
+#X connect 0 0 11 0;
+#X connect 0 0 15 0;
+#X connect 1 0 13 0;
+#X connect 2 0 9 0;
+#X connect 3 0 6 0;
+#X connect 6 0 15 0;
+#X connect 8 0 2 0;
+#X connect 9 0 4 0;
+#X connect 9 1 4 1;
+#X connect 10 0 9 1;
+#X connect 11 0 10 0;
+#X connect 13 0 11 0;
+#X connect 14 0 8 0;
+#X connect 15 0 16 0;
+#X connect 16 0 2 1;

@@ -1,0 +1,141 @@
+#N canvas 345 22 977 829 12;
+#X obj 702 169 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 9342 1;
+#X obj 739 165 > 0;
+#X obj 739 204 change;
+#X obj 739 240 sel 1;
+#X obj 739 276 bng 30 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X text 685 223 0;
+#X text 685 164 1;
+#X text 676 287 -1;
+#X obj 702 134 unsig~ 1;
+#X obj 711 351 nbx 5 30 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 15
+-261234 -1 -1 254.759 256;
+#X obj 611 323 blosc~ saw;
+#X obj 611 358 output~;
+#X obj 611 226 *~ 200;
+#X obj 611 261 +~ 300;
+#X obj 611 131 noise~;
+#X obj 109 232 sah~;
+#X obj 150 526 zerox~;
+#X obj 115 583 sah~;
+#X obj 109 172 noise~;
+#X obj 115 693 blosc~ saw;
+#X obj 115 620 *~ 200;
+#X obj 93 743 output~;
+#X obj 96 508 noise~;
+#X obj 189 577 edge~;
+#X obj 189 607 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 711 321 unsig~ 1;
+#X obj 109 345 blosc~ saw;
+#X obj 94 395 output~;
+#X obj 313 227 sah~;
+#X obj 313 164 noise~;
+#X obj 313 340 blosc~ saw;
+#X obj 313 267 *~ 200;
+#X obj 313 302 +~ 300;
+#X obj 298 390 output~;
+#X obj 383 229 edge~;
+#X obj 383 259 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 109 272 *~ 50;
+#X obj 109 307 +~ 90;
+#X obj 115 655 +~ 700;
+#X obj 338 197 train~ 1500;
+#X obj 702 97 noisi~ 5;
+#X obj 647 629 expr random(300 \, 500) \; random(500 \, 1500);
+#X obj 647 603 metro;
+#X obj 647 569 tgl 25 0 empty empty empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X obj 647 540 loadbang;
+#X floatatom 647 677 5 0 0 0 - - -;
+#X floatatom 798 673 5 0 0 0 - - -;
+#X obj 619 741 output~;
+#X obj 647 703 blosc~;
+#X obj 134 202 impulse~ 1;
+#X obj 179 234 edge~;
+#X obj 179 264 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 313 540 sah~;
+#X obj 313 490 noise~;
+#X obj 313 653 blosc~ saw;
+#X obj 298 703 output~;
+#X obj 382 499 click~;
+#X obj 382 462 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 313 580 *~ 500;
+#X obj 313 615 +~ 1000;
+#X text 521 24 Porém \, abaixo temos também um gerador de rampa aleatóreo
+para trigar o [sah~] apenas quando o valor excede o patamar de 0!;
+#X text 530 493 O correspondente do patch acima na versão de controle:
+;
+#X text 52 28 O objeto [sah~] é outro "sample and hold" \, clonado
+do Max \, com um comportamento diferente. Ele sampleia apenas quando
+o sinal de áudio excede um valor dado como argumento (sem nenhum argumento
+\, esse valor é de 0). Em termos práticos \, ele foi desenhado para
+ser trigado por um impulso ou trem de pulso \, em vez de ser trigado
+por um [phasor~] como o [samphold~] \, confira abaixo.;
+#X obj 611 188 sah~;
+#X obj 150 494 osc~ 1;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 8 0 0 0;
+#X connect 8 0 1 0;
+#X connect 10 0 11 0;
+#X connect 10 0 11 1;
+#X connect 12 0 13 0;
+#X connect 13 0 10 0;
+#X connect 13 0 25 0;
+#X connect 14 0 63 0;
+#X connect 15 0 36 0;
+#X connect 16 1 17 1;
+#X connect 16 1 23 0;
+#X connect 17 0 20 0;
+#X connect 18 0 15 0;
+#X connect 19 0 21 0;
+#X connect 19 0 21 1;
+#X connect 20 0 38 0;
+#X connect 22 0 17 0;
+#X connect 23 0 24 0;
+#X connect 25 0 9 0;
+#X connect 26 0 27 0;
+#X connect 26 0 27 1;
+#X connect 28 0 31 0;
+#X connect 29 0 28 0;
+#X connect 30 0 33 0;
+#X connect 30 0 33 1;
+#X connect 31 0 32 0;
+#X connect 32 0 30 0;
+#X connect 34 0 35 0;
+#X connect 36 0 37 0;
+#X connect 37 0 26 0;
+#X connect 38 0 19 0;
+#X connect 39 0 34 0;
+#X connect 39 0 28 1;
+#X connect 40 0 8 0;
+#X connect 40 0 63 1;
+#X connect 41 0 45 0;
+#X connect 41 1 42 1;
+#X connect 41 1 46 0;
+#X connect 42 0 41 0;
+#X connect 43 0 42 0;
+#X connect 44 0 43 0;
+#X connect 45 0 48 0;
+#X connect 48 0 47 0;
+#X connect 48 0 47 1;
+#X connect 49 0 50 0;
+#X connect 49 0 15 1;
+#X connect 50 0 51 0;
+#X connect 52 0 58 0;
+#X connect 53 0 52 0;
+#X connect 54 0 55 0;
+#X connect 54 0 55 1;
+#X connect 56 0 52 1;
+#X connect 57 0 56 0;
+#X connect 58 0 59 0;
+#X connect 59 0 54 0;
+#X connect 63 0 12 0;
+#X connect 64 0 16 0;

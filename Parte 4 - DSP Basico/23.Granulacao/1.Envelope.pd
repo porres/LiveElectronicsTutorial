@@ -1,0 +1,162 @@
+#N canvas 480 43 909 626 10;
+#X obj 679 547 bng 20 250 50 0 empty empty empty 17 7 0 10 -241326
+-1 -1;
+#N canvas 790 22 443 326 sampler 0;
+#X obj 253 242 table \$0-buffer;
+#X obj 149 243 soundfiler;
+#X obj 149 185 list append \$0-buffer;
+#X obj 51 72 openpanel;
+#X obj 51 95 list append \$0-buffer;
+#X msg 51 119 read -resize \$1 \$2;
+#X obj 198 94 loadbang;
+#X msg 209 116 \; hz 1 \; grain 500 \; pd dsp 1;
+#X obj 51 41 inlet;
+#X msg 149 214 read -resize ../../samples/bubul.wav \$1;
+#X connect 2 0 9 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 1 0;
+#X connect 6 0 7 0;
+#X connect 6 0 2 0;
+#X connect 8 0 3 0;
+#X connect 9 0 1 0;
+#X restore 679 573 pd sampler;
+#X floatatom 646 190 6 0 0 0 - hz -;
+#X obj 566 312 +~;
+#X obj 618 307 samphold~;
+#X obj 595 260 samphold~;
+#X obj 565 262 *~;
+#X obj 566 339 tabread4~ \$0-buffer;
+#X obj 740 384 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 692 406 pd ganho;
+#X obj 709 309 tof/breakpoints~ 100 50;
+#X obj 692 372 *~;
+#X obj 718 249 loadbang;
+#X msg 718 273 0 0.25 1 0.5 1 0.25 0;
+#X obj 203 469 cnv 15 100 60 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X floatatom 67 346 6 0 0 0 - hz -;
+#X obj 67 463 +~;
+#X obj 67 430 *~;
+#X obj 67 492 tabread4~ \$0-buffer;
+#X obj 241 548 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 193 570 pd ganho;
+#X text 44 346 Hz;
+#X obj 208 479 /~ 2;
+#X obj 208 502 sin~;
+#X obj 193 536 *~;
+#X text 245 487 Envelope;
+#X text 652 171 Hz;
+#X text 491 109 O envelope abaixo é um ASR linear \, com o objeto [tof/breakpoints~]
+;
+#X obj 646 213 phasor~;
+#X obj 67 370 phasor~;
+#X obj 336 423 samplerate~;
+#X obj 336 450 / 1000;
+#X obj 336 476 v sr_KHz;
+#X obj 336 398 loadbang;
+#X obj 161 376 expr~ $v1 * sr_KHz \; $v2 * sr_KHz;
+#X floatatom 272 351 6 0 0 0 - - -;
+#X floatatom 161 352 6 0 0 0 - grain -;
+#X text 269 329 posição (ms);
+#X text 161 329 grão (ms);
+#X floatatom 565 190 6 0 0 0 - grain -;
+#X floatatom 454 190 6 0 0 0 - grain -;
+#X text 446 170 posição;
+#X text 567 170 grão;
+#X text 45 257 O tamanho do trecho em loop \, chamado "grão" \, é dado
+em ms. A posição de início de leitura também. Ambos são convertidos
+em amostras ao multiplicar pela taxa de amostragem em KHz.;
+#X obj 454 215 expr~ $v1 * sr_KHz \; $v2 * sr_KHz;
+#X text 43 71 Neste exemplo \, lemos em loop com um [phasor~] em uma
+dada frequência \, e o mesmo [phasor~] controla um envelope que \,
+no caso \, é a metade do período da função seno.;
+#X text 43 125 Apesar de evitar clicks \, um envelope é sempre uma
+modulação de amplitude. De modo que esse processamento introduz parciais
+da forma característica de modulação de ampltitude em frequências de
+modulação altas. Ou então um tremolo em frequências baixas. Minimizaremos
+isso com "overlap" no próximo exemplo.;
+#X text 44 20 Já começamos a ver um princípio de granulação \, apenas
+como picotar um sample em um pedacinho qualquer \, mas agora usamos
+envelopes para evitar "clicks".;
+#X text 44 210 Um grão/trecho de áudio \, lido com frequência alta
+\, pode ser encarado como uma forma de onda \, esse é um dos conceitos
+de Síntese Granular.;
+#X text 486 43 Outras descontinuidades (clicks) surgem quando ajustamos
+o tamanho do grão e posição de leitura. Podemos evitar isso com o [samplhold~]
+\, que só deixa um novo valor passar ao final do ciclo do [phasor~]
+que controla o envelope.;
+#X text 489 449 Esta seção de exemplos trata de granulação a partir
+de um sample carregado em um array e lido com o [tabread4~]. Mas no
+último exemplo veremos como granular também em um buffer circular (linhas
+de delay). O sample já foi carregado automaticamente no subpatch abaixo
+\, mas você pode escolher outro clicando no bang.;
+#X connect 0 0 1 0;
+#X connect 2 0 28 0;
+#X connect 3 0 7 0;
+#X connect 4 0 3 1;
+#X connect 5 0 6 1;
+#X connect 6 0 3 0;
+#X connect 7 0 11 0;
+#X connect 8 0 9 1;
+#X connect 10 0 11 1;
+#X connect 11 0 9 0;
+#X connect 12 0 13 0;
+#X connect 13 0 10 0;
+#X connect 15 0 29 0;
+#X connect 16 0 18 0;
+#X connect 17 0 16 0;
+#X connect 18 0 24 0;
+#X connect 19 0 20 1;
+#X connect 22 0 23 0;
+#X connect 23 0 24 1;
+#X connect 24 0 20 0;
+#X connect 28 0 4 1;
+#X connect 28 0 5 1;
+#X connect 28 0 6 0;
+#X connect 28 0 10 0;
+#X connect 29 0 17 0;
+#X connect 29 0 22 0;
+#X connect 30 0 31 0;
+#X connect 31 0 32 0;
+#X connect 33 0 30 0;
+#X connect 34 0 17 1;
+#X connect 34 1 16 1;
+#X connect 35 0 34 1;
+#X connect 36 0 34 0;
+#X connect 39 0 44 1;
+#X connect 40 0 44 0;
+#X connect 44 0 4 0;
+#X connect 44 1 5 0;

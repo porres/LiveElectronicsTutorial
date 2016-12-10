@@ -1,0 +1,109 @@
+#N canvas 607 81 841 620 10;
+#X obj 500 247 cnv 15 198 138 empty empty empty 20 12 0 14 -204786
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Trem 441 float 1;
+#A 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 499 246 graph;
+#X text 485 241 1;
+#X text 479 373 -1;
+#X text 485 308 0;
+#X obj 565 178 hsl 128 15 0 1 0 0 empty empty empty -2 -6 0 10 -204786
+-1 -1 0 0;
+#N canvas 294 60 471 450 ganho 0;
+#X obj 237 180 *~;
+#X obj 225 212 dac~;
+#X obj 266 150 line~;
+#X msg 266 124 \$1 10;
+#X obj 266 98 pow 4;
+#X obj 266 71 inlet;
+#X obj 237 40 inlet~;
+#X obj 41 192 metro 441;
+#X obj 41 141 loadbang;
+#X obj 41 168 tgl 15 0 empty empty empty 17 7 0 10 -204786 -1 -1 1
+1;
+#X obj 118 249 tabwrite~ Trem;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 10 0;
+#X connect 7 0 10 0;
+#X connect 8 0 9 0;
+#X connect 9 0 7 0;
+#X restore 517 202 pd ganho;
+#X obj 517 94 expr 1000 / $f1;
+#X obj 517 71 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X text 56 180 O objeto [train~] não foi pensado como um oscilador
+\, por isso o tempo de cada Trem de Pulso é dado em ms \, em vez de
+Hz. Mas podemos converter de período em ms para Hertz facilmente.;
+#X obj 635 88 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -167145
+-1 -1 0 1;
+#X floatatom 632 115 5 0 0 0 - - -;
+#X text 640 67 Tamanho do Pulso;
+#X text 496 70 Hz;
+#X text 500 122 ms;
+#X text 54 43 É preciso diferenciar bem pulso de trem de pulso e de
+ondas quadradas! Vimos agora um oscilador de pulso \, o objeto [impulse~]
+e como ele gera um pulso de apenas uma amostra. Pois bem \, mais de
+uma amostra em seguida já pode ser considerada um "trem de pulsos".
+;
+#X text 58 124 O objeto [train~] é um "Trem de Pulsos" propriamente
+dito. O resultado se assemelha a uma onda quadrada \, porém o valor
+mínimo é zero em vez de -1 como na Onda Quadrada!;
+#X obj 531 534 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X obj 660 534 bng 15 250 50 0 empty empty empty 17 7 0 10 -258113
+-1 -1;
+#X obj 531 510 threshold~ 0.5 0 0.5 0;
+#X text 49 267 ============================================================
+;
+#X text 62 368 No contexto do Pd \, podemos usar esse gerador de Trem
+de Pulsos para ligar ou desligar um sinal de áudio \, por exemplo.
+Mais para frente veremos alguns exemplos de aplicações nesse sentido.
+;
+#X text 494 532 Liga;
+#X text 604 533 Desliga;
+#X text 59 313 Tal como um gerador de impulso \, um trem de pulsos
+costuma ter aplicações em síntese analógica modular como uma espécie
+de chave de liga e desliga \, ou um "gate".;
+#X obj 531 451 train~ 1500 0.75;
+#X obj 517 143 train~ 5 0.75;
+#X floatatom 531 117 5 0 0 0 - - -;
+#X obj 624 478 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X text 646 477 Liga;
+#X text 86 458 Na realidade \, o [train~] possui um segundo outlet
+para enviar um bang toda vez que ocorre a transição de 0 a 1 \, mas
+podemos usar ainda o objeto [threshold~] para converter o sinal de
+um trem de pulsos em sinal de controle (bangs) tanto para a transição
+de 0 a 1 quanto de transição de 1 para 0!;
+#X connect 5 0 6 1;
+#X connect 7 0 26 0;
+#X connect 7 0 27 0;
+#X connect 8 0 7 0;
+#X connect 10 0 11 0;
+#X connect 11 0 26 1;
+#X connect 19 0 17 0;
+#X connect 19 1 18 0;
+#X connect 25 0 19 0;
+#X connect 25 1 28 0;
+#X connect 26 0 6 0;

@@ -1,0 +1,215 @@
+#N canvas 198 34 1111 721 10;
+#X obj 783 568 bng 20 250 50 0 empty empty empty 17 7 0 10 -241326
+-1 -1;
+#N canvas 1016 504 443 326 sampler 0;
+#X obj 233 242 table \$0-buffer;
+#X obj 129 243 soundfiler;
+#X obj 129 185 list append \$0-buffer;
+#X obj 31 72 openpanel;
+#X obj 31 95 list append \$0-buffer;
+#X msg 31 119 read -resize \$1 \$2;
+#X obj 178 94 loadbang;
+#X obj 31 41 inlet;
+#X msg 129 214 read -resize ../../samples/bubul.wav \$1;
+#X msg 189 116 \; hz -1 \; grain 500 \; pd dsp 1;
+#X connect 2 0 8 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 1 0;
+#X connect 6 0 9 0;
+#X connect 6 0 2 0;
+#X connect 7 0 3 0;
+#X connect 8 0 1 0;
+#X restore 783 594 pd sampler;
+#X floatatom 782 403 0 0 1e+06 0 - grain -;
+#X floatatom 671 404 0 0 1e+06 0 - - -;
+#X text 966 426 Hz;
+#X text 771 384 grão (ms);
+#X text 643 382 posição (ms);
+#X obj 671 484 s~ \$0-pos;
+#X obj 782 484 s~ \$0-grain;
+#X text 772 543 Abrir outro arquivo;
+#X obj 543 425 samplerate~;
+#X obj 543 452 / 1000;
+#X obj 543 478 v sr_KHz;
+#X obj 543 400 loadbang;
+#X obj 671 429 expr~ $v1 * sr_KHz \; $v2 * sr_KHz;
+#X obj 690 635 +~;
+#X obj 738 644 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 690 666 pd ganho;
+#N canvas 142 27 469 503 grao_1 0;
+#X obj 214 406 *~;
+#X obj 229 355 /~ 2;
+#X obj 229 379 sin~;
+#X obj 101 202 r~ \$0-grain;
+#X obj 59 238 *~;
+#X obj 101 235 sah~;
+#X obj 90 324 +~;
+#X obj 111 300 sah~;
+#X obj 85 264 r~ \$0-pos;
+#X obj 210 204 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 90 356 tabread4~ \$0-buffer;
+#X obj 214 443 outlet~;
+#X text 247 224 transforma em impulso;
+#X obj 156 75 inlet~;
+#X text 145 54 Frequência;
+#X obj 156 101 phasor~;
+#X connect 0 0 11 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 1;
+#X connect 6 0 10 0;
+#X connect 7 0 6 1;
+#X connect 8 0 7 0;
+#X connect 9 0 5 1;
+#X connect 9 0 7 1;
+#X connect 10 0 0 0;
+#X connect 13 0 15 0;
+#X connect 15 0 4 0;
+#X connect 15 0 9 0;
+#X connect 15 0 1 0;
+#X restore 630 592 pd grao_1;
+#N canvas 142 27 500 505 grao_2 0;
+#X obj 224 406 *~;
+#X obj 239 355 /~ 2;
+#X obj 239 379 sin~;
+#X obj 111 202 r~ \$0-grain;
+#X obj 69 238 *~;
+#X obj 111 235 sah~;
+#X obj 100 324 +~;
+#X obj 121 300 sah~;
+#X obj 95 264 r~ \$0-pos;
+#X obj 220 204 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 100 356 tabread4~ \$0-buffer;
+#X obj 224 443 outlet~;
+#X obj 165 68 inlet~;
+#X text 250 227 transforma em impulso;
+#X text 154 45 Frequência;
+#X obj 165 101 phasor~;
+#X msg 228 100 0.5;
+#X obj 228 74 loadbang;
+#X text 263 102 Defasagem;
+#X connect 0 0 11 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 1;
+#X connect 6 0 10 0;
+#X connect 7 0 6 1;
+#X connect 8 0 7 0;
+#X connect 9 0 5 1;
+#X connect 9 0 7 1;
+#X connect 10 0 0 0;
+#X connect 12 0 15 0;
+#X connect 15 0 4 0;
+#X connect 15 0 9 0;
+#X connect 15 0 1 0;
+#X connect 16 0 15 1;
+#X connect 17 0 16 0;
+#X restore 705 589 pd grao_2;
+#X text 67 34 Por enquanto temos trabalhado com frequências positivas.
+Nada nos impede de trabalhar com frequências negativas. A diferença
+é que o grão será lido com o phasor de trás pra frente \, na direção
+contrária.;
+#X obj 97 119 phasor~ 1;
+#X obj 97 154 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 267 154 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 267 119 phasor~ -1;
+#X text 104 297 Frequência positiva;
+#X text 272 296 Frequência negativa;
+#X text 84 359 O problema que surge é que temos usado o [samphold~]
+para evitar clicks nas mudanças de tamanho de grão e posição \, e ele
+não funciona com frequências negativas como já apontado anteriormente.
+;
+#X obj 907 403 hsl 128 15 -5 5 0 0 empty hz empty -2 -8 0 10 -228856
+-1 -1 7620 1;
+#X obj 904 429 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 1 256;
+#X text 85 427 Uma saída possível é transformar a saída do [phasor~]
+em impulso e ligqa-la no objeto [sah~] como já discutido anteriormente.
+;
+#X obj 153 568 sah~;
+#X obj 186 542 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 153 596 snaps~;
+#X obj 186 511 phasor~ -1;
+#X obj 124 529 noise~;
+#X text 596 254 Vejamos como fica a adaptação do patch abaixo. O patch
+também foi reorganizado com dois subpatches \, um para cada grão em
+overlap \, abra-os para conferir.;
+#X text 597 311 E experimente \, claro \, controlar a leitura dos grãos
+com frequência negativa.;
+#X text 600 32 Outra mudança que faremos é em relação à defasagem do
+[phasor~] \, podemos também simplemente usar o inlet direito para fazer
+um deslocamento da fase. Porém precisamos agora de dois objetos [phasor~].
+;
+#X obj 543 105 cnv 15 180 125 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 741 104 cnv 15 267 125 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X obj 609 115 phasor~ 150;
+#X text 654 157 Defasagem;
+#X obj 609 170 wrap~;
+#X obj 609 144 +~ 0.5;
+#X obj 609 202 cos~;
+#X obj 557 202 cos~;
+#X obj 752 169 phasor~ 150;
+#X obj 752 201 cos~;
+#X obj 839 168 phasor~ 150;
+#X obj 839 200 cos~;
+#X msg 902 140 0.5;
+#X obj 902 114 loadbang;
+#X text 937 142 Defasagem;
+#X obj 904 457 s \$0-freq;
+#X text 924 383 frequência;
+#X obj 630 555 r \$0-freq;
+#X connect 0 0 1 0;
+#X connect 2 0 14 1;
+#X connect 3 0 14 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 13 0 10 0;
+#X connect 14 0 7 0;
+#X connect 14 1 8 0;
+#X connect 15 0 17 0;
+#X connect 16 0 17 1;
+#X connect 18 0 15 0;
+#X connect 19 0 15 1;
+#X connect 21 0 22 0;
+#X connect 24 0 23 0;
+#X connect 28 0 29 0;
+#X connect 29 0 54 0;
+#X connect 31 0 33 0;
+#X connect 32 0 31 1;
+#X connect 34 0 32 0;
+#X connect 35 0 31 0;
+#X connect 41 0 44 0;
+#X connect 41 0 46 0;
+#X connect 43 0 45 0;
+#X connect 44 0 43 0;
+#X connect 47 0 48 0;
+#X connect 49 0 50 0;
+#X connect 51 0 49 1;
+#X connect 52 0 51 0;
+#X connect 56 0 19 0;
+#X connect 56 0 18 0;

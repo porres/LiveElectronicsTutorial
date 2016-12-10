@@ -1,0 +1,91 @@
+#N canvas 170 23 1025 505 10;
+#X text 26 273 -1;
+#X text 34 304 1;
+#X text 28 412 -1;
+#X obj 270 172 cnv 15 224 110 empty empty empty 20 12 0 14 -249648
+-66577 0;
+#X obj 46 173 cnv 15 223 110 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array senoide 4410 float 0;
+#X coords 0 1.1 4409 -1.1 450 112 1;
+#X restore 45 172 graph;
+#X text 32 165 1;
+#X obj 272 312 cnv 15 224 110 empty empty empty 20 12 0 14 -249648
+-66577 0;
+#X obj 48 313 cnv 15 223 110 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array triangular 4410 float 0;
+#X coords 0 1.1 4409 -1.1 450 112 1;
+#X restore 47 311 graph;
+#X obj 759 176 cnv 15 224 110 empty empty empty 20 12 0 14 -249648
+-66577 0;
+#X obj 535 176 cnv 15 223 110 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array dente-de-serra 4410 float 0;
+#X coords 0 1.1 4409 -1.1 450 112 1;
+#X restore 534 175 graph;
+#N canvas 381 23 421 513 plot 0;
+#X obj 49 119 t b f;
+#X msg 49 96 0;
+#X obj 218 50 loadbang;
+#X obj 152 223 sin~;
+#X obj 155 277 tabwrite~ senoide;
+#X obj 241 210 triangle~;
+#X obj 218 132 t b f;
+#X msg 218 107 0.25;
+#X obj 231 242 tabwrite~ triangular;
+#X obj 115 448 tabwrite~ dente-de-serra;
+#X obj 125 401 triangle~ 0;
+#X obj 143 330 expr~ if ($v1 < 0.5 \, 1 \, -1);
+#X obj 138 369 tabwrite~ quadrada;
+#X obj 125 155 phasor~ 20;
+#X obj 242 179 phasor~ 20;
+#X connect 0 0 4 0;
+#X connect 0 0 9 0;
+#X connect 0 0 12 0;
+#X connect 0 1 13 1;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 2 0 7 0;
+#X connect 3 0 4 0;
+#X connect 5 0 8 0;
+#X connect 6 0 8 0;
+#X connect 6 1 14 1;
+#X connect 7 0 6 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
+#X connect 13 0 3 0;
+#X connect 13 0 10 0;
+#X connect 13 0 11 0;
+#X connect 14 0 5 0;
+#X restore 941 419 pd plot;
+#X obj 762 308 cnv 15 224 110 empty empty empty 20 12 0 14 -249648
+-66577 0;
+#X obj 538 308 cnv 15 223 110 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array quadrada 4410 float 0;
+#X coords 0 1.1 4409 -1.1 450 112 1;
+#X restore 537 307 graph;
+#X text 29 220 0;
+#X text 34 359 0;
+#X text 521 168 1;
+#X text 515 276 -1;
+#X text 521 223 0;
+#X text 519 300 1;
+#X text 513 408 -1;
+#X text 519 355 0;
+#X text 99 39 Vimos em detalhes o oscilador e forma de onda senoidal
+\, que é o oscilador mais simples e que define um tom puro. Mais à
+frente \, veremos com calma diversos outros osciladores e suas aplicações
+em síntese. Apresentamos aqui \, entretanto \, já algumas formas de
+onda elementares: Triangular \, Dente de Serra e Quadrada. Confira
+os gráficos abaixo. que incluem dois períodos/ciclos de cada forma
+de onda.;
+#X text 555 45 Apesar da diferença de formato \, há certas similaridades
+entre as formas de onda. Todas \, menos a dente de serra \, são "espelhadadas"
+\, onde a segunda metade do ciclo é igual à primeira metade invertida.
+Veremos implicações dessa diferença com a dente de serra depois.;

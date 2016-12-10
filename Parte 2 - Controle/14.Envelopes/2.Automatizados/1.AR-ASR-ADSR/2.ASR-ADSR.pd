@@ -1,0 +1,90 @@
+#N canvas 281 47 973 685 10;
+#X obj 113 291 line~;
+#X obj 113 180 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 98 329 *~;
+#X obj 41 259 osc~ 440;
+#X obj 86 363 dac~;
+#X obj 379 195 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 364 294 *~;
+#X obj 304 236 osc~ 440;
+#X obj 352 328 dac~;
+#X obj 379 256 vline~;
+#X obj 172 381 envgen 200 140 1 0  ;
+#X obj 170 339 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 123 583 *~;
+#X obj 111 617 dac~;
+#X obj 84 482 osc~ 440;
+#X msg 113 238 1 25;
+#X msg 153 250 0 25;
+#X obj 153 221 delay 100;
+#X msg 211 349 0 25 1 100 1 25 0;
+#X obj 211 323 loadbang;
+#X msg 379 228 1 25 \, 0 25 100;
+#X text 143 43 O envelope ASR tem Attack \, Sustain e Release.;
+#X text 142 67 Neste exemplo o attack é de 25 ms \, o sustain de 100
+ms e o release de 25 ms.;
+#X text 142 109 Veja abaixo como gerar esse envelope na três formas
+apresentadas ([line~] \, [vline~] e [engen]).;
+#X obj 675 157 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 660 256 *~;
+#X obj 600 198 osc~ 440;
+#X obj 648 290 dac~;
+#X obj 675 218 vline~;
+#X obj 658 396 envgen 200 140 1 0  ;
+#X obj 656 354 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 609 598 *~;
+#X obj 597 632 dac~;
+#X obj 577 498 osc~ 440;
+#X obj 697 338 loadbang;
+#X text 566 25 O envelope ADSR tem Attack \, Decay \, Sustain e Release.
+;
+#X msg 697 364 0 50 1 100 0.5 500 0.5 50 0;
+#X text 565 49 Neste exemplo o attack é de 50 ms \, o decay de 100
+ms \, 0 sustain de 500 ms e o release de 50 ms.;
+#X msg 675 190 1 50 \, 0.5 100 50 \, 0 50 650;
+#X obj 170 549 vline~;
+#X text 565 91 nesse ponto já não vale a pena mesmo usar o [line~]
+e sim apenas o [vline~] e o [envgen] como abaixo.;
+#X obj 656 564 vline~;
+#X connect 0 0 2 1;
+#X connect 1 0 15 0;
+#X connect 1 0 17 0;
+#X connect 2 0 4 0;
+#X connect 2 0 4 1;
+#X connect 3 0 2 0;
+#X connect 5 0 20 0;
+#X connect 6 0 8 0;
+#X connect 6 0 8 1;
+#X connect 7 0 6 0;
+#X connect 9 0 6 1;
+#X connect 10 0 39 0;
+#X connect 11 0 10 0;
+#X connect 12 0 13 0;
+#X connect 12 0 13 1;
+#X connect 14 0 12 0;
+#X connect 15 0 0 0;
+#X connect 16 0 0 0;
+#X connect 17 0 16 0;
+#X connect 18 0 10 0;
+#X connect 19 0 18 0;
+#X connect 20 0 9 0;
+#X connect 24 0 38 0;
+#X connect 25 0 27 0;
+#X connect 25 0 27 1;
+#X connect 26 0 25 0;
+#X connect 28 0 25 1;
+#X connect 29 0 41 0;
+#X connect 30 0 29 0;
+#X connect 31 0 32 0;
+#X connect 31 0 32 1;
+#X connect 33 0 31 0;
+#X connect 34 0 36 0;
+#X connect 36 0 29 0;
+#X connect 38 0 28 0;
+#X connect 39 0 12 1;
+#X connect 41 0 31 1;

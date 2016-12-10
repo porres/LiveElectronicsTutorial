@@ -1,0 +1,198 @@
+#N canvas 26 42 1010 703 10;
+#X obj 545 22 cnv 15 274 180 empty empty empty 10 10 0 12 -233017 -4160
+0;
+#X obj 684 100 table \$0-buffer;
+#X obj 551 28 loadbang;
+#X obj 551 94 soundfiler;
+#X obj 551 134 samplerate~;
+#X obj 641 160 /;
+#X obj 551 114 trigger bang float;
+#X obj 641 180 v Hz_\$0;
+#X obj 551 159 / 1000;
+#X obj 551 180 v sr_Khz;
+#X obj 665 32 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786 -1
+-1;
+#X obj 551 48 symbol \$0-buffer;
+#X obj 665 51 openpanel;
+#X text 672 121 tamanho do sample;
+#X text 691 181 frequência do sample;
+#X text 682 31 Escolher Outro Sample;
+#X text 489 25 Sampler:;
+#X msg 261 607 \; speed 8 \; cents -4200 \; grain 400;
+#X msg 68 605 \; speed -36 \; cents 200 \; grain 1000;
+#X msg 160 543 \; speed 8 \; cents -3400 \; grain 400;
+#X msg 68 542 \; speed 50 \; cents -4200 \; grain 100;
+#X msg 160 606 \; speed 4 \; cents -2400 \; grain 14;
+#X text 85 515 presets:;
+#X obj 261 515 loadbang;
+#X msg 261 540 \; speed 100 \; grain 25 \; cents 0;
+#X text 37 397 Seria só isso \, se não fosse o cuidado em usar objetos
+[samphold~] para evitar clicks enquanto mudamos o intervalo e velocidade.
+Uma complicação decorrente disso é que temos a possibilidade do [phasor~]
+rodar em velocidades negativas \, e isso impede seu uso num [samphold~]
+\, por isso invertemos o sinal do [phasor~] para liga-lo ao [samphold~]
+no caso de frequências negativas.;
+#X msg 551 73 read -resize ../../../samples/bubul.wav \$1;
+#X obj 668 139 s \$0-size;
+#X obj 462 399 cnv 15 140 30 empty empty empty 20 12 0 14 -261682 -66577
+0;
+#X obj 764 438 cnv 15 140 25 empty empty empty 20 12 0 14 -204800 -66577
+0;
+#X obj 771 281 nbx 5 18 -1e+37 1e+37 0 0 empty speed empty 0 -8 0 13
+-204800 -1 -1 100 256;
+#X obj 694 557 +~;
+#X obj 771 441 phasor~;
+#X obj 468 281 nbx 6 18 -1e+37 1e+37 0 0 empty cents empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#X obj 468 405 phasor~;
+#X text 555 280 Cents;
+#X text 844 282 Velocidade (%);
+#X obj 771 412 expr~ $v1 * Hz_\$0;
+#X obj 771 307 /~ 100;
+#X obj 635 281 nbx 4 18 3 1e+37 0 0 empty grain empty 0 -8 0 13 -262130
+-1 -1 25 256;
+#X text 697 282 Grão (ms);
+#X obj 646 345 expr~ 1000 / $v1;
+#X obj 635 379 expr~ $v1 * sr_Khz;
+#X obj 667 601 output~;
+#X text 777 486 Ponto de Leitura do sample;
+#X text 475 325 Razão;
+#X obj 468 352 -~;
+#X obj 468 375 *~;
+#X obj 468 306 expr~ pow(2 \, $v1/1200);
+#X obj 771 467 *~;
+#X obj 805 468 r \$0-size;
+#X text 517 405 Transposição;
+#X text 824 441 Velocidade;
+#X text 37 37 Neste exemplo podemos escolher um tamanho de grão qualquer
+\, enquanto anteriormente estávamos presos aos tamanhos possíveis de
+blobo de áudio (potências de 2). Outra diferença é que a leitura do
+buffer é controlada pela soma de dois objetos [phasor~] (um responsável
+pela transposição e outro pela velocidade de leitura) em vez de um
+[vline~] e a estutura de contador.;
+#X text 36 134 Cada envelope de um grão é controlado por um [phasor~]
+\, que também é o responável pelo ajuste de transposição. Assim \,
+precisamos calcular a frequência do [phasor~] de acordo com o tamanho
+do grão de acordo com o intervalo de transposição (pitch shifting)
+mas também subtrair a influência do outro [phasor~] (responsável pela
+velocidade de leitura ou "time stretch").;
+#X text 36 230 Para encontrarmos a frequência do [phasor~] responsável
+pela transposição \, convertemos o intervalo de cents para razão e
+subtraímos da proporção de velocidade. Por fim \, esse valor é Multiplicado
+pela frequência correspondente ao período do grão.;
+#X text 36 302 A saída desse [phasor~] é multiplicada pelo tamanho
+do grão em amostras e somada com outro [phasor~] que cospe o número
+de amostras do sample de acordo com a velocidade de leitura. A frequência
+de leitura é determinada por essa soma. Por fim \, passamos o sinal
+com o número de amostras por um looper e enfim lemos o sample com o
+[tabread4~].;
+#X text 751 344 <== Frequência do grão;
+#X text 751 378 <== Grão em amostras;
+#X obj 635 405 s~ \$0-grain;
+#N canvas 79 29 479 409 grao_1 0;
+#X obj 33 279 tabread4~ \$0-buffer;
+#X obj 33 228 +~;
+#X obj 33 196 *~;
+#X obj 176 171 /~ 2;
+#X obj 176 197 sin~;
+#X obj 33 253 pong~ 1;
+#X obj 72 228 r \$0-size;
+#X obj 159 126 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 43 136 r~ \$0-grain;
+#X obj 48 173 sah~;
+#X obj 33 52 inlet~;
+#X obj 161 321 *~;
+#X obj 161 352 outlet~;
+#X obj 196 52 inlet~;
+#X text 34 25 Fase;
+#X text 160 24 Ponto de Leitura do sample;
+#X connect 0 0 11 0;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 11 1;
+#X connect 5 0 0 0;
+#X connect 6 0 5 2;
+#X connect 7 0 9 1;
+#X connect 8 0 9 0;
+#X connect 9 0 2 1;
+#X connect 10 0 2 0;
+#X connect 10 0 7 0;
+#X connect 10 0 3 0;
+#X connect 11 0 12 0;
+#X connect 13 0 1 1;
+#X restore 641 515 pd grao_1;
+#N canvas 79 29 497 474 grao_2 1;
+#X obj 87 346 tabread4~ \$0-buffer;
+#X obj 87 295 +~;
+#X obj 87 263 *~;
+#X obj 230 238 /~ 2;
+#X obj 230 264 sin~;
+#X obj 87 320 pong~ 1;
+#X obj 126 295 r \$0-size;
+#X obj 213 193 fexpr~ abs($x1[0] - $x1[-1]) > 0.5;
+#X obj 97 203 r~ \$0-grain;
+#X obj 102 240 sah~;
+#X obj 215 388 *~;
+#X obj 215 419 outlet~;
+#X obj 310 59 inlet~;
+#X text 88 25 Fase;
+#X text 259 20 Ponto de Leitura do sample;
+#X obj 87 90 +~ 0.5;
+#X obj 87 119 wrap~;
+#X obj 87 58 inlet~;
+#X text 141 91 Defasagem;
+#X connect 0 0 10 0;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 10 1;
+#X connect 5 0 0 0;
+#X connect 6 0 5 2;
+#X connect 7 0 9 1;
+#X connect 8 0 9 0;
+#X connect 9 0 2 1;
+#X connect 10 0 11 0;
+#X connect 12 0 1 1;
+#X connect 15 0 16 0;
+#X connect 16 0 2 0;
+#X connect 16 0 7 0;
+#X connect 16 0 3 0;
+#X connect 17 0 15 0;
+#X restore 720 514 pd grao_2;
+#X connect 2 0 11 0;
+#X connect 3 0 6 0;
+#X connect 4 0 5 0;
+#X connect 4 0 8 0;
+#X connect 5 0 7 0;
+#X connect 6 0 4 0;
+#X connect 6 1 5 1;
+#X connect 6 1 27 0;
+#X connect 8 0 9 0;
+#X connect 10 0 12 0;
+#X connect 11 0 26 0;
+#X connect 12 0 26 0;
+#X connect 23 0 24 0;
+#X connect 26 0 3 0;
+#X connect 30 0 38 0;
+#X connect 31 0 43 0;
+#X connect 31 0 43 1;
+#X connect 32 0 49 0;
+#X connect 33 0 48 0;
+#X connect 34 0 60 0;
+#X connect 34 0 61 0;
+#X connect 37 0 32 0;
+#X connect 38 0 37 0;
+#X connect 38 0 46 1;
+#X connect 39 0 41 0;
+#X connect 39 0 42 0;
+#X connect 41 0 47 1;
+#X connect 42 0 59 0;
+#X connect 46 0 47 0;
+#X connect 47 0 34 0;
+#X connect 48 0 46 0;
+#X connect 49 0 60 1;
+#X connect 49 0 61 1;
+#X connect 50 0 49 1;
+#X connect 60 0 31 0;
+#X connect 61 0 31 1;

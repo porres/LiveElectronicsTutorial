@@ -1,0 +1,240 @@
+#N canvas 1 106 1165 683 10;
+#X obj 419 334 cnv 15 298 148 empty empty empty 20 12 0 14 -216628
+-66577 0;
+#X obj 423 512 cnv 15 298 148 empty empty empty 20 12 0 14 -204328
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array fase 441 float 0;
+#X coords 0 1 440 -1 300 150 1;
+#X restore 418 333 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array onda 441 float 0;
+#X coords 0 1 440 -1 300 150 1;
+#X restore 422 511 graph;
+#X text 33 127 Sabemos que se ligarmos um [phasor~] num [cos~] temos
+um oscilador senoidal \, e é evidente a semelhança entre o [phasor~]
+e uma dente de serra. A diferença é tão somente um ajuste de ganho
+e DC-Offset.;
+#X text 562 97 LFO;
+#X text 625 119 LFO;
+#X obj 546 138 *~ 0.22;
+#X obj 546 160 +~ 0.25;
+#X obj 612 184 +~ 0.75;
+#X obj 612 162 *~ 0.22;
+#X obj 612 139 osc~ 0.55;
+#X obj 546 117 osc~ 0.22;
+#N canvas 0 22 512 364 plot-out 0;
+#X obj 410 180 metro 100;
+#X obj 413 157 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 229 77 inlet~;
+#X obj 103 75 inlet~;
+#X obj 413 126 loadbang;
+#X obj 341 272 tabwrite~ fase;
+#X obj 186 273 tabwrite~ onda;
+#X obj 343 66 inlet;
+#X obj 344 112 pow 4;
+#X msg 345 143 \$1 10;
+#X obj 343 170 line~;
+#X obj 197 204 *~;
+#X obj 306 209 *~;
+#X obj 117 303 dac~;
+#X obj 213 232 catch~ onda;
+#X obj 404 223 catch~ fase;
+#X connect 0 0 5 0;
+#X connect 0 0 6 0;
+#X connect 1 0 0 0;
+#X connect 2 0 11 0;
+#X connect 3 0 12 0;
+#X connect 4 0 1 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 12 1;
+#X connect 10 0 11 1;
+#X connect 11 0 6 0;
+#X connect 11 0 13 0;
+#X connect 11 0 13 1;
+#X connect 12 0 5 0;
+#X connect 14 0 6 0;
+#X connect 15 0 5 0;
+#X restore 487 253 pd plot-out;
+#X obj 560 228 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 489 355 plot-out 0;
+#X obj 229 77 inlet~;
+#X obj 103 75 inlet~;
+#X obj 343 66 inlet;
+#X obj 344 112 pow 4;
+#X msg 345 143 \$1 10;
+#X obj 343 170 line~;
+#X obj 197 204 *~;
+#X obj 306 209 *~;
+#X obj 148 288 dac~;
+#X obj 205 251 throw~ onda;
+#X obj 299 256 throw~ fase;
+#X connect 0 0 6 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 1;
+#X connect 5 0 6 1;
+#X connect 6 0 8 1;
+#X connect 6 0 8 0;
+#X connect 6 0 9 0;
+#X connect 7 0 10 0;
+#X restore 88 652 pd plot-out;
+#X obj 192 627 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X obj 458 140 phasor~ 160;
+#X text 33 21 A síntese por distorção de Fase (Phase Distortion) é
+um método desenvolvio pela Casio e implementado em alguns de seus sintetizadores.
+Mas veremos aqui como se trata de uma técnica relcionada com waveshaping.
+O método de Distorção de Fase em si \, e em todo seu potencial técnico
+\, é um assunto que infelizmente não será abordado aqui além da simples
+relação com Waveshaping.;
+#X obj 103 300 phasor~ 440;
+#X obj 103 332 kink~;
+#N canvas 236 23 489 355 plot-out 0;
+#X obj 229 77 inlet~;
+#X obj 103 75 inlet~;
+#X obj 343 66 inlet;
+#X obj 344 112 pow 4;
+#X msg 345 143 \$1 10;
+#X obj 343 170 line~;
+#X obj 197 204 *~;
+#X obj 306 209 *~;
+#X obj 148 288 dac~;
+#X obj 205 251 throw~ onda;
+#X obj 299 256 throw~ fase;
+#X obj 45 148 loadbang;
+#X msg 45 184 \; pd dsp 1;
+#X connect 0 0 6 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 1;
+#X connect 5 0 6 1;
+#X connect 6 0 8 1;
+#X connect 6 0 8 0;
+#X connect 6 0 9 0;
+#X connect 7 0 10 0;
+#X connect 11 0 12 0;
+#X restore 72 421 pd plot-out;
+#X obj 186 396 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X obj 195 362 line~;
+#X msg 195 338 \$1 10;
+#X obj 198 298 hsl 128 15 0.5 100 1 1 empty empty empty -2 -8 0 10
+-228856 -1 -1 1300 1;
+#X floatatom 195 317 0 0 0 0 - - -;
+#X text 52 365 fase;
+#X text 73 618 fase;
+#X text 473 212 fase;
+#X text 37 464 Agora temos a saída de um [triangle~] passando por uma
+função de cosseno \, onde fica mais que claro e evidente a caracterização
+como um waveshaping. A forma de onda do [triangle~] é controlada com
+um LFO.;
+#X obj 849 355 tof/breakpoints~;
+#X obj 847 204 loadbang;
+#X msg 847 230 0 1 1;
+#X obj 764 266 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204800 -1 -1 0 256;
+#X obj 764 294 phasor~ 120;
+#X msg 905 262 0 0.3 0.8 0.7 1;
+#X msg 923 289 0 0.1 0.9 0.9 1;
+#X msg 938 316 0 0.2 1 0.3 0 0.3 0.05 0.15 1;
+#X msg 899 231 0 0.9 0.5 0.1 1;
+#X obj 931 526 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X text 798 521 fase;
+#N canvas 0 22 489 355 plot-out 0;
+#X obj 229 77 inlet~;
+#X obj 103 75 inlet~;
+#X obj 343 66 inlet;
+#X obj 344 112 pow 4;
+#X msg 345 143 \$1 10;
+#X obj 343 170 line~;
+#X obj 197 204 *~;
+#X obj 306 209 *~;
+#X obj 148 288 dac~;
+#X obj 205 251 throw~ onda;
+#X obj 299 256 throw~ fase;
+#X connect 0 0 6 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 1;
+#X connect 5 0 6 1;
+#X connect 6 0 8 1;
+#X connect 6 0 8 0;
+#X connect 6 0 9 0;
+#X connect 7 0 10 0;
+#X restore 816 552 pd plot-out;
+#X text 425 34 Em outro exemplo \, temos uma implementação que usa
+o objeto [trapezoid~] como gerador de fase distorcida. A forma de onda
+é controlada por dois LFOs para dar uma graça.;
+#X text 798 127 Por fim \, podemos pensar o [tof/breakpoints~] como
+um gerador de fase \, e assim podemos desenhar uma função de Distorção
+de Fase.;
+#X text 33 191 Pois bem \, a distorção de fase consiste em distorcer
+o formato do gerador de fase (logo \, o [phasor~]). O objeto [kink~]
+faz exatamente isso \, mas de forma limitada. Confira abaixo. Veja
+ao lado tabela de "fase" que é a "distorção de fase" e a saída do [kink~]
+e o resutado na forma de onda na tabela "onda'.;
+#X obj 215 596 +~ 0.5;
+#X obj 215 568 *~ 0.345;
+#X text 283 571 LFO;
+#X obj 119 558 phasor~ 50;
+#X floatatom 119 534 5 0 0 0 - - -;
+#X obj 119 585 triangle~;
+#X obj 215 540 osc~ 0.13;
+#X obj 119 624 sin~;
+#X obj 103 380 cos~;
+#X obj 518 227 cos~;
+#X obj 518 189 trapezoid~;
+#X obj 847 526 cos~;
+#X connect 7 0 8 0;
+#X connect 8 0 56 1;
+#X connect 9 0 56 2;
+#X connect 10 0 9 0;
+#X connect 11 0 10 0;
+#X connect 12 0 7 0;
+#X connect 14 0 13 2;
+#X connect 16 0 15 2;
+#X connect 17 0 56 0;
+#X connect 19 0 20 0;
+#X connect 20 0 21 0;
+#X connect 20 0 54 0;
+#X connect 22 0 21 2;
+#X connect 23 0 20 1;
+#X connect 24 0 23 0;
+#X connect 25 0 26 0;
+#X connect 26 0 24 0;
+#X connect 31 0 42 0;
+#X connect 31 0 57 0;
+#X connect 32 0 33 0;
+#X connect 33 0 31 0;
+#X connect 34 0 35 0;
+#X connect 35 0 31 0;
+#X connect 36 0 31 0;
+#X connect 37 0 31 0;
+#X connect 38 0 31 0;
+#X connect 39 0 31 0;
+#X connect 40 0 42 2;
+#X connect 46 0 51 1;
+#X connect 47 0 46 0;
+#X connect 49 0 51 0;
+#X connect 50 0 49 0;
+#X connect 51 0 15 0;
+#X connect 51 0 53 0;
+#X connect 52 0 47 0;
+#X connect 53 0 15 1;
+#X connect 54 0 21 1;
+#X connect 55 0 13 1;
+#X connect 56 0 13 0;
+#X connect 56 0 55 0;
+#X connect 57 0 42 1;

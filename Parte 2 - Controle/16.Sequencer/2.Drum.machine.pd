@@ -1,0 +1,292 @@
+#N canvas 161 82 956 517 10;
+#X obj 615 59 tgl 30 0 empty metro empty 17 7 0 10 -167031 -1 -1 1
+1;
+#X text 675 46 TEMPO;
+#X obj 666 65 nbx 5 18 100 1000 0 0 empty empty empty 0 -8 0 15 -203904
+-1 -1 100 256;
+#X obj 564 98 moses 1;
+#X obj 792 175 table tgl_\$0 16;
+#N canvas 86 22 791 576 drum 0;
+#X obj 54 57 hradio 25 1 0 16 NADA h_radio empty 0 -6 0 15 -116513
+-183280 -1 7;
+#X obj 61 89 tgl 15 1 \$0-tgl0 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 87 89 tgl 15 1 \$0-tgl1 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 112 89 tgl 15 1 \$0-tgl2 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 135 89 tgl 15 1 \$0-tgl3 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 186 89 tgl 15 1 \$0-tgl5 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 211 89 tgl 15 1 \$0-tgl6 NIENTE empty 0 -6 0 10 -204800 -1 -1
+1 1;
+#X obj 236 89 tgl 15 0 \$0-tgl7 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 287 89 tgl 15 1 \$0-tgl9 NIENTE empty 0 -6 0 10 -204800 -1 -1
+0 1;
+#X obj 312 89 tgl 15 1 \$0-tgl10 NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 335 89 tgl 15 1 \$0-tgl11 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 384 89 tgl 15 1 \$0-tgl13 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 409 89 tgl 15 1 \$0-tgl14 NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 435 89 tgl 15 1 \$0-tgl15 NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 261 89 tgl 15 1 \$0-tgl8 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 161 89 tgl 15 1 \$0-tgl4 NIENTE empty 0 -6 0 10 -104946 -1 -1
+1 1;
+#X obj 359 89 tgl 15 1 \$0-tgl12 NIENTE empty 0 -6 0 10 -104946 -1
+-1 0 1;
+#X obj 40 240 r \$0-tgl0;
+#X msg 40 262 0 \$1;
+#X obj 40 284 s tgl_\$0;
+#X obj 104 284 s tgl_\$0;
+#X obj 167 285 s tgl_\$0;
+#X obj 231 285 s tgl_\$0;
+#X obj 38 354 s tgl_\$0;
+#X obj 102 354 s tgl_\$0;
+#X obj 165 355 s tgl_\$0;
+#X obj 229 355 s tgl_\$0;
+#X obj 166 433 s tgl_\$0;
+#X obj 234 433 s tgl_\$0;
+#X obj 37 502 s tgl_\$0;
+#X obj 105 502 s tgl_\$0;
+#X obj 173 503 s tgl_\$0;
+#X obj 241 503 s tgl_\$0;
+#X obj 104 240 r \$0-tgl1;
+#X msg 104 262 1 \$1;
+#X obj 167 240 r \$0-tgl2;
+#X msg 167 263 2 \$1;
+#X msg 231 263 3 \$1;
+#X obj 38 310 r \$0-tgl4;
+#X msg 38 332 4 \$1;
+#X obj 102 310 r \$0-tgl5;
+#X msg 102 332 5 \$1;
+#X obj 165 311 r \$0-tgl6;
+#X msg 165 333 6 \$1;
+#X obj 229 311 r \$0-tgl7;
+#X msg 229 334 7 \$1;
+#X obj 39 388 r \$0-tgl8;
+#X obj 103 387 r \$0-tgl9;
+#X obj 166 389 r \$0-tgl10;
+#X msg 166 411 10 \$1;
+#X obj 234 389 r \$0-tgl11;
+#X msg 234 411 11 \$1;
+#X obj 37 458 r \$0-tgl12;
+#X obj 105 458 r \$0-tgl13;
+#X obj 173 458 r \$0-tgl14;
+#X obj 241 459 r \$0-tgl15;
+#X msg 37 480 12 \$1;
+#X msg 105 480 13 \$1;
+#X msg 173 481 14 \$1;
+#X msg 241 481 15 \$1;
+#X obj 231 241 r \$0-tgl3;
+#X obj 39 432 s tgl_\$0;
+#X msg 39 410 8 \$1;
+#X obj 103 432 s tgl_\$0;
+#X msg 103 410 9 \$1;
+#X obj 61 110 tgl 15 1 \$0-tgl0b NIENTE empty 0 -6 0 10 -104946 -1
+-1 1 1;
+#X obj 87 110 tgl 15 1 \$0-tgl1b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 112 110 tgl 15 1 \$0-tgl2b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 135 110 tgl 15 1 \$0-tgl3b NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 186 110 tgl 15 1 \$0-tgl5b NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 211 110 tgl 15 1 \$0-tgl6b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 236 110 tgl 15 0 \$0-tgl7b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 287 110 tgl 15 1 \$0-tgl9b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 312 110 tgl 15 1 \$0-tgl10b NIENTE empty 0 -6 0 10 -204800 -1
+-1 1 1;
+#X obj 335 110 tgl 15 1 \$0-tgl11b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 384 110 tgl 15 1 \$0-tgl13b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 409 110 tgl 15 1 \$0-tgl14b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 435 110 tgl 15 1 \$0-tgl15b NIENTE empty 0 -6 0 10 -204800 -1
+-1 0 1;
+#X obj 261 110 tgl 15 1 \$0-tgl8b NIENTE empty 0 -6 0 10 -104946 -1
+-1 1 1;
+#X obj 161 110 tgl 15 1 \$0-tgl4b NIENTE empty 0 -6 0 10 -104946 -1
+-1 0 1;
+#X obj 359 110 tgl 15 1 \$0-tgl12b NIENTE empty 0 -6 0 10 -104946 -1
+-1 1 1;
+#X msg 366 258 0 \$1;
+#X msg 440 258 1 \$1;
+#X msg 513 259 2 \$1;
+#X msg 587 259 3 \$1;
+#X msg 364 328 4 \$1;
+#X msg 438 328 5 \$1;
+#X msg 511 329 6 \$1;
+#X msg 585 330 7 \$1;
+#X msg 512 407 10 \$1;
+#X msg 590 407 11 \$1;
+#X msg 363 476 12 \$1;
+#X msg 441 476 13 \$1;
+#X msg 519 477 14 \$1;
+#X msg 597 477 15 \$1;
+#X msg 365 406 8 \$1;
+#X msg 439 406 9 \$1;
+#X obj 366 236 r \$0-tgl0b;
+#X obj 440 236 r \$0-tgl1b;
+#X obj 513 236 r \$0-tgl2b;
+#X obj 588 237 r \$0-tgl3b;
+#X obj 364 306 r \$0-tgl4b;
+#X obj 438 306 r \$0-tgl5b;
+#X obj 511 307 r \$0-tgl6b;
+#X obj 585 307 r \$0-tgl7b;
+#X obj 365 384 r \$0-tgl8b;
+#X obj 439 383 r \$0-tgl9b;
+#X obj 512 385 r \$0-tgl10b;
+#X obj 590 384 r \$0-tgl11b;
+#X obj 363 454 r \$0-tgl12b;
+#X obj 441 454 r \$0-tgl13b;
+#X obj 519 454 r \$0-tgl14b;
+#X obj 597 455 r \$0-tgl15b;
+#X obj 366 280 s tgl2_\$0;
+#X obj 440 280 s tgl2_\$0;
+#X obj 513 281 s tgl2_\$0;
+#X obj 587 281 s tgl2_\$0;
+#X obj 364 350 s tgl2_\$0;
+#X obj 438 350 s tgl2_\$0;
+#X obj 511 351 s tgl2_\$0;
+#X obj 585 351 s tgl2_\$0;
+#X obj 365 428 s tgl2_\$0;
+#X obj 439 428 s tgl2_\$0;
+#X obj 512 429 s tgl2_\$0;
+#X obj 590 429 s tgl2_\$0;
+#X obj 363 498 s tgl2_\$0;
+#X obj 441 498 s tgl2_\$0;
+#X obj 519 499 s tgl2_\$0;
+#X obj 596 499 s tgl2_\$0;
+#X text 166 186 Abaixo \, recebemos os valores dos toggles e mandamos
+para as tabelas;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 33 0 34 0;
+#X connect 34 0 20 0;
+#X connect 35 0 36 0;
+#X connect 36 0 21 0;
+#X connect 37 0 22 0;
+#X connect 38 0 39 0;
+#X connect 39 0 23 0;
+#X connect 40 0 41 0;
+#X connect 41 0 24 0;
+#X connect 42 0 43 0;
+#X connect 43 0 25 0;
+#X connect 44 0 45 0;
+#X connect 45 0 26 0;
+#X connect 46 0 62 0;
+#X connect 47 0 64 0;
+#X connect 48 0 49 0;
+#X connect 49 0 27 0;
+#X connect 50 0 51 0;
+#X connect 51 0 28 0;
+#X connect 52 0 56 0;
+#X connect 53 0 57 0;
+#X connect 54 0 58 0;
+#X connect 55 0 59 0;
+#X connect 56 0 29 0;
+#X connect 57 0 30 0;
+#X connect 58 0 31 0;
+#X connect 59 0 32 0;
+#X connect 60 0 37 0;
+#X connect 62 0 61 0;
+#X connect 64 0 63 0;
+#X connect 81 0 113 0;
+#X connect 82 0 114 0;
+#X connect 83 0 115 0;
+#X connect 84 0 116 0;
+#X connect 85 0 117 0;
+#X connect 86 0 118 0;
+#X connect 87 0 119 0;
+#X connect 88 0 120 0;
+#X connect 89 0 123 0;
+#X connect 90 0 124 0;
+#X connect 91 0 125 0;
+#X connect 92 0 126 0;
+#X connect 93 0 127 0;
+#X connect 94 0 128 0;
+#X connect 95 0 121 0;
+#X connect 96 0 122 0;
+#X connect 97 0 81 0;
+#X connect 98 0 82 0;
+#X connect 99 0 83 0;
+#X connect 100 0 84 0;
+#X connect 101 0 85 0;
+#X connect 102 0 86 0;
+#X connect 103 0 87 0;
+#X connect 104 0 88 0;
+#X connect 105 0 95 0;
+#X connect 106 0 96 0;
+#X connect 107 0 89 0;
+#X connect 108 0 90 0;
+#X connect 109 0 91 0;
+#X connect 110 0 92 0;
+#X connect 111 0 93 0;
+#X connect 112 0 94 0;
+#X coords 0 -1 1 1 410 82 2 50 50;
+#X restore 487 381 pd drum;
+#X text 814 156 tabelas;
+#X text 601 41 Play/Stop;
+#X obj 487 301 readsf~;
+#X obj 667 223 sel 1;
+#X obj 720 300 readsf~;
+#X obj 720 222 sel 1;
+#X obj 792 195 table tgl2_\$0 16;
+#X obj 720 326 dac~;
+#X obj 486 330 dac~;
+#X obj 615 98 metro 225;
+#X text 67 211 Temos \, na verdade \, duas trilhas (ou duas vozes).
+Cada uma é dada por uma linha horizontal de toggles. Os valores dos
+toggles de cada trilha são armazenados em tabelas diferentes e lidos
+em um mesmo [expr]. Cada trilha corresponde a um sample diferente \,
+que são lidos com o [readsf~].;
+#X text 69 301 O controle da interface gráfica é feito no subpatch
+abaixo. Ligue e desligue os toggles para acionar a sequência com o
+ritmo desejado. Um horizontal radio é usado apenas para visualização
+do ponto da sequência.;
+#X obj 809 84 loadbang;
+#X msg 809 107 \; pd dsp 1;
+#X text 65 80 Em um paradigma diferente - próprio de um "Drum Machine"
+- temos um série de toggles onde o valor de cada um é armazenado em
+uma tabela.;
+#X text 192 420 Abra o subpatch à direita para mais detalhes:;
+#X obj 615 192 v i;
+#X obj 615 132 expr (i + 1) % 16 \; tgl_\$0[i] \; tgl2_\$0[i] \;;
+#X obj 564 216 s h_radio;
+#X text 66 134 O sequencer ainda possui uma mesma estrutura apresentada
+anteriormente. Temos um contador em loop que verifica os valores de
+uma tabela. Porém \, agora verificamos o valor do toggle armazenado
+na tabela e \, caso for igual a 1 \, tocamos um sample.;
+#X msg 487 272 open ../../../samples/dholak.aif \, 1;
+#X msg 720 271 open ../../../samples/bagal.aif \, 1;
+#X connect 0 0 3 0;
+#X connect 0 0 15 0;
+#X connect 2 0 15 1;
+#X connect 3 0 24 0;
+#X connect 3 0 22 0;
+#X connect 8 0 14 0;
+#X connect 8 0 14 1;
+#X connect 9 0 26 0;
+#X connect 10 0 13 0;
+#X connect 10 0 13 1;
+#X connect 11 0 27 0;
+#X connect 15 0 23 0;
+#X connect 18 0 19 0;
+#X connect 23 0 22 0;
+#X connect 23 0 24 0;
+#X connect 23 1 9 0;
+#X connect 23 2 11 0;
+#X connect 26 0 8 0;
+#X connect 27 0 10 0;

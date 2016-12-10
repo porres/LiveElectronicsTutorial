@@ -1,0 +1,164 @@
+#N canvas -415 74 1239 651 10;
+#X obj 446 381 output~;
+#N canvas 283 384 425 376 flanger~ 0;
+#X obj 193 225 *~;
+#X obj 59 322 outlet~;
+#X obj 266 153 block~ 1;
+#X obj 115 89 vd~ \$0-flanger;
+#X obj 59 185 +~;
+#X obj 115 49 inlet~;
+#X obj 208 49 inlet~;
+#X obj 59 50 inlet~;
+#X text 49 18 Entrada;
+#X text 123 19 LFO;
+#X text 208 19 Feedback;
+#X obj 193 255 delwrite~ \$0-flanger 120;
+#X connect 0 0 11 0;
+#X connect 3 0 4 1;
+#X connect 4 0 1 0;
+#X connect 4 0 0 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 1;
+#X connect 7 0 4 0;
+#X restore 468 341 pd flanger~;
+#X obj 42 481 loadbang;
+#X obj 430 124 osc~;
+#X floatatom 601 71 5 0 0 0 - - -;
+#X obj 604 51 hsl 128 15 1 100 0 0 empty depth depth -2 -8 0 10 -179692
+-1 -1 1796 1;
+#X obj 601 114 line~;
+#X floatatom 430 47 5 0 0 0 - - -;
+#X obj 430 96 line~;
+#X msg 430 68 \$1 10;
+#X obj 433 28 hsl 128 15 0.05 10 1 0 empty rate rate -2 -8 0 10 -240943
+-1 -1 0 1;
+#X msg 601 92 \$1 100;
+#X obj 279 552 blosc~ saw;
+#X text 214 539 Sinal de;
+#X text 217 559 Entrada;
+#X obj 430 150 expr~ ($v1 * 0.5 + 0.5) * $v3;
+#X text 487 182 DC offset (tempo mínimo);
+#X floatatom 445 182 5 0 20 0 - dc -;
+#X msg 42 512 \; fb 0.9 \; depth 8 \; rate 0.07 \; dc 0.1;
+#X obj 430 210 +~;
+#X msg 126 513 \; fb -0.8 \; depth 15 \; rate 0.04 \; dc 0.4;
+#X obj 682 115 hsl 128 15 -0.999 0.999 0 0 empty fb feedback -2 -7
+0 10 -117809 -1 -355 0 1;
+#X msg 679 170 \$1 20;
+#X obj 679 195 line~;
+#X floatatom 679 142 5 0 0 0 - - -;
+#X obj 679 221 s~ \$0-fb;
+#X obj 430 235 s~ \$0-del-time;
+#X obj 279 580 s~ \$0-in;
+#X obj 619 375 output~;
+#X obj 531 313 r~ \$0-fb;
+#X obj 499 286 r~ \$0-del-time;
+#X obj 436 287 r~ \$0-in;
+#X obj 732 306 r~ \$0-fb;
+#X obj 695 272 r~ \$0-del-time;
+#X text 748 335 Flanger;
+#X text 19 358 Para tal \, temos um subpatch para o patch de Flanger
+com um bloco de áudio de apenas uma amostra \, para permitir que o
+atraso seja de até uma única amostra. Abra e confira a estrutura de
+delay com feedback e veja o equivalente com o objeto [comb~] (que não
+precisa de um ajuste de bloco para uma amostra!).;
+#X obj 633 273 r~ \$0-in;
+#X text 18 22 Já esboçamos o que seria um flanger nos exemplos anteriores.
+Pois enfim vamos falar melhor do que ele seria.;
+#X text 18 55 Originalmente \, o Flanger era obtivo ao manipular a
+velocidade de leitura de um rolo de fita \, segurando com a própria
+mão a borda do rolo de fita (também chamada de "flange" \, daí o nome).
+Desse modo \, é possível mudar a velocidade de leitura e \, portanto
+\, criar variações de altura/vibrato.;
+#X text 18 138 Ao mixar esse resultado com o sinal original \, se obtém
+o efeito de flanging que \, de modo muito semelhante ao Phaser \, cria
+cancelamentos de fase. Veremos como implementar um Phaser apenas na
+seção de Filtros II \, onde comparamos com outra forma de implementar
+um Flanger a partir de filtros Passa Tudo.;
+#X text 17 222 É bom ressaltar que não há um modo clássico e único
+de se gerar um Flanger \, assim como um Chorus ou um Phaser. diversas
+variações e implementações são possíveis no mundo analógico e digital.
+A base do Flanger \, como já dito \, é uma soma do sinal com uma cópia
+atrasada.;
+#X obj 279 522 sig~ 40;
+#X obj 279 496 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 0 256;
+#X obj 633 335 comb~ 120 0 1 0 0;
+#X text 18 296 Estamos usando aqui um atraso retroalimentado \, ou
+seja \, exatamente o mesmo exemplo anterior em feedback (com a possibilidade
+de valores negativos)! Porém com outros valores de parâmetro \, com
+um atrase bem menor de delay!;
+#X obj 517 588 output~;
+#X obj 593 525 r~ \$0-del-time;
+#X obj 531 526 r~ \$0-in;
+#X obj 531 557 comb~ 120 0 1 1 0;
+#X obj 952 198 output~;
+#X obj 1028 106 r~ \$0-del-time;
+#X obj 966 107 r~ \$0-in;
+#X obj 966 167 comb~ 120 0 1 1 0;
+#X text 424 450 Mas como também já foi comentado anteiormente \, um
+flanger já é possível somente com um atraso em feedforward (e sem feedback).
+Vejamos o exemplo abaixo com um objeto [comb~].;
+#X obj 1065 141 r~ \$0-fb;
+#X text 862 20 Podemos pensar então em variações do Flanger combinando
+as linhas de delay em feedforward e feedback. Abaixo temos a linha
+de feedforward com um ganho de "1" e o ganho de feedback é o mesmo
+sinal dos exemplos ao lado.;
+#X text 868 269 Perceba aqui \, entretanto \, que quando temos um valor
+negativo de feedback \, por causa da inversão de polaridade \, temos
+um cancelamento do sinal com o delay em feedforward \, já que um é
+o imverso do outro.;
+#X obj 957 535 output~;
+#X obj 1033 443 r~ \$0-del-time;
+#X obj 971 444 r~ \$0-in;
+#X obj 1071 477 r~ \$0-fb;
+#X obj 972 504 comb~ 120 0 1 0 0;
+#X text 867 357 Uma outra variação do Flanger evita a questão mencionada
+acima. Com um mesmo sinal controlando o ganho do delay em feedback
+e feedforward \, eles não se cancelam. Veja abaixo como fica e teste
+com valores negativos no slider de "feedback".;
+#X connect 1 0 0 0;
+#X connect 1 0 0 1;
+#X connect 2 0 18 0;
+#X connect 3 0 15 0;
+#X connect 4 0 11 0;
+#X connect 5 0 4 0;
+#X connect 6 0 15 2;
+#X connect 7 0 9 0;
+#X connect 8 0 3 0;
+#X connect 9 0 8 0;
+#X connect 10 0 7 0;
+#X connect 11 0 6 0;
+#X connect 12 0 27 0;
+#X connect 15 0 19 0;
+#X connect 17 0 19 1;
+#X connect 19 0 26 0;
+#X connect 21 0 24 0;
+#X connect 22 0 23 0;
+#X connect 23 0 25 0;
+#X connect 24 0 22 0;
+#X connect 29 0 1 2;
+#X connect 30 0 1 1;
+#X connect 31 0 1 0;
+#X connect 32 0 43 4;
+#X connect 33 0 43 1;
+#X connect 36 0 43 0;
+#X connect 41 0 12 0;
+#X connect 42 0 41 0;
+#X connect 43 0 28 0;
+#X connect 43 0 28 1;
+#X connect 46 0 48 1;
+#X connect 47 0 48 0;
+#X connect 48 0 45 0;
+#X connect 48 0 45 1;
+#X connect 50 0 52 1;
+#X connect 51 0 52 0;
+#X connect 52 0 49 0;
+#X connect 52 0 49 1;
+#X connect 54 0 52 4;
+#X connect 58 0 61 1;
+#X connect 59 0 61 0;
+#X connect 60 0 61 4;
+#X connect 60 0 61 3;
+#X connect 61 0 57 0;
+#X connect 61 0 57 1;

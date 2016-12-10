@@ -1,0 +1,72 @@
+#N canvas 96 23 787 691 10;
+#X obj 522 103 readsf~;
+#X obj 522 47 loadbang;
+#X obj 538 137 output~;
+#X obj 494 279 comb~ 30 30 1 0 0.4;
+#X obj 558 331 comb~ 50 50 1 0 0.5;
+#X obj 589 385 comb~ 70 70 1 0 0.6;
+#X obj 609 437 comb~ 80 80 1 0 0.7;
+#X obj 522 191 s~ \$0-in;
+#X obj 494 255 r~ \$0-in;
+#X obj 558 308 r~ \$0-in;
+#X obj 589 362 r~ \$0-in;
+#X obj 610 415 r~ \$0-in;
+#X obj 558 470 allpass~ 75 75 0.77;
+#X obj 558 502 allpass~ 95 95 0.88;
+#X obj 537 605 output~;
+#X obj 558 562 tanh~;
+#X obj 558 529 *~ 0.25;
+#X obj 153 398 allpass~ 45 45 0.88;
+#X obj 153 430 allpass~ 75 75 0.99;
+#X obj 153 460 allpass~ 95 95 0.77;
+#X obj 153 492 allpass~ 85 85 0.66;
+#X obj 153 523 allpass~ 65 65 0.8;
+#X obj 141 591 output~;
+#X obj 153 552 tanh~;
+#X obj 153 364 r~ \$0-in;
+#X text 68 129 O primeiro exemplo é um conjunto de Passa Tudo em série
+\, e o segundo é um conjunto de Filtros Pente em paralelo passando
+por filtros Passa Tudo em série. Ambos diagramas (allpass filters em
+série e comb filters em paralelo passando por allpass filters) são
+clássicos e comumente chamados de modelos de Schroeder e Moorer \,
+por terem sido sugeridos por esses autores.;
+#X text 68 234 À direita e acima temos o sinal de entrada do reverb.
+Abaixo temos 4 [allpass~] em série e \, ao lado \, 4 [comb~] em paralelo
+passando por dois estágios de [allpass~] (dividimos por 4 para compensar
+a soma dos [comb~]). Passamos ambos por um soft clipping [tanh~].;
+#X text 68 37 Os objetos [allpass~] e [comb~] são módulos de delay
+e podem ser usados como filtros propriamente ditos com tempo de delay
+curtos \, até uns 10 ms. Acima disso começamos a escutar uma propagação
+de ecos \, próprios de uma rede de delays. Portanto \, esses objetos
+podem ser usados para implementar um Reverb \, como demonstrado neste
+exemplo.;
+#X text 70 312 Experimente outros parâmetros \, brinque e divirta-se.
+;
+#X msg 522 73 open ../../samples/didge.aif \, 1;
+#X connect 0 0 2 0;
+#X connect 0 0 2 1;
+#X connect 0 0 7 0;
+#X connect 0 1 29 0;
+#X connect 1 0 29 0;
+#X connect 3 0 12 0;
+#X connect 4 0 12 0;
+#X connect 5 0 12 0;
+#X connect 6 0 12 0;
+#X connect 8 0 3 0;
+#X connect 9 0 4 0;
+#X connect 10 0 5 0;
+#X connect 11 0 6 0;
+#X connect 12 0 13 0;
+#X connect 13 0 16 0;
+#X connect 15 0 14 0;
+#X connect 15 0 14 1;
+#X connect 16 0 15 0;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 20 0 21 0;
+#X connect 21 0 23 0;
+#X connect 23 0 22 0;
+#X connect 23 0 22 1;
+#X connect 24 0 17 0;
+#X connect 29 0 0 0;

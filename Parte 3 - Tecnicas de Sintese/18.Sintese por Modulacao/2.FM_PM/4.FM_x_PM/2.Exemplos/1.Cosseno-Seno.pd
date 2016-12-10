@@ -1,0 +1,153 @@
+#N canvas 206 27 816 693 10;
+#X obj 112 462 sin~;
+#X obj 448 570 osc~;
+#X obj 56 472 +~;
+#X obj 56 504 cos~;
+#X obj 463 467 cos~;
+#X obj 463 509 *~;
+#X obj 182 251 nbx 5 14 -1e+37 1e+37 0 0 empty moduladora empty 0 -8
+0 10 -204800 -1 -1 2 256;
+#X obj 303 253 nbx 8 14 -1e+37 1e+37 0 0 empty indice_pm empty 0 -8
+0 10 -261682 -1 -1 1 256;
+#X obj 182 286 t b f;
+#X obj 230 283 v mod;
+#X obj 228 316 s \$0-mod;
+#X obj 463 397 r \$0-mod;
+#X obj 463 423 phasor~;
+#X obj 112 410 r \$0-mod;
+#X obj 112 437 phasor~;
+#X obj 448 543 +~;
+#X obj 72 260 nbx 5 14 -1e+37 1e+37 0 0 empty portadora empty 0 -8
+0 10 -262130 -1 -1 440 256;
+#X obj 72 289 s \$0-carrier;
+#X obj 377 397 r \$0-carrier;
+#X obj 24 412 r \$0-carrier;
+#X obj 56 446 phasor~;
+#X text 69 232 Portadora;
+#X text 179 228 Moduladora;
+#X text 307 228 Índice PM;
+#X obj 303 281 s \$0-i_pm;
+#X obj 112 496 *~;
+#X obj 456 255 nbx 8 14 -1e+37 1e+37 0 0 empty indice_fm empty 0 -8
+0 10 -261234 -1 -1 12.5664 256;
+#X text 460 230 Índice FM;
+#X obj 456 283 s \$0-i_fm;
+#X obj 182 346 s indice_pm;
+#X obj 105 598 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 316 79 204 290 ganho 0;
+#X obj 80 181 *~;
+#X obj 109 151 line~;
+#X msg 109 125 \$1 10;
+#X obj 109 99 pow 4;
+#X obj 109 72 inlet;
+#X obj 80 41 inlet~;
+#X obj 68 213 dac~ 1;
+#X connect 0 0 6 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X restore 57 622 pd ganho;
+#X obj 496 603 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 316 79 204 290 ganho 0;
+#X obj 80 181 *~;
+#X obj 109 151 line~;
+#X msg 109 125 \$1 10;
+#X obj 109 99 pow 4;
+#X obj 109 72 inlet;
+#X obj 80 41 inlet~;
+#X obj 68 213 dac~ 2;
+#X connect 0 0 6 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 0 0;
+#X restore 448 627 pd ganho;
+#X text 71 656 CANAL ESQUERDO;
+#X text 443 659 CANAL DIREITO;
+#X obj 153 497 line~;
+#X obj 218 453 r \$0-i_fm;
+#X floatatom 218 512 0 0 0 0 - - -;
+#X msg 218 539 \; indice_pm set \$1;
+#X obj 217 410 r \$0-i_pm;
+#X obj 506 507 line~;
+#X obj 563 481 expr $f1 * (mod * 2*pi);
+#X obj 563 456 r \$0-i_pm;
+#X msg 563 536 \; indice_fm set \$1;
+#X floatatom 563 507 0 0 0 0 - - -;
+#X obj 576 400 r \$0-i_fm;
+#X obj 218 478 expr $f1 / (mod * 2*pi);
+#X obj 739 274 pi;
+#X obj 739 303 v pi;
+#X obj 611 241 loadbang;
+#X msg 153 472 \$1 100;
+#X msg 506 482 \$1 100;
+#X msg 611 265 \; portadora 440 \; moduladora 1 \; indice_pm 1 \; pd
+dsp 1;
+#X text 55 377 Modulação de Fase;
+#X text 432 361 Modulação de Frequência;
+#X text 33 126 Abaixo temos a PM à esquerda (com saída de som no canal
+esquerdo) e a FM à direita (com saída de som no canal direito) para
+que os resultados possam ser comparados \, sendo que o patch faz uma
+conversão automática entre os índices de PM e FM.;
+#X text 427 176 O patch também faz a conversão inversa de índice de
+FM para índice de PM.;
+#X text 32 26 Vejamos agora na prática a relação entre uma FM e uma
+PM. No caso de senóides \, a forma de onda é a mesma \, mas deve haver
+uma diferença de fase inicial de 90 graus entre os ociladores moduladores
+(mais especificamente \, considerando a fase inicial de seno na PM
+\, a moduladora da FM deve estar em fase de cosseno). Outro detalhe
+é que é necessário ajustar o índice de modulação.;
+#X text 426 21 A conversão do índice de PM pra FM é simples \, primeiro
+multiplicamos o índice por 2pi (já que os valores de 0 a 1 na PM correspondem
+a um ciclo completo de fase de 0 a 2pi). Outro ajuste é multiplicar
+pela frequência moduladora \, porque \, se aumentamos a frequência
+\, aumentamos a velocidade angular \, e mais velocidade implica em
+um desvio maior de frequência.;
+#X text 427 119 Ou seja \, há uma diferença de comportamento \, onde
+a frequência de modulação influencia no índice de modulação no caso
+de uma FM que se comporta como uma PM.;
+#X connect 0 0 25 0;
+#X connect 1 0 33 0;
+#X connect 2 0 3 0;
+#X connect 3 0 31 0;
+#X connect 4 0 5 0;
+#X connect 5 0 15 1;
+#X connect 6 0 8 0;
+#X connect 7 0 24 0;
+#X connect 8 0 29 0;
+#X connect 8 1 9 0;
+#X connect 8 1 10 0;
+#X connect 11 0 12 0;
+#X connect 12 0 4 0;
+#X connect 13 0 14 0;
+#X connect 14 0 0 0;
+#X connect 15 0 1 0;
+#X connect 16 0 17 0;
+#X connect 18 0 15 0;
+#X connect 19 0 20 0;
+#X connect 20 0 2 0;
+#X connect 25 0 2 1;
+#X connect 26 0 28 0;
+#X connect 30 0 31 1;
+#X connect 32 0 33 1;
+#X connect 36 0 25 1;
+#X connect 37 0 47 0;
+#X connect 38 0 39 0;
+#X connect 40 0 51 0;
+#X connect 41 0 5 1;
+#X connect 42 0 45 0;
+#X connect 42 0 52 0;
+#X connect 43 0 42 0;
+#X connect 45 0 44 0;
+#X connect 46 0 52 0;
+#X connect 47 0 38 0;
+#X connect 47 0 51 0;
+#X connect 48 0 49 0;
+#X connect 50 0 53 0;
+#X connect 51 0 36 0;
+#X connect 52 0 41 0;

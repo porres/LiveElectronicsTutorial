@@ -1,0 +1,68 @@
+#N canvas 156 48 938 604 10;
+#X obj 629 258 *~;
+#X obj 644 231 line~;
+#X msg 644 208 \$1 10;
+#X obj 608 318 dac~;
+#X obj 186 228 *~;
+#X obj 201 166 tgl 18 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 130 188 osc~ 440;
+#X obj 165 275 dac~;
+#X floatatom 201 199 5 0 0 0 - - -;
+#X obj 644 175 tgl 18 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X text 18 187 oscilador a 440Hz;
+#X text 67 302 dac = Digital to Analog Converter;
+#X text 104 325 "saída de som";
+#X msg 177 428 \; pd dsp 1;
+#X obj 177 402 loadbang;
+#X obj 633 510 adc~ 1;
+#X text 683 505 (Analog to Digital;
+#X text 715 520 Converter);
+#X text 498 440 O exemplo é com uma senóide \, mas você pode testar
+um sinal de entrada da sua placa de som. É só mudar o patch e ligar
+um [adc~] em vez do [osc~].;
+#X text 528 509 Entrada de som;
+#X text 53 436 liga o áudio no Pd;
+#X obj 284 275 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 19 36 Abaixo \, temos o objeto [*~] usado para ligar e desligar
+(ou "mutar") o sinal de áudio ao multiplicarmos por 1 ou 0 (respectivamente).
+Veja como isso gera descontinuidades no sinal \, ou "clicks".;
+#X text 320 251 [Scope~];
+#X obj 654 288 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X text 713 266 [Scope~];
+#X text 510 547 Só tenha cuidado e use fones de ouvido para evitar
+feedbacks!;
+#X text 20 102 Usamos também o objeto [Scope~] para visualização. Para
+ligar e desligar \, clique no "toggle".;
+#X text 222 166 (toggle) Liga/Desliga;
+#X text 666 174 On/Off;
+#X text 686 223 Fade In/Out;
+#X text 492 34 Isso se dá pelo fato do alto falante dar um salto brusco
+a cada vez que o som "morre" ou "aparece". Usamos então um [line~]
+para suavizar esse salto e eliminar os clicks.;
+#X text 492 85 No patch abaixo \, estamos usando o [line~] para gerar
+uma rampa de 10 ms com valores entre 0 e 1 (ou entre 1 e 0). Na prática
+se trata de um "fade in" e "fade out" breve e linear. Veremos outros
+tipos de fade in/out depois.;
+#X text 42 491 O que estamos fazendo nesse patch \, então \, é apenas
+"mutar" processos diferentes de áudio \, como o oscilador da esquerda
+e o da direita. Mas \, na prática \, para o Pd \, todos os objetos
+de áudio continuam funcionando e comendo processamento.;
+#X obj 569 194 osc~ 440;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 0 0 24 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 4 0 7 0;
+#X connect 4 0 7 1;
+#X connect 4 0 21 0;
+#X connect 5 0 8 0;
+#X connect 6 0 4 0;
+#X connect 8 0 4 1;
+#X connect 9 0 2 0;
+#X connect 14 0 13 0;
+#X connect 34 0 0 0;

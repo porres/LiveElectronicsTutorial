@@ -1,0 +1,92 @@
+#N canvas 207 22 1046 646 10;
+#X obj 568 488 dac~;
+#X obj 612 434 unsig~ 1;
+#X obj 612 461 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 0 1;
+#X obj 512 361 osc~ 440;
+#X obj 577 449 *~;
+#X msg 722 180 0 1000 1 500 0.5 1000 0.5 500 1 1000 0;
+#X obj 485 134 vline~;
+#X obj 485 74 nbx 5 14 -1e+37 1e+37 0 0 empty tempo empty 0 -8 0 10
+-228856 -1 -1 4000 256;
+#X obj 485 36 bng 20 250 50 0 empty empty empty 17 7 0 10 -239973 -1
+-1;
+#X text 546 73 tempo (ms);
+#X obj 859 460 loadbang;
+#X obj 722 155 loadbang;
+#X obj 722 205 trigger list bang list bang;
+#X obj 828 229 list split 2;
+#X obj 828 270 unpack;
+#X obj 861 294 +;
+#X obj 895 294 f;
+#X obj 862 249 t l;
+#X msg 913 228 0;
+#X obj 834 317 float;
+#X floatatom 834 341 5 0 0 0 - - -;
+#X text 57 118 A primeira diferença prática em relação ao [breakpoints]
+\, como é de se esperar \, é que o [breakpoints~] envia um sinal de
+áudio - que já pode ser usado diretamente como envelope.;
+#X obj 834 365 value indices;
+#X obj 485 161 expr~ $v1 * indices;
+#X text 839 390 número total;
+#X text 840 408 de índices;
+#X text 63 265 A sintaxe de gerar funções continua a mesma do [envgen].
+Todavia \, o tempo não é mais definido em ms \, e esse valor precisa
+ser encarado como índice da tabela. Quem define o tempo de leitura
+agora é o sinal de áudio.;
+#X text 811 114 soma de índices = 1;
+#X msg 590 114 0 0.1 1 0.4 0.5 0.1 0.5 0.3 1 0.1 0;
+#X text 63 330 Como no exemplo anterior de envelope com tabelas \,
+o sinal de áudio precisa enviar o número certo de índices para uma
+leitura apropriada. Fazemos isso aqui ao multiplicar a saída do [vline~]
+pelo número de índices (ou pontos) da função gerada.;
+#X text 64 403 Por conveniência \, o patch calcula automaticamente
+o valor total de índices ao somar sempre o segundo valor dos pares
+que definem cada linha da função. Afinal \, é o segundo valor de cada
+par que define o tanto de índices que cada reta possui.;
+#X text 65 478 Por comodidade e simplicidade \, você pode criar funções
+cuja soma de índices é sempre igual a um. Isso descarta não só a necessidade
+da soma de índices \, como também multiplicar pelo número de índices.
+Em todo caso \, este exemplo oferece uma forma eficaz de trabalhar
+com qualquer soma de índices.;
+#X msg 485 101 0 \, 1 \$1;
+#X obj 594 274 tof/breakpoints~;
+#X text 57 58 Por fim \, similar ao [breakpoints] \, temos ainda outra
+variação do [envgen] na biblioteca "tof" \, o [breakpoints~] \, que
+gera sinal de áudio. A diferença visual é que ele possui uma borda
+mais grossa que o [breakpoints].;
+#X text 57 166 Outra diferença é que ele recebe sinal de áudio como
+índice da função gerada. Logo \, é semelhante aos exemplos de uso de
+tabelas para envelopes \, já que também fizemos a leitura das tableas
+por meio de um sinal de áudio com o [vline~] \, do mesmo modo que neste
+exemplo.;
+#X msg 859 484 \; pd dsp 1 \; tempo set 4000;
+#X connect 1 0 2 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 1;
+#X connect 4 0 0 0;
+#X connect 5 0 12 0;
+#X connect 6 0 23 0;
+#X connect 7 0 32 0;
+#X connect 8 0 7 0;
+#X connect 10 0 36 0;
+#X connect 11 0 5 0;
+#X connect 12 0 33 0;
+#X connect 12 1 19 0;
+#X connect 12 2 13 0;
+#X connect 12 3 18 0;
+#X connect 13 0 14 0;
+#X connect 13 1 17 0;
+#X connect 14 1 15 0;
+#X connect 15 0 16 0;
+#X connect 15 0 19 1;
+#X connect 16 0 15 1;
+#X connect 17 0 13 0;
+#X connect 18 0 15 1;
+#X connect 19 0 20 0;
+#X connect 20 0 22 0;
+#X connect 23 0 33 0;
+#X connect 28 0 12 0;
+#X connect 32 0 6 0;
+#X connect 33 0 1 0;
+#X connect 33 0 4 1;

@@ -1,0 +1,69 @@
+#N canvas 230 33 524 696 10;
+#X obj 168 171 blosc~ saw;
+#X obj 168 143 sig~ 100;
+#X obj 43 178 tof/menubutton 105 28 \$0-menu \$0-menu-set 1 black red
+orange purple 0 \, nenhum \, lowpass \, highpass \, bandpass \, notch
+;
+#X obj 160 316 output~;
+#X msg 43 216 choice \$1;
+#X obj 191 276 polygate~ 4 100 linear;
+#X obj 355 299 s \$0-menu-set;
+#X msg 355 276 1;
+#X obj 355 250 loadbang;
+#X obj 255 170 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-freq empty 0 -8
+0 10 -204800 -1 -1 0 256;
+#X obj 311 212 nbx 5 14 0 1 0 0 empty empty empty 0 -8 0 10 -4032 -1
+-1 0 256;
+#X obj 258 145 hsl 128 15 100 5000 0 0 empty empty empty -2 -8 0 10
+-204800 -1 -1 0 1;
+#X obj 314 191 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -4032
+-1 -1 0 1;
+#X text 116 382 * Veja mais detalhes no help \, que dá mais informação
+como as saídas dos filtros dependem uma da outra.;
+#X msg 221 547 radians;
+#X msg 212 522 linear;
+#X obj 284 491 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -232576
+-1 -1 3800 1;
+#X floatatom 281 510 5 0 0 0 - - -;
+#X obj 159 522 noise~;
+#X obj 212 498 loadbang;
+#X obj 195 618 output~;
+#X text 117 430 O help também explica outras formas de controlar a
+frequância do filtro ("linear" e "radians").;
+#X msg 281 531 \$1 10;
+#X obj 281 554 line~;
+#X text 273 143 Freq. ressonante;
+#X text 342 190 Q/Resonância;
+#X text 80 24 Outro filtro clonado do MAX/MSP \, o [svf~] possui quatro
+saídas paralelas e simultâneas de filtros ressonantes \, são eles:
+Passa Baixa \, Passa Alta \, Passa Banda e Notch (Rejeita Banda - como
+soma do lowpss e highpass*). Os argumentos são frequência de corte
+e parâmetro de Q/ressonância (de 0 a 1).;
+#X obj 200 236 cyclone/svf~ 1000 1;
+#X obj 212 584 cyclone/svf~ 1000 1;
+#X connect 0 0 27 0;
+#X connect 1 0 0 0;
+#X connect 2 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
+#X connect 5 0 3 1;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 9 0 27 1;
+#X connect 10 0 27 2;
+#X connect 11 0 9 0;
+#X connect 12 0 10 0;
+#X connect 14 0 28 0;
+#X connect 15 0 28 0;
+#X connect 16 0 17 0;
+#X connect 17 0 22 0;
+#X connect 18 0 28 0;
+#X connect 19 0 15 0;
+#X connect 22 0 23 0;
+#X connect 23 0 28 1;
+#X connect 27 0 5 0;
+#X connect 27 1 5 1;
+#X connect 27 2 5 2;
+#X connect 27 3 5 3;
+#X connect 28 0 20 0;
+#X connect 28 0 20 1;

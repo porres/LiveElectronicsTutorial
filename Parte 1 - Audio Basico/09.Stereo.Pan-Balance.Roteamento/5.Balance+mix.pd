@@ -1,0 +1,115 @@
+#N canvas 92 22 1058 648 10;
+#X obj 883 165 line~;
+#X msg 883 142 \$1 10;
+#X obj 886 117 hsl 128 15 -1 1 0 0 empty pos2 empty -2 -8 0 10 -233211
+-1 -1 0 1;
+#X msg 883 93 0;
+#X obj 883 260 prvu~;
+#X obj 884 291 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 532 262 prvu~;
+#X obj 533 293 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 240 177 hsl 128 15 -1 1 0 0 empty pos empty -2 -8 0 10 -233211
+-1 -1 6350 1;
+#X floatatom 237 197 0 0 0 0 - - -;
+#X msg 237 150 0;
+#X text 269 148 posição central;
+#X obj 237 228 expr if($f1 < 0 \, 1 \, 1 - $f1) \; if($f1 < 0 \, 1
++ $f1 \, 1) \;;
+#X floatatom 408 306 5 0 0 0 - - -;
+#X obj 57 453 *~;
+#X obj 57 482 +~;
+#X obj 129 454 *~;
+#X obj 270 454 *~;
+#X obj 270 481 +~;
+#X obj 333 453 *~;
+#X obj 246 275 expr 1 - $f1;
+#X floatatom 246 304 5 0 0 0 - - -;
+#X floatatom 210 304 5 0 0 0 - - -;
+#X obj 327 275 expr 1 - $f1;
+#X floatatom 327 305 5 0 0 0 - - -;
+#X obj 142 563 output~;
+#X obj 673 279 output~;
+#X obj 532 188 expr~ if($v3 < 0 \, $v1 + ($v2 * -$v3) \, $v1 * (1 -
+$v3)) / 2 \; if($v3 < 0 \, $v2 * (1 + $v3) \, $v2 + ($v1 * $v3)) /
+2 \;;
+#X obj 270 507 /~ 2;
+#X obj 57 512 /~ 2;
+#X obj 348 387 line~;
+#X msg 348 364 \$1 10;
+#X obj 72 430 line~;
+#X msg 72 407 \$1 10;
+#X obj 144 424 line~;
+#X msg 144 401 \$1 10;
+#X obj 285 384 line~;
+#X msg 285 361 \$1 10;
+#X text 506 31 Como o sinal estéreo é mixado em um sinal mono no canal
+esquerdo ou direito \, a informação não se perde. Porém \, pode haver
+questões de cancelamento de fase quando o sinal estéreo possui bastante
+correlação.;
+#X obj 237 126 loadbang;
+#X msg 152 187 \; pd dsp 1;
+#X obj 57 285 osc~ 500;
+#X obj 129 286 osc~ 600;
+#X obj 532 163 osc~ 500;
+#X obj 707 164 osc~ 600;
+#X text 66 34 Uma variação do balance permite que o sinal atenuado
+seja mixado ao canal oposto. E como os canais são mixados \, dividimos
+por dois para não estourar e clipar. Veja o patch abaixo e uma versão
+simplificada à direita em um [expr].;
+#X obj 528 460 cnv 15 400 150 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X text 544 467 A pertinência de um processamento de Balance + Mix
+se dá em um sinal de estéreo real. Afinal \, se há a mesma informação
+em dois canais \, não faz sentido algum mixa-los para jogar num mesmo.
+;
+#X text 546 532 E o importante a se ressaltar aqui é que um sinal em
+estéreo \, ao ser mixado em um mono \, pode sofrer problemas de cancelamento
+de fase. Se isso for o caso \, você já sabe que uma saída fácil é inverter
+a polaridade de um dos canais!;
+#X connect 0 0 27 2;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 6 0 7 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 0;
+#X connect 10 0 8 0;
+#X connect 12 0 22 0;
+#X connect 12 0 20 0;
+#X connect 12 1 23 0;
+#X connect 12 1 13 0;
+#X connect 13 0 31 0;
+#X connect 14 0 15 0;
+#X connect 15 0 29 0;
+#X connect 16 0 15 1;
+#X connect 17 0 18 0;
+#X connect 18 0 28 0;
+#X connect 19 0 18 1;
+#X connect 20 0 21 0;
+#X connect 21 0 37 0;
+#X connect 22 0 33 0;
+#X connect 23 0 24 0;
+#X connect 24 0 35 0;
+#X connect 27 0 6 0;
+#X connect 27 0 26 0;
+#X connect 27 1 4 0;
+#X connect 27 1 26 1;
+#X connect 28 0 25 1;
+#X connect 29 0 25 0;
+#X connect 30 0 19 1;
+#X connect 31 0 30 0;
+#X connect 32 0 14 1;
+#X connect 33 0 32 0;
+#X connect 34 0 16 1;
+#X connect 35 0 34 0;
+#X connect 36 0 17 1;
+#X connect 37 0 36 0;
+#X connect 39 0 10 0;
+#X connect 39 0 40 0;
+#X connect 41 0 14 0;
+#X connect 41 0 17 0;
+#X connect 42 0 16 0;
+#X connect 42 0 19 0;
+#X connect 43 0 27 0;
+#X connect 44 0 27 1;

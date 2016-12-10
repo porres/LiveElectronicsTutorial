@@ -1,0 +1,34 @@
+#N canvas 462 202 702 613 12;
+#X obj 400 255 loadbang;
+#X obj 382 377 cnv 15 198 138 empty empty empty 20 12 0 14 -261682
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Sine 4099 float 0;
+#X coords 0 1 4098 -1 200 140 1;
+#X restore 381 376 graph;
+#X obj 203 392 tabosc4~ Sine;
+#X obj 98 393 osc~;
+#X obj 147 302 sig~;
+#X obj 147 274 nbx 5 14 -1e+37 1e+37 0 0 empty hz empty 0 -8 0 10 -228856
+-1 -1 440 256;
+#X msg 400 284 \; Sine sinesum 4096 1 \; hz 440;
+#X obj 184 465 output~;
+#X obj 72 467 output~;
+#X text 126 100 Podemos usar o [tabosc4~] também como um simples oscilador
+senoidal \, mas gerando tabelas com mais pontos \, aumentando assim
+a resolução da forma de onda (neste exemplo usamos uma tabela com 4096
+pontos).;
+#X text 127 41 O objeto [osc~] \, assim como o [cycle~] \, consiste
+internamente em um oscilador de tabela que possui 512 pontos e é lida
+com interpolação linear.;
+#X text 127 173 Outro detalhe é que a interpolação no [tabosc4~] é
+polinomial de 4 pontos e mais elaborada que a interpolação linear usadas
+no [osc~] e [cycle~].;
+#X connect 0 0 7 0;
+#X connect 3 0 8 0;
+#X connect 3 0 8 1;
+#X connect 4 0 9 0;
+#X connect 4 0 9 1;
+#X connect 5 0 4 0;
+#X connect 5 0 3 0;
+#X connect 6 0 5 0;

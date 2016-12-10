@@ -1,0 +1,103 @@
+#N canvas 83 27 880 631 10;
+#X obj 710 203 edge~;
+#X obj 710 230 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 737 230 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 710 143 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 710 170 sig~;
+#X obj 516 144 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X obj 516 166 sig~;
+#X obj 516 230 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 645 228 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130
+-1 -1;
+#X obj 150 357 tgl 15 0 empty empty empty 17 7 0 10 -204786 -1 -1 1
+1;
+#X obj 150 412 tgl 15 0 empty empty empty 17 7 0 10 -162280 -1 -1 1
+1;
+#X obj 150 385 metro 500;
+#X obj 259 444 sig~;
+#X obj 150 443 sig~;
+#X obj 197 505 bng 15 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 170 533 timer;
+#X floatatom 170 560 0 0 0 0 - - -;
+#X obj 170 505 bng 15 250 50 0 empty empty empty 17 7 0 10 -261234
+-1 -1;
+#X obj 150 330 loadbang;
+#X text 49 133 Primeiramente \, vejamos o objeto [edge~] \, que manda
+um bang no outlet esquerdo quando há uma transição de 0 para um valor
+diferente de zero. Já o outlet direito envia um bang quando temos novamente
+o valor de zero no sinal de áudio.;
+#X obj 259 516 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 999.887 256;
+#X obj 516 199 threshold~ 0.5 0 0.5 0;
+#X obj 259 476 cyclone/spike~;
+#X obj 150 472 cyclone/edge~;
+#X obj 585 372 loadbang;
+#X floatatom 585 475 0 0 0 0 - - -;
+#X obj 553 414 bng 20 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 585 423 cyclone/count~;
+#X obj 585 452 vsnapshot~;
+#X obj 585 400 metro 50;
+#X obj 585 524 nbx 6 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 51 202 Abaixo \, temos um toggle que liga e desliga a cada
+500 ms. Fazemos uma análise de tempo com o objeto [timer] e vemos que
+o resultado não é perfeito por causa dessa questão da resolução do
+bloco de áudio. Temos também o objeto [spike~] \, que nos dá o tempo
+entre uma transição de 0 a valores diferentes de 0 e outra transição
+do mesmo tipo. O resultado de tempo é então em torno do dobro do que
+obtemos com o [timer] \, e também não é exato.;
+#X text 442 44 O objeto [threshold~] reporta bangs quando o sinal excede
+o um valor de patamar definido como argumento \, mas também envia outro
+bang quando o sinal fica menor que outro valor de patamar igualmente
+especificado. Abaixo \, temos o [edge~] e o [threshold~] em um caso
+que acabam se comportando do mesmo jeito.;
+#X obj 585 500 / 64;
+#X text 456 286 É importante compreender também que os objetos gráficos
+no Pd \, quando acionados via interface de mouse/teclado \, sempre
+enviam dados em sincronia com o início de um ciclo de DSP. É por isso
+que \, quando clicamos no bang abaixo \, o valor do snapshot é sempre
+um múltiplo de 64!;
+#X text 477 559 Já no caso de dados e bangs enviados por objetos como
+[metro] e [delay] não possuem essa restrição.;
+#X msg 251 371 \; pd dsp 1;
+#X text 49 36 Há objetos que analisam sinal um de áudio e nos enviam
+uma mensagem de controle - como um "bang" - para que possamos usar
+informação de sinal de áudio para sincronizar com eventos de conrtrole
+no patch. Todavia \, essa conversão sofre de um problema de resolução
+de tempo \, que tem a ver com o tamanho do bloco de 64 amostras.;
+#X connect 0 0 1 0;
+#X connect 0 1 2 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X connect 5 0 6 0;
+#X connect 6 0 21 0;
+#X connect 9 0 11 0;
+#X connect 10 0 13 0;
+#X connect 10 0 12 0;
+#X connect 11 0 10 0;
+#X connect 12 0 22 0;
+#X connect 13 0 23 0;
+#X connect 14 0 15 1;
+#X connect 15 0 16 0;
+#X connect 17 0 15 0;
+#X connect 18 0 9 0;
+#X connect 18 0 36 0;
+#X connect 21 0 7 0;
+#X connect 21 1 8 0;
+#X connect 22 0 20 0;
+#X connect 23 0 17 0;
+#X connect 23 1 14 0;
+#X connect 24 0 29 0;
+#X connect 25 0 33 0;
+#X connect 26 0 28 0;
+#X connect 27 0 28 0;
+#X connect 28 0 25 0;
+#X connect 29 0 27 0;
+#X connect 33 0 30 0;

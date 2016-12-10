@@ -1,0 +1,26 @@
+#N canvas 142 22 449 643 10;
+#X obj 48 109 adc~;
+#X obj 48 141 dac~;
+#X text 82 110 entrada de som (Analog to Digital Converter);
+#X text 89 140 saída de som (Digital to Analog Converter);
+#X text 33 184 Esses nomes indicam que o Pd se considera como um ambiente
+de áudio digital \, o que é a mais pura verdade \, mas também indica
+que qualquer sinal que entra ou sai do Pd é um sinal analógico - o
+que nem sempre precisa ser verdade.;
+#X text 35 381 Por padrão \, os objetos [adc~] e [dac~] lidam com sinal
+estéreo que indicam as entradas e saídas 1 e 2 da placa de som \, mas
+você pode definir outras entradas e saídas \, dependendo da capacidade
+da sua placa.;
+#X obj 141 498 adc~ 1 3 5;
+#X text 126 471 entradas 1 \, 3 e 5;
+#X obj 146 580 dac~ 2 4 6;
+#X text 138 551 saídas 2 \, 4 e 6;
+#X text 38 27 Os objetos de entrada e saída de áudio no Pd são \, respectivamente
+\, [adc~] e [dac~] \, que são abreviações de "Analog to Digital Converter"
+e "Digital to Analog Converter".;
+#X text 34 265 O fato é que esses objetos se comunicam com a placa
+de som setada nas configurações de Áudio \, e aí depende da placa se
+ela tem entradas e saídas analógicas e digitais \, assim como o número
+de entradas e saídas. A maioria das placas costumam ter pelo menos
+uma entrada e saída analógica \, e é na placa que há de fato um conversor
+Analógico => Digital e Digital => Analógico.;

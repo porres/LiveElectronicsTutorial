@@ -1,0 +1,73 @@
+#N canvas 113 23 1005 719 10;
+#X obj 186 260 samplerate~;
+#X obj 186 228 bng 20 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#X obj 391 141 image ./files/onda.gif;
+#X text 209 227 <= clique;
+#X obj 186 295 nbx 5 18 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-261682 -1 -1 44100 256;
+#X obj 687 199 samplerate~;
+#X obj 672 228 *;
+#X obj 645 199 t f b;
+#X text 533 29 Conversão entre número de amostras e tempo:;
+#X floatatom 645 173 0 0 0 0 - - -;
+#X floatatom 672 256 0 0 0 0 - - -;
+#X text 535 61 No áudio digital \, podemos contar o tempo pelo número
+de amostras. Claro que o tempo em segundos depende da taxa de amostragem.
+Para converter segundos em número de amostras \, basta multiplicar
+pela taxa de amostragem. Já a conversão de número de amostras para
+segundos é feita com a divisão do número de amostras pela taxa de aostragem:
+;
+#X text 588 171 segundos;
+#X text 613 256 amostras;
+#X obj 702 338 samplerate~;
+#X obj 660 338 t f b;
+#X floatatom 660 312 0 0 0 0 - - -;
+#X floatatom 687 395 0 0 0 0 - - -;
+#X obj 687 367 /;
+#X text 603 310 amostras;
+#X text 628 395 segundos;
+#X floatatom 585 564 5 0 0 0 - - -;
+#X floatatom 690 628 0 0 0 0 - - -;
+#X floatatom 728 562 5 0 0 0 - - -;
+#X floatatom 833 627 0 0 0 0 - - -;
+#X text 704 645 ms;
+#X text 708 560 ms;
+#X text 832 646 samples;
+#X text 537 563 samples;
+#X text 549 501 A conversão é feita para sinal de áudio e também números/dados!
+;
+#X text 545 451 Já os externals abaixo \, clonados do max (da biblioteca
+"cyclone") fazem uma conversão similar \, mas para milissegundos (ms)
+- onde 1 seg = 1000 ms.;
+#X obj 585 597 cyclone/sampstoms~;
+#X obj 728 594 cyclone/mstosamps~;
+#X text 85 104 Um objeto de áudio opera na Taxa de Áudio \, ou Taxa
+de Amostragem.;
+#X text 87 151 O objeto [samplerate~] dá a taxa de amostragem em que
+o Pd está rodando (que pode ser alterada nas configurações). O padrão
+mais comum é 44.1 Khz (44100 valores por segundo).;
+#X text 93 350 Dessa maneira \, quando o DSP está ligado \, todos os
+objetos de áudio estão gerando valores na taxa de áudio.;
+#X text 95 391 Por exemplo \, no oscilador abaixo \, a saída de sinal
+possui 44100 valores por segundo.;
+#X obj 223 480 osc~ 440;
+#X obj 193 527 output~;
+#X connect 0 0 4 0;
+#X connect 1 0 0 0;
+#X connect 5 0 6 1;
+#X connect 6 0 10 0;
+#X connect 7 0 6 0;
+#X connect 7 1 5 0;
+#X connect 9 0 7 0;
+#X connect 14 0 18 1;
+#X connect 15 0 18 0;
+#X connect 15 1 14 0;
+#X connect 16 0 15 0;
+#X connect 18 0 17 0;
+#X connect 21 0 31 0;
+#X connect 23 0 32 0;
+#X connect 31 1 22 0;
+#X connect 32 1 24 0;
+#X connect 37 0 38 0;
+#X connect 37 0 38 1;

@@ -1,0 +1,122 @@
+#N canvas 112 22 942 603 10;
+#X obj 367 196 nbx 3 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 67 256;
+#X text 385 177 dB;
+#X obj 227 375 *~;
+#X obj 126 45 loadbang;
+#X text 374 219 noise floor;
+#X obj 263 229 >=;
+#X obj 367 127 loadbang;
+#X obj 263 257 change;
+#X obj 263 288 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1 0
+1;
+#X obj 321 286 sel 1;
+#X obj 321 315 bng 25 50 10 0 empty empty empty 17 7 0 10 -261682 -1
+-1;
+#X obj 126 443 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 59.8079 256;
+#X obj 126 415 env~;
+#X text 140 462 original;
+#X obj 274 443 nbx 7 17 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-261682 -1 -1 0 256;
+#X obj 274 415 env~;
+#X text 288 462 gate;
+#X obj 126 95 readsf~;
+#X obj 115 498 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 60 84 350 289 output 0;
+#X obj 116 171 *~;
+#X obj 100 210 dac~;
+#X obj 131 62 inlet;
+#X obj 82 62 inlet~;
+#X obj 131 118 line~;
+#X msg 131 92 \$1 10;
+#X obj 131 146 expr~ pow($v1 \, 4);
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 1;
+#X restore 61 524 pd output;
+#X obj 330 501 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 60 84 350 289 output 0;
+#X obj 116 171 *~;
+#X obj 100 210 dac~;
+#X obj 131 62 inlet;
+#X obj 82 62 inlet~;
+#X obj 131 118 line~;
+#X msg 131 92 \$1 10;
+#X obj 131 146 expr~ pow($v1 \, 4);
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 5 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 1;
+#X restore 276 527 pd output;
+#X text 527 435 Este patch também foi adaptado para que um "bang" acuse
+quando o patamar definido em dB for ultrapassado.;
+#X obj 396 292 loadbang;
+#X msg 396 318 \; pd dsp 1;
+#X msg 263 311 \$1 10;
+#X obj 165 195 delay~ 512 512;
+#X text 525 55 Neste exemplo \, deixamos o sinal passar apenas se sua
+amplitude for maior do que um valor estipulado. Esse processo é conhecido
+como "noise gate" ("portão de ruído" \, numa tradução literal). A ideia
+é que o portão se fecha para valores menores do que um valor tido como
+"noise floor" (chão de ruído) - que acaba sendo o valor mínimo (o "chão"
+\, por assim dizer) a passar pelo "portão".;
+#X text 526 154 A implementação é simples \, usamos o medidor de amplitude
+[env~] e comparamos seu valor com um de "noise floor". O objeto comparativo
+é o [>=] \, onde um valor maior ou igual que o chão retorna 1 (verdadeiro).
+e um menor dá 0 (falso). Esses valores de verdadeiro (1) e falso (0)
+são usados \, respectivamente \, para "abrir" e "fechar" o portão.
+;
+#X obj 263 194 env~ 512 512;
+#X msg 367 154 67;
+#X text 527 245 Quanto à latência \, o [env~] está gerando uma análise
+a cada 512 amostras. O atraso \, portanto \, é então de 512 amostras
+\, o que dá um tempo em torno de 11.61 ms em uma taxa de 44.1Khz. Usamos
+um objeto de atraso \, o [delay~] \, também com 512 amostras \, para
+que o processamento esteja sincronizado com essa latência.;
+#X text 527 333 O primeiro argumento do [delay~] é o tamanho máximo
+da linha de delay em número de amostras. O segundo argumento é o atraso
+(também recebida no inlet direito).;
+#X text 525 475 Compare à esquerda os valores de amplitude do sinal
+original e da saída do gate. Compare também o resultado sonoro de ambos
+ajustando o ganho do original e do gate.;
+#X obj 263 337 line~;
+#X text 526 384 Outro detalhe é que temos um [line~] ajustando o fade
+in e fade out do gate a 10 ms - que podeser interpretado como o atack
+e release do processamento.;
+#X msg 126 70 open ../../samples/MouthBow.wav \, start;
+#X connect 0 0 5 1;
+#X connect 2 0 15 0;
+#X connect 2 0 21 0;
+#X connect 3 0 36 0;
+#X connect 5 0 7 0;
+#X connect 6 0 30 0;
+#X connect 7 0 8 0;
+#X connect 7 0 9 0;
+#X connect 8 0 25 0;
+#X connect 9 0 10 0;
+#X connect 12 0 11 0;
+#X connect 15 0 14 0;
+#X connect 17 0 12 0;
+#X connect 17 0 19 0;
+#X connect 17 0 26 0;
+#X connect 17 0 29 0;
+#X connect 17 1 36 0;
+#X connect 18 0 19 1;
+#X connect 20 0 21 1;
+#X connect 23 0 24 0;
+#X connect 25 0 34 0;
+#X connect 26 0 2 0;
+#X connect 29 0 5 0;
+#X connect 30 0 0 0;
+#X connect 34 0 2 1;
+#X connect 36 0 17 0;

@@ -1,0 +1,34 @@
+#N canvas 32 40 496 562 10;
+#X msg 145 239 butterLP \$1;
+#X msg 237 258 butterHP \$1;
+#X floatatom 145 212 5 0 0 0 - - -;
+#X floatatom 237 231 5 0 0 0 - - -;
+#X obj 83 221 noise~;
+#X obj 112 305 biquadseries~ 4;
+#X text 49 22 O [biquadseries~] implementa filtros passa baixa e passa
+alta da topologia Butterworth a partir de sistemas de segunda ordem
+(ou seja \, biquads).;
+#X obj 100 359 output~;
+#X text 51 76 O argumento define o número de sistemas biquad \, um
+argumento de 4 define então um sistema de oitava ordem.;
+#X text 52 114 O [biquadseries~] recebe mensagens com a frequência
+de corte precedidos do símbolo "butterLP" para Passa Baixa e "butterHP"
+para Passa Alta.;
+#X obj 148 181 hsl 128 15 100 10000 0 0 empty empty empty -2 -8 0 10
+-228856 -1 -1 0 1;
+#X obj 240 208 hsl 128 15 100 10000 0 0 empty empty empty -2 -8 0 10
+-228856 -1 -1 0 1;
+#X obj 160 497 blop~;
+#X obj 205 497 bhip~;
+#X text 58 427 Já [blop~] e [blip~] são abstrações com o [biquadseries~]
+para definir filtros Passa Baixa ([blop~]) ou Passa Alta (bhip~) Butterworth.
+abra e confira.;
+#X connect 0 0 5 0;
+#X connect 1 0 5 0;
+#X connect 2 0 0 0;
+#X connect 3 0 1 0;
+#X connect 4 0 5 0;
+#X connect 5 0 7 0;
+#X connect 5 0 7 1;
+#X connect 10 0 2 0;
+#X connect 11 0 3 0;

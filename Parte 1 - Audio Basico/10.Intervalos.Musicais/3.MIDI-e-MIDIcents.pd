@@ -1,0 +1,218 @@
+#N canvas 61 22 1202 706 10;
+#X obj 454 110 ftom;
+#X obj 484 76 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 18 -6 0 10 -203904
+-1 -1 0 256;
+#X text 504 108 =;
+#X obj 454 159 nbx 5 14 -1e+37 1e+37 0 0 empty empty MIDI 18 -6 0 10
+-204786 -1 -1 0 256;
+#X obj 137 220 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X obj 134 245 nbx 5 14 -1e+37 1e+37 0 0 empty empty MIDI 60 7 0 10
+-204786 -1 -1 0 256;
+#X obj 134 267 mtof;
+#X obj 134 295 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 60 7 0 10 -260097
+-1 -1 0 256;
+#X msg 134 168 60;
+#X msg 160 193 69;
+#X text 192 194 Lá Central;
+#X text 169 168 Dó Central;
+#X obj 49 636 + 69;
+#X obj 148 432 cnv 15 155 18 empty empty empty 20 12 0 14 -215585 -66577
+0;
+#X text 153 431 Log2(intervalo) * 12;
+#X obj 49 610 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 0 256;
+#X obj 49 664 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X text 110 607 Diferença de Semitons em relação ao Lá Central;
+#X obj 536 109 expr log($f1/440) / log(2) * 12 + 69;
+#X obj 49 577 expr log($f1) / log(2) * 12;
+#X obj 49 548 / 440;
+#X text 99 548 Intervalo em Relação ao Lá central 440Hz;
+#X text 112 660 Frequencia em MIDI;
+#X obj 49 525 nbx 5 14 20 1e+37 0 0 empty empty empty 0 -8 0 10 -261682
+-1 -1 20 256;
+#X text 107 522 Frequência em Hertz;
+#X obj 250 578 cnv 15 155 18 empty empty empty 20 12 0 14 -215585 -66577
+0;
+#X text 256 577 Log2(intervalo) * 12;
+#X obj 536 158 nbx 5 14 -1e+37 1e+37 0 0 empty empty MIDI 18 -6 0 10
+-204786 -1 -1 0 256;
+#X obj 532 585 mtof;
+#X obj 532 608 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 60 7 0 10 -260097
+-1 -1 440 256;
+#X obj 532 538 + 69;
+#X obj 532 493 / 100;
+#X floatatom 532 472 8 0 0 0 - - -;
+#X floatatom 532 516 8 0 0 0 - - -;
+#X obj 535 451 hsl 128 15 0 1200 0 0 empty empty empty -2 -8 0 10 -261234
+-1 -1 0 1;
+#X text 441 204 MIDI-Cents:;
+#X text 432 185 ============================================================
+;
+#X text 596 471 Cents;
+#X text 598 561 MIDI e MIDI-Cents;
+#X obj 532 630 osc~;
+#X obj 580 634 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -175543
+-1 -1 0 1;
+#N canvas 0 22 363 279 ganho 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X obj 214 93 loadbang;
+#X msg 214 122 \; pd dsp 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 8 0;
+#X restore 532 655 pd ganho;
+#X obj 927 60 nbx 5 14 -1e+37 1e+37 0 0 empty empty MIDI 60 7 0 10
+-204786 -1 -1 0 256;
+#X obj 860 108 mtof;
+#X obj 860 143 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 60 7 0 10 -203904
+-1 -1 0 256;
+#X text 915 109 =;
+#X obj 956 110 expr pow(2 \, ($f1 -69) /12) * 440;
+#X obj 956 142 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 60 7 0 10 -203904
+-1 -1 0 256;
+#X text 23 81 Números MIDI podem ser convertidos em outras coisas \,
+como em Frequência \, onde o padrão é que o número 60 é o Dó Central
+\, e cada unidade representa uma mudança de um Semitom. O Lá central
+em MIDI (9 Semitons acima do Dó Central) é o número 69 \, e sua frequência
+é 440Hz.;
+#X obj 532 562 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 18 -6 0
+10 -204786 -1 -1 69 256;
+#X text 830 15 A partir da conta ao lado \, é fácil chegar na expressão
+matemática inversa \, do objeto [mtof]:;
+#X obj 968 391 mtof;
+#X obj 968 419 nbx 5 14 -1e+37 1e+37 0 0 empty empty Hz 60 7 0 10 -203904
+-1 -1 220 256;
+#X obj 968 329 + 69;
+#X obj 968 273 / 100;
+#X floatatom 968 302 8 0 0 0 - - -;
+#X floatatom 968 361 8 0 0 0 - - -;
+#X obj 968 452 osc~;
+#X obj 1022 456 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -175543
+-1 -1 0 1;
+#N canvas 0 22 244 279 output 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 968 482 pd output;
+#X text 1063 436 gain;
+#X obj 896 254 nbx 5 14 -1e+37 1e+37 0 0 empty midi empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 896 297 t b f;
+#X text 857 253 MIDI;
+#X obj 968 254 nbx 7 14 -1200 1200 0 0 empty cents empty 0 -8 0 10
+-261234 -1 -1 -1200 256;
+#X text 1042 251 Cents;
+#X text 817 185 ============================================================
+;
+#X text 838 211 Uma adaptação separando o MIDI dos Cents:;
+#X obj 872 589 nbx 5 14 0 120 0 0 empty midi empty 0 -8 0 10 -261682
+-1 -1 69 256;
+#X obj 1028 591 nbx 5 14 -1200 1200 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 -1200 256;
+#X text 872 568 midi;
+#X text 1029 568 cents;
+#X obj 872 669 nbx 7 14 -1e+37 1e+37 0 0 empty empty Hz 80 7 0 10 -260097
+-1 -1 220 256;
+#X obj 1028 612 trigger bang float;
+#X obj 872 639 expr pow(2 \, ($f1 + ($f2/100) -69) /12) * 440;
+#X text 819 524 E uma versão em [expr] que leva em conta o conhecimento
+da fórmula de conversão do objeto [mtof]:;
+#X text 23 15 O protocolo MIDI possui dados com 7 bits. O que dá 2
+elevado a 7 valores (128 valores \, que vão de 0 a 127). Um Horizontal
+Slider \, por exemplo \, vai de 0 a 127 por padrão justamente por uma
+influência da importância do padrão MIDI.;
+#X text 23 327 O objeto [mtof] - de "MIDI to Frequency" - converte
+números MIDI em Hertz. Os 128 valores MIDI nos dá um registro que vai
+em torno de 8Hz a 12.5Khz.;
+#X text 23 378 A escala MIDI é uma escala logarítmica \, em que as
+unidades representam Semitons. Uma conversão de intervalos para semitons
+já foi dada anteriormente:;
+#X text 23 470 Para converter Hertz para MIDI \, precisamos de um ponto
+qualquer de referência. Usemos então o Lá Central a 440Hz.;
+#X text 586 516 MIDI-Cents;
+#X text 429 16 Essa conversão faz o inverso do objeto [mtof] \, e claro
+que também temos um objeto que faz isso - o [ftom] \, de "Frequency
+to MIDI".;
+#X text 90 635 Soma a diferença com Lá Central em MIDI;
+#X text 443 230 "MIDI-Cents" diz respeito a um número MIDI com casas
+decimais (um float). Tradicionalmente \, o MIDI tem uma resolução de
+7 bits e valores inteiros de 0 a 127 \, mas no Pd \, por exemplo \,
+podemos um número com casas decimais para representar o MIDI \, sendo
+que essas casas decimais se relacionam com cents. Mas enquanto os cents
+são uma divisão da oitava \, as casas decimais no MIDI são frações
+de um semitom!;
+#X text 444 343 No exemplo abaixo \, temos um slider que varia em cents
+de 0 a 1200 Para converter ao padrão MIDI \, dividimos por 100 \, e
+aí temos um número cuja parte inteira corresponde a Semitons \, e as
+casas decimais são os valores de "MIDI-Cents". Por fim \, somamos isso
+com o Lá Central.;
+#X text 793 185 ====;
+#X connect 0 0 3 0;
+#X connect 1 0 0 0;
+#X connect 1 0 18 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 8 0 4 0;
+#X connect 9 0 4 0;
+#X connect 12 0 16 0;
+#X connect 15 0 12 0;
+#X connect 18 0 27 0;
+#X connect 19 0 15 0;
+#X connect 20 0 19 0;
+#X connect 23 0 20 0;
+#X connect 28 0 29 0;
+#X connect 29 0 39 0;
+#X connect 30 0 49 0;
+#X connect 31 0 33 0;
+#X connect 32 0 31 0;
+#X connect 33 0 30 0;
+#X connect 34 0 32 0;
+#X connect 39 0 41 0;
+#X connect 40 0 41 1;
+#X connect 42 0 43 0;
+#X connect 42 0 46 0;
+#X connect 43 0 44 0;
+#X connect 46 0 47 0;
+#X connect 49 0 28 0;
+#X connect 51 0 52 0;
+#X connect 52 0 57 0;
+#X connect 53 0 56 0;
+#X connect 54 0 55 0;
+#X connect 55 0 53 0;
+#X connect 56 0 51 0;
+#X connect 57 0 59 0;
+#X connect 58 0 59 1;
+#X connect 61 0 62 0;
+#X connect 62 0 53 0;
+#X connect 62 1 53 1;
+#X connect 64 0 54 0;
+#X connect 68 0 74 0;
+#X connect 69 0 73 0;
+#X connect 73 0 74 0;
+#X connect 73 1 74 1;
+#X connect 74 0 72 0;

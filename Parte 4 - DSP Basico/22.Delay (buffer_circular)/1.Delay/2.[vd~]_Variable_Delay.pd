@@ -1,0 +1,87 @@
+#N canvas 357 22 933 800 10;
+#X obj 38 524 output~;
+#X obj 537 208 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 526 274 output~;
+#X obj 709 284 output~;
+#X obj 100 489 delwrite~ delay_um 3000;
+#X obj 720 247 vd~ delay_um;
+#X obj 720 189 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 273 557 output~;
+#X obj 284 520 vd~ delay_um;
+#X obj 284 488 line~;
+#X obj 287 394 hsl 128 15 0 1000 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X text 45 25 O [delread~] é para um valor de delay fixo. É possível
+mudar o valor pelo inlet \, claro \, mas isso gera clicks. A metáfora
+é como se estivessemos lendo de um disco de vinil \, onde mudar o ponto
+de leitura brucamente é como fazer a agulha saltar de posição.;
+#X obj 39 453 readsf~;
+#X obj 39 403 loadbang;
+#X floatatom 284 425 0 0 0 0 - - -;
+#X msg 284 458 \$1 500;
+#X text 43 114 Para mudança de ponto de leitura temos o [vd~] \, de
+"variable delay". Apesar de "aceitar" mudança de valores de tempo \,
+uma mudança de tempo igualmente brusca também gera clicks. Portanto
+\, a real diferença é que o [vd~] aceita uma variação contínua de sinal
+de áudio \, como de um [line~] \, mas isso gera um "ascelerando" ou
+"desacelerando" e \, consequentemente \, mudança de altura.;
+#X text 45 216 Voltando à metáfora do vinil \, é como se mudássemos
+a velocidade de rotação para chegarmos ao ponto de destino. Logo \,
+é parecido com fazer um "scratch". Ou ainda pensando novamente no modelo
+de delay de fita \, é a mesma coisa que ascelerar/desascelerar a velocidade
+de leitura para que o cabeçote vá para outro ponto de leitura.;
+#X text 47 313 Mas após chegar no ponto de destino \, a velocidade
+volta ao normal e não há mais pitch shifting. Brinque com o slider
+abaixo no [vd~] e entenda o que acontece.;
+#X text 484 40 Diferente do [delrad~] \, o [vd~] possui apenas um argumento
+que é o nome do buffer. O tempo de delay é dado somente via o inlet
+que recebe sinal de áudio - mas também entende dado de controle (número).
+;
+#X text 487 125 Novamente \, mais de um [vd~] pode ler o mesmo buffer
+de áudio \, e pode acessar o mesmo buffer que um [delread~] e vice-versa.
+;
+#X obj 537 238 delread~ delay_um 1500;
+#X obj 720 215 sig~ 2000;
+#X text 490 340 ============================================================
+;
+#X text 497 372 A possibilidade de mudança de Pitch de um delay com
+tempo variável abre as portas para uma série de processamentos. Além
+de processamentos como vibrato ou um próprio Pitch Shifter \, destacam-se
+os famosos Flanger e Chorus.;
+#X text 489 450 ============================================================
+;
+#X text 498 473 Interpolação:;
+#X text 498 497 O [vd~] recebe valores decimais para leitura da linha
+de delay. Isso significa que ele realiza uma interpolação. Mais especificamente
+\, se trata da mesma interpolação de 4 pontos que o Pd costuma adotar.
+Por causa da interpolação \, o [vd~] sempre tem um atraso mínimo de
+pelo menos uma amostra \, mesmo quando recebe um valor de "0".;
+#X msg 39 428 open ../../../samples/bubul.wav \, 1;
+#X text 250 629 ============================================================
+;
+#X text 272 655 BUG:;
+#X text 271 683 Até a versão 0.46-7 \, [delread~] e [vd~] na verdade
+não conseguem ler até o tamanho máximo da linha de delay especificada
+em [delwrite~]. Uma forma de evitar algum problema é especificar o
+tamanho de delay com pelo menos um bloco a mais.;
+#X connect 1 0 21 0;
+#X connect 5 0 3 0;
+#X connect 5 0 3 1;
+#X connect 6 0 22 0;
+#X connect 8 0 7 0;
+#X connect 8 0 7 1;
+#X connect 9 0 8 0;
+#X connect 10 0 14 0;
+#X connect 12 0 0 0;
+#X connect 12 0 0 1;
+#X connect 12 0 4 0;
+#X connect 12 1 28 0;
+#X connect 13 0 28 0;
+#X connect 14 0 15 0;
+#X connect 15 0 9 0;
+#X connect 21 0 2 0;
+#X connect 21 0 2 1;
+#X connect 22 0 5 0;
+#X connect 28 0 12 0;

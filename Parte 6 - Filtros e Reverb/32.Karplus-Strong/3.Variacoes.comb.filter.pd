@@ -1,0 +1,310 @@
+#N canvas 64 33 1256 694 10;
+#X floatatom 134 189 5 0 0 0 - hz -;
+#X text 115 188 Hz;
+#X obj 81 269 output~;
+#X obj 61 191 noise~;
+#X obj 189 184 hsl 128 15 0 0.999 0 0 empty fb empty -2 -6 0 8 -204800
+-1 -1 12649 1;
+#X floatatom 186 208 0 0 0 0 - - -;
+#X text 223 184 feedback;
+#X obj 280 220 loadbang;
+#X obj 83 629 output~;
+#X obj 218 577 hsl 128 15 0 0.999 0 0 empty fb empty -2 -6 0 8 -204800
+-1 -1 12649 1;
+#X floatatom 215 601 0 0 0 0 - - -;
+#X text 253 576 feedback;
+#X obj 106 537 mtof;
+#X obj 193 537 / 127;
+#X floatatom 106 562 0 0 0 0 - - -;
+#X msg 106 486 36;
+#X obj 106 513 makenote 127 10;
+#X floatatom 193 488 5 0 1000 0 - - -;
+#X obj 564 505 output~;
+#X obj 684 386 hsl 128 15 0 0.9999 0 0 empty fb empty -2 -6 0 8 -204800
+-1 -1 12638 1;
+#X floatatom 681 410 6 0 0 0 - - -;
+#X text 719 386 feedback;
+#X obj 505 397 mtof;
+#X obj 592 397 / 127;
+#X floatatom 505 422 0 0 0 0 - - -;
+#X obj 505 373 makenote 127 10;
+#X floatatom 592 348 5 10 100 0 - - -;
+#X obj 730 417 hsl 128 15 100 10000 0 0 empty cutoff empty -2 -6 0
+8 -262130 -1 -1 7184 1;
+#X floatatom 727 441 0 0 0 0 - - -;
+#X text 765 416 cutoff;
+#X msg 280 245 \; hz 65.4 \; fb 0.995 \; cutoff 5700;
+#X obj 449 285 metro;
+#X obj 449 261 tgl 15 0 empty empty empty 17 7 0 10 -261234 -33289
+-1 0 1;
+#X obj 449 311 expr random(30 \, 50) \; random(200 \, 600);
+#X obj 505 351 nbx 2 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X text 478 257 <== Gerador de notas aleatório;
+#N canvas 217 82 303 410 comb-filter 0;
+#X obj 50 357 outlet~;
+#X obj 105 238 *~;
+#X obj 50 274 +~;
+#X obj 105 181 line~;
+#X msg 105 154 \$1 10;
+#X obj 50 53 inlet~;
+#X obj 175 242 line~;
+#X msg 175 215 \$1 10;
+#X obj 105 52 inlet;
+#X obj 173 53 inlet;
+#X text 107 30 tempo;
+#X text 164 32 feedback;
+#X text 48 29 input;
+#X obj 80 313 delwrite~ \$0-fb1 1000;
+#X obj 105 213 vd~ \$0-fb1;
+#X floatatom 105 120 5 0 0 0 - - -;
+#X obj 105 90 expr 1000 / $f1;
+#X text 84 118 ms;
+#X connect 1 0 2 1;
+#X connect 2 0 0 0;
+#X connect 2 0 13 0;
+#X connect 3 0 14 0;
+#X connect 4 0 3 0;
+#X connect 5 0 2 0;
+#X connect 6 0 1 1;
+#X connect 7 0 6 0;
+#X connect 8 0 16 0;
+#X connect 9 0 7 0;
+#X connect 14 0 1 0;
+#X connect 15 0 4 0;
+#X connect 16 0 15 0;
+#X restore 94 231 pd comb-filter;
+#N canvas 442 60 602 557 comb-filter 0;
+#X obj 184 496 outlet~;
+#X obj 199 382 *~;
+#X obj 184 413 +~;
+#X obj 199 256 line~;
+#X msg 199 229 \$1 10;
+#X obj 396 248 line~;
+#X msg 396 221 \$1 10;
+#X obj 128 53 inlet;
+#X obj 394 59 inlet;
+#X text 385 38 feedback;
+#X floatatom 199 195 5 0 0 0 - - -;
+#X obj 199 165 expr 1000 / $f1;
+#X text 243 195 ms;
+#X obj 199 307 vd~ \$0-fb2;
+#X obj 214 452 delwrite~ \$0-fb2 1000;
+#X obj 37 226 noise~;
+#X obj 99 238 vline~;
+#X obj 84 282 *~;
+#X obj 203 52 inlet;
+#X text 215 32 envelope;
+#X text 134 31 Hz;
+#X obj 246 52 inlet;
+#X obj 99 204 pack f 5;
+#X connect 1 0 2 1;
+#X connect 2 0 0 0;
+#X connect 2 0 14 0;
+#X connect 3 0 13 0;
+#X connect 4 0 3 0;
+#X connect 5 0 1 1;
+#X connect 6 0 5 0;
+#X connect 7 0 11 0;
+#X connect 8 0 6 0;
+#X connect 10 0 4 0;
+#X connect 11 0 10 0;
+#X connect 13 0 1 0;
+#X connect 15 0 17 0;
+#X connect 16 0 17 1;
+#X connect 17 0 2 0;
+#X connect 18 0 22 0;
+#X connect 21 0 22 1;
+#X connect 22 0 16 0;
+#X restore 106 591 pd comb-filter;
+#X text 234 486 duração/sustain;
+#X obj 595 325 hsl 128 15 1 100 0 0 empty empty empty -2 -8 0 10 -261682
+-1 -1 0 1;
+#X floatatom 988 391 5 0 0 0 - - -;
+#X obj 988 361 expr 1000 / $f1;
+#X text 1026 391 ms;
+#X obj 1041 569 output~;
+#X obj 988 417 sig~;
+#X obj 919 388 vline~;
+#X obj 904 411 *~;
+#X obj 988 250 metro;
+#X obj 988 216 tgl 15 0 empty empty empty 17 7 0 10 -261234 -33289
+-1 0 1;
+#X obj 988 287 expr random(30 \, 50) \; random(200 \, 600);
+#X obj 1105 441 hsl 128 15 100 10000 0 0 empty cutoff empty -2 -6 0
+8 -262130 -1 -1 7184 1;
+#X floatatom 1102 465 0 0 0 0 - - -;
+#X text 1144 440 cutoff;
+#X obj 1066 389 hsl 128 15 0 0.999 0 0 empty fb empty -2 -6 0 8 -204800
+-1 -1 12649 1;
+#X floatatom 1063 410 0 0 0 0 - - -;
+#X text 1101 389 feedback;
+#X obj 988 331 mtof;
+#X obj 1063 431 sig~;
+#X obj 964 454 comb~ 100 0 1 0 0;
+#X text 450 173 Temos tudo abaixo em um subpatch com tamanho de bloco
+igual a 1 para permitir frequências bem agudas (com delay de até uma
+amostra). Veja abaixo como ficou essa revisão de um patch de Karplus-Strong.
+;
+#X msg 919 359 1 \, 0 0 \$1;
+#X text 472 564 Por fim \, temos uma implementação baseada no objeto
+[comb~] \, que convenientemente nos dá uma linha de delay com feedback
+loop.;
+#X obj 904 307 pink~;
+#X obj 1102 490 sig~;
+#X obj 1068 517 lores~ 0 0.2;
+#X text 864 33 Pode ser interessante utilizar outro tipo de filtro
+em vez do Passa Baixa de um polo \, ou ainda um ruído rosa em vez de
+ruído branco como abaixo.;
+#X text 866 83 O ruído rosa \, que tem menos brilho (menos energia
+nos componentes mais agudos do espectro) e usamos um filtro passa baixa
+ressonante.;
+#N canvas 442 60 452 595 comb-filter+lowpass 0;
+#X obj 164 233 line~;
+#X msg 164 206 \$1 10;
+#X obj 266 256 line~;
+#X msg 266 229 \$1 10;
+#X obj 62 50 inlet;
+#X obj 266 53 inlet;
+#X text 257 32 feedback;
+#X floatatom 164 172 5 0 0 0 - - -;
+#X obj 164 142 expr 1000 / $f1;
+#X text 208 172 ms;
+#X obj 51 253 noise~;
+#X obj 113 265 vline~;
+#X obj 98 309 *~;
+#X obj 113 49 inlet;
+#X text 112 29 envelope;
+#X text 68 28 Hz;
+#X obj 319 53 inlet;
+#X text 317 32 cutoff;
+#X floatatom 319 270 0 0 0 0 - - -;
+#X obj 190 402 *~;
+#X obj 165 306 vd~ \$0-fb3;
+#X obj 191 437 delwrite~ \$0-fb3 1000;
+#X obj 165 477 outlet~;
+#X obj 66 402 block~ 1;
+#X obj 165 367 lop~;
+#X obj 113 210 pack;
+#X obj 153 49 inlet;
+#X connect 0 0 20 0;
+#X connect 1 0 0 0;
+#X connect 2 0 19 1;
+#X connect 3 0 2 0;
+#X connect 4 0 8 0;
+#X connect 5 0 3 0;
+#X connect 7 0 1 0;
+#X connect 8 0 7 0;
+#X connect 10 0 12 0;
+#X connect 11 0 12 1;
+#X connect 12 0 24 0;
+#X connect 13 0 25 0;
+#X connect 16 0 18 0;
+#X connect 18 0 24 1;
+#X connect 19 0 21 0;
+#X connect 20 0 24 0;
+#X connect 24 0 22 0;
+#X connect 24 0 19 0;
+#X connect 25 0 11 0;
+#X connect 26 0 25 1;
+#X restore 577 467 pd comb-filter+lowpass;
+#X text 39 23 Vejamos agora algumas variações da técnica de Karplus-Strong.
+Podemos encarar o Karplus-Strong como um ruído branco em um Comb Filter
+(que permite um feedback delay)! Temos então \, como ponto de partida
+\, algo que já vimos em exemplos anteriores \, onde um ruído branco
+é filtrado em um Comb Filter simples \, com apenas uma linha de feedback
+- e onde a frequência é dada em Hz e convertida para o período do delay.
+A partir dessa estrutura inicial \, podemos nos aproximar mais à técnica
+de Karplus-Strong.;
+#X text 37 327 O primeiro passo é criar um envelope para o ruído branco.
+Podemos ser mais flexíveis e não nos preocuparmos em extrair um grão
+de ruído com período igual à frequência de entrada. Temos uma estrutura
+de Note On/Note Off com o [makenote] \, para emular uma entrada de
+um teclado MIDI. Temos aqui um valor curto de envelope \, de 10 ms
+de duração/sustain. Usamos o. Abra o subpatch e veja que temos um ataque
+e um release de 5 ms no objeto [vline~]. Você pode alterar esse valor
+de ataque. Tente valores maiores de duração/sustain.;
+#X text 446 110 Seguindo com variações. Em vez do filtro de média \,
+incluimos agora um filtro Passa Baixa de um polo. Com esse filtro \,
+temos a possibilidade de setar uma frequência de corte. E assim temos
+mais um parâmetro.;
+#X floatatom 244 537 5 0 500 0 - - -;
+#X text 280 537 ataque;
+#X floatatom 641 381 5 10 100 0 - - -;
+#X obj 644 358 hsl 128 15 1 100 0 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#X text 605 325 duração/sustain;
+#X text 685 356 ataque;
+#X text 446 23 A duração/sustain seria um parâmetro extra. Valores
+mais altos fazem com que o tenhamos o ruído branco sendo filtrado pelo
+comb filter durante esse tempo. Um valor muito curto faz com que o
+grão de ruído seja até menor que o período de repetição. Outro parâmetro
+extra é o ataque do envelope.;
+#X text 474 615 Uma adaptação com esse objeto faz com que retiremos
+o filtro de dentro do loop de feedback. Apesar disso ser tecnicamente
+uma alteração que faz diferença \, a diferença de resultado sonoro
+pode não ser comprometedora.;
+#X text 869 135 Para esse último exemplo \, deixamos de lado os parâmetros
+do envelope (duração/sustain e ataque). Temos agora \, novamente \,
+a ideia de extrair um grão de acordo com o período da frequência.;
+#X connect 0 0 36 1;
+#X connect 3 0 36 0;
+#X connect 4 0 5 0;
+#X connect 5 0 36 2;
+#X connect 7 0 30 0;
+#X connect 9 0 10 0;
+#X connect 10 0 37 3;
+#X connect 12 0 14 0;
+#X connect 13 0 37 1;
+#X connect 14 0 37 0;
+#X connect 15 0 16 0;
+#X connect 16 0 12 0;
+#X connect 16 1 13 0;
+#X connect 17 0 16 2;
+#X connect 19 0 20 0;
+#X connect 20 0 67 3;
+#X connect 22 0 24 0;
+#X connect 23 0 67 1;
+#X connect 24 0 67 0;
+#X connect 25 0 22 0;
+#X connect 25 1 23 0;
+#X connect 26 0 25 2;
+#X connect 27 0 28 0;
+#X connect 28 0 67 4;
+#X connect 31 0 33 0;
+#X connect 32 0 31 0;
+#X connect 33 0 34 0;
+#X connect 33 1 31 1;
+#X connect 34 0 25 0;
+#X connect 36 0 2 0;
+#X connect 36 0 2 1;
+#X connect 37 0 8 0;
+#X connect 37 0 8 1;
+#X connect 39 0 26 0;
+#X connect 40 0 44 0;
+#X connect 40 0 60 0;
+#X connect 41 0 40 0;
+#X connect 44 0 58 1;
+#X connect 45 0 46 1;
+#X connect 46 0 58 0;
+#X connect 47 0 49 0;
+#X connect 48 0 47 0;
+#X connect 49 0 56 0;
+#X connect 49 1 47 1;
+#X connect 50 0 51 0;
+#X connect 51 0 63 0;
+#X connect 53 0 54 0;
+#X connect 54 0 57 0;
+#X connect 56 0 41 0;
+#X connect 57 0 58 4;
+#X connect 58 0 64 0;
+#X connect 60 0 45 0;
+#X connect 62 0 46 0;
+#X connect 63 0 64 1;
+#X connect 64 0 43 0;
+#X connect 64 0 43 1;
+#X connect 67 0 18 0;
+#X connect 67 0 18 1;
+#X connect 71 0 37 2;
+#X connect 73 0 67 2;
+#X connect 74 0 73 0;

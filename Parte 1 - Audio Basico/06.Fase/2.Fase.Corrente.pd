@@ -1,0 +1,33 @@
+#N canvas 175 34 490 646 10;
+#X obj 122 410 phasor~;
+#X obj 122 469 Scope~ 130 130 256 3 128 0 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 122 356 sig~ 2;
+#X text 102 587 0;
+#X text 104 461 1;
+#X obj 286 508 loadbang;
+#X msg 286 535 \; pd dsp 1;
+#X text 135 384 Velocidade (velocidade angular);
+#X text 137 437 Posição (Fase Corrente);
+#X text 58 219 Enquanto o sinal de Frequência (velocidade angular)
+indica a velocidade em que o ângulo/fase muda ou "corre" \, o sinal
+de Fase Corrente indica esse deslocamento angular \, essa variação
+de posição da Fase/ângulo. Isso se dá tal como a relação de Velocidade
+de um carro e sua Posição no espaço. A diferença é que não se trata
+de um deslocamento em metros \, mas sim de um deslocamento de Fase/Ângulo.
+;
+#X text 54 22 O que aqui chamamos de "Fase Corrente" é o sinal gerado
+pelo [phasor~]. Até então apresentamos uma ideia de fase que indica
+uma posição específica dentre um ciclo (Fase Instantânea). Já esse
+conceito de fase é mais dinâmico e implica em uma mudança de ângulo/fase
+no tempo. Portanto seria um conceito bem distinto e até posto de "Fase
+Instantânea"!;
+#X text 54 129 O conceito de Fase Corrente está intimamente ligado
+com a frequência de oscilação \, sendo o sinal de frequência e de Fase
+Corrente dois lados de uma mesma moeda! Essa relação entre Velocidade
+Angular (Frequência) e Fase Corrente é que permite uma relação entre
+"Modulação de Frequência" e "Modulação de Fase" \, como veremos depois.
+;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 5 0 6 0;

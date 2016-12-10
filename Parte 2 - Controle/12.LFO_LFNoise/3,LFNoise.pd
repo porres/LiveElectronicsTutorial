@@ -1,0 +1,78 @@
+#N canvas 186 199 1028 552 12;
+#X obj 69 409 *~;
+#X obj 48 455 output~;
+#X obj 69 206 noisi~ 5;
+#X obj 69 238 *~ 500;
+#X obj 69 279 +~ 1000;
+#X obj 69 324 osc~;
+#X obj 221 281 *~ 500;
+#X obj 221 312 +~ 1000;
+#X obj 87 376 noisi~ 3;
+#X obj 712 241 metro 500;
+#X obj 712 214 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X floatatom 807 206 5 0 0 0 - - -;
+#X obj 712 287 random 500;
+#X obj 713 400 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 316.76 256;
+#X obj 713 362 line 0 5;
+#X obj 712 328 pack float 500;
+#X obj 712 183 loadbang;
+#X obj 716 435 hsl 128 15 0 500 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 8046 1;
+#X text 89 42 Geradores de ruído de frequência baixa podem ser usados
+como sinais de controle aleateóreos.;
+#X obj 201 398 output~;
+#X obj 221 341 osc~;
+#X text 572 64 Ou seja \, os geradores de ruído podem substituir um
+método de gerar números e linhas aleatóreas para dados de controle
+\, com os objetos [metro] \, [random] e [line]. Por exemplo \, abaixo
+temos o que seria um ruído interpolado.;
+#X obj 376 222 hsl 128 15 1 10 1 0 empty empty empty -2 -8 0 10 -204786
+-1 -1 4100 0;
+#X obj 373 247 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 2.10298 256;
+#X obj 373 318 samphold~;
+#X obj 373 290 noise~;
+#X obj 221 243 noish~ 7;
+#X obj 433 287 phasor~ 7;
+#X obj 373 353 *~ 500;
+#X obj 373 384 +~ 1000;
+#X obj 355 457 output~;
+#X obj 373 413 osc~;
+#X text 90 82 Neste exemplo temos um gerador aleatóreo interpolado
+para frequências e amplitudes à esquerda. Já à direita temos um gerador
+aleatóreo não interpolado \, que pode ser implementado também com um
+[noise~] passando por um "sample and hold" controlador por um LFO.
+;
+#X text 514 287 <= LFO;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X connect 6 0 7 0;
+#X connect 7 0 20 0;
+#X connect 8 0 0 1;
+#X connect 9 0 12 0;
+#X connect 10 0 9 0;
+#X connect 11 0 9 1;
+#X connect 11 0 15 1;
+#X connect 12 0 15 0;
+#X connect 13 0 17 0;
+#X connect 14 0 13 0;
+#X connect 15 0 14 0;
+#X connect 16 0 10 0;
+#X connect 20 0 19 0;
+#X connect 20 0 19 1;
+#X connect 22 0 23 0;
+#X connect 23 0 27 0;
+#X connect 24 0 28 0;
+#X connect 25 0 24 0;
+#X connect 26 0 6 0;
+#X connect 27 0 24 1;
+#X connect 28 0 29 0;
+#X connect 29 0 31 0;
+#X connect 31 0 30 0;
+#X connect 31 0 30 1;

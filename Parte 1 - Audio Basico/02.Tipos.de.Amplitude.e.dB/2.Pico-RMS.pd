@@ -1,0 +1,173 @@
+#N canvas 115 23 945 603 10;
+#X obj 615 170 *~;
+#X obj 633 116 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -4034
+-1 -1 12700 1;
+#X obj 630 152 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-4034 -1 -1 1 256;
+#X obj 665 240 nbx 8 20 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-257985 -1 -1 96.9904 256;
+#X obj 205 460 image ./files/Amp.gif;
+#X text 636 135 Amplitude de Pico;
+#X obj 665 290 nbx 8 20 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-204786 -1 -1 0.707161 256;
+#X text 778 243 RMS (dB);
+#X text 778 293 RMS (linear);
+#X obj 665 268 dbtorms;
+#X obj 615 90 osc~ 500;
+#X text 712 152 (linear);
+#X obj 546 506 cnv 15 300 50 empty empty empty 20 12 0 14 -220728 -66577
+0;
+#X text 558 514 Veja mais sobre RMS neste subpatch:;
+#X text 631 530 (clique para abrir);
+#X text 443 242 Pico (linear);
+#X text 467 288 Pico (dB);
+#N canvas 256 22 1032 711 RMS 0;
+#X obj 277 151 Uzi 1024;
+#X obj 299 324 / 1024;
+#X obj 322 245 +;
+#X obj 353 247 f;
+#X msg 337 223 0;
+#X obj 299 389 sqrt;
+#X floatatom 299 354 0 0 0 0 - - -;
+#X msg 299 601 \; rms const \$1;
+#X text 385 212 ao quadrado;
+#X text 257 348 média;
+#X obj 322 176 expr pow(seno[$f1] \, 2);
+#X floatatom 299 296 0 0 0 0 - - -;
+#X obj 195 486 env~;
+#X obj 195 549 dbtorms;
+#X obj 332 502 rmstodb;
+#X msg 324 85 \; seno sinesum 1024 \$1;
+#X obj 277 80 t b f;
+#X obj 270 32 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -191407
+-1 -1 0 1;
+#X floatatom 267 56 0 0 0 0 - - -;
+#X obj 151 370 osc~ 500;
+#X obj 195 439 *~;
+#X obj 496 397 cnv 15 498 238 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array seno 1027 float 0;
+#X array rms 1027 float 0;
+#X coords 0 1 1026 -1 500 240 1;
+#X restore 495 396 graph;
+#X text 209 15 Amplitude de Pico;
+#X obj 299 270 f;
+#X text 484 388 1;
+#X text 483 508 0;
+#X text 477 625 -1;
+#X text 208 30 (linear);
+#X text 232 359 aritmética;
+#X text 332 197 valor das amplitudes;
+#X text 356 459 (linear);
+#X text 84 528 *;
+#X msg 65 219 \; pd dsp 1;
+#X obj 65 193 loadbang;
+#X text 31 161 Ligar o Áudio no Pd:;
+#X text 574 104 Como já dito \, RMS (de "Root Mean Square") é um Média
+Quadrática. Essa média é calculada como a raiz quadrada de uma média
+de valores de amplitude ao quadrado.;
+#X text 288 119 cria um seno numa tabela com 1024 pontos;
+#X text 333 150 rotina de 1024 iteraÃ§Ãµes;
+#X text 333 390 Raiz Quadrada;
+#X text 267 294 soma;
+#X text 343 325 divide pelo tamanho da tabela;
+#X obj 299 427 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X obj 99 575 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X obj 195 574 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X obj 332 526 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X obj 195 526 nbx 8 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 315 443 RMS "Média Quadrática";
+#X text 278 524 RMS (dB);
+#X text 21 573 RMS (linear);
+#X text 578 274 Abaixo temos o grÃ¡fico da senÃ³ide junto com uma linha
+que representa o valor da amplitude RMS.;
+#X obj 99 529 envrms~;
+#X text 69 651 * [envrms~] converte pra RMS linear em vez de DB;
+#X text 576 157 À esquerda \, temos o cálculo de RMS implementado num
+patch passo a passo. A mÃ©dia do RMS é feita em uma amplitude linear
+\, logor temos como resultado um valor de RMS também em amplitude linear
+\, mas convertemos depois esse valor para dB. Para simples comparação
+\, temos tambÃ©m os valores de RMS dados pelo objeto [env~] \, que
+analisa uma senóide com mesma Amplitude de Pico. Apresentamos ainda
+um objeto novo \, o external [rms~].;
+#X connect 0 1 4 0;
+#X connect 0 1 24 0;
+#X connect 0 2 10 0;
+#X connect 1 0 6 0;
+#X connect 2 0 3 0;
+#X connect 2 0 24 1;
+#X connect 3 0 2 1;
+#X connect 4 0 2 1;
+#X connect 5 0 42 0;
+#X connect 6 0 5 0;
+#X connect 10 0 2 0;
+#X connect 11 0 1 0;
+#X connect 12 0 46 0;
+#X connect 13 0 44 0;
+#X connect 14 0 45 0;
+#X connect 16 0 0 0;
+#X connect 16 1 15 0;
+#X connect 17 0 18 0;
+#X connect 18 0 16 0;
+#X connect 18 0 20 1;
+#X connect 19 0 20 0;
+#X connect 20 0 12 0;
+#X connect 20 0 51 0;
+#X connect 24 0 11 0;
+#X connect 34 0 33 0;
+#X connect 42 0 14 0;
+#X connect 42 0 7 0;
+#X connect 46 0 13 0;
+#X connect 51 0 43 0;
+#X restore 789 525 pd RMS;
+#X text 40 117 Os outros tipos de amplitudes que restaram da figura
+estão relacionados entre si \, pois são a amplitude de Pico (número
+1) e a Amplitude de Pico a Pico (número 2). Dessas duas \, é mais comum
+que trabalhemos com amplitude de pico \, que é a amplitude máxima de
+uma janela de tempo.;
+#X text 518 22 Veja abaixo a análise desses dois tipos de amplitude
+(Pico e RMS) com valores na escala linear e em dB.;
+#X obj 665 212 env~ 512;
+#X text 41 189 Há vantagens em medirmos a amplitude como uma média
+de valores \, pois é só assim que temos uma ideia de como ela se comporta
+numa janela de tempo. A amplitude de pico apenas diz o valor máximo
+de amplitude e não informa nada sobre os outros valores.;
+#X text 39 24 Na figura à abaixo (já mostrada anteriormente) temos
+três tipos de amplitude \, sendo a mais comum a amplitude RMS (número
+3) \, que dá a amplitude a partir de uma média quadrática de valores
+em uma janela de tempo. A média quadrática é um tipo de média útil
+para análise de sinais que variam entre positivo e negativo \, como
+é o caso do sinal de áudio.;
+#X text 527 395 Por ser tão comum \, "rms" é tratada quase como um
+sinônimo de amplitude no Pd \, apesar de termos outros tipos. Porém
+não é correto indicar amplitude linear \, pois a RMS pode ser expressa
+tanto em dB como em amplitude linear!;
+#X text 527 357 Perceba que \, no caso de senÃ³ides \, o RMS é em torno
+de 3 dB abaixo da amplitude de pico.;
+#X obj 528 239 nbx 8 20 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-179756 -1 -1 0.99999 256;
+#X obj 528 287 nbx 8 20 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 14
+-253909 -1 -1 99.9999 256;
+#X obj 528 266 rmstodb;
+#X text 41 262 O objeto [env~] nos dá a amplitude RMS de um sinal em
+dB (com valores entre 0 e 100 dB). Já o external [average~] \, clone
+de Max \, dá o rms em amplitude linear. Outro clone de max \, o [peakamp~]
+retorna a amplitude de pico em valor linear.;
+#X obj 528 214 cyclone/peakamp~ 50;
+#X connect 0 0 20 0;
+#X connect 0 0 29 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 1;
+#X connect 3 0 9 0;
+#X connect 9 0 6 0;
+#X connect 10 0 0 0;
+#X connect 20 0 3 0;
+#X connect 25 0 27 0;
+#X connect 27 0 26 0;
+#X connect 29 0 25 0;

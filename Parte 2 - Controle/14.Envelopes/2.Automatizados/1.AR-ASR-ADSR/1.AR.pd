@@ -1,0 +1,112 @@
+#N canvas 793 23 902 709 10;
+#X obj 198 199 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 183 323 *~;
+#X obj 121 284 osc~ 440;
+#X obj 174 353 dac~;
+#X obj 197 537 bng 20 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 182 625 *~;
+#X obj 122 578 osc~ 440;
+#X obj 170 655 dac~;
+#X obj 197 598 vline~;
+#X obj 622 412 envgen 200 140 1 0  ;
+#X obj 620 370 bng 25 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 573 604 *~;
+#X obj 561 638 dac~;
+#X obj 519 500 osc~ 440;
+#X text 153 240 Attack;
+#X text 284 265 Release;
+#X msg 198 241 1 100;
+#X obj 244 240 delay 100;
+#X msg 244 265 0 100;
+#X msg 197 569 1 100 \, 0 100 100;
+#X text 488 170 Abaixo \, a mensagem "0 100 1 100 0" diz que o envelope
+começa no 0 e demora 100 ms para chegar em 1 \, depois demora mais
+100 ms para voltar ao 0 \, ou seja \, igual aos anteriores.;
+#X obj 474 325 loadbang;
+#X msg 668 375 duration \$1;
+#X obj 620 570 vline~;
+#X msg 492 354 0 100 1 100 0;
+#X msg 474 395 \; pd dsp 1;
+#X floatatom 668 344 5 0 0 0 - - -;
+#X obj 594 315 metro;
+#X obj 594 338 t b b;
+#X obj 594 280 tgl 20 0 empty empty empty 17 7 0 10 -203904 -1 -1 0
+1;
+#X obj 678 321 expr random(100 \, 1500);
+#X msg 653 276 100;
+#X msg 668 297 200;
+#X text 480 280 Duração aleatória:;
+#X text 707 344 ms;
+#X obj 198 295 line~;
+#X text 55 391 Como já informado \, o [vline~] possui uma resolução
+melhor que o [line~]. fora isso \, o [vline~] também é mais próprio
+para gerar envelopes \, pois consegue agendar mensagens sem a necessidade
+de um delay \, basta separar as mensagens com vírgula. A sintaxe é:
+ponto de chagada / tempo da linha / atraso. Abaixo tempos então uma
+linha até 1 que dura 100 ms (com atraso de 0 ms na falta de um terceiro
+elemento na lista) e outra mensagem que diz para ir até 0 em 100 ms
+depois de 100 ms. Ou seja \, igual acima!;
+#X obj 675 589 vsl 15 80 0 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 0 1;
+#X text 490 217 A mensagem "duration" ajusta o tempo total do envelope
+mantendo as mesmas proporções. Abra o help para mais detalhes.;
+#X text 488 136 A sintaxe é diferente do [vline~] \, ele aceita uma
+mensagem só \, com informação para todos os pontos em sequência.;
+#X obj 675 565 line 0 1;
+#X text 487 79 Quando recebe um bang \, ele envia mensagens separadas
+com atrasos \, que podem ser usadas tanto no [line~] quanto no [vline~].
+Ou ainda em um [line] para dados de controle \, possibilitando o uso
+de envelopes para controles diversos.;
+#X text 49 122 Na sua forma mais simples \, o envelope possui um "Attack"
+e um "Release" (envelope AR). Abaixo temos um envelope AR com ataque
+de 100 ms e release de também 100 ms. Para tal \, usamos um [line~]
+e uma mensagem com delay de 100 ms.;
+#X text 486 21 Temos também no Pd Extended o [envgen] \, um GUI gerador
+de linhas \, em que você pode clicar nos pontos para arrasta-los com
+o mouse ou deleta-los (com backspace) - além de criar novos pontos
+ao clicar onde não há pontos.;
+#X text 50 28 Nesta seção veremos envelopes "automatizados" \, que
+seriam envelopes que \, quando acionados por um trigger \, disparam
+uma função com início e fim. Diferente de envelopes que precisam ser
+ligados e desligados (note on / note off).;
+#X text 49 90 ============================================================
+;
+#X connect 0 0 16 0;
+#X connect 0 0 17 0;
+#X connect 1 0 3 0;
+#X connect 1 0 3 1;
+#X connect 2 0 1 0;
+#X connect 4 0 19 0;
+#X connect 5 0 7 0;
+#X connect 5 0 7 1;
+#X connect 6 0 5 0;
+#X connect 8 0 5 1;
+#X connect 9 0 23 0;
+#X connect 9 0 40 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
+#X connect 11 0 12 1;
+#X connect 13 0 11 0;
+#X connect 16 0 35 0;
+#X connect 17 0 18 0;
+#X connect 18 0 35 0;
+#X connect 19 0 8 0;
+#X connect 21 0 24 0;
+#X connect 21 0 25 0;
+#X connect 22 0 9 0;
+#X connect 23 0 11 1;
+#X connect 24 0 9 0;
+#X connect 26 0 27 1;
+#X connect 26 0 22 0;
+#X connect 27 0 28 0;
+#X connect 28 0 10 0;
+#X connect 28 1 30 0;
+#X connect 29 0 27 0;
+#X connect 30 0 26 0;
+#X connect 31 0 26 0;
+#X connect 32 0 26 0;
+#X connect 35 0 1 1;
+#X connect 40 0 37 0;

@@ -1,0 +1,33 @@
+#N canvas 485 44 542 519 10;
+#X obj 129 329 *~;
+#X obj 58 194 osc~ 440;
+#X obj 214 319 Scope~ 130 130 256 3 128 -1 1 0 0 0 0 102 255 51 135
+135 135 0;
+#X obj 95 385 output~;
+#X obj 381 340 loadbang;
+#X obj 229 156 impulse~ 1;
+#X obj 133 246 slide~ 0 10000;
+#X obj 214 277 -~;
+#X obj 229 250 slide~ 0 300;
+#X obj 298 199 nbx 5 14 -1e+37 1e+37 0 0 empty attack empty 0 -8 0
+10 -228856 -1 -1 300 256;
+#X obj 371 199 nbx 5 14 -1e+37 1e+37 0 0 empty decay empty 0 -8 0 10
+-191407 -1 -1 10000 256;
+#X text 302 179 Attack;
+#X text 379 179 Decay;
+#X msg 381 375 \; pd dsp 1 \; attack 300 \; decay 10000;
+#X text 87 58 Este exemplo traz uma forma de gerar um envelope AR simples
+a partir de um impulso com o objeto [slide~]. O valor de ataque e decay
+são dados em samples. Confira abaixo.;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 1 0 0 0;
+#X connect 4 0 13 0;
+#X connect 5 0 6 0;
+#X connect 5 0 8 0;
+#X connect 6 0 7 0;
+#X connect 7 0 2 0;
+#X connect 7 0 0 1;
+#X connect 8 0 7 1;
+#X connect 9 0 8 2;
+#X connect 10 0 6 2;

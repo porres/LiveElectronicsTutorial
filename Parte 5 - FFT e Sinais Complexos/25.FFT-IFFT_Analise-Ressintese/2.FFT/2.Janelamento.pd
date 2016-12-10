@@ -1,0 +1,87 @@
+#N canvas 107 48 942 587 10;
+#X obj 475 376 cnv 15 370 180 empty empty Janela-Hann 5 12 0 14 -179243
+-66577 0;
+#X text 52 136 Na prática \, não se espera que o sinal seja periódico.
+E \, mesmo que fosse \, não significa que haveria correspondência entre
+os componentes e os pontos de frequência da FFT. Por conseguinte \,
+além de periódico \, o sinal precisaria encaixar no mesmo período da
+FFT.;
+#X text 54 311 O sinal analisado acaba sendo cortado abruptamente dentro
+do Tamanho do Bloco (ou Janela) \, gerando assim ruído na análise.
+Para obtermos uma análise mais "limpa" para a ressíntese \, aplicamos
+um "janelamento" \, que na prática é um envelope aplicado no bloco
+de amostras para suavizar a entrada e saída do som.;
+#X text 53 25 Vimos que o parâmetro do tamanho do bloco (também compreendido
+como "Tamanho de Janela") e a taxa de amostragem nos dão a resolução
+de frequências. Quanto maior for o bloco \, melhor será a resolução
+de frequências! Todavia \, blocos grandes geram perda de resolução
+no tempo \, pois tudo que ocorrer em um determinado bloco de amostras
+será interpretado como um evento único \, e periódico!;
+#X text 51 216 Enfim \, justamente porque esperamos que o sinal seja
+dinâmico e varie no tempo é que estamos \, de fato \, lidando com a
+STFT. E \, para tal \, precisamos de alguns ajustes e parâmetros como
+o "Janelamento" e "Sobreposições de Janelas" (overlapping). Veremos
+neste exemplo o que é um "Janelamento" (windowing).;
+#X text 591 390 1;
+#X text 590 505 0;
+#X text 607 521 0;
+#X obj 563 279 osc~;
+#X obj 555 337 tabwrite~ \$0-hann;
+#X msg 634 249 0.5;
+#X obj 563 249 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-220522 -1 -1 21.5332 256;
+#X obj 606 398 cnv 15 198 118 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hann 2048 float 0;
+#X coords 0 1 2047 0 200 120 1;
+#X restore 605 398 graph;
+#X obj 635 152 send \$0-hann;
+#X msg 635 129 const 0;
+#X text 629 521 ---- tamanho da janela ----;
+#X text 678 535 (ou bloco);
+#X text 446 248 fundamental em Hz;
+#X text 661 249 Fase invertida;
+#X text 701 308 ajuste de DC (0 a 1);
+#X text 55 473 A janela Hann é um Cosseno invertido com ajuste de DC
+Offset (valores de 0 a 1). Podemos então gerar uma janela Hann com
+o objeto [osc~]. Para tal \, precisamos da frequência que caiba no
+período do tamanho do bloco (ou a "fundamental" da série). Esse valor
+é dado pela Taxa de Amostragem dividida pelo tamanho da janela.;
+#X text 54 406 O tipo de Janela mais comum (por produzir bons resultados)
+em áudio é a Hann (ou Hanning) - função já apresentada por aqui para
+fades e envelopes. Revisemos então essa função no contexto de análise
+de FFT!;
+#X msg 555 142 2048;
+#X obj 555 168 nbx 5 14 -1e+37 1e+37 0 0 \$0-size empty empty 0 -8
+0 10 -262130 -1 -1 2048 256;
+#X obj 563 219 expr sr / $f1;
+#X text 442 167 Tamanho da janela;
+#X obj 563 308 expr~ $v1 * 0.5 + 0.5;
+#X floatatom 800 523 0 0 0 0 - #0-size xx;
+#X obj 555 119 loadbang;
+#X obj 705 189 samplerate~;
+#X obj 705 215 v sr;
+#X obj 555 189 trigger bang float bang;
+#X text 739 210 Jogamos a taxa de amostragrem \; do patch em uma variável
+"sr".;
+#X text 603 280 Cosseno invertido (-1 a 1);
+#X text 686 128 Resseta (zera a tabela);
+#X text 464 27 Abaixo temos o cálculo e a geração de uma Janela Hann
+de acordo com o tamanho da janela de análise de uma FFT. Entre com
+o número do tamanho da janela de análise abaixo e entenda como o cálculo
+é feito. O comando "const 0" zera a tabela.;
+#X connect 8 0 27 0;
+#X connect 10 0 8 1;
+#X connect 11 0 8 0;
+#X connect 15 0 14 0;
+#X connect 23 0 24 0;
+#X connect 24 0 32 0;
+#X connect 25 0 11 0;
+#X connect 27 0 9 0;
+#X connect 29 0 23 0;
+#X connect 30 0 31 0;
+#X connect 32 0 9 0;
+#X connect 32 1 25 0;
+#X connect 32 2 10 0;
+#X connect 32 2 30 0;

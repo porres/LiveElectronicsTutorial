@@ -1,0 +1,98 @@
+#N canvas 20 53 1311 667 10;
+#X obj 218 371 image euler.gif;
+#X obj 849 383 cnv 15 450 140 empty empty empty 20 12 0 14 -113399
+-66577 0;
+#X obj 850 297 cnv 15 330 80 empty empty Cartesiana 20 12 0 14 -228844
+-66577 0;
+#X obj 847 129 cnv 15 430 100 empty empty Polar 20 12 0 14 -261682
+-66577 0;
+#X floatatom 954 142 8 0 0 0 - - -;
+#X text 977 163 Amplitude;
+#X floatatom 984 346 5 0 0 0 - - -;
+#X floatatom 1101 345 5 0 0 0 - - -;
+#X text 944 344 Real;
+#X floatatom 1125 143 8 0 0 0 - - -;
+#X floatatom 1125 30 5 0 0 0 - - -;
+#X floatatom 954 31 5 0 0 0 - - -;
+#X obj 984 253 expr cos($f2) * $f1 \; sin($f2) * $f1;
+#X obj 1016 397 cartopol;
+#X obj 1016 460 poltocar;
+#X floatatom 1006 426 8 0 0 0 - - -;
+#X text 935 427 Amplitude;
+#X floatatom 1069 427 8 0 0 0 - - -;
+#X floatatom 1069 491 5 0 0 1 imaginÃ¡ria - -;
+#X floatatom 1016 491 5 0 0 0 real - -;
+#X obj 991 592 cartopol~;
+#X obj 1096 592 poltocar~;
+#X obj 954 82 expr sqrt($f1*$f1 + $f2*$f2) \; atan2($f2 \, $f1);
+#X text 443 71 O círculo na figura tem um raio de "1". A parte real
+vai de "-1" a "1". A parte imaginária também vai de "-1" a "1" \, mas
+é multiplicada pela unidade imaginária "i" - portanto vai de "-1 *
+i" a "1 * i". Sendo que a unidade imaginária é igual à "raiz quadrada
+de menos 1"!;
+#X text 440 147 Um número complexo é a coordenada (parte real \, parte
+imaginária) \, ou (a \, b*i) - onde "a" e "b" são números reais.;
+#X text 440 279 Um número complexo pode ser representado na Forma Cartesiana
+ou Polar. A Cartesiana nos dá o número complexo como a coordenada (a
+\, b). Já a forma Polar é dada pelos valores de Amplitude (ou "magnitude")
+e Fase Inicial (ou "argumento"). Em ambos os casos temos duas coisas
+\, duas dimensões \, duas "partes".;
+#X text 886 60 Converte de Cartesiana para Polar;
+#X text 1148 164 Fase;
+#X text 1133 187 (Ângulo em radianos);
+#X text 847 233 Converte de Polar para Cartesiana;
+#X text 1034 345 Imaginária;
+#X text 863 399 Objetos de conversão:;
+#X text 1096 398 Cartesiana para Polar;
+#X text 1135 427 Fase;
+#X text 1088 458 Polar para Cartesiana;
+#X text 884 549 Os objetos de conversão fazem parte do Pd-Extended
+\, e possuem versão de áudio:;
+#X text 33 28 Números Complexos possuem propriedades particulares que
+facilitam algumas operações que seriam muito trabalhosas sem eles.
+;
+#X text 34 565 Sim \, é exatamente a mesma ideia e princípio do exemplo
+anterior. Podemos dizer que a parte real é o eixo horizontal (Amplitude
+de Cosseno) \, e a parte imaginária o eixo vertical (Amplitude de Seno).
+;
+#X text 440 364 Há ainda uma terceira forma de representar o número
+complexo \, a exponecial \, que é dada pela Fórmula de Euler na figura
+à esquerda. Em todo caso \, não usaremos essa forma por aqui.;
+#X text 881 31 parte real;
+#X text 1021 29 parte imaginária;
+#X text 970 626 Mas também dá pra usar o [expr~]!;
+#X text 33 75 Um "Número Real" tem apenas uma parte "real" \, já um
+Número Complexo tem tanto uma parte "real" como uma "imaginária". Portanto
+\, podemos partir de qualquer número real e torná-lo complexo ao adicionar
+a ele uma parte imaginária. Podemos representar essas duas dimensões
+em um plano cartesiano \, da mesma forma que no exemplo anterior. Vejamos
+na figura abaixo uma representação do número complexo em um plano bidimensional
+\, e a Fórmula de Euler:;
+#X text 441 198 No Pd \, não lidamos com a unidade imaginária de fato
+\, e sim apenas com números reais. Desse modo \, o que aparece nas
+caixas de número à direita são apenas os valores de "a" e "b". Em todo
+caso \, é implícito que "b" é multiplicado por "i".;
+#X text 440 424 Por se tratar de um plano cartesiano \, como no exemplo
+passado \, podemos usar as mesmas fórmulas para adquirir a Amplitude
+e Fase inicial a partir de "a" e "b" \, e assim converter da forma
+Cartesiana para a forma Polar. Para fazer a conversão inversa \, precisamos
+do Cosseno e Seno do ângulo multiplicados pela Amplitude.;
+#X text 441 519 Veja a direita como fazemos essas conversões no Pd
+com o objeto [expr] e objetos que fazem essas conversões automaticamente.
+;
+#X connect 4 0 12 0;
+#X connect 6 0 13 0;
+#X connect 7 0 13 1;
+#X connect 9 0 12 1;
+#X connect 10 0 22 1;
+#X connect 11 0 22 0;
+#X connect 12 0 6 0;
+#X connect 12 1 7 0;
+#X connect 13 0 15 0;
+#X connect 13 1 17 0;
+#X connect 14 0 19 0;
+#X connect 14 1 18 0;
+#X connect 15 0 14 0;
+#X connect 17 0 14 1;
+#X connect 22 0 4 0;
+#X connect 22 1 9 0;

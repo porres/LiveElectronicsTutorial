@@ -1,0 +1,169 @@
+#N canvas 87 23 1234 703 10;
+#X obj 169 369 + 1;
+#X obj 123 368 float;
+#X obj 460 398 loadbang;
+#X floatatom 289 316 5 200 1000 0 - - -;
+#X obj 338 359 spigot;
+#X obj 371 335 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X text 388 334 Loop;
+#X obj 123 308 tgl 25 0 empty metro empty 17 7 0 10 -151553 -262144
+-1 0 1;
+#X obj 208 350 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X floatatom 174 314 5 200 1000 0 - - -;
+#X obj 463 579 tabdump sequencer;
+#X obj 463 553 bng 15 250 50 0 empty empty empty 17 7 0 10 -228856
+-1 -1;
+#X obj 463 603 prepend set;
+#X obj 460 248 loadbang;
+#X msg 463 626 -0.685814 7.02831 -1.02866 1.02843 -9.42848 -5.99998
+-2.91434 -4.28574 -4.97144 -4.97144 -4.80001 -4.28574 -1.88579 6.17143
+7.3 7.1;
+#X text 520 245 envia valores pro sequencer;
+#X text 484 551 pegar valores do sequencer;
+#X obj 569 377 cnv 15 198 138 empty empty empty 20 12 0 14 -261950
+-66577 0;
+#N canvas 91 30 450 300 (subpatch) 0;
+#X array sequencer 16 float 2;
+#X coords 0 12 16 -12 200 140 1;
+#X restore 568 376 graph;
+#X text 213 314 tempo (ms);
+#X obj 208 374 for++ 0 15 500;
+#X text 38 18 Um sequencer armazena valores que podem ser usados para
+diversas coisas \, mas é comum que seja usado para controlar a frequência
+de sintetizadores.;
+#X floatatom 208 398 5 0 0 0 - - -;
+#X obj 123 393 mod 16;
+#X floatatom 123 416 5 0 0 0 - - -;
+#X text 40 244 Os valores do contador precisam ser de 0 a 15 \, por
+isso temos uma função de módulo (objeto [mod]) para manter os valores
+nesse registro.;
+#X text 439 147 Abaixo temos a tabela usada como sequencer \, que recebe
+valores de incialização de uma mensagem. Você pode mudar a sequência
+direto na tabela com o mouse \, e depois resgatar os novos valores
+abaixo com o objeto [tabdump] \, que cospe todos os valores da tabela.
+;
+#X text 771 504 -12;
+#X text 772 372 12;
+#X text 39 141 Consultamos o valor da tabela via um [expr] e somamos
+com esse valor de transposição \, depois convertemos de MIDI para hertz
+com [mtof]. Perceba que estamos usando valores com pontos decimais.
+Logo \, fora da escala temperada.;
+#X msg 460 427 \; pd dsp 1 \; transpos 60;
+#X text 51 313 Play/Stop;
+#X text 38 69 Uma forma de implementar um sequencer no Pd é armazenar
+valores em uma tabela. Neste exemplo \, guardamos valores de -12 a
+12 \, que serão interpretados como intervalos em semitons. O ponto
+de transposição dá a nota de base \, que setamos \, por padrão \, em
+60 (ó central em MIDI).;
+#X text 39 199 Temos aqui duas maneiras de sequenciar a leitura da
+tabela. A mais comum é com um contador que funciona a partir de um
+[metro] \, mas temos ainda uma outra forma com [for++].;
+#X obj 460 317 prepend 0;
+#X obj 460 340 s sequencer;
+#X msg 460 272 -5.14286 -7.88572 -7.2 -2.4 -7.2 1.2 4.8 4.11429 -2.4
+-4.28572 -4.28572 -0.685715 2.22857 6.17143 7.3 7.1;
+#X obj 180 440 tabread sequencer;
+#X obj 217 486 nbx 5 14 -1e+37 1e+37 0 0 empty transpos empty 0 -8
+0 10 -261682 -1 -1 60 256;
+#X text 275 485 transp;
+#X obj 180 484 +;
+#X floatatom 180 461 5 0 0 0 - - -;
+#X obj 180 528 mtof;
+#X obj 180 579 osc~;
+#X obj 191 607 *~;
+#X obj 180 553 t f b;
+#X text 296 580 envelope;
+#X obj 221 580 ead~ 50 150;
+#X floatatom 180 505 5 0 0 0 - - -;
+#X obj 992 377 mtof;
+#X obj 920 366 v i;
+#X obj 992 489 osc~;
+#X obj 920 328 expr (i + 1) % 16 \; int(sequencer[i] + transp);
+#X obj 1038 263 nbx 5 14 -1e+37 1e+37 0 0 empty transpos empty 0 -8
+0 10 -261682 -1 -1 60 256;
+#X text 1047 244 transp;
+#X obj 1038 288 v transp;
+#X obj 920 254 loadbang;
+#X obj 920 279 tgl 15 0 empty empty empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 971 525 output~;
+#X floatatom 971 280 5 200 1000 0 - - -;
+#X obj 992 437 pack f f;
+#X obj 1037 408 nbx 5 14 0 200 0 0 empty empty empty 0 -8 0 10 -203904
+-1 -1 0 256;
+#X text 1031 389 portamento;
+#X obj 123 342 metro 350;
+#X obj 166 642 output~;
+#X obj 920 305 metro 350;
+#X text 841 88 Abaixo temos uma outra forma de programar um sequencer
+a partir de um [expr]. Fazemos a leitura da tabela ali mesmo no expr
+e somamos com a variável de transposição. Ainda consideramos só a parte
+inteira \, que é convertida para MIDI. Uma outra equação faz a vez
+do contador e atualiza o valor do índice usado na leitura da tabela.
+;
+#X text 874 365 índice;
+#X text 847 182 Descosideramos o uso de um envelope aqui \, mas \,
+em contrapartida \, temos um line para fazer um portamento.;
+#X floatatom 51 525 5 0 0 0 - - -;
+#X msg 92 470 set 0;
+#X obj 92 445 loadbang;
+#X text 437 53 Outra opção de obter um contador em loop é com o objeto
+[counter]. Porém o [for++] já é um contador em que você seta o registro
+(primeiros dois argumentos) e o tempo entre um valor e outro em ms
+(terceiro argumento). Ele ainda envia um bang quando acaba de contar
+\, que podemos usar para fazer um loop.;
+#X obj 51 496 counter 0 15;
+#X obj 992 463 vline~;
+#X connect 0 0 1 1;
+#X connect 1 0 23 0;
+#X connect 2 0 30 0;
+#X connect 3 0 20 2;
+#X connect 4 0 8 0;
+#X connect 5 0 4 1;
+#X connect 7 0 63 0;
+#X connect 8 0 20 0;
+#X connect 9 0 63 1;
+#X connect 10 0 12 0;
+#X connect 11 0 10 0;
+#X connect 12 0 14 0;
+#X connect 13 0 36 0;
+#X connect 20 0 22 0;
+#X connect 20 1 4 0;
+#X connect 22 0 37 0;
+#X connect 23 0 24 0;
+#X connect 23 0 0 0;
+#X connect 24 0 37 0;
+#X connect 34 0 35 0;
+#X connect 36 0 34 0;
+#X connect 37 0 41 0;
+#X connect 38 0 40 1;
+#X connect 40 0 48 0;
+#X connect 41 0 40 0;
+#X connect 42 0 45 0;
+#X connect 43 0 44 0;
+#X connect 44 0 64 0;
+#X connect 44 0 64 1;
+#X connect 45 0 43 0;
+#X connect 45 1 47 0;
+#X connect 47 0 44 1;
+#X connect 48 0 42 0;
+#X connect 49 0 60 0;
+#X connect 51 0 58 0;
+#X connect 51 0 58 1;
+#X connect 52 0 50 0;
+#X connect 52 1 49 0;
+#X connect 53 0 55 0;
+#X connect 56 0 57 0;
+#X connect 57 0 65 0;
+#X connect 59 0 65 1;
+#X connect 60 0 74 0;
+#X connect 61 0 60 1;
+#X connect 63 0 1 0;
+#X connect 63 0 73 0;
+#X connect 65 0 52 0;
+#X connect 70 0 73 0;
+#X connect 71 0 70 0;
+#X connect 73 0 69 0;
+#X connect 74 0 51 0;

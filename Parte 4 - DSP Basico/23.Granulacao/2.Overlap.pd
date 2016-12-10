@@ -1,0 +1,178 @@
+#N canvas 41 23 1046 685 10;
+#X obj 479 585 bng 20 250 50 0 empty empty empty 17 7 0 10 -241326
+-1 -1;
+#N canvas 790 22 443 326 sampler 0;
+#X obj 233 242 table \$0-buffer;
+#X obj 129 243 soundfiler;
+#X obj 129 185 list append \$0-buffer;
+#X obj 31 72 openpanel;
+#X obj 31 95 list append \$0-buffer;
+#X msg 31 119 read -resize \$1 \$2;
+#X obj 178 94 loadbang;
+#X msg 189 116 \; hz 1 \; grain 500 \; pd dsp 1;
+#X obj 31 41 inlet;
+#X msg 129 214 read -resize ../../samples/bubul.wav \$1;
+#X connect 2 0 9 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 1 0;
+#X connect 6 0 7 0;
+#X connect 6 0 2 0;
+#X connect 8 0 3 0;
+#X connect 9 0 1 0;
+#X restore 479 611 pd sampler;
+#X obj 496 505 tabread4~ \$0-buffer;
+#X obj 615 548 *~;
+#X obj 496 478 +~;
+#X obj 538 479 samphold~;
+#X obj 658 406 samphold~;
+#X obj 496 443 *~;
+#X obj 630 479 /~ 2;
+#X obj 630 505 sin~;
+#X floatatom 694 234 0 0 1e+06 0 - grain -;
+#X floatatom 583 235 0 0 1e+06 0 - - -;
+#X floatatom 805 234 0 0 50 0 - hz -;
+#X text 803 215 Hz;
+#X obj 663 611 hsl 128 15 0 1 0 0 empty ganho empty -2 -8 0 10 -204786
+-1 -1 0 1;
+#N canvas 0 22 450 300 ganho 0;
+#X obj 206 206 *~;
+#X obj 225 175 line~;
+#X msg 225 149 \$1 10;
+#X obj 225 113 pow 4;
+#X obj 190 245 dac~;
+#X obj 226 60 inlet;
+#X obj 177 60 inlet~;
+#X connect 0 0 4 0;
+#X connect 0 0 4 1;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 5 0 3 0;
+#X connect 6 0 0 0;
+#X restore 615 633 pd ganho;
+#X obj 615 605 +~;
+#X obj 683 531 tabread4~ \$0-buffer;
+#X obj 683 576 *~;
+#X obj 683 504 +~;
+#X obj 727 505 samphold~;
+#X obj 827 449 samphold~;
+#X obj 683 474 *~;
+#X obj 806 516 /~ 2;
+#X obj 806 542 sin~;
+#X obj 778 412 wrap~;
+#X obj 778 384 +~ 0.5;
+#X obj 805 271 phasor~;
+#X obj 64 181 cnv 15 248 148 empty empty empty 20 12 0 14 -224824 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array cos 441 float 0;
+#X array seno 441 float 0;
+#X coords 0 1 441 0 250 150 1;
+#X restore 63 180 graph;
+#X obj 172 508 tabwrite~ seno;
+#X obj 83 508 tabwrite~ cos;
+#X obj 83 442 /~ 2;
+#X obj 172 355 phasor~ 150;
+#X obj 216 477 metro 300;
+#X obj 216 458 tgl 15 0 empty empty empty 17 7 0 10 -183917 -1 -1 1
+1;
+#X obj 216 437 loadbang;
+#X obj 172 441 /~ 2;
+#X obj 83 470 sin~;
+#X obj 172 470 sin~;
+#X text 683 215 grão (ms);
+#X text 555 213 posição (ms);
+#X obj 583 315 s~ \$0-pos;
+#X obj 694 315 s~ \$0-grain;
+#X obj 805 315 s~ \$0-fase;
+#X obj 581 360 r~ \$0-fase;
+#X obj 658 368 r~ \$0-grain;
+#X obj 778 360 r~ \$0-fase;
+#X obj 827 414 r~ \$0-grain;
+#X obj 715 482 r~ \$0-pos;
+#X obj 526 451 r~ \$0-pos;
+#X text 34 39 Para compensar o efeito sonoro do uso de um envelope
+(ou seja \, da modulação de amplitude) \, podemos fazer uma sobreposição
+("overlap" em inglês) de dois grãos em oposição de fase.;
+#X text 35 100 O overlap não deixa de ser um crossfade \, de modo que
+\, enquanto a amplitude de um envelope decai \, a do outro sobe.;
+#X text 468 560 Abrir outro arquivo;
+#X text 264 509 Plotar gráfico;
+#X text 217 397 Defasagem;
+#X text 27 544 Para defasar os envelopes \, somamos a fase de um deles
+por 0.5 (o que gera uma oposição de fase). O [wrap~] mantém o registro
+da fase entre 0 e 1 (em vez de 0.5 e 1.5).;
+#X text 28 591 Dividimos por 2 a fase porque nosso envelope é a metade
+do ciclo de um seno \, então enquanto um envelope fica entre 0 e 0.5.o
+outra fica entre 0.25 e 0.75. Na prática \, temos como resultado um
+"equal power crossfade" de Seno e Cosseno.;
+#X text 489 39 Usando um envelope com a metade de um período da funcão
+seno \, essa sobreposição defasada gera um crossfade de Potência Constante
+(Equal Power) \, já apresentado anteriormente.;
+#X obj 455 256 samplerate~;
+#X obj 455 283 / 1000;
+#X obj 455 309 v sr_KHz;
+#X obj 455 231 loadbang;
+#X obj 583 260 expr~ $v1 * sr_KHz \; $v2 * sr_KHz;
+#X text 490 143 No patch abaixo \, temos o exemplo anterior com a inclusão
+da sobreposição (overlap) de grãos.;
+#X obj 172 410 wrap~;
+#X obj 172 384 +~ 0.5;
+#X text 490 99 Vide gráfico à esquerda e reveja (na Parte I) o exemplo
+08.Fade_Crossfade/2.Crossfade/6.Crossfade.sin;
+#X text 828 384 Defasagem;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 16 0;
+#X connect 4 0 2 0;
+#X connect 5 0 4 1;
+#X connect 6 0 7 1;
+#X connect 7 0 4 0;
+#X connect 8 0 9 0;
+#X connect 9 0 3 1;
+#X connect 10 0 63 1;
+#X connect 11 0 63 0;
+#X connect 12 0 27 0;
+#X connect 14 0 15 1;
+#X connect 16 0 15 0;
+#X connect 17 0 18 0;
+#X connect 18 0 16 1;
+#X connect 19 0 17 0;
+#X connect 20 0 19 1;
+#X connect 21 0 22 1;
+#X connect 22 0 19 0;
+#X connect 23 0 24 0;
+#X connect 24 0 18 1;
+#X connect 25 0 22 0;
+#X connect 25 0 23 0;
+#X connect 25 0 21 1;
+#X connect 25 0 20 1;
+#X connect 26 0 25 0;
+#X connect 27 0 44 0;
+#X connect 32 0 38 0;
+#X connect 33 0 32 0;
+#X connect 33 0 66 0;
+#X connect 34 0 31 0;
+#X connect 34 0 30 0;
+#X connect 35 0 34 0;
+#X connect 36 0 35 0;
+#X connect 37 0 39 0;
+#X connect 38 0 31 0;
+#X connect 39 0 30 0;
+#X connect 45 0 7 0;
+#X connect 45 0 8 0;
+#X connect 45 0 6 1;
+#X connect 45 0 5 1;
+#X connect 46 0 6 0;
+#X connect 47 0 26 0;
+#X connect 48 0 21 0;
+#X connect 49 0 20 0;
+#X connect 50 0 5 0;
+#X connect 59 0 60 0;
+#X connect 60 0 61 0;
+#X connect 62 0 59 0;
+#X connect 63 0 42 0;
+#X connect 63 1 43 0;
+#X connect 65 0 37 0;
+#X connect 66 0 65 0;

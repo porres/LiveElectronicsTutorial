@@ -1,0 +1,134 @@
+#N canvas 404 25 971 593 10;
+#X msg 561 131 0;
+#X obj 452 328 samphold~;
+#X text 590 132 reset;
+#X obj 574 198 phasor~;
+#X obj 452 172 phasor~;
+#X obj 150 453 readsf~;
+#X msg 150 431 open \$1 \, 1;
+#X obj 80 348 openpanel;
+#X obj 80 329 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130 -1
+-1;
+#X obj 574 173 expr~ 1000 / $v1;
+#X obj 452 387 vd~ \$0-ring_buffer;
+#X obj 574 371 /~ 2;
+#X obj 574 394 sin~;
+#X obj 559 433 *~;
+#X obj 683 520 output~;
+#X obj 712 482 +~;
+#X obj 452 149 *~;
+#X obj 452 85 expr 1000 / $f1 \; $f1;
+#X obj 571 76 /~ 100;
+#X obj 571 101 expr~ 1 - $v1;
+#X obj 530 216 *~;
+#X obj 150 313 loadbang;
+#X obj 452 33 loadbang;
+#X obj 452 363 +~;
+#X obj 586 296 *~;
+#X obj 783 118 nbx 5 14 -1e+37 1e+37 0 0 empty \$0-cents-set empty
+0 -8 0 10 -261682 -1 -1 0 256;
+#X text 843 117 Cents;
+#X obj 783 165 expr~ 1 - $v1;
+#X obj 783 141 expr~ pow(2 \, $v1/1200);
+#X obj 647 314 samphold~;
+#X obj 647 418 vd~ \$0-ring_buffer;
+#X obj 768 400 /~ 2;
+#X obj 768 423 sin~;
+#X obj 698 253 +~ 0.5;
+#X obj 698 275 wrap~;
+#X obj 727 449 *~;
+#X obj 746 335 *~;
+#X obj 647 392 +~;
+#X obj 586 325 *~;
+#X obj 768 360 *~;
+#X obj 571 52 nbx 5 14 -1e+37 1e+37 0 0 empty velocidade empty 0 -8
+0 10 -203904 -1 -1 -8 256;
+#X text 568 30 velocidade (%);
+#X msg 172 339 \; velocidade 100 \; grao 100 \; cents 0;
+#X obj 783 337 samphold~;
+#X obj 626 276 samphold~;
+#X text 491 57 buffer (ms);
+#X text 34 39 Juntamos agora um pitch shift e time stretch em um mesmo
+patch. Ou seja \, justamos os dois patches anteriores em um só!;
+#X text 477 217 posição;
+#X obj 714 126 line~;
+#X obj 717 53 hsl 128 15 0 1000 0 0 empty grao grain-ms -2 -8 0 10
+-261234 -1 -1 1270 1;
+#X obj 714 77 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261234 -1 -1 100 256;
+#X msg 714 102 \$1 50;
+#X text 33 205 Multiplicar o sinal da fase funciona como mudar a frequência
+\, e ainda mantém o sinal em sincronia de fase. O sinal de transposição
+também passa por um [samphold~] para evitar clicks enquanto é ajustado.
+Um [line~] suaviza também a mudança do tamanho do grão.;
+#X obj 150 409 symbol ../../../samples/bubul.wav;
+#X obj 150 484 delwrite~ \$0-ring_buffer 6000;
+#X msg 452 57 6000;
+#X text 33 89 Temos o mesmo mecanismo do exemplo anterior para realizar
+um time stretch/compress. Relacionado com o primeiro exemplo \, temos
+também um ajuste de transposição em cents - onde multiplicamos um ajuste
+pela frequência do grão. Porém \, não multiplicamos a frequência de
+fato \, mas o sinal de fase. Isso é porque precisamos da frequência
+original do grão para controlar o [samphold~] do sinal do [phasor~]
+que controla a posição/time stretch.;
+#X connect 0 0 4 1;
+#X connect 1 0 23 0;
+#X connect 3 0 1 1;
+#X connect 3 0 33 0;
+#X connect 3 0 11 0;
+#X connect 3 0 24 0;
+#X connect 3 0 44 1;
+#X connect 4 0 20 0;
+#X connect 5 0 54 0;
+#X connect 5 1 53 0;
+#X connect 6 0 5 0;
+#X connect 7 0 53 0;
+#X connect 8 0 7 0;
+#X connect 9 0 3 0;
+#X connect 10 0 13 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 1;
+#X connect 13 0 15 0;
+#X connect 15 0 14 0;
+#X connect 15 0 14 1;
+#X connect 16 0 4 0;
+#X connect 17 0 16 0;
+#X connect 17 1 20 1;
+#X connect 18 0 19 0;
+#X connect 19 0 16 1;
+#X connect 20 0 1 0;
+#X connect 20 0 29 0;
+#X connect 21 0 42 0;
+#X connect 21 0 53 0;
+#X connect 22 0 55 0;
+#X connect 23 0 10 0;
+#X connect 24 0 38 0;
+#X connect 25 0 28 0;
+#X connect 27 0 43 0;
+#X connect 27 0 44 0;
+#X connect 28 0 27 0;
+#X connect 29 0 37 0;
+#X connect 30 0 35 0;
+#X connect 31 0 32 0;
+#X connect 32 0 35 1;
+#X connect 33 0 34 0;
+#X connect 34 0 29 1;
+#X connect 34 0 31 0;
+#X connect 34 0 36 0;
+#X connect 34 0 43 1;
+#X connect 35 0 15 1;
+#X connect 36 0 39 0;
+#X connect 37 0 30 0;
+#X connect 38 0 23 1;
+#X connect 39 0 37 1;
+#X connect 40 0 18 0;
+#X connect 43 0 39 1;
+#X connect 44 0 38 1;
+#X connect 48 0 24 1;
+#X connect 48 0 36 1;
+#X connect 48 0 9 0;
+#X connect 49 0 50 0;
+#X connect 50 0 51 0;
+#X connect 51 0 48 0;
+#X connect 53 0 6 0;
+#X connect 55 0 17 0;

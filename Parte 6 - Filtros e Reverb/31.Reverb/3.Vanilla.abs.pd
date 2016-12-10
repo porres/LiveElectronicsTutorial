@@ -1,0 +1,129 @@
+#N canvas 144 40 715 620 10;
+#X obj 501 125 rev1~;
+#X obj 445 31 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682 -1
+-1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 445 74 pd teste;
+#X obj 501 156 output~;
+#X msg 514 75 90;
+#X floatatom 514 98 3 0 0 0 - - -;
+#X msg 543 99 clear;
+#X text 583 99 mata o reverb;
+#X text 53 53 O Pd Vanilla vem com uma série de abstrações de reverbs
+fornmado por linhas de delay. O primeiro da família é o [rev1~] \,
+que consiste em 10 estágios de filtros Passa Tudo.;
+#X obj 514 50 loadbang;
+#X text 542 74 dB após 1 seg;
+#X text 54 102 Ele tem um controle de feedback ou decaimento do reverb
+que indica quanto de dB ainda resta depois de um segundo (sendo 100
+dB o valor máximo e um tempo infinito).;
+#X obj 487 303 rev2~ 100 90 3000 20;
+#X text 52 242 O [rev2~] é baseado no exemplo G08.reverb do Pd \, que
+também vimos neste material. Lembrando que o exemplo contém 4 linhas
+de delay em feedback \, esse objeto possui 4 saídas que correspondem
+a elas. Fora isso \, o patch também inclui um Passa Baixa para atenuar
+frequências mais agudas.;
+#X text 55 327 Ele recebe 4 argumentos \, que também podem ser alterados
+via inlets \, que são: nível em dB \, "liveness" (que é o feedback
+\, de 0 a 100) \, frequência de corte e HF damping (que diminui o feedback
+para frequências acima da frequência de corte).;
+#X obj 487 231 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 487 274 pd teste;
+#X obj 487 335 output~;
+#X obj 503 490 rev3~ 100 90 3000 20;
+#X obj 503 419 bng 30 250 50 0 empty empty empty 17 7 0 10 -261682
+-1 -1;
+#N canvas 797 186 322 336 teste 0;
+#X obj 36 155 osc~;
+#X obj 36 257 outlet~;
+#X obj 36 211 *~;
+#X obj 152 151 vline~;
+#X obj 36 37 inlet;
+#X obj 36 125 vline~;
+#X obj 36 68 trigger bang bang;
+#X msg 211 122 0 50;
+#X obj 211 84 delay 500;
+#X msg 36 97 440 \, 880 500;
+#X msg 152 111 0.5 50;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 1;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 9 0;
+#X connect 6 1 10 0;
+#X connect 6 1 8 0;
+#X connect 7 0 3 0;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 3 0;
+#X restore 503 462 pd teste;
+#X text 119 515 Abra o help de todos eles.;
+#X text 58 453 Por fim temos o [rev3~] \, que é uma variação do [rev2~]
+que aceita um sinal estéreo de entrada e é formado agora por 16 linhas
+de delay em feedback!;
+#X obj 503 523 output~;
+#X connect 0 0 3 0;
+#X connect 0 0 3 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 1;
+#X connect 6 0 0 2;
+#X connect 9 0 4 0;
+#X connect 12 0 17 0;
+#X connect 12 1 17 1;
+#X connect 15 0 16 0;
+#X connect 16 0 12 0;
+#X connect 18 0 23 0;
+#X connect 18 1 23 1;
+#X connect 19 0 20 0;
+#X connect 20 0 18 0;

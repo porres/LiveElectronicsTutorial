@@ -1,0 +1,213 @@
+#N canvas 425 23 805 709 10;
+#N canvas 128 22 291 357 feedback 0;
+#X obj 136 207 block~ 1;
+#X obj 50 287 outlet~;
+#X obj 105 168 *~;
+#X obj 50 204 +~;
+#X obj 105 111 line~;
+#X obj 80 243 delwrite~ \$0-fb 1000;
+#X msg 105 84 \$1 10;
+#X obj 50 53 inlet~;
+#X obj 175 172 line~;
+#X msg 175 145 \$1 10;
+#X obj 105 52 inlet;
+#X obj 105 143 vd~ \$0-fb;
+#X obj 175 53 inlet;
+#X text 107 30 tempo;
+#X text 166 32 feedback;
+#X text 48 29 input;
+#X connect 2 0 3 1;
+#X connect 3 0 1 0;
+#X connect 3 0 5 0;
+#X connect 4 0 11 0;
+#X connect 6 0 4 0;
+#X connect 7 0 3 0;
+#X connect 8 0 2 1;
+#X connect 9 0 8 0;
+#X connect 10 0 6 0;
+#X connect 11 0 2 0;
+#X connect 12 0 9 0;
+#X restore 106 525 pd feedback;
+#X obj 92 555 output~;
+#X obj 69 477 noise~;
+#X obj 197 503 hsl 128 15 -1 1 0 0 empty feedback empty -2 -6 0 8 -204800
+-1 -1 11748 1;
+#X floatatom 194 527 0 0 0 0 - - -;
+#X floatatom 137 490 5 0 0 0 - - -;
+#X obj 140 465 hsl 128 15 0.1 500 1 0 empty tempo empty -2 -6 0 8 -183917
+-1 -1 0 1;
+#X text 257 528 feedback;
+#X text 274 463 tempo (ms);
+#X floatatom 547 250 5 0 0 0 - - -;
+#X floatatom 547 305 5 0 0 0 - - -;
+#X obj 547 275 expr 1000 / $f1;
+#X text 524 251 Hz;
+#X text 526 303 ms;
+#N canvas 217 82 291 357 feedback 0;
+#X obj 136 207 block~ 1;
+#X obj 50 287 outlet~;
+#X obj 105 168 *~;
+#X obj 50 204 +~;
+#X obj 105 111 line~;
+#X msg 105 84 \$1 10;
+#X obj 50 53 inlet~;
+#X obj 185 172 line~;
+#X msg 185 145 \$1 10;
+#X obj 105 52 inlet;
+#X obj 185 53 inlet;
+#X text 107 30 tempo;
+#X text 176 32 feedback;
+#X text 48 29 input;
+#X obj 80 243 delwrite~ \$0-fb2 1000;
+#X obj 105 143 vd~ \$0-fb2;
+#X connect 2 0 3 1;
+#X connect 3 0 1 0;
+#X connect 3 0 14 0;
+#X connect 4 0 15 0;
+#X connect 5 0 4 0;
+#X connect 6 0 3 0;
+#X connect 7 0 2 1;
+#X connect 8 0 7 0;
+#X connect 9 0 5 0;
+#X connect 10 0 8 0;
+#X connect 15 0 2 0;
+#X restore 516 339 pd feedback;
+#X obj 503 370 output~;
+#X obj 476 275 noise~;
+#X obj 607 317 hsl 128 15 -1 1 0 0 empty feedback empty -2 -6 0 8 -204800
+-1 -1 11748 1;
+#X floatatom 604 341 0 0 0 0 - - -;
+#X text 642 298 feedback;
+#X text 400 95 De fato percebemos a altura relacionada à freequência
+do período determinado pelo tempo do delay. Por exemplo \, um delay
+de 10 ms em feedback determina um período de repetição de 10 ms. Qualquer
+coisa que se repete a cada 10 ms possui uma frequência de repetição
+\, que é o inverso do período. Ou seja \, 10 ms é 100 Hz.;
+#X text 403 187 É fácil converter frequência em período em ms \, basta
+inverter e multiplicar por 1000! Pronto \, agora temos o controle de
+tempo em função da frequência.;
+#X text 399 587 ============================================================
+;
+#X text 22 632 O Filtro de Pente tem esse nome porque sua resposta
+de frequência possui vários picos de amplitude lado a lado \, num formato
+de pente mesmo. Esses picos formam uma série harmônica \, que é a série
+relacionada ao período do delay.;
+#X text 409 617 Tendo como exemplo o ruído branco filtrado apresentado
+aqui no patch \, percebemos que a linha de delay em feedback é capaz
+de filtrar essa entrada ruidosa do filtro de forma harmônica \, a partir
+de uma frequência fundamental que é o período do delay.;
+#X text 9 609 ============================================================
+;
+#X obj 473 437 cnv 15 190 140 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X text 592 463 |;
+#X text 592 473 |;
+#X text 592 484 |;
+#X text 573 495 |;
+#X text 615 495 |;
+#X text 615 515 |;
+#X text 573 515 |;
+#X text 576 486 _______;
+#X text 576 515 _______;
+#X text 592 487 v;
+#X text 537 486 |;
+#X text 537 498 |;
+#X text 537 462 |;
+#X text 537 474 |;
+#X text 537 459 ^;
+#X text 603 445 >;
+#X text 573 505 | z^-d |;
+#X text 592 453 |;
+#X text 484 446 x[n] ---(+)--------- y[n];
+#X text 497 546 y[n] = x[n] + a * x[n-d];
+#X obj 38 76 cnv 15 290 110 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 92 88 |;
+#X text 92 100 |;
+#X text 92 112 |;
+#X text 73 123 |;
+#X text 115 123 |;
+#X text 115 143 |;
+#X text 73 143 |;
+#X text 76 114 _______;
+#X text 76 143 _______;
+#X text 92 115 v;
+#X text 154 115 |;
+#X text 154 126 |;
+#X text 154 96 |;
+#X text 154 105 |;
+#X text 154 91 ^;
+#X text 238 89 |;
+#X text 238 101 |;
+#X text 238 113 |;
+#X text 219 124 |;
+#X text 261 124 |;
+#X text 261 144 |;
+#X text 219 144 |;
+#X text 222 115 _______;
+#X text 222 144 _______;
+#X text 238 116 v;
+#X text 184 117 |;
+#X text 184 127 |;
+#X text 184 95 |;
+#X text 184 105 |;
+#X text 184 90 ^;
+#X text 261 81 >;
+#X text 121 132 -(*b)-;
+#X text 185 133 -(*c)-;
+#X text 52 82 x[n] -----(*a)--(+)--(+)----------- y[n];
+#X text 539 504 -(*a)-;
+#X text 616 361 a;
+#X text 20 289 Formas bem simples \, como somente uma linha de feedback
+ou de feedforward também são possíveis \, e que podem ser respectivamente
+definidas como um Filtro Pente IIR e um Filtro Pente FIR.;
+#N canvas 0 22 305 292 init 0;
+#X msg 97 137 \; pd dsp 1;
+#X obj 108 67 samplerate~;
+#X obj 108 89 / 1000;
+#X obj 108 114 v sr_khz;
+#X obj 97 43 loadbang;
+#X msg 69 183 \; feedback 0.85 \; Hz 100;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 4 0 0 0;
+#X connect 4 0 1 0;
+#X connect 4 0 5 0;
+#X restore 691 362 pd init;
+#X text 18 20 Como vimos \, o [comb~] é um tipo genérico de Comb Filter
+(filtro de pente) - cujo diagrama e equação de diferença encontram-se
+abaixo:;
+#X text 73 133 | z^-d |;
+#X text 219 134 | z^-d |;
+#X text 56 165 y[n] = a * x[n] + b * x[n-d] + c * y[n-d];
+#X text 19 207 Temos \, basicamente \, uma linha de delay em feedforward
+e outra em feedback com seus devidos coeficientes \, além de um coeficiente
+de ganho. Em suma \, qualquer combinação com uma linha de delay em
+feedback e outra em feedforward pode ser \, a grosso modo \, considerada
+como um Comb Filter.;
+#X text 21 354 Vejamos um Filtro Pente IIR bem simples \, sem feedforward
+e com coeficiente de ganho de entrada igual a 1 - veja o diagrama e
+equação de diferença logo abaixo à direita. Esse é um exemplo simples
+e esse tipo de delay em feedback já foi apresentado algumas vezes \,
+como para implementar um Flanger! Ele está abaixo em um subpatch para
+podermos usar um bloco de áudio de apenas uma amostra.;
+#X text 401 16 Perceba que \, para um tempo de delay bem curto e um
+valor de feebback alto \, o ruído branco é filtrado de tal modo que
+soa de forma harmônica \, onde até percebemos uma frequência \, chamada
+de frequência de ressonância. Por isso \, o Filtro de Pente também
+é considerado como um filtro ressonante.;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 2;
+#X connect 5 0 0 1;
+#X connect 6 0 5 0;
+#X connect 9 0 11 0;
+#X connect 10 0 14 1;
+#X connect 11 0 10 0;
+#X connect 14 0 15 0;
+#X connect 14 0 15 1;
+#X connect 16 0 14 0;
+#X connect 17 0 18 0;
+#X connect 18 0 14 2;

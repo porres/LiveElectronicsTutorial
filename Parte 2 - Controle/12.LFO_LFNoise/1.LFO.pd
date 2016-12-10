@@ -1,0 +1,220 @@
+#N canvas 207 23 883 679 10;
+#X obj 174 345 loadbang;
+#N canvas 56 22 380 527 sine 0;
+#X floatatom 70 276 5 0 0 0 - - -;
+#X obj 70 91 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1 1
+;
+#X obj 70 313 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 11231 1;
+#X obj 70 242 cos;
+#X text 92 91 Sine Wave;
+#X floatatom 160 106 5 0 0 0 - - -;
+#X obj 70 125 metro;
+#X text 222 40 Hz;
+#X text 205 105 Período (ms);
+#X obj 160 71 expr 1000 / $f1;
+#X obj 70 156 float;
+#X text 92 306 1;
+#X text 86 426 -1;
+#X text 91 360 0;
+#X msg 70 186 0 \, 6.28 \$1;
+#X obj 70 216 line 0 5;
+#X obj 160 41 nbx 5 14 0.1 3 0 0 empty hz empty 0 -8 0 10 -228856 -1
+-1 1 256;
+#X connect 0 0 2 0;
+#X connect 1 0 6 0;
+#X connect 3 0 0 0;
+#X connect 5 0 6 1;
+#X connect 5 0 10 1;
+#X connect 6 0 10 0;
+#X connect 9 0 5 0;
+#X connect 10 0 14 0;
+#X connect 14 0 15 0;
+#X connect 15 0 3 0;
+#X connect 16 0 9 0;
+#X restore 132 605 pd sine;
+#N canvas 136 22 386 455 saw 1;
+#X floatatom 65 234 5 0 0 0 - - -;
+#X obj 65 38 metro 1000;
+#X obj 65 271 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 1397 1;
+#X text 90 7 Sawtooth;
+#X floatatom 208 65 5 0 0 0 - - -;
+#X text 248 64 Período (ms);
+#X obj 208 30 expr 1000 / $f1;
+#X obj 65 85 float;
+#X text 92 265 1;
+#X text 86 385 -1;
+#X text 91 319 0;
+#X obj 65 155 line 0 5;
+#X text 270 5 Hz;
+#X obj 208 6 nbx 5 14 0.1 3 0 0 empty hz empty 0 -8 0 10 -228856 -1
+-1 1 256;
+#X obj 65 9 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1 1
+;
+#X msg 65 119 1 \, -1 \$1;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 4 0 1 1;
+#X connect 4 0 7 1;
+#X connect 6 0 4 0;
+#X connect 7 0 15 0;
+#X connect 11 0 0 0;
+#X connect 13 0 6 0;
+#X connect 14 0 1 0;
+#X connect 15 0 11 0;
+#X restore 135 627 pd saw;
+#N canvas 153 34 374 508 triangle 0;
+#X floatatom 59 242 5 0 0 0 - - -;
+#X obj 59 279 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 2794 1;
+#X floatatom 203 50 5 0 0 0 - - -;
+#X text 246 49 Período (ms);
+#X obj 203 18 expr 1000 / $f1;
+#X obj 59 73 float;
+#X obj 166 113 pipe;
+#X obj 203 80 / 2;
+#X obj 59 26 metro;
+#X text 84 -5 Triangle;
+#X msg 59 151 1 \$1;
+#X msg 166 149 -1 \$1;
+#X text 87 273 1;
+#X text 81 393 -1;
+#X text 86 327 0;
+#X obj 59 202 line -1 5;
+#X text 265 -7 Hz;
+#X obj 203 -6 nbx 5 14 0.1 3 0 0 empty hz empty 0 -8 0 10 -228856 -1
+-1 1 256;
+#X obj 59 1 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1 1
+;
+#X connect 0 0 1 0;
+#X connect 2 0 7 0;
+#X connect 2 0 8 1;
+#X connect 4 0 2 0;
+#X connect 5 0 10 0;
+#X connect 5 0 6 0;
+#X connect 6 0 11 0;
+#X connect 7 0 5 1;
+#X connect 7 0 6 1;
+#X connect 8 0 5 0;
+#X connect 10 0 15 0;
+#X connect 11 0 15 0;
+#X connect 15 0 0 0;
+#X connect 17 0 4 0;
+#X connect 18 0 8 0;
+#X restore 184 605 pd triangle;
+#N canvas 39 22 443 492 square 0;
+#X floatatom 82 293 5 0 0 0 - - -;
+#X obj 82 330 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 0 1;
+#X floatatom 226 104 5 0 0 0 - - -;
+#X text 294 103 Período (ms);
+#X obj 226 69 expr 1000 / $f1;
+#X obj 82 124 float;
+#X obj 189 164 pipe;
+#X obj 226 131 / 2;
+#X obj 82 77 metro;
+#X msg 82 202 1;
+#X msg 189 200 -1;
+#X text 107 46 Square;
+#X text 114 326 1;
+#X text 108 446 -1;
+#X text 113 380 0;
+#X text 288 43 Hz;
+#X obj 226 44 nbx 5 14 0.1 3 0 0 empty hz empty 0 -8 0 10 -228856 -1
+-1 1 256;
+#X obj 82 50 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1 1
+;
+#X connect 0 0 1 0;
+#X connect 2 0 7 0;
+#X connect 2 0 8 1;
+#X connect 4 0 2 0;
+#X connect 5 0 9 0;
+#X connect 5 0 6 0;
+#X connect 6 0 10 0;
+#X connect 7 0 5 1;
+#X connect 7 0 6 1;
+#X connect 8 0 5 0;
+#X connect 9 0 0 0;
+#X connect 10 0 0 0;
+#X connect 16 0 4 0;
+#X connect 17 0 8 0;
+#X restore 190 627 pd square;
+#X text 48 34 Low Frequency Oscilators \, ou apenas "LFO" \, são quaisquer
+osciladores com uma frequência baixa \, simples assim.;
+#X obj 269 304 unsig~ 20;
+#X obj 269 341 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 10030 1;
+#X obj 269 270 osc~ 0.4;
+#X obj 107 342 vsl 15 128 -1 1 0 0 empty empty empty 0 -9 0 10 -228856
+-1 -1 9896 1;
+#X obj 107 251 osc~ 0.4;
+#X obj 107 300 snapshot~;
+#X obj 184 243 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X text 92 568 Abra e confira os suboatches abaixo:;
+#X obj 657 327 pansig~;
+#X obj 501 338 pansig~;
+#X text 48 67 A ideia é que esses osciladores \, uma vez que estão
+abaixo da frequência audível \, sejam usados para modular algum parâmetro
+qualquer do patch \, em vez de gerar sinais sonoros.;
+#X floatatom 501 176 5 0 0 0 - tri1 -;
+#X floatatom 657 177 5 0 0 0 - tri2 -;
+#X obj 657 201 phasor~;
+#X obj 501 203 phasor~;
+#X obj 501 228 triangle~ 0.5;
+#X obj 657 226 triangle~ 0.5;
+#X msg 174 372 \; hz 1 \; metro 1 \; pd dsp 1 \; tri1 100 \; tri2 150
+;
+#X obj 696 276 osc~ 0.25;
+#X obj 501 381 throw~ \$0-L;
+#X obj 540 359 throw~ \$0-R;
+#X obj 657 375 throw~ \$0-L;
+#X obj 696 353 throw~ \$0-R;
+#X obj 592 476 catch~ \$0-L;
+#X obj 631 500 catch~ \$0-R;
+#X obj 631 523 tanh~;
+#X obj 592 523 tanh~;
+#X obj 587 567 output~;
+#X obj 696 304 *~ -1;
+#X text 462 59 Abaixo \, temos um LFOs controlando o panorâmico de
+dois osciladores triangulares. Há uma cópia do LFO com polaridade invertida
+(ou seja \, com oposição de fase) de modo que os dois sons estão fazendo
+o pan de modo oposto.;
+#X obj 184 264 metro 1;
+#X text 50 113 LFOs são largamente usados não só em síntese \, mas
+também no controle de qualquer processamento de DSP. É apenas uma forma
+de automatizar certos parâmetros e \, em algumas ocasiões \, nem precisa
+se tratar de um sinal de áudio.;
+#X text 50 173 Digamos que nem seja para controlar um processamento
+de áudio \, nesse caso \, você pode simplesmente converter o oscilador
+em dado de controle como de costume \, com um [snapshot~] ou [unsig~].
+;
+#X text 43 499 Por curiosidade e elaborando essa ideia \, este exemplo
+traz alguns subpatches em que formas de onda são geradas diretamente
+como dados de controle. Logo \, não é necessário que o DSP esteja ligado.
+;
+#X connect 0 0 23 0;
+#X connect 6 0 7 0;
+#X connect 8 0 6 0;
+#X connect 10 0 11 0;
+#X connect 11 0 9 0;
+#X connect 12 0 36 0;
+#X connect 14 0 27 0;
+#X connect 14 1 28 0;
+#X connect 15 0 25 0;
+#X connect 15 1 26 0;
+#X connect 17 0 20 0;
+#X connect 18 0 19 0;
+#X connect 19 0 22 0;
+#X connect 20 0 21 0;
+#X connect 21 0 15 0;
+#X connect 22 0 14 0;
+#X connect 24 0 15 1;
+#X connect 24 0 34 0;
+#X connect 29 0 32 0;
+#X connect 30 0 31 0;
+#X connect 31 0 33 1;
+#X connect 32 0 33 0;
+#X connect 34 0 14 1;
+#X connect 36 0 11 0;

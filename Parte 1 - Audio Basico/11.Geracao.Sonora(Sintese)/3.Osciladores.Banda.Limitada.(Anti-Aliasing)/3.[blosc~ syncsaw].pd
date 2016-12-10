@@ -1,0 +1,83 @@
+#N canvas 345 73 820 410 10;
+#X obj 609 114 metro;
+#X obj 609 90 tgl 15 0 empty metro empty 17 7 0 10 -228856 -1 -1 1
+1;
+#X floatatom 609 178 5 0 0 0 - - -;
+#X obj 524 268 blosc~ syncsaw;
+#X obj 578 308 hsl 128 15 0 1 0 0 empty empty empty -2 -6 0 10 -261682
+-1 -1 0 0;
+#N canvas 232 59 524 385 output 0;
+#X obj 306 217 *~;
+#X obj 294 249 dac~;
+#X obj 335 187 line~;
+#X msg 335 161 \$1 10;
+#X obj 335 135 pow 4;
+#X obj 335 108 inlet;
+#X obj 306 77 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 524 332 pd output;
+#X obj 609 226 line~;
+#X obj 609 204 pack;
+#X floatatom 659 178 5 0 0 0 - - -;
+#X obj 524 169 nbx 5 14 -1e+37 1e+37 0 0 empty Hz empty 0 -8 0 10 -261877
+-1 -1 40 256;
+#X obj 542 192 v hz;
+#X obj 200 265 loadbang;
+#X msg 200 290 \; pd dsp 1 \; Hz 40 \; metro 1;
+#X obj 609 139 expr random(hz \, hz * 3) \; random (600 \, 1200);
+#X text 49 41 O [blosc~] tem ainda um oscilador dente de serra com
+"hard sync". Mas como ele desativa o sync no caso da frequência do
+escrabo ser menor que a do mestre \, pode se discutir se não seria
+de fato um "soft sync". Todavia \, no caso de um oscilador dente de
+serra \, seria meio bobo mesmo permitir o sync nesse caso \, pois somente
+implicaria em um desajuste de DC offset e menor amplitude.;
+#X text 51 144 É mais pertinente a lmitação de banda no caso de osciladores
+em sycronia \, pois esse tipo de técnica costuma gerar muito aiasing
+mesmo!;
+#X text 604 248 <= escravo;
+#X text 484 199 mestre;
+#X text 50 201 Neste exemplo \, temos a frequência do escravo controlado
+de forma randômica \, em um intervalo sempre acima da frequência do
+mestre.;
+#N canvas 786 159 417 234 sequencer 0;
+#X obj 180 135 mtof;
+#X obj 75 74 metro 200;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array sequencer 16 float 3;
+#A 0 -6 -8 -8 -3 -8 1 4 4 -3 -5 -5 -1 2 6 7 7;
+#X coords 0 12 16 -12 100 70 1;
+#X restore 240 71 graph;
+#X obj 75 135 v i;
+#X obj 180 163 outlet;
+#X obj 75 49 inlet;
+#X obj 75 97 expr (i + 1) % 16 \; sequencer[i] + 41;
+#X connect 0 0 4 0;
+#X connect 1 0 6 0;
+#X connect 5 0 1 0;
+#X connect 6 0 3 0;
+#X connect 6 1 0 0;
+#X restore 506 138 pd sequencer;
+#X obj 506 114 tgl 15 0 empty empty empty 17 7 0 10 -261234 -1 -1 0
+1;
+#X connect 0 0 13 0;
+#X connect 1 0 0 0;
+#X connect 2 0 7 0;
+#X connect 3 0 5 0;
+#X connect 4 0 5 1;
+#X connect 6 0 3 1;
+#X connect 7 0 6 0;
+#X connect 8 0 7 1;
+#X connect 9 0 10 0;
+#X connect 9 0 3 0;
+#X connect 11 0 12 0;
+#X connect 13 0 2 0;
+#X connect 13 1 0 1;
+#X connect 13 1 8 0;
+#X connect 19 0 9 0;
+#X connect 20 0 19 0;

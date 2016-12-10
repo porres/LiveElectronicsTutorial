@@ -1,0 +1,64 @@
+#N canvas 204 41 940 647 10;
+#X obj 582 215 phasor~;
+#X floatatom 621 185 5 0 0 0 - - -;
+#X text 507 89 Frequência em Hz;
+#X text 496 104 (velocidade;
+#X text 513 118 angular);
+#X floatatom 582 109 5 0 0 0 - - -;
+#X text 621 328 Função / Forma de onda;
+#X text 621 395 Ajuste de Ganho;
+#X text 621 453 DC Offset;
+#X obj 582 138 sig~ 300;
+#X obj 582 395 *~ 1;
+#X obj 567 520 output~;
+#X obj 582 454 +~ 0;
+#X text 38 39 ANATOMIA DE UM OSCILADOR.;
+#X text 618 163 resseta forma de onda para uma dada;
+#X text 666 184 Fase Inicial (0 a 1);
+#X text 637 211 Gerador de fase linear (ângulo de 0 a 1);
+#X text 639 228 de acordo com frequência;
+#X text 597 248 <= Fase Corrente;
+#X text 596 360 <= Amplitude;
+#X obj 582 278 +~ 0;
+#X text 621 277 Ajuste de fase;
+#X obj 582 327 sin~;
+#X text 81 217 - Sinal de Frequência: Indica a Velocidade Angular.
+;
+#X text 64 76 Vejamos agora como ficou a anatomia completa de um oscildor.
+Temos neste exemplo um patch que desmembra todos os detalhes possíveis
+de ajustes de um oscilador. No caso \, temos uma forma de onda de seno
+(oscilador senoidal) \, mas a mesma estrutura pode ser aplicada para
+outros tipos de osciladores \, mudando apenas a Função/Forma de onda.
+;
+#X text 64 170 Vejamos então todos esses elementos possíveis antes
+de avançarmos para outros tipos de osciladores:;
+#X text 82 239 - Sinal de Fase Corrente: Sinal é gerado pelo [phasor~]
+- é a velocidade em que a fase corre de acordo com a velocidade angular.
+;
+#X text 81 293 - Ressetar Fase Inicial: Controle que permite reiniciar
+o oscilador para que volte ao ponto de uma dada Fase Inicial. No [osc~]
+e [phasor~] \, isso é feito no inlet direito.;
+#X text 80 346 - Ajuste de Fase: Podemos mudar o sinal de Fase Corrente
+para mudar a fase de um oscilador. Aqui fazemos isso na saída do sinal
+do [phasor~] \, mas vimos que também é possível no inlet direito do
+[cycle~].;
+#X text 81 410 - Função/Forma de onda: Temos aqui uma função Seno \,
+que faz deste um oscilador senoidal. Para outras formas de onda \,
+é necessário uma outra função ou tabela \, como veremos nos exemplos
+seguintes.;
+#X text 80 475 - Sinal de Amplitude: É o sinal gerado na saída da função.
+É enfim o sinal de amplitude da nossa forma de onda.;
+#X text 78 520 - Ajuste de ganho: O objeto de multiplicação [*~] permite
+um ajuste da Amplitude de pico de nossa forma de onda.;
+#X text 78 561 - Ajuste de DC Offset: Por fim \, um objeto de soma
+([+~]) pode ainda definir um último parâmetro do sinal de nosso oscilador:
+um DC Offset.;
+#X connect 0 0 20 0;
+#X connect 1 0 0 1;
+#X connect 5 0 9 0;
+#X connect 9 0 0 0;
+#X connect 10 0 12 0;
+#X connect 12 0 11 0;
+#X connect 12 0 11 1;
+#X connect 20 0 22 0;
+#X connect 22 0 10 0;

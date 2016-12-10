@@ -1,0 +1,136 @@
+#N canvas 109 36 1062 675 10;
+#X obj 161 595 output~;
+#X obj 353 402 hsl 128 15 -0.999 0.999 0 0 empty feedback empty -2
+-6 0 8 -204800 -1 -1 11753 1;
+#X obj 190 528 +~;
+#X floatatom 350 426 0 0 0 0 - - -;
+#X obj 100 16 loadbang;
+#X obj 105 223 readsf~;
+#X obj 105 166 loadbang;
+#X obj 205 303 *~ 0.5;
+#X obj 205 324 +~ 0.5;
+#X obj 205 275 osc~ 0.1;
+#X floatatom 205 251 5 0 0 0 - - -;
+#X obj 356 365 line~;
+#X msg 356 344 \$1 10;
+#X floatatom 305 292 5 0 1000 0 - - -;
+#X floatatom 356 322 5 1 100 0 - - -;
+#X obj 205 416 +~;
+#X obj 205 389 *~;
+#X obj 305 335 line~;
+#X msg 305 314 \$1 10;
+#X obj 205 502 *~;
+#X obj 237 569 delwrite~ \$0-feedback 3000;
+#X obj 208 229 hsl 128 15 0.01 3 1 0 empty LFO empty -2 -8 0 10 -228856
+-1 -1 6670 1;
+#X text 396 321 delay mínimo;
+#X text 570 83 A saída do vibrato volta pro delay \, então ocorre um
+vibrato em cima do vibrato e a possibilidde de efeitos são diversas.
+;
+#X text 170 252 rate;
+#X text 269 291 depth;
+#X obj 308 269 hsl 128 15 10 3000 1 0 empty depth empty -2 -8 0 10
+-228856 -1 -1 5127 1;
+#X obj 359 300 hsl 128 15 5 3000 1 0 empty delay empty -2 -8 0 10 -228856
+-1 -1 2752 1;
+#X text 570 120 Como anteriormente \, temos um "rate" e um "depth"
+para controlar velocidade e amplitude do vibrato. Mas temos ainda um
+DC offset do LFO \, que indica o tempo mínimo do delay. Você pode tentar
+outros valores e entender como que esse valor interfere na qualidade
+sonora. Por fim \, temos então um controle do valor de ganho do feedback
+(positivo e negativo).;
+#X msg 100 43 \; pd dsp 1 \; LFO 0.2 \; depth 100 \; delay 20 \; feedback
+0.85;
+#X msg 213 48 \; LFO 0.1 \; depth 30 \; delay 10 \; feedback -0.75
+;
+#X msg 322 47 \; LFO 0.05 \; depth 15 \; delay 5 \; feedback 0.91;
+#X obj 599 605 output~;
+#X obj 622 520 r~ \$0-in;
+#X obj 806 516 hsl 128 15 -0.999 0.999 0 0 empty feedback empty -2
+-6 0 8 -204800 -1 -1 11753 1;
+#X obj 350 474 line~;
+#X msg 350 453 \$1 10;
+#X text 837 514 feedback;
+#X text 387 401 feedback;
+#X floatatom 803 538 0 0 0 0 - - -;
+#X obj 803 586 line~;
+#X msg 803 565 \$1 10;
+#X obj 60 327 s~ \$0-in;
+#X obj 632 401 nbx 5 14 -1e+37 1e+37 0 0 empty LFO empty 0 -8 0 10
+-261682 -1 -1 0.2 256;
+#X obj 632 422 osc~;
+#X text 640 375 Rate;
+#X obj 735 426 line~;
+#X msg 735 405 \$1 100;
+#X obj 735 387 nbx 5 14 0 200 0 0 empty depth empty 0 -8 0 10 -204786
+-1 -1 100 256;
+#X text 741 365 Depth;
+#X obj 632 450 expr~ ($v1 * 0.5 + 0.5) * $v2 + $v3;
+#X obj 839 428 line~;
+#X msg 839 407 \$1 100;
+#X obj 839 389 nbx 5 14 0 200 0 0 empty delay empty 0 -8 0 10 -262130
+-1 -1 20 256;
+#X text 848 367 del mín;
+#X obj 632 478 s~ \$0-del-time;
+#X obj 688 521 r~ \$0-del-time;
+#X text 594 450 LFO;
+#X text 574 323 Veja abaixo uma implementação com o [comb~].;
+#X obj 622 565 comb~ 200 0 1 0 0;
+#X obj 205 447 vd~ \$0-feedback;
+#X msg 105 191 open ../../../samples/guitar.wav \, 1;
+#X text 569 22 Esse é o mesmo exemplo anterior de vibrato controlado
+por um LFO \, porém agora temos uma implementação em feedback sendo
+mixada com o sinal original \, o que dá um efeito bem mais rico e psicodélico.
+;
+#X text 572 224 Novamente \, é possível achar parâmetros que geram
+um efeito com característica de Chorus \, mas também um Flanger. Veremos
+no próximo exemplo como um flanger pode ter essa mesma estrutura. Brinque
+com os parâmetros e teste os presets. Perceba que também temos valores
+de feedback negativos \, que invertem a polaridade.;
+#X connect 1 0 3 0;
+#X connect 2 0 0 0;
+#X connect 2 0 0 1;
+#X connect 2 0 20 0;
+#X connect 3 0 36 0;
+#X connect 4 0 29 0;
+#X connect 5 0 2 0;
+#X connect 5 0 42 0;
+#X connect 5 1 61 0;
+#X connect 6 0 61 0;
+#X connect 7 0 8 0;
+#X connect 8 0 16 0;
+#X connect 9 0 7 0;
+#X connect 10 0 9 0;
+#X connect 11 0 15 1;
+#X connect 12 0 11 0;
+#X connect 13 0 18 0;
+#X connect 14 0 12 0;
+#X connect 15 0 60 0;
+#X connect 16 0 15 0;
+#X connect 17 0 16 1;
+#X connect 18 0 17 0;
+#X connect 19 0 2 1;
+#X connect 21 0 10 0;
+#X connect 26 0 13 0;
+#X connect 27 0 14 0;
+#X connect 33 0 59 0;
+#X connect 34 0 39 0;
+#X connect 35 0 19 1;
+#X connect 36 0 35 0;
+#X connect 39 0 41 0;
+#X connect 40 0 59 4;
+#X connect 41 0 40 0;
+#X connect 43 0 44 0;
+#X connect 44 0 50 0;
+#X connect 46 0 50 1;
+#X connect 47 0 46 0;
+#X connect 48 0 47 0;
+#X connect 50 0 55 0;
+#X connect 51 0 50 2;
+#X connect 52 0 51 0;
+#X connect 53 0 52 0;
+#X connect 56 0 59 1;
+#X connect 59 0 32 0;
+#X connect 59 0 32 1;
+#X connect 60 0 19 0;
+#X connect 61 0 5 0;

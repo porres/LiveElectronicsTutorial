@@ -1,0 +1,80 @@
+#N canvas 369 22 815 509 10;
+#N canvas 133 117 311 365 ratio 0;
+#X obj 158 283 /;
+#X obj 167 226 t b f;
+#X obj 158 252 f;
+#X obj 101 101 cnv 15 105 100 empty empty _ 27 20 0 80 -233017 -66577
+0;
+#X obj 128 169 nbx 3 16 1 1e+37 0 0 baixo set-baixo empty 0 -8 0 14
+-204800 -1 -1 2 256;
+#X obj 128 122 nbx 3 16 1 1e+37 0 0 cima set-cima empty 0 -8 0 14 -204786
+-1 -1 3 256;
+#X obj 158 316 outlet;
+#X obj 161 28 loadbang;
+#X msg 161 50 3 2;
+#X obj 161 76 unpack;
+#X connect 0 0 6 0;
+#X connect 1 0 2 0;
+#X connect 1 1 0 1;
+#X connect 2 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 5 0;
+#X connect 9 1 4 0;
+#X coords 0 -1 1 1 107 102 1 100 100;
+#X restore 488 219 pd ratio;
+#X text 613 262 Razão;
+#X text 564 399 Cents;
+#X text 438 18 A quinta do Temperamento Igual nem precisa calcular.
+Uma quinta são 7 Semitons \, cada Semitom tem 100 cents \, então uma
+Quinta tem 700 cents.;
+#X obj 239 365 cnv 15 230 18 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 66 339 A Fórmula para converter um intervalo/proporção em Cents
+já foi dada anteriormente:;
+#X text 570 337 Proporção/Intervalo;
+#X text 570 458 Proporção/Intervalo;
+#X text 32 167 O cent tem como base o Temperamento Igual. O mais útil
+de uma representação em cents é comparar intervalos que não pertencem
+ao Temperamento Igual aos que pertencem a ele.;
+#X text 35 230 Os intervalos Justos se relacionam à Série Harmônica
+\, que é uma Série de números inteiros. A Quinta Justa tem o intervalo
+de 3/2 \, e corresponde à relação entre o terceiro e o segundo harmônico.
+Para compararmos a Quinta Justa com a Quinta do Temperamento Igual
+\, podemos comparar o valor de ambas em cents.;
+#X obj 278 420 cnv 15 190 28 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 360 426 ^;
+#X text 368 419 cents/1200;
+#X obj 488 340 nbx 7 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 1.5 256;
+#X obj 488 401 nbx 7 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-233004 -1 -1 701.955 256;
+#X obj 488 458 nbx 7 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 1.5 256;
+#X obj 488 365 expr (log($f1)/log(2))*1200;
+#X obj 488 425 expr pow(2 \, $f1/1200);
+#X text 448 166 Entre uma razão no formato ( X / Y );
+#X text 280 429 intervalo = 2;
+#X text 75 424 A conversão inversa é dada por:;
+#X text 440 425 ===>;
+#X text 246 364 Cents = Log2(intervalo) * 1200 ===>;
+#X text 440 72 A quinta justa é 3/2 \, que é igual a 1.5. Isso dá um
+valor de quase 702 cents \, nem mesmo 2 cents acima de uma Quinta Temperada.
+Você pode entrar com outras razões no patch abaixo e conferir o valor
+em Cents de outros intervalos Justos.;
+#X text 32 20 Os intervalos Justos podem ser representadas por proporções
+de números inteiros. Em outras palavras \, são intervalos que podem
+ser representados por números racionais (razões ou frações de números
+inteiros) \, como a Oitava \, que é 2/1.;
+#X text 31 94 Já a proporção do Tritono \, no Sistema Temperado \,
+é "Raiz Quadrada de 2". Essa proporção não pode ser representada por
+números inteiros e \, por isso \, trata-se de um número irracinal \,
+além de se constituir como um "Intervalo Temperado".;
+#X connect 0 0 13 0;
+#X connect 13 0 16 0;
+#X connect 14 0 17 0;
+#X connect 16 0 14 0;
+#X connect 17 0 15 0;

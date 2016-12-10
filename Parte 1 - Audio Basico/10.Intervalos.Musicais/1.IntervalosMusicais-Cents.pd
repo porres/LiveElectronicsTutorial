@@ -1,0 +1,152 @@
+#N canvas 184 22 995 702 10;
+#X floatatom 192 177 5 0 15 0 - - -;
+#X text 242 176 mudança unitária;
+#X obj 138 556 sqrt;
+#X msg 138 527 2;
+#X floatatom 138 586 8 0 0 0 - - -;
+#X obj 138 617 pow 2;
+#X floatatom 138 649 5 0 0 0 - - -;
+#X msg 622 122 12;
+#X floatatom 213 586 8 0 0 0 - - -;
+#X obj 213 555 expr pow(2 \, 0.5);
+#X obj 213 619 expr pow($f1 \, 2);
+#X obj 213 531 bng 15 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X floatatom 213 649 5 0 0 0 - - -;
+#X text 187 556 =;
+#X text 31 612 Multiplica por;
+#X text 39 627 ele mesmo =;
+#X text 188 617 =;
+#X text 281 587 Proporção do Trítono;
+#X text 283 650 Proporção da Oitava;
+#X text 32 556 Raiz Quadrada;
+#X floatatom 622 227 8 0 0 0 - - -;
+#X obj 622 198 expr pow(2 \, 1/partes);
+#X obj 649 172 value partes;
+#X text 34 177 Mudança de "Oitavas";
+#X text 447 226 Intervalo \, ou Proporção;
+#X text 659 121 partes iguais (Temperamento Igual);
+#X obj 622 100 loadbang;
+#X floatatom 192 256 5 0 0 0 - - -;
+#X obj 192 216 expr pow (2 \, $f1);
+#X text 264 247 Escala logarítmica;
+#X text 84 254 Dobra o valor;
+#X obj 192 292 expr log($f1)/log(2);
+#X floatatom 192 323 5 0 15 0 - - -;
+#X text 242 322 mudança unitária;
+#X text 34 323 Mudança de "Oitavas";
+#X text 241 263 ou geométrica de "Oitavas";
+#X text 689 227 = 2;
+#X text 711 219 1/12;
+#X floatatom 757 497 8 0 0 0 - - -;
+#X floatatom 592 498 8 0 0 0 - - -;
+#X obj 661 417 sqrt;
+#X msg 661 390 2;
+#X obj 622 253 value semitom;
+#X obj 700 415 value semitom;
+#X obj 700 391 bng 15 250 50 0 empty empty empty 17 7 0 10 -204800
+-1 -1;
+#X msg 623 415 2;
+#X text 659 500 Oitava;
+#X text 826 498 Semitons;
+#X obj 796 219 expr pow(2 \, 1/$f1);
+#X floatatom 796 196 5 1 100 0 - - -;
+#X floatatom 796 244 5 0 0 0 - - -;
+#X obj 622 147 t b f;
+#X text 843 246 Intervalo;
+#X text 811 172 (Outras divisões;
+#X text 851 193 da Oitava);
+#X obj 477 530 cnv 15 500 150 empty empty Cents 5 34 0 22 -203904 -165529
+0;
+#X obj 745 604 sqrt;
+#X msg 745 581 2;
+#X obj 789 604 value semitom;
+#X obj 789 584 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X msg 707 602 2;
+#X obj 745 632 expr (log($f1)/log(2)) * 1200;
+#X obj 745 654 nbx 5 18 -1e+37 1e+37 0 0 empty empty Cents 68 10 0
+12 -261682 -1 -1 0 256;
+#X obj 499 631 cnv 15 230 18 empty empty empty 20 12 0 14 -262130 -66577
+0;
+#X text 513 633 Cents = Log2(intervalo) * 1200;
+#X obj 780 443 cnv 15 155 18 empty empty empty 20 12 0 14 -215585 -66577
+0;
+#X text 786 442 Log2(intervalo) * 12;
+#X obj 592 466 expr log($f1)/log(2);
+#X obj 757 465 expr log($f1)/log(2) * 12;
+#X text 467 416 Intervalo / Proporção;
+#X text 321 554 (outra forma em [expr]);
+#X text 137 290 Log2*;
+#X text 11 351 (* Log na base dois pode ser simulado com um logaritmo
+em qualquer base dividido pelo logaritmo de 2 na mesma base);
+#X text 10 401 Um trítono divide a Oitava em dois intervalos iguais
+\, ou seja \, duas proporções iguais. Para dividir algo de forma proporcionalmente
+igual \, precisamos de uma divisão geométrica. A divisão geométrica
+em duas partes equivale a extrar a raiz quadrada. Outra forma de calcular
+a raíz quadrada é elevar a 1/2 \, ou "0.5". Abaixo temos o valor do
+trítono que \, se multiplicado de novo por si mesmo \, nos dá a proporção
+da oitava.;
+#X text 473 18 Para dividir uma Oitava em X intervalos iguais \, basta
+elevar 2 a 1/X \, que nos dá a proporção desse intervalo. Uma divisão
+da oitava em 12 dá 1.05946 \, que é a proporção do Semitom de nosso
+caro Sistema Temperado Igual \, veja abaixo:;
+#X text 489 121 Divisão da Oitava em:;
+#X obj 487 466 cnv 15 100 18 empty empty empty 20 12 0 14 -215585 -66577
+0;
+#X text 490 465 Log2(intervalo);
+#X text 17 22 Intervalo Musical é uma relação proporcional. Por exemplo
+\; 220Hz/110Hz = (2/1). Aliás \, essa é a proporção da Oitava. 220Hz
+é uma Oitava de 110Hz \, 440Hz é Oitava de 220Hz \, e uma mesma diferença
+em Hz não dá uma mesma diferença de intervalo! Se quisermos indicar
+um mesmo intervalo em unidades (Lá4 é Oitava de Lá3 \, que é Oitava
+de Lá2) \, precisamos de uma escala logarítmica. No caso da Oitava
+\, temos uma escala logarítmica na base 2 \, onde uma mudança unitária
+indica que a frequência em Hertz foi dobrada ou dividida pela metade.
+;
+#X text 569 532 1 Cent é uma subdivisão do Semitom em 100 partes iguais.
+Ou seja \, se uma Oitava tem 12 Semitons \, então uma Oitava tem 1200
+cents! A fórmula do cent é uma simples adaptação das fórmulas acima.
+;
+#X text 522 289 Agora retomamos a fórmula do Log na base 2 \, e entramos
+com o Intervalo \, ou Proporção. Veja que o trítono (raiz de 2) dá
+"meia Oitava". Enquanto o número 2 (proporção 2/1) dá uma oitava \,
+e a proporção do semitom dá 1/12 de Oitava. Abaixo \, temos a mesma
+fórmula adaptada para dar valores em Semitons \, cuja adaptação é só
+multiplicar por 12!;
+#X connect 0 0 28 0;
+#X connect 2 0 4 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 7 0 51 0;
+#X connect 8 0 10 0;
+#X connect 9 0 8 0;
+#X connect 10 0 12 0;
+#X connect 11 0 9 0;
+#X connect 20 0 42 0;
+#X connect 21 0 20 0;
+#X connect 26 0 7 0;
+#X connect 27 0 31 0;
+#X connect 28 0 27 0;
+#X connect 31 0 32 0;
+#X connect 40 0 67 0;
+#X connect 40 0 68 0;
+#X connect 41 0 40 0;
+#X connect 43 0 67 0;
+#X connect 43 0 68 0;
+#X connect 44 0 43 0;
+#X connect 45 0 67 0;
+#X connect 45 0 68 0;
+#X connect 48 0 50 0;
+#X connect 49 0 48 0;
+#X connect 51 0 21 0;
+#X connect 51 1 22 0;
+#X connect 56 0 61 0;
+#X connect 57 0 56 0;
+#X connect 58 0 61 0;
+#X connect 59 0 58 0;
+#X connect 60 0 61 0;
+#X connect 61 0 62 0;
+#X connect 67 0 39 0;
+#X connect 68 0 38 0;

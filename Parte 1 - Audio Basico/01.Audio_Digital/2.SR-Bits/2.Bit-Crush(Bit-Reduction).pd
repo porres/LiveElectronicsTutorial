@@ -1,0 +1,176 @@
+#N canvas 330 46 1059 704 10;
+#X obj 67 324 osc~ 440;
+#X msg 602 41 4;
+#X msg 641 41 8;
+#X msg 533 41 1;
+#X msg 570 41 2;
+#X obj 602 78 expr pow(2 \, $f1);
+#X obj 643 107 / 2;
+#X obj 602 151 + 1;
+#X obj 602 217 nbx 5 22 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 13
+-204786 -1 -1 257 256;
+#X obj 553 284 cnv 15 448 138 empty empty empty 20 12 0 14 -204786
+-66577 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array bits 441 float 5;
+#A 0 0.0546875 0.117188 0.179688 0.242188 0.304688 0.367188 0.421875
+0.476562 0.53125 0.585938 0.632812 0.679688 0.726562 0.765625 0.804688
+0.84375 0.875 0.898438 0.929688 0.945312 0.96875 0.984375 0.992188
+1 1 1 0.992188 0.984375 0.96875 0.953125 0.929688 0.90625 0.882812
+0.851562 0.8125 0.773438 0.734375 0.695312 0.648438 0.59375 0.546875
+0.492188 0.4375 0.375 0.320312 0.257812 0.195312 0.132812 0.0703125
+0.0078125 -0.0546875 -0.117188 -0.179688 -0.234375 -0.296875 -0.359375
+-0.414062 -0.46875 -0.523438 -0.578125 -0.625 -0.671875 -0.71875 -0.765625
+-0.804688 -0.835938 -0.867188 -0.898438 -0.921875 -0.945312 -0.96875
+-0.976562 -0.992188 -1 -1 -1 -0.992188 -0.984375 -0.96875 -0.953125
+-0.9375 -0.914062 -0.882812 -0.851562 -0.820312 -0.78125 -0.742188
+-0.695312 -0.648438 -0.601562 -0.546875 -0.5 -0.445312 -0.382812 -0.328125
+-0.265625 -0.203125 -0.140625 -0.078125 -0.015625 0.046875 0.109375
+0.171875 0.226562 0.289062 0.351562 0.40625 0.460938 0.515625 0.570312
+0.625 0.671875 0.71875 0.757812 0.796875 0.835938 0.867188 0.898438
+0.921875 0.945312 0.960938 0.976562 0.992188 1 1 1 0.992188 0.984375
+0.976562 0.960938 0.9375 0.914062 0.890625 0.859375 0.820312 0.789062
+0.742188 0.703125 0.65625 0.609375 0.554688 0.5 0.445312 0.390625 0.335938
+0.273438 0.210938 0.148438 0.0859375 0.0234375 -0.0390625 -0.101562
+-0.164062 -0.226562 -0.28125 -0.34375 -0.398438 -0.460938 -0.515625
+-0.5625 -0.617188 -0.664062 -0.710938 -0.75 -0.789062 -0.828125 -0.859375
+-0.890625 -0.921875 -0.945312 -0.960938 -0.976562 -0.984375 -0.992188
+-1 -1 -0.992188 -0.984375 -0.976562 -0.960938 -0.9375 -0.914062 -0.890625
+-0.859375 -0.828125 -0.789062 -0.75 -0.703125 -0.664062 -0.609375 -0.5625
+-0.507812 -0.453125 -0.398438 -0.335938 -0.28125 -0.21875 -0.15625
+-0.09375 -0.03125 0.03125 0.09375 0.15625 0.21875 0.273438 0.335938
+0.398438 0.453125 0.507812 0.5625 0.609375 0.65625 0.703125 0.75 0.789062
+0.828125 0.859375 0.890625 0.914062 0.9375 0.960938 0.976562 0.984375
+0.992188 1 1 0.992188 0.992188 0.976562 0.960938 0.945312 0.921875
+0.890625 0.867188 0.828125 0.796875 0.757812 0.710938 0.664062 0.617188
+0.570312 0.515625 0.460938 0.40625 0.34375 0.289062 0.226562 0.164062
+0.101562 0.0390625 -0.0234375 -0.0859375 -0.148438 -0.210938 -0.273438
+-0.328125 -0.390625 -0.445312 -0.5 -0.554688 -0.601562 -0.65625 -0.703125
+-0.742188 -0.78125 -0.820312 -0.851562 -0.882812 -0.914062 -0.9375
+-0.960938 -0.976562 -0.984375 -0.992188 -1 -1 -1 -0.992188 -0.976562
+-0.960938 -0.945312 -0.921875 -0.898438 -0.867188 -0.835938 -0.796875
+-0.757812 -0.71875 -0.671875 -0.625 -0.570312 -0.523438 -0.46875 -0.414062
+-0.351562 -0.296875 -0.234375 -0.171875 -0.109375 -0.046875 0.015625
+0.078125 0.140625 0.203125 0.265625 0.320312 0.382812 0.4375 0.492188
+0.546875 0.601562 0.648438 0.695312 0.742188 0.78125 0.820312 0.851562
+0.882812 0.914062 0.9375 0.953125 0.96875 0.984375 0.992188 1 1 1 0.992188
+0.976562 0.96875 0.945312 0.921875 0.898438 0.867188 0.835938 0.804688
+0.765625 0.71875 0.679688 0.632812 0.578125 0.53125 0.476562 0.414062
+0.359375 0.296875 0.242188 0.179688 0.117188 0.0546875 -0.0078125 -0.0703125
+-0.132812 -0.195312 -0.257812 -0.320312 -0.375 -0.429688 -0.484375
+-0.539062 -0.59375 -0.640625 -0.6875 -0.734375 -0.773438 -0.8125 -0.851562
+-0.882812 -0.90625 -0.929688 -0.953125 -0.96875 -0.984375 -0.992188
+-1 -1 -1 -0.992188 -0.984375 -0.96875 -0.953125 -0.929688 -0.90625
+-0.875 -0.84375 -0.804688 -0.765625 -0.726562 -0.679688 -0.632812 -0.585938
+-0.53125 -0.476562 -0.421875 -0.367188 -0.304688 -0.25 -0.1875 -0.125
+-0.0625 0 0.0625 0.125 0.1875 0.25 0.3125 0.367188 0.429688 0.484375
+0.539062 0.585938 0.640625 0.6875 0.726562 0.773438 0.8125 0.84375
+0.875 0.90625 0.929688 0.953125 0.96875 0.984375 0.992188 1 1 1 0.992188
+0.984375 0.96875 0.953125 0.929688 0.90625 0.875 0.84375 0.8125 0.773438
+0.734375 0.6875 0.640625 0.59375;
+#X coords 0 1.1 440 -1.1 450 140 1;
+#X restore 552 283 graph;
+#X text 717 77 resolução em bits;
+#X text 681 106 divide por 2 porque temos o eixo;
+#X text 759 121 positivo e negativo.;
+#X obj 67 293 nbx 4 22 0 1e+37 0 0 empty empty empty 0 -8 0 13 -204786
+-1 -1 0 256;
+#X obj 641 17 loadbang;
+#X text 713 41 bits;
+#X msg 678 41 16;
+#X text 645 181 O [expr] consegue carregar esse valor como uma variável
+;
+#X text 96 69 Enquanto processamento \, esse efeito é conhecido como
+"Bit Crusher" \, e é usado como um tipo de distorção.;
+#X obj 67 544 output~;
+#X obj 86 386 output~;
+#N canvas 134 61 471 328 plotar 0;
+#X obj 114 165 tgl 15 0 empty empty empty 17 7 0 10 -204786 -1 -1 1
+1;
+#X obj 114 138 loadbang;
+#X obj 73 223 tabwrite~ bits;
+#X obj 114 190 metro 440;
+#X obj 73 84 inlet~;
+#X text 174 225 joga o áudio na tabela a cada bang;
+#X msg 210 177 \; pd dsp 1;
+#X text 278 183 liga o áudio;
+#X connect 0 0 3 0;
+#X connect 1 0 0 0;
+#X connect 1 0 6 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X restore 118 504 pd plotar;
+#X text 164 408 <= volume (clique e arraste);
+#X text 162 392 som original;
+#X text 139 563 som processado;
+#X text 98 217 No caso de tons puros fica fácil reconhecer os artefatos
+(ruídos) gerados pela baixa resolução da "Quantização em Bits". É importante
+ressaltar que a resolução final máxima depende do conversor analógico-digital
+sua placa de som.;
+#X text 27 295 Hertz;
+#X text 132 295 <= Clique e arraste \, ou clique \, dê um valor e depois
+"enter";
+#X text 273 464 <= bit crusher/reduction;
+#X text 222 519 clique e abra;
+#X text 134 323 <= oscilador a 440 Hz;
+#X msg 812 570 float;
+#X text 851 570 inalterado;
+#X msg 832 620 8bit;
+#X text 785 654 =;
+#X floatatom 765 611 5 0 0 0 - bit -;
+#X obj 612 655 expr~ int($v1 * $f2) / $f2;
+#X text 681 220 Os valores que temos é o da Resolução em bits + 1 (zero)
+;
+#X obj 67 465 expr~ rint($v1 * steps) / steps;
+#X obj 812 654 quantize~;
+#X msg 826 596 16bit;
+#X obj 643 134 nbx 5 14 -1e+37 1e+37 0 0 bit empty empty 0 -8 0 10
+-262144 -1 -1 128 256;
+#X obj 643 157 value steps;
+#X text 724 159 Guardamos a variável "steps" no objeto [value];
+#X text 98 103 O truque do processamento \, no Pd \, é multiplicar
+o sinal de áudio (que varia entre -1 e 1) por um valor (variável "steps"
+à direita) \, arredondar como número inteiro e dividi-la pelo mesmo
+valor \, fazendo com que volte a ficar entre -1 e 1!;
+#X text 98 172 Clique nas mensagens acima à direita para mudar a resolução
+em bits. Veja que 8 bits até que engana um pouquinho... mas só um pouquinho...
+;
+#X text 186 503 <= subpatch que plota o áudio;
+#X text 106 616 Uma outra forma seria usar a função "int" em vez de
+"rint". Essa função considera apenas a parte inteira \, e isso aumenta
+o erro de arredondamento (ou seja \, o erro de quantização) gerando
+dessa forma mais ruído. O objeto [quantize~] faz osse mesmo tipo de
+operação.;
+#X text 593 457 Abaixo temos o objeto [quantize~] \, que recebe o número
+de passos como a variável "steps". Ele ainda chama presets de 8 e 16
+bits quando recebe as mensagens "8bit" e "16bit" \, além da mensagem
+"float" deixa o sinal inalterado (na resolução original de 32 bit float).
+Temos também abaixo a implementação equivalente do [quantize~] em um
+objeto [expr~].;
+#X text 95 9 Em um processo simples de arredondamento \, podemos simular
+uma redução da resolução em bits. Além de acrescentar ruídos \, diminuir
+a resolução em bits também diminui o registro dinâmico em 6.0206 dB
+por bit.;
+#X connect 0 0 21 0;
+#X connect 0 0 21 1;
+#X connect 0 0 39 0;
+#X connect 1 0 5 0;
+#X connect 2 0 5 0;
+#X connect 3 0 5 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 5 0 7 0;
+#X connect 6 0 42 0;
+#X connect 7 0 8 0;
+#X connect 14 0 0 0;
+#X connect 15 0 2 0;
+#X connect 17 0 5 0;
+#X connect 32 0 40 0;
+#X connect 34 0 40 0;
+#X connect 36 0 37 1;
+#X connect 36 0 40 0;
+#X connect 39 0 20 0;
+#X connect 39 0 20 1;
+#X connect 39 0 22 0;
+#X connect 41 0 40 0;
+#X connect 42 0 43 0;

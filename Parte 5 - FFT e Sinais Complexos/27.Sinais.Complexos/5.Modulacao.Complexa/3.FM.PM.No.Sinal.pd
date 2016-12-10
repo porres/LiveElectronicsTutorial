@@ -1,0 +1,237 @@
+#N canvas 344 31 882 715 10;
+#X obj 176 454 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 10800 0;
+#N canvas 0 134 529 373 gain 0;
+#X obj 234 176 *~;
+#X obj 243 209 dac~;
+#X obj 263 146 line~;
+#X msg 263 120 \$1 10;
+#X obj 263 94 pow 4;
+#X obj 263 67 inlet;
+#X obj 234 36 inlet~;
+#N canvas 131 60 278 287 plot-spectrum 0;
+#X obj 53 64 inlet~;
+#X obj 53 99 rfft~;
+#X obj 132 98 loadbang;
+#X obj 132 146 metro 250;
+#X obj 132 125 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1
+1;
+#X obj 89 224 block~ 4096;
+#X obj 41 137 cartopol~;
+#X obj 51 188 tabwrite~ \$0-Espectro;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 1 1 6 1;
+#X connect 2 0 4 0;
+#X connect 3 0 7 0;
+#X connect 4 0 3 0;
+#X connect 6 0 7 0;
+#X restore 165 250 pd plot-spectrum;
+#X obj 383 105 loadbang;
+#X msg 383 130 \; pd dsp 1 \; Portadora 500 \; Moduladora 1 \; indice
+250;
+#X obj 111 182 r~ \$0-plot;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 7 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 8 0 9 0;
+#X connect 10 0 7 0;
+#X restore 134 478 pd gain;
+#X obj 250 522 cnv 15 298 138 empty empty empty 20 12 0 14 -174629
+-66577 0;
+#N canvas 0 22 478 328 (subpatch) 0;
+#X array \$0-Espectro 128 float 0;
+#X coords 0 3248 127 0 300 140 1;
+#X restore 249 521 graph;
+#X text 341 661 500Hz;
+#X text 288 660 250Hz;
+#X text 248 660 50Hz;
+#X text 396 660 750Hz;
+#X text 455 660 1KHz;
+#X text 500 661 1.25KHz;
+#X obj 98 302 nbx 5 16 -2000 2000 0 0 empty Portadora empty 0 -8 0
+13 -261682 -1 -1 500 256;
+#X text 99 281 Portadora;
+#N canvas 244 63 323 322 FM_ssb 0;
+#X obj 89 275 outlet~;
+#X obj 89 174 cartopol~;
+#X obj 89 240 poltocar~;
+#X obj 157 175 cartopol~;
+#X obj 140 210 +~;
+#X obj 89 210 *~;
+#N canvas 77 67 612 360 hilbert~ 0;
+#X obj 308 157 biquad~ 0.83774 -0.06338 0.06338 -0.83774 1;
+#X obj 308 129 biquad~ 1.94632 -0.94657 0.94657 -1.94632 1;
+#X obj 28 132 biquad~ -0.02569 0.260502 -0.260502 0.02569 1;
+#X obj 28 158 biquad~ 1.8685 -0.870686 0.870686 -1.8685 1;
+#X obj 308 26 inlet~;
+#X obj 308 183 outlet~;
+#X obj 28 186 outlet~;
+#X obj 405 271 hilbert~;
+#X text 297 271 clique e abra =>;
+#X text 119 240 Copiado da abstração [hilbert~] que vem no Pd-Vanilla.
+;
+#X connect 0 0 5 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 1 0;
+#X connect 4 0 2 0;
+#X restore 77 92 pd hilbert~;
+#X obj 157 131 cos~;
+#X obj 208 131 cos~;
+#X obj 208 110 -~ 0.25;
+#X obj 77 31 inlet~;
+#X obj 157 54 phasor~;
+#X obj 157 28 inlet~;
+#X connect 1 0 5 0;
+#X connect 1 1 4 0;
+#X connect 2 0 0 0;
+#X connect 3 0 5 1;
+#X connect 3 1 4 1;
+#X connect 4 0 2 1;
+#X connect 5 0 2 0;
+#X connect 6 0 1 0;
+#X connect 6 1 1 1;
+#X connect 7 0 3 0;
+#X connect 8 0 3 1;
+#X connect 9 0 8 0;
+#X connect 10 0 6 0;
+#X connect 11 0 7 0;
+#X connect 11 0 9 0;
+#X connect 12 0 11 0;
+#X restore 134 410 pd FM_ssb;
+#X obj 268 355 line~;
+#X msg 268 327 \$1 10;
+#X obj 185 369 *~;
+#X text 186 281 Moduladora;
+#X text 278 280 Índice;
+#X obj 185 332 osc~;
+#X obj 583 445 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 267 136 529 373 gain 0;
+#X obj 234 176 *~;
+#X obj 243 209 dac~;
+#X obj 263 146 line~;
+#X msg 263 120 \$1 10;
+#X obj 263 94 pow 4;
+#X obj 263 67 inlet;
+#X obj 234 36 inlet~;
+#X obj 165 250 s~ \$0-plot;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 0 0 7 0;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 541 469 pd gain;
+#N canvas 244 63 273 274 PM_ssb 0;
+#X obj 89 225 outlet~;
+#X obj 89 124 cartopol~;
+#X obj 89 190 poltocar~;
+#X obj 140 160 +~;
+#N canvas 77 67 612 360 hilbert~ 0;
+#X obj 308 157 biquad~ 0.83774 -0.06338 0.06338 -0.83774 1;
+#X obj 308 129 biquad~ 1.94632 -0.94657 0.94657 -1.94632 1;
+#X obj 28 132 biquad~ -0.02569 0.260502 -0.260502 0.02569 1;
+#X obj 28 158 biquad~ 1.8685 -0.870686 0.870686 -1.8685 1;
+#X obj 308 26 inlet~;
+#X obj 308 183 outlet~;
+#X obj 28 186 outlet~;
+#X obj 405 271 hilbert~;
+#X text 297 271 clique e abra =>;
+#X text 119 240 Copiado da abstração [hilbert~] que vem no Pd-Vanilla.
+;
+#X connect 0 0 5 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 6 0;
+#X connect 4 0 1 0;
+#X connect 4 0 2 0;
+#X restore 77 92 pd hilbert~;
+#X obj 77 31 inlet~;
+#X obj 157 28 inlet~;
+#X connect 1 0 2 0;
+#X connect 1 1 3 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 1;
+#X connect 4 0 1 0;
+#X connect 4 1 1 1;
+#X connect 5 0 4 0;
+#X connect 6 0 3 1;
+#X restore 541 401 pd PM_ssb;
+#X obj 54 348 adc~;
+#X obj 185 302 nbx 5 16 -2000 2000 0 0 empty Moduladora empty 0 -8
+0 13 -262130 -1 -1 52 256;
+#X obj 268 303 nbx 5 16 0 2000 0 0 empty indice empty 0 -8 0 13 -204786
+-1 -1 250 256;
+#X obj 505 307 nbx 5 16 -2000 2000 0 0 empty Portadora empty 0 -8 0
+13 -261682 -1 -1 500 256;
+#X text 506 286 Portadora;
+#X obj 675 360 line~;
+#X msg 675 332 \$1 10;
+#X obj 592 374 *~;
+#X text 593 286 Moduladora;
+#X text 685 285 Índice;
+#X obj 592 337 osc~;
+#X obj 592 307 nbx 5 16 -2000 2000 0 0 empty Moduladora empty 0 -8
+0 13 -262130 -1 -1 1 256;
+#X obj 675 308 nbx 5 16 0 2000 0 0 empty indice empty 0 -8 0 13 -204786
+-1 -1 250 256;
+#X obj 460 353 adc~;
+#X text 46 212 O subpatch [FM_ssb] equivale ao que vimos no exemplo
+de "Spectral.Shifter" e já inclui a transformada de hilbert \, o oscilador
+modulador complexo e a modulação complexa.;
+#X text 46 147 Mas no caso de uma senóide como sinal portador \, seria
+o mesmo que uma FM com um oscilador senoidal. Apesar de usarmos aqui
+um oscilador senoidal \, podemos ter a entrada do microfone ou qualquer
+outro sinal. Experimente.;
+#X text 439 80 Esse patch é ainda mais simples que o de "FM" ao lado
+e consiste apenas de ligar um oscilador real na entrada de fase da
+portadora. Para obtermos a fase da portadora \, fazemos uma transformada
+de hilbert e convertemos pra forma polar (Amplitude e Fase). Veja que
+o resultado agora é bem similar à FM \, porém \, igualmente como demonstrado
+anteriormente na teoria de PM \, a frequência de modulação influencia
+no índice de modulação.;
+#X text 442 196 Por fim \, pense que pode usar outras formas de onda
+como moduladora em ambos os casos. Porém o sinal de modulação na PM
+obedece à teoria de uma relação de integral com a FM.;
+#X obj 505 353 osc~;
+#X text 438 31 Como o sinal complexo nos dá acesso à fase \, é possível
+também que implementemos o spectral shifting via uma espécie de Modulação
+de Fase!;
+#X obj 98 348 phasor~ 500;
+#X text 44 33 Com a modulação complexa (ou ssb) somos capazes de relizarmos
+uma espécie modulação de frequência no sinal dado no tempo. Não se
+trata de um "FM" propriamente dita \, porque a modulação de frequência
+em um oscilador dente de serra realiza um "Pitch Shifting" \, e já
+vimos que essa técnica gera outra coisa (um "spectral shifting"). Em
+todo caso \, o resutado é relativamente similar para frequências de
+modulação mais altas.;
+#X connect 0 0 1 1;
+#X connect 10 0 42 0;
+#X connect 12 0 1 0;
+#X connect 13 0 15 1;
+#X connect 14 0 13 0;
+#X connect 15 0 12 1;
+#X connect 18 0 15 0;
+#X connect 19 0 20 1;
+#X connect 21 0 20 0;
+#X connect 23 0 18 0;
+#X connect 24 0 14 0;
+#X connect 25 0 40 0;
+#X connect 27 0 29 1;
+#X connect 28 0 27 0;
+#X connect 29 0 21 1;
+#X connect 32 0 29 0;
+#X connect 33 0 32 0;
+#X connect 34 0 28 0;
+#X connect 40 0 21 0;
+#X connect 42 0 12 0;

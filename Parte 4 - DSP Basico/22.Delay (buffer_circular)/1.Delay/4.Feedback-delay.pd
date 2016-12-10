@@ -1,0 +1,301 @@
+#N canvas 134 71 1140 648 10;
+#X obj 113 69 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 113 93 metro 1000;
+#X obj 60 39 noise~;
+#X obj 60 106 *~;
+#X text 109 38 Ruído Branco;
+#X obj 31 514 output~;
+#X obj 95 400 *~;
+#X obj 113 350 hsl 128 15 -0.999 0.999 0 0 empty feedback empty -2
+-6 0 8 -204800 -1 -1 10200 1;
+#X obj 100 478 delwrite~ feedback 3000;
+#X obj 60 436 +~;
+#X floatatom 110 374 0 0 0 0 - - -;
+#X obj 95 263 line~;
+#X msg 95 236 \$1 300;
+#X floatatom 95 209 5 0 0 0 - - -;
+#X obj 98 184 hsl 128 15 1.45 500 1 0 empty tempo empty -2 -6 0 8 -183917
+-1 -1 0 1;
+#X obj 113 143 vline~;
+#X text 318 124 Ao multiplicar por 0.9 \, por exemplo \, cada repetição
+terá 90% da amplitude da anterior.;
+#X text 111 329 feedback (ajuste de ganho);
+#X text 140 209 tempo do delay;
+#X text 317 157 Perceba que um valor bem curto de delay acaba filtrando
+e mudando a qualidade sonora da entrada. Veremos melhor a explicação
+e teoria por trás disso depois. Aliás \, veremos como os filtros podem
+ser obtidos por linhas de delay.;
+#X text 319 217 No caso de um feedback \, o sinal será realimentado
+com um atraso mínimo (nunca será 0 de fato). Isso porque o processamente
+de áudio sempre se dá em blocos \, e o mínimo então será sempre um
+bloco de processamento.;
+#X text 320 280 No Pd \, o padrão é do tamanho do bloco é de 64 amostras.
+O objeto [block~] muda o tamanho do bloco para a janela (ou subjanela)
+em que ele se encontra \, mas o problema é que não pode haver nem entradas
+nem saídas de áudio (objetos [adc~] e [dac~]) para blocos diferentes
+de 64!;
+#N canvas 615 143 751 625 feedback 0;
+#X obj 473 228 block~ 1;
+#X text 368 270 Neste subpatch \, o bloco é de apenas uma amostra!
+;
+#X obj 115 542 outlet~;
+#X obj 188 66 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 188 90 metro 1000;
+#X obj 115 76 noise~;
+#X obj 115 113 *~;
+#X obj 160 423 *~;
+#X obj 178 373 hsl 128 15 -0.999 0.999 0 0 empty feedback empty -2
+-6 0 8 -204800 -1 -1 400 1;
+#X obj 115 459 +~;
+#X floatatom 175 397 0 0 0 0 - - -;
+#X obj 160 286 line~;
+#X msg 160 259 \$1 300;
+#X floatatom 160 232 5 0 0 0 - - -;
+#X obj 163 207 hsl 128 15 0.1 500 1 0 empty tempo empty -2 -6 0 8 -183917
+-1 -1 3600 1;
+#X obj 188 140 vline~;
+#X text 213 354 feedback;
+#X text 212 185 tempo;
+#X obj 145 498 delwrite~ feedback2 3000;
+#X obj 160 318 vd~ feedback2 3000;
+#X msg 188 113 1 20 \, 0 50 50;
+#X text 345 305 Logo \, o atraso mínimo do feedback é de também uma
+amostra;
+#X connect 3 0 4 0;
+#X connect 4 0 20 0;
+#X connect 5 0 6 0;
+#X connect 6 0 9 0;
+#X connect 7 0 9 1;
+#X connect 8 0 10 0;
+#X connect 9 0 2 0;
+#X connect 9 0 18 0;
+#X connect 10 0 7 1;
+#X connect 11 0 19 0;
+#X connect 12 0 11 0;
+#X connect 13 0 12 0;
+#X connect 14 0 13 0;
+#X connect 15 0 6 1;
+#X connect 19 0 7 0;
+#X connect 20 0 15 0;
+#X restore 779 118 pd feedback;
+#X obj 762 161 output~;
+#X obj 925 118 loadbang;
+#X msg 925 145 \; pd dsp 1 \; tempo 300 \; feedback 0.9 \; metro 1
+;
+#X text 202 116 Envelope AR;
+#X msg 113 116 1 20 \, 0 50 50;
+#X text 318 80 É importante que haja um ajuste de ganho para que ocorra
+um decaimento do feedback \, pois se for multiplicado por 1 ou mais
+\, o feedback será infinito.;
+#X text 317 22 Diferente dos exemplos anteriores \, temos neste exemplo
+um delay em feedback. Ou seja \, a linha de delay é somada novamente
+à entrada do buffer. Em contrapartida \, podemos dizer que os exemplos
+anteriores eram de "feedforward".;
+#X text 305 414 FEEDBACK NEGATIVO:;
+#X text 330 559 Perceba a diferença na qualidade sonora do feedback
+positivo e negativo \, especialmente para valores altos de feedback
+e valores de tempo de delay mais curtos.;
+#N canvas 128 22 582 630 feedback 0;
+#X obj 278 436 block~ 1;
+#X obj 115 542 outlet~;
+#X obj 130 423 *~;
+#X obj 148 373 hsl 128 15 -1 1 0 0 empty feedback empty -2 -6 0 8 -204800
+-1 -1 4947 1;
+#X obj 115 459 +~;
+#X floatatom 145 397 0 0 0 0 - - -;
+#X obj 130 286 line~;
+#X msg 130 259 \$1 300;
+#X floatatom 130 232 5 0 0 0 - - -;
+#X obj 133 207 hsl 128 15 0.1 1500 1 0 empty tempo empty -2 -6 0 8
+-183917 -1 -1 10028 1;
+#X text 181 372 feedback;
+#X text 177 205 tempo;
+#X obj 43 94 inlet~;
+#X obj 130 56 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X floatatom 187 54 5 0 0 0 - - -;
+#X obj 130 108 random 500;
+#X obj 130 167 line 0 1;
+#X obj 130 80 metro 1800;
+#X floatatom 250 116 5 0 0 0 - - -;
+#X obj 130 141 pack f 700;
+#X floatatom 214 147 5 0 0 0 - - -;
+#X obj 306 188 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X floatatom 363 189 5 0 0 0 - - -;
+#X floatatom 393 298 5 0 0 0 - - -;
+#X obj 306 211 metro 1200;
+#X obj 145 498 delwrite~ feedback3 3000;
+#X obj 250 64 metro 5000;
+#X obj 250 90 expr random (100 \, 1000);
+#X obj 251 43 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 306 235 random 2000;
+#X obj 306 256 / 1000;
+#X obj 306 279 - 1;
+#X obj 306 332 line 0 1;
+#X obj 306 306 pack f 200;
+#X obj 130 318 vd~ feedback3;
+#X connect 2 0 4 1;
+#X connect 3 0 5 0;
+#X connect 4 0 1 0;
+#X connect 4 0 25 0;
+#X connect 5 0 2 1;
+#X connect 6 0 34 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 9 0 8 0;
+#X connect 12 0 4 0;
+#X connect 13 0 17 0;
+#X connect 14 0 17 1;
+#X connect 15 0 19 0;
+#X connect 16 0 9 0;
+#X connect 17 0 15 0;
+#X connect 18 0 15 1;
+#X connect 19 0 16 0;
+#X connect 20 0 19 1;
+#X connect 21 0 24 0;
+#X connect 22 0 24 1;
+#X connect 23 0 33 1;
+#X connect 24 0 29 0;
+#X connect 26 0 27 0;
+#X connect 27 0 18 0;
+#X connect 28 0 26 0;
+#X connect 29 0 30 0;
+#X connect 30 0 31 0;
+#X connect 31 0 33 0;
+#X connect 32 0 3 0;
+#X connect 33 0 32 0;
+#X connect 34 0 2 0;
+#X restore 828 506 pd feedback;
+#X obj 845 545 output~;
+#X obj 929 335 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 929 359 metro 1000;
+#X obj 929 426 vline~;
+#X text 974 425 Envelope AR;
+#X obj 888 464 *~;
+#X msg 929 399 1 20 \, 0 100 100;
+#X obj 781 423 blosc~ saw;
+#N canvas 734 24 582 630 feedback 0;
+#X obj 278 436 block~ 1;
+#X obj 115 542 outlet~;
+#X obj 130 423 *~;
+#X obj 148 373 hsl 128 15 -1 1 0 0 empty feedback empty -2 -6 0 8 -204800
+-1 -1 9627 1;
+#X obj 115 459 +~;
+#X floatatom 145 397 0 0 0 0 - - -;
+#X obj 130 286 line~;
+#X msg 130 259 \$1 300;
+#X floatatom 130 232 5 0 0 0 - - -;
+#X obj 133 207 hsl 128 15 0.1 1500 1 0 empty tempo empty -2 -6 0 8
+-183917 -1 -1 11132 1;
+#X text 181 372 feedback;
+#X text 177 205 tempo;
+#X obj 43 94 inlet~;
+#X obj 130 56 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X floatatom 187 54 5 0 0 0 - - -;
+#X obj 130 108 random 500;
+#X obj 130 167 line 0 1;
+#X floatatom 250 116 5 0 0 0 - - -;
+#X floatatom 214 147 5 0 0 0 - - -;
+#X obj 306 188 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X floatatom 363 189 5 0 0 0 - - -;
+#X floatatom 393 298 5 0 0 0 - - -;
+#X obj 250 90 expr random (100 \, 1000);
+#X obj 251 43 tgl 15 0 empty metro empty 17 7 0 10 -261682 -1 -1 1
+1;
+#X obj 306 235 random 2000;
+#X obj 306 256 / 1000;
+#X obj 306 279 - 1;
+#X obj 306 332 line 0 1;
+#X obj 306 306 pack f 200;
+#X obj 145 498 delwrite~ feedback4 3000;
+#X obj 130 80 metro 1000;
+#X obj 130 141 pack f 800;
+#X obj 250 64 metro 500;
+#X obj 306 211 metro 600;
+#X obj 130 318 vd~ feedback4;
+#X connect 2 0 4 1;
+#X connect 3 0 5 0;
+#X connect 4 0 1 0;
+#X connect 4 0 29 0;
+#X connect 5 0 2 1;
+#X connect 6 0 34 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 9 0 8 0;
+#X connect 12 0 4 0;
+#X connect 13 0 30 0;
+#X connect 14 0 30 1;
+#X connect 15 0 31 0;
+#X connect 16 0 9 0;
+#X connect 17 0 15 1;
+#X connect 18 0 31 1;
+#X connect 19 0 33 0;
+#X connect 20 0 33 1;
+#X connect 21 0 28 1;
+#X connect 22 0 17 0;
+#X connect 23 0 32 0;
+#X connect 24 0 25 0;
+#X connect 25 0 26 0;
+#X connect 26 0 28 0;
+#X connect 27 0 3 0;
+#X connect 28 0 27 0;
+#X connect 30 0 15 0;
+#X connect 31 0 16 0;
+#X connect 32 0 22 0;
+#X connect 33 0 24 0;
+#X connect 34 0 2 0;
+#X restore 908 506 pd feedback;
+#X obj 95 295 vd~ feedback;
+#X text 320 355 Sendo assim \, precisamos mudar o tamanho do bloco
+em um subpatch como à direita ([pd feedback]. Abra e veja como ali
+o delay mínimo pode ser de apenas uma amostra.;
+#X text 733 37 O subpatch [pd feedback] abaixo permite atraso em feedback
+de até uma amostra.;
+#X text 749 279 E agora uma variação do exemplo em estéreo \, com controles
+de tempo do delay e feedback sendo controlados aleatoreamente.;
+#X obj 781 397 expr random(200 \, 400);
+#X text 328 438 Este exemplo também permite multiplicar por valores
+negativos de feedback. Já sabemos de exemplos anteriores que multiplicar
+por um número negativo gera um sinal com polaridade invertida!;
+#X text 329 496 No caso de um feedback \, isso significa que a cada
+iteração do loop de delay haverá uma inversão de polaridade do sinal
+que vem da linha de delay. Já no exemplo do suboatch \, com bloco igual
+a 1 \, a inversão pode chegar a até uma amostra!;
+#X connect 0 0 1 0;
+#X connect 1 0 27 0;
+#X connect 2 0 3 0;
+#X connect 3 0 9 0;
+#X connect 6 0 9 1;
+#X connect 7 0 10 0;
+#X connect 9 0 8 0;
+#X connect 9 0 5 0;
+#X connect 9 0 5 1;
+#X connect 10 0 6 1;
+#X connect 11 0 42 0;
+#X connect 12 0 11 0;
+#X connect 13 0 12 0;
+#X connect 14 0 13 0;
+#X connect 15 0 3 1;
+#X connect 22 0 23 0;
+#X connect 22 0 23 1;
+#X connect 24 0 25 0;
+#X connect 27 0 15 0;
+#X connect 32 0 33 0;
+#X connect 34 0 35 0;
+#X connect 35 0 39 0;
+#X connect 35 0 46 0;
+#X connect 36 0 38 1;
+#X connect 38 0 32 0;
+#X connect 38 0 41 0;
+#X connect 39 0 36 0;
+#X connect 40 0 38 0;
+#X connect 41 0 33 1;
+#X connect 42 0 6 0;
+#X connect 46 0 40 0;

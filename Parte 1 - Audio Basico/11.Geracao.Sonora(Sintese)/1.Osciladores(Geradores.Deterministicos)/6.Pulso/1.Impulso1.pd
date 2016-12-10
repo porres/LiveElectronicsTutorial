@@ -1,0 +1,163 @@
+#N canvas 88 46 855 755 10;
+#X obj 56 339 cnv 15 198 138 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array Pulse 441 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 1.1 440 -1.1 200 140 1;
+#X restore 55 338 graph;
+#X text 41 333 1;
+#X text 35 465 -1;
+#X text 41 400 0;
+#X obj 173 268 hsl 128 15 0 1 0 0 empty empty empty -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 0 22 465 402 ganho 0;
+#X obj 238 184 *~;
+#X obj 226 216 dac~;
+#X obj 291 138 line~;
+#X msg 291 112 \$1 10;
+#X obj 291 86 pow 4;
+#X obj 291 45 inlet;
+#X obj 238 44 inlet~;
+#X obj 96 198 metro 441;
+#X obj 96 147 loadbang;
+#X obj 96 174 tgl 15 0 empty empty empty 17 7 0 10 -203904 -1 -1 1
+1;
+#X obj 166 253 tabwrite~ Pulse;
+#X msg 67 233 \; pd dsp 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 0 10 0;
+#X connect 7 0 10 0;
+#X connect 8 0 9 0;
+#X connect 8 0 11 0;
+#X connect 9 0 7 0;
+#X restore 125 291 pd ganho;
+#X floatatom 125 212 5 0 0 0 - - -;
+#X obj 125 238 impulse~ 300;
+#X text 165 213 Hz;
+#X obj 696 271 nbx 5 14 1 100 0 1 empty empty empty 0 -8 0 10 -262130
+-1 -1 1 256;
+#X obj 460 218 cnv 15 198 138 empty empty empty 20 12 0 14 -262130
+-66577 0;
+#N canvas 0 22 474 324 (subpatch) 0;
+#X array impulso 4099 float 0;
+#X coords 0 1 4098 -1 200 140 1;
+#X restore 459 217 graph;
+#X text 442 215 1;
+#X text 437 340 -1;
+#X text 673 238 número de harmônicos:;
+#X text 31 19 Um oscilador de pulso é aquele que envia apenas uma amostra
+a cada ciclo. Geralmente a amostra possui um valor de 1 enquanto o
+resto do sinal é zerado. Logo \, é um pulso propriamente dito \, e
+não uma relação desse conceito com a onda quadrada \, já que uma Onda
+Quadrada oscila entre valores positivos e negativos.;
+#X text 34 108 Uma sequência maior de amostras iguais a 1 é chamada
+de "Trem de Pulsos". Enquanto apenas uma amostra também é chamada de
+"impulso". O externo [impulse~] é um oscilador de pulso nesses termos
+\, cujo argumento é a frequência do ciclo em Hz \, também recebida
+no inlet como sinal de áudio ou dado de controle.;
+#N canvas 101 22 550 476 Impulso 0;
+#X obj 42 47 inlet;
+#X obj 42 137 Uzi;
+#X obj 152 199 l;
+#X obj 42 221 l;
+#X floatatom 42 81 5 0 0 0 - - -;
+#X obj 57 193 list prepend;
+#X obj 42 109 trigger float bang;
+#X msg 42 342 normalize 1;
+#X obj 42 313 trigger bang anything;
+#X obj 42 279 prepend sinesum 4096;
+#X msg 57 164 1;
+#X obj 165 374 send impulso;
+#X text 164 163 Impulso: parciais com valores iguais a 1!;
+#X connect 0 0 4 0;
+#X connect 1 1 3 0;
+#X connect 1 2 10 0;
+#X connect 2 0 5 1;
+#X connect 3 0 9 0;
+#X connect 4 0 6 0;
+#X connect 5 0 2 0;
+#X connect 5 0 3 1;
+#X connect 6 0 1 0;
+#X connect 6 1 5 1;
+#X connect 7 0 11 0;
+#X connect 8 0 7 0;
+#X connect 8 1 11 0;
+#X connect 9 0 8 0;
+#X connect 10 0 5 0;
+#X restore 696 301 pd Impulso;
+#X text 439 19 Novamente \, é possível também gerar um impulso a partir
+de uma série harmônica (somatória de senos). E ainda outra vez \, podemos
+notar como é necessário uma somatória de harmônicos infinita para gerar
+um impulso perfeito.;
+#X text 440 104 No caso da geração de um pulso \, todos os harmônicos
+possuem um valor de amplitude igual. A implicação disso é que um impulso
+contém então todas as frequências de uma série harmônica infinita com
+os mesmos valores.;
+#X obj 451 385 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-204800 -1 -1 303 256;
+#X obj 569 435 hsl 128 15 0 1 0 0 empty empty ganho -2 -6 0 10 -203904
+-1 -1 0 0;
+#N canvas 0 22 237 305 ganho 0;
+#X obj 79 176 *~;
+#X obj 67 208 dac~;
+#X obj 108 146 line~;
+#X msg 108 120 \$1 10;
+#X obj 108 94 pow 4;
+#X obj 108 67 inlet;
+#X obj 79 36 inlet~;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 0 1;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X restore 521 465 pd ganho;
+#X obj 451 413 tabosc4~ impulso;
+#X obj 392 682 click~;
+#X obj 295 684 dirac~;
+#X obj 392 657 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X obj 295 659 bng 15 250 50 0 empty empty empty 17 7 0 10 -203904
+-1 -1;
+#X obj 290 717 dac~;
+#X obj 384 716 dac~;
+#X text 231 560 Gerador de pulso:;
+#X text 230 584 Relacionado ao oscilador de impulso \, temos os gerados
+de pulso único a partir de bangs: os objetos [dirac~] e [click~]. Porém
+claramente \, não são osciladores!;
+#X text 210 532 ============================================================
+;
+#X connect 5 0 6 1;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;
+#X connect 10 0 18 0;
+#X connect 21 0 24 0;
+#X connect 22 0 23 1;
+#X connect 24 0 23 0;
+#X connect 25 0 30 0;
+#X connect 25 0 30 1;
+#X connect 26 0 29 0;
+#X connect 26 0 29 1;
+#X connect 27 0 25 0;
+#X connect 28 0 26 0;

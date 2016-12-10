@@ -1,0 +1,181 @@
+#N canvas 65 22 1301 709 10;
+#X obj 102 342 output~;
+#X obj 36 300 expr~ $v1 * cos($v2 * (pi / 2)) \; $v1 * sin($v2 * (pi
+/ 2));
+#X obj 36 237 osc~ 400;
+#X obj 258 248 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228395
+-1 -1 0 1;
+#X obj 255 323 line~;
+#X msg 255 300 \$1 20;
+#N canvas 422 36 814 620 text 0;
+#X restore 690 387 pd text;
+#X obj 255 274 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 12
+-236717 -1 -1 0 256;
+#X text 328 274 Posição (0-1);
+#X text 199 246 esquerda;
+#X text 393 247 direita;
+#X msg 255 221 0.5;
+#X text 285 221 posição central;
+#X floatatom 919 231 0 0 0 0 - - -;
+#X obj 922 205 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 550 264 output~;
+#X obj 498 140 osc~ 400;
+#X obj 654 101 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -228395
+-1 -1 0 1;
+#X obj 651 176 line~;
+#X msg 651 153 \$1 20;
+#X obj 651 127 nbx 5 16 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 12
+-236717 -1 -1 0 256;
+#X text 724 127 Posição (0-1);
+#X text 595 99 esquerda;
+#X text 790 98 direita;
+#X msg 651 74 0.5;
+#X text 681 74 posição central;
+#X obj 498 213 expr~ $v1 * sqrt(1 - $v2) \; $v1 * sqrt($v2);
+#X obj 225 347 prvu~;
+#X obj 36 347 prvu~;
+#X obj 148 408 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 131 408 vu 15 120 empty empty -1 -8 0 10 -66577 -1 0 0;
+#X obj 157 536 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 -99.9 256;
+#X obj 140 553 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 216 534 dB (canal direito);
+#X text 202 552 dB (canal esquerdo);
+#X text 480 21 Segue agora a implementação da regra de potência constante
+(3 dB) a partir da raiz quadrada.;
+#X obj 583 334 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
+#X obj 566 334 vu 15 120 empty empty -1 -8 0 10 -66577 -1 0 0;
+#X obj 592 466 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 -99.9 256;
+#X obj 575 486 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-261682 -1 -1 0 256;
+#X text 651 464 dB (canal direito);
+#X text 637 485 dB (canal esquerdo);
+#X obj 651 272 prvu~;
+#X obj 498 272 prvu~;
+#X obj 919 255 expr pow(sin($f1) \, 2) + pow(cos($f1) \, 2) \; pow(sqrt($f1)
+\, 2) + pow(sqrt(1 - $f1) \, 2);
+#X obj 890 460 pan~;
+#X obj 877 499 output~;
+#X obj 955 413 hsl 128 15 -45 45 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X msg 952 455 \$1 20;
+#X obj 952 478 line 0 1;
+#X obj 1057 479 pansig~;
+#X floatatom 1121 435 5 0 0 0 - - -;
+#X obj 1124 413 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -228856
+-1 -1 0 1;
+#X obj 1121 485 line~;
+#X msg 1121 460 \$1 5;
+#X obj 1051 513 output~;
+#X floatatom 952 434 5 0 0 0 - - -;
+#X obj 919 300 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-228856 -1 -1 0 256;
+#X obj 1162 300 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0
+10 -228856 -1 -1 0 256;
+#X msg 315 411 \; pd dsp 1;
+#X obj 302 365 loadbang;
+#X obj 302 473 v pi;
+#X text 874 115 Esse princípio é verificado logo abaixo em um [expr]
+\, onde somamos o quadrado das amplitudes para qualquer posição do
+Pan. Veja que \, tanto para a função seno quanto para a raiz quadrada
+\, temos uma potência constante de 1!;
+#X text 862 228 posição;
+#X text 858 297 Potência;
+#X obj 949 653 equal_power_pan~;
+#X obj 890 426 noise~;
+#X obj 1057 449 noise~;
+#X obj 302 447 pi;
+#X obj 1069 652 square_root_pan~;
+#X text 43 16 O "pan" (de "panorâmico") é uma técnica que consiste
+em jogar um sinal de áudio em diferentes canais \, como distribuir
+um canal mono em um estéreo.;
+#X text 41 582 Esse tipo de panning com Seno e Cosseno é um exemplo
+de "Equal Power Panning" (Pan de Potência Igual) ou "Constant Power"
+(Potência Constante) \, cuja ideia é que a percepção de intensidade
+seja a mesma - independente da posição do pan - e atenua ambos os canais
+em torno de 3 dB na posição central. Outra função de Potência Constante/atenuação
+de 3 dB ao centro é a raiz quadrada.;
+#X text 469 515 A "regra" ou "lei" de pan diz que um mesmo sinal em
+dois alto-falantes dá um ganho de até 6 dBSPL (logo \, o dobro de intensidade
+sonora). Portanto \, o sinal precisa ser atenuado idealmente em 6 dB
+quando jogado em um canal estéreo.;
+#X text 470 632 Na verdade \, é comum o uso de três regras: 3 dB \,
+6 dB e um meio termo de 4.5 dB. Neste exemplo estamos somente falando
+da regra de 3 dB \, que é de Potência Constante.;
+#X text 881 340 Os externals [pan~] e [pansig~] são de potência constante
+de funcão Seno/Cosseno. Para a posição \, o [pan~] recebe dados (de
+-45 a 45) e o [pansig~] sinal de áudio (de -1 a 1).;
+#X text 44 61 Mais que apenas duplicar o sinal \, um "pan" permite
+que você distribua (ou posicione) uma fonte sonora mais à direita ou
+à esquerda.;
+#X text 45 107 Isso é basicamente a mesma coisa que fazer um crossfading
+\, só que em vez de mixar duas fontes sonoras para um mesmo canal \,
+estamos jogando uma fonte em dois canais diferentes.;
+#X text 46 152 Veja abaixo uma implementação em patch de um panorâmico
+que segue o mesmo procedimento do exemplo passado \, ou seja \, um
+crossfade a partir da função seno. Note que uma simples adaptação pode
+incluir outras funções.;
+#X text 469 573 Porém \, atenuar -3 dB é mais condizente com a a realidade
+das características acústicas de diversas salas de mixagem e performance
+medianas. Sistemas muito profissionais com devido tratamento acústico
+precisariam mesmo atenuar 6 dB.;
+#X text 874 36 Esse termo "Potência" remete de fato a grandezas como
+a Potência em Watts. Já vimos que a potência é propocional ao quadrado
+da amplitude (essa dada em voltagem). Assim sendo \, potência constante
+significa que a soma dos quadrados das amplitudes é constante.;
+#X text 885 578 O external [equal_power_pan~] também é uma abstração
+com a função seno. Ele recebe valores de pan de 0 a 1 mas apenas dado
+de controle. O [square_root_pan~] é outra abstração da mesma série
+\, também de potência constante via raiz quadrada.;
+#X connect 1 0 0 0;
+#X connect 1 0 28 0;
+#X connect 1 1 0 1;
+#X connect 1 1 27 0;
+#X connect 2 0 1 0;
+#X connect 3 0 7 0;
+#X connect 4 0 1 1;
+#X connect 5 0 4 0;
+#X connect 7 0 5 0;
+#X connect 11 0 3 0;
+#X connect 13 0 44 0;
+#X connect 14 0 13 0;
+#X connect 16 0 26 0;
+#X connect 17 0 20 0;
+#X connect 18 0 26 1;
+#X connect 19 0 18 0;
+#X connect 20 0 19 0;
+#X connect 24 0 17 0;
+#X connect 26 0 15 0;
+#X connect 26 0 43 0;
+#X connect 26 1 15 1;
+#X connect 26 1 42 0;
+#X connect 27 0 29 0;
+#X connect 28 0 30 0;
+#X connect 29 1 31 0;
+#X connect 30 1 32 0;
+#X connect 36 1 38 0;
+#X connect 37 1 39 0;
+#X connect 42 0 36 0;
+#X connect 43 0 37 0;
+#X connect 44 0 57 0;
+#X connect 44 1 58 0;
+#X connect 45 0 46 0;
+#X connect 45 1 46 1;
+#X connect 47 0 56 0;
+#X connect 48 0 49 0;
+#X connect 49 0 45 1;
+#X connect 50 0 55 0;
+#X connect 50 1 55 1;
+#X connect 51 0 54 0;
+#X connect 52 0 51 0;
+#X connect 53 0 50 1;
+#X connect 54 0 53 0;
+#X connect 56 0 48 0;
+#X connect 60 0 59 0;
+#X connect 60 0 68 0;
+#X connect 66 0 45 0;
+#X connect 67 0 50 0;
+#X connect 68 0 61 0;

@@ -1,84 +1,68 @@
-#N canvas 251 229 1024 516 10;
-#X obj 134 291 hsl 128 15 0.01 1 1 0 empty index1 empty -2 -8 0 10
--262130 -1 -1 9380 1;
-#X obj 131 318 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
--262130 -1 -1 0.30003 256;
-#X obj 114 265 nbx 5 14 -1e+37 1e+37 0 0 empty freq1 empty 0 -8 0 10
--204786 -1 -1 200 256;
-#X text 122 246 Hz_1;
-#X text 162 290 índice_1;
-#X obj 318 312 hsl 128 15 0.01 1 1 0 empty index2 empty -2 -8 0 10
--203904 -1 -1 8262 1;
-#X obj 315 339 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
--203904 -1 -1 0.200033 256;
-#X obj 317 276 nbx 5 14 -1e+37 1e+37 0 0 empty freq2 empty 0 -8 0 10
--204800 -1 -1 300 256;
-#X text 325 257 Hz_2;
-#X text 346 311 índice_2;
-#X obj 883 312 loadbang;
-#X text 95 65 O exemplo passado pode ser também chamado de Modulação
+#N canvas 251 229 829 453 10;
+#X text 61 208 Hz_1;
+#X obj 673 282 loadbang;
+#X text 34 27 O exemplo passado pode ser também chamado de Modulação
 Cruzada (Cross Modulation) \, já que a saída do OSC1 controla a modulação
 do OSC2 e a saída do OSC2 controla a modulação do OSC1.;
-#X obj 155 416 output~;
-#N canvas 107 47 756 432 Cross_Phase_Modulation 0;
-#X obj 69 73 inlet~;
-#X obj 118 73 inlet~;
-#X obj 223 73 inlet~;
-#X obj 323 72 inlet~;
-#X obj 103 350 outlet~;
-#X obj 427 288 block~ 1;
-#X obj 69 214 cycle~;
-#X obj 223 111 cycle~;
-#X obj 223 157 *~;
-#X obj 103 259 *~;
-#X text 75 49 Hz_1;
-#X text 118 49 índice_1;
-#X text 226 51 Hz_2;
-#X text 313 50 índice_2;
-#X obj 116 282 cnv 15 150 40 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 1 105 643 540 Cross_Phase_Modulation 0;
+#X obj 330 80 inlet~;
+#X obj 379 80 inlet~;
+#X obj 75 79 inlet~;
+#X obj 121 79 inlet~;
+#X obj 330 457 outlet~;
+#X obj 421 208 block~ 1;
+#X obj 330 321 cycle~;
+#X obj 75 201 cycle~;
+#X obj 106 263 *~;
+#X obj 364 366 *~;
+#X text 76 58 Hz_1;
+#X text 119 58 índice_1;
+#X text 333 55 Hz_2;
+#X text 375 54 índice_2;
+#X obj 377 389 cnv 15 150 40 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 126 296 delwrite~ \$0-pm_fb 1;
-#X obj 334 130 cnv 15 150 40 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 387 403 delwrite~ \$0-pm_fb 1;
+#X obj 145 127 cnv 15 150 40 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 346 139 delread~ \$0-pm_fb 0;
-#X text 368 111 feedback;
-#X obj 316 342 outlet~;
+#X obj 157 136 delread~ \$0-pm_fb 0;
+#X text 179 108 feedback;
+#X obj 75 447 outlet~;
 #X connect 0 0 6 0;
 #X connect 1 0 9 1;
 #X connect 2 0 7 0;
 #X connect 3 0 8 1;
 #X connect 6 0 9 0;
+#X connect 6 0 4 0;
 #X connect 7 0 8 0;
+#X connect 7 0 19 0;
 #X connect 8 0 6 1;
-#X connect 8 0 19 0;
-#X connect 9 0 4 0;
 #X connect 9 0 15 0;
 #X connect 17 0 7 1;
-#X restore 114 364 pd Cross_Phase_Modulation;
-#X text 94 134 A diferença deste exemplo abaixo para o anterior \,
-é que agora temos a saída de ambos os osciladores \, um em cada canal
+#X restore 53 326 pd Cross_Phase_Modulation;
+#X text 33 96 A diferença deste exemplo abaixo para o anterior \, é
+que agora temos a saída de ambos os osciladores \, um em cada canal
 \, em vez de apenas a saída do OSC1 em mono como anteriormente. Temos
 então um sinal em estéreo \, mas o sinal de um canal também influencia
 no resultado do outro!;
-#X msg 883 336 \; Hz1 200 \; index1 0.3 \; Hz2 300 \; index2 0.2 \;
+#X msg 673 306 \; Hz1 200 \; index1 0.3 \; Hz2 300 \; index2 0.2 \;
 freq1 150 \; freq2 250 \; fb1 100 \; fb2 100;
-#X obj 580 217 hsl 128 15 1 10000 1 0 empty fb1 empty -2 -8 0 10 -262130
--1 -1 0 1;
-#X obj 577 244 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
--262130 -1 -1 1 256;
-#X obj 560 191 nbx 5 14 -1e+37 1e+37 0 0 empty Hz1 empty 0 -8 0 10
+#X obj 459 176 hsl 128 15 1 10000 1 0 empty fb1 empty -2 -8 0 10 -262130
+-1 -1 6350 1;
+#X obj 456 203 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 100 256;
+#X obj 439 150 nbx 5 14 -1e+37 1e+37 0 0 empty Hz1 empty 0 -8 0 10
 -204786 -1 -1 200 256;
-#X text 568 172 Hz_1;
-#X text 608 216 índice_1;
-#X obj 764 238 hsl 128 15 1 10000 1 0 empty fb2 empty -2 -8 0 10 -203904
--1 -1 0 1;
-#X obj 761 265 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
--203904 -1 -1 1 256;
-#X obj 763 202 nbx 5 14 -1e+37 1e+37 0 0 empty Hz2 empty 0 -8 0 10
+#X text 447 131 Hz_1;
+#X text 487 175 índice_1;
+#X obj 643 197 hsl 128 15 1 10000 1 0 empty fb2 empty -2 -8 0 10 -203904
+-1 -1 6350 1;
+#X obj 640 224 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-203904 -1 -1 100 256;
+#X obj 642 161 nbx 5 14 -1e+37 1e+37 0 0 empty Hz2 empty 0 -8 0 10
 -204800 -1 -1 300 256;
-#X text 771 183 Hz_2;
-#X text 792 237 índice_2;
-#X obj 601 342 output~;
+#X text 650 142 Hz_2;
+#X text 671 196 índice_2;
+#X obj 480 301 output~;
 #N canvas 107 47 596 466 Cross_Freq_Modulation 0;
 #X obj 69 53 inlet~;
 #X obj 118 53 inlet~;
@@ -117,25 +101,41 @@ freq1 150 \; freq2 250 \; fb1 100 \; fb2 100;
 #X connect 18 0 17 0;
 #X connect 19 0 16 0;
 #X connect 21 0 19 1;
-#X restore 560 290 pd Cross_Freq_Modulation;
-#X text 575 73 Uma outra opção seria trabalhar com modulação de frequência
+#X restore 439 249 pd Cross_Freq_Modulation;
+#X text 440 32 Uma outra opção seria trabalhar com modulação de frequência
 cruzada em vez de fase \, com saída também em estéreo. O resultado
 sonoro acaba não "estourando" como no nosso exemplo com modulação de
 fase. Compare abaixo.;
-#X connect 0 0 1 0;
-#X connect 1 0 13 1;
-#X connect 2 0 13 0;
-#X connect 5 0 6 0;
-#X connect 6 0 13 3;
-#X connect 7 0 13 2;
-#X connect 10 0 15 0;
-#X connect 13 0 12 0;
-#X connect 13 1 12 1;
-#X connect 16 0 17 0;
-#X connect 17 0 27 1;
-#X connect 18 0 27 0;
-#X connect 21 0 22 0;
-#X connect 22 0 27 3;
-#X connect 23 0 27 2;
-#X connect 27 0 26 0;
-#X connect 27 1 26 1;
+#X obj 73 253 hsl 128 15 0.01 1 1 0 empty index1 empty -2 -8 0 10 -262130
+-1 -1 0 1;
+#X obj 70 280 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262130 -1 -1 0 256;
+#X obj 53 227 nbx 5 14 -1e+37 1e+37 0 0 empty freq1 empty 0 -8 0 10
+-204786 -1 -1 0 256;
+#X text 101 252 índice_1;
+#X obj 257 274 hsl 128 15 0.01 1 1 0 empty index2 empty -2 -8 0 10
+-203904 -1 -1 0 1;
+#X obj 254 301 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-203904 -1 -1 0 256;
+#X obj 256 238 nbx 5 14 -1e+37 1e+37 0 0 empty freq2 empty 0 -8 0 10
+-204800 -1 -1 0 256;
+#X text 264 219 Hz_2;
+#X text 285 273 índice_2;
+#X obj 94 378 output~;
+#X connect 1 0 5 0;
+#X connect 3 0 28 0;
+#X connect 3 1 28 1;
+#X connect 6 0 7 0;
+#X connect 7 0 17 1;
+#X connect 8 0 17 0;
+#X connect 11 0 12 0;
+#X connect 12 0 17 3;
+#X connect 13 0 17 2;
+#X connect 17 0 16 0;
+#X connect 17 1 16 1;
+#X connect 19 0 20 0;
+#X connect 20 0 3 1;
+#X connect 21 0 3 0;
+#X connect 23 0 24 0;
+#X connect 24 0 3 3;
+#X connect 25 0 3 2;
